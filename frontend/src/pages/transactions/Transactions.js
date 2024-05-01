@@ -241,12 +241,12 @@ const Transactions = () => {
                       )}
 
 
-                      <Link to='/transactions' style={{ borderColor: '#9E3E65' }} class='btn d-inline-flex btn-md btn-light border-base mx-1 me-3'>
+                      {/* <Link to='/transactions' style={{ borderColor: '#9E3E65' }} class='btn d-inline-flex btn-md btn-light border-base mx-1 me-3'>
                         <span class=' pe-2'>
                           <i class='bi bi-pencil'></i>
                         </span>
                         <span className='fw-bold'>Edit</span>
-                      </Link>
+                      </Link> */}
 
                     </div>
                   </div>
@@ -293,7 +293,7 @@ const Transactions = () => {
                       <tbody>
                         {currentTrans?.length > 0 &&
                           currentTrans?.map((data) => (
-                            <tr key={data} className='text-center'>
+                            <tr key={data.id} className='text-center'>
                               <td style={{ fontSize: "0.9rem" }} className='py-4 fst-normal'>
                                 {new Date(data.createdAt).toLocaleDateString("en-US", DATE_OPTIONS)}
                               </td>
