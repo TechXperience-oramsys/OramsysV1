@@ -1041,33 +1041,40 @@ const Facility = ({ hendelCancel, hendelNext }) => {
     const [eventOfDefault, setEventOfDefault] = useState(false);
 
     useEffect(() => {
+        // Add a check to ensure ref is not null before accessing its properties
         precedentTogref.current && window.addEventListener('click', (e) => {
-            !precedentTogref.current.contains(e.target) && setViewsPrecedent(false);
+            precedentTogref.current.contains && !precedentTogref.current.contains(e.target) && setViewsPrecedent(false);
         }, true);
-
+    
         subsequentTogref.current && window.addEventListener('click', (e) => {
-            !subsequentTogref.current.contains(e.target) && setViewsSubsequent(false);
+            subsequentTogref.current.contains && !subsequentTogref.current.contains(e.target) && setViewsSubsequent(false);
         }, true);
-
+    
         repsTogref.current && window.addEventListener('click', (e) => {
-            !repsTogref.current.contains(e.target) && setViewsReps(false);
+            repsTogref.current.contains && !repsTogref.current.contains(e.target) && setViewsReps(false);
         }, true);
+    
         bacTogref.current && window.addEventListener('click', (e) => {
-            !bacTogref.current.contains(e.target) && setViewsBac(false);
+            bacTogref.current.contains && !bacTogref.current.contains(e.target) && setViewsBac(false);
         }, true);
+    
         fincovTogref.current && window.addEventListener('click', (e) => {
-            !fincovTogref.current.contains(e.target) && setViewsFincov(false);
+            fincovTogref.current.contains && !fincovTogref.current.contains(e.target) && setViewsFincov(false);
         }, true);
+    
         infocovTogref.current && window.addEventListener('click', (e) => {
-            !infocovTogref.current.contains(e.target) && setViewsInfo(false);
+            infocovTogref.current.contains && !infocovTogref.current.contains(e.target) && setViewsInfo(false);
         }, true);
+    
         undertakingsTogref.current && window.addEventListener('click', (e) => {
-            !undertakingsTogref.current.contains(e.target) && setViewsUndertakings(false);
+            undertakingsTogref.current.contains && !undertakingsTogref.current.contains(e.target) && setViewsUndertakings(false);
         }, true);
+    
         eventsTogref.current && window.addEventListener('click', (e) => {
-            !eventsTogref.current.contains(e.target) && setEventOfDefault(false);
+            eventsTogref.current.contains && !eventsTogref.current.contains(e.target) && setEventOfDefault(false);
         }, true);
-    }, []);
+    }, []); 
+    
 
     // const HandleSelection = (val) => {
     //     const findData = facility.representations.find(ele => ele === val);
