@@ -7,7 +7,7 @@ const APIResponse = require("../helpers/APIResponse");
 class TermSheetController {
     async download(req, res, next) {
         try {
-            const file = fs.access("..files/TermSheet.docx")
+            const file = fs.access("../files/TermSheet.docx")
             // const file = fs.access("../files/TermSheet.docx")
            console.log(file);
             return res.status(httpStatus.OK).json(new APIResponse({}, 'Ports fetch successfully.', httpStatus.OK));

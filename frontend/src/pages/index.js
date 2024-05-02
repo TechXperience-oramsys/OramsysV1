@@ -203,76 +203,40 @@ const Index = () => {
     ]
 
     let primaryLinks = []
-    useEffect(() => {
+
+    const checkUserRoleAndNavigate = () => {
         if (AuthStorage.isUserAuthenticated()) {
             ApiGet("user/validateToken").then((res) => {
                 if (res.status === 200) {
-                    console.log('res', res)
                     if (AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin") {
-                        navigate("/homeLanding")
+                        navigate("/homeLanding");
                     } else if (AuthStorage.getStorageData(STORAGEKEY.roles) === "admin") {
-                        navigate("/entities")
+                        navigate("/entities");
                     } else if (AuthStorage.getStorageData(STORAGEKEY.roles) === "user") {
-                        navigate("/homeLanding")
+                        navigate("/homeLanding");
                     }
                 } else {
-                    if (pathForLayout.includes(location.pathname))
-                        navigate(location.pathname)
-                    else
-                        navigate("/")
-                    localStorage.clear()
+                    if (pathForLayout.includes(location.pathname)) {
+                        navigate(location.pathname);
+                    } else {
+                        navigate("/");
+                    }
+                    localStorage.clear();
                 }
             }).catch(e => {
-                if (pathForLayout.includes(location.pathname))
-                    navigate(location.pathname)
-                else
-                    navigate("/")
-                localStorage.clear()
-            })
+                if (pathForLayout.includes(location.pathname)) {
+                    navigate(location.pathname);
+                } else {
+                    navigate("/");
+                }
+                localStorage.clear();
+            });
         } 
+    };
+    useEffect(() => {
+        checkUserRoleAndNavigate();
     }, [])
-    // useEffect(() => {
-    //     if (pathForLayout.includes(location.pathname)) {
-    //         if (AuthStorage.isUserAuthenticated()) {
-    //             ApiGet("user/validateToken").then((res) => {
-    //                 if (res.status === 200) {
-    //                     console.log('res', res)
-    //                     if (AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin") {
-    //                         navigate("/transactions")
-    //                     } else if (AuthStorage.getStorageData(STORAGEKEY.roles) === "admin") {
-    //                         navigate("/entities")
-    //                     } else if (AuthStorage.getStorageData(STORAGEKEY.roles) === "user") {
-    //                         navigate("/transactions")
-    //                     }
-    //                 } else {
-    //                     // navigate(-1)
-    //                     localStorage.clear()
-    //                 }
-    //             }).catch(e => {
-    //                 // navigate(-1)
-    //                 localStorage.clear()
-    //             })
-
-    //         } else {
-    //             navigate(location.pathname)
-    //             // if (AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin") {
-    //             //     navigate("/admin-login")
-    //             // } else if (AuthStorage.getStorageData(STORAGEKEY.roles) === "admin") {
-    //             //     navigate("/fa-login")
-    //             // } else if (AuthStorage.getStorageData(STORAGEKEY.roles) === "user") {
-    //             //     navigate("/")
-    //             // } else {
-    //             //     navigate("/")
-    //             // }
-    //         }
-    //     } else {
-    //         if (AuthStorage.isUserAuthenticated()) {
-    //             navigate("/transactions")
-    //         } else {
-    //             navigate(-1)
-    //         }
-    //     }
-    // }, []);
+ 
 
     if (AuthStorage.getStorageData(STORAGEKEY.roles) === "user") {
         primaryLinks = userRoutes
@@ -284,7 +248,7 @@ const Index = () => {
 
     return (
         <>
-            {pathForLayout.includes(location.pathname) ?
+            {pathForLayout.includes(location.pathname) ? (
                 <Layout>
                     <Routes>
                         {/* <Route element={<PublicRoutes />}> */}
@@ -294,21 +258,18 @@ const Index = () => {
                         <Route path="/admin-login" element={<AdminLogin />} />
                         <Route path="/fa-login" element={<FunctionalAdmin />} />
                     </Routes>
-                </Layout> :
+                </Layout> ) : (
                 <AuthLayOut>
                     <Routes>
 
-                        {primaryLinks?.map(item =>
-                            < Route path={`/${item?.path}`} element={<item.component />} />
+                        {primaryLinks?.map(item => (
+                            < Route key={item.path} path={`/${item?.path}`} element={<item.component />} />
                             // }
-                        )}
+                        ))}
                     </Routes>
                 </AuthLayOut>
-            }
-            {/* </Route> */}
-            {/* <Route element={<RouteProtecter />}> */}
-            {/* </Route> */}
-            {/* </Routes> */}
+            )}
+            
         </>
     )
 }

@@ -65,11 +65,11 @@ const SignIn = () => {
         }
         dispatch(loginAction(data))
     }
-
+     
 
     const { authState, oktaAuth } = useOktaAuth();
     const loginWithRedirect = () =>
-        oktaAuth.signInWithRedirect({ originalUri: "/" });
+        oktaAuth.signInWithRedirect({ originalUri: `/` });
     const logOut = () => oktaAuth.signOut();
 
     const buttonText = authState?.isAuthenticated ? "Logout" : "Login";

@@ -298,7 +298,7 @@ class transactionController {
                         } else {
                             try {
                                 console.log("File Created")
-                                data = fs.readFileSync(path.join(__dirname, `../TermSheet-${id}.pdf`), 'base64', function (err, content) {
+                                data = fs.readFileSync(path.join(__dirname, `../files/TermSheet-${id}.pdf`), 'base64', function (err, content) {
                                     return content;
                                 });
                                 return res.status(httpStatus.OK).json(new APIResponse({ data: data }, 'TermSheet downloaded successfully.', httpStatus.OK));
