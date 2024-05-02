@@ -1,14 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FaPowerOff } from "react-icons/fa";
 import { HiOutlineLogout } from 'react-icons/hi';
 import { IoSettingsOutline } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 import LogoutModal from '../../component/Modal/LogoutModal'
+import AuthStorage from '../../helper/AuthStorage'
+import STORAGEKEY from '../../config/APP/app.config'
+
 
 const AuthHeader = ({ showSidebar, setSidebar }) => {
   const [showspan, setShowspan] = useState(false)
   const [showSubData, setShowSubData] = useState(false)
   const [showModal, setshowModal] = useState(false)
+  const [userData, setUserData] = useState('')
+
+  useEffect(() => {
+    setUserData(JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)) ?? {})
+  }, [AuthStorage.getStorageData(STORAGEKEY.userData)])
+
   return (
     <>
       {/* <div className='authheader_main'>
@@ -49,10 +58,10 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
           <span className="ms-2 fw-bold fs-5">Oramsys</span>
         </div>
         <div className="d-flex align-items-center me-5 ms-auto">
-          {/* <div className='me-2'>
-            <IoSettingsOutline className='me-1' size={15} />
-            <span>Settings</span>
-          </div> */}
+          <div className='me-2'>
+            {/* <IoSettingsOutline className='me-1' size={15} /> */}
+            <span>Welcome, {userData?.name}</span>
+          </div>
 
           <div className='ms-2 mx-auto'>
            
