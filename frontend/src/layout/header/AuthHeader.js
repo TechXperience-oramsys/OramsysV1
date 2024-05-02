@@ -49,10 +49,10 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
           <span className="ms-2 fw-bold fs-5">Oramsys</span>
         </div>
         <div className="d-flex align-items-center me-5 ms-auto">
-          <div className='me-2'>
+          {/* <div className='me-2'>
             <IoSettingsOutline className='me-1' size={15} />
             <span>Settings</span>
-          </div>
+          </div> */}
 
           <div className='ms-2 mx-auto'>
            
