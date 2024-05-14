@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import LogoutModal from '../../component/Modal/LogoutModal'
 import AuthStorage from '../../helper/AuthStorage'
 import STORAGEKEY from '../../config/APP/app.config'
+import { MenuOutlined } from '@ant-design/icons';
 
 
 const AuthHeader = ({ showSidebar, setSidebar }) => {
@@ -54,7 +55,8 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
       </div> */}
       <div className='open-sidebar d-flex align-items-center' style={{ backgroundColor: "#f1f1f1", padding: "15px" }}>
         <div className="d-flex align-items-center">
-          <img src='./assets/img/my-img/barmanu.svg' alt='' width="30px" onClick={() => setSidebar(!showSidebar)} />
+          {/* <img src='./assets/img/my-img/barmanu.svg' alt='' width="30px"  /> */}
+          <MenuOutlined className='fs-5' onClick={() => setSidebar(!showSidebar)} />
           <span className="ms-2 fw-bold fs-5">Oramsys</span>
         </div>
         <div className="d-flex align-items-center me-5 ms-auto">

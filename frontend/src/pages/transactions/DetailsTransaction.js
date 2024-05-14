@@ -1132,23 +1132,6 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                         <div className=''>
 
                             <Row>
-
-
-                                {/* <Form.Group className="col-md-6">
-                                    <Form.Label>Select up to 5 tags</Form.Label>
-                                    <Form.Select id="choices-multiple-remove-button" multiple
-                                        onChange={(e, newVal) => {
-                                            setBorrower_Applicant(e.target.value)
-                                        }}
-                                        disabled={isView}
-                                        value={borrower_Applicant}
-                                    >
-                                        
-                                        {borrowerOption.map((item) => (
-                                            <option key={item.label} value={item.label}>{item.label}</option>
-                                        ))}
-                                    </Form.Select>
-                                </Form.Group> */}
                                 <Form.Group as={Col} controlId="formGridZip">
                                     <Form.Label>Borrower/Applicant</Form.Label>
                                     <Form.Select
@@ -1194,6 +1177,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
 
                         </div>
                     </div>
+                    
                     <div className='m-3' />
                     <div className='add-edit-product'>
                         <div className='form'>

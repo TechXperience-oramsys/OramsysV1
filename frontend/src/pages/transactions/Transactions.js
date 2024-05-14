@@ -20,8 +20,9 @@ import { Tooltip } from "react-tooltip"
 import Paginate from './Pagination'
 import { FaSearch } from "react-icons/fa"
 import Fade from 'react-reveal/Fade';
-import Loader from "../../layout/loader/Loader"
 import { FcSearch, FcSettings } from "react-icons/fc"
+import { Table, Dropdown as AntDropdown, Button as AntButton, Menu } from 'antd';
+import { DownloadOutlined, EditOutlined, EyeOutlined, FormOutlined, DownOutlined, EllipsisOutlined } from '@ant-design/icons';
 
 const Transactions = () => {
   const dispatch = useDispatch()
@@ -184,21 +185,106 @@ const Transactions = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
   const checkSearch = (e) => {
-    const filtered = transaction2.filter((item) => (
-      item.borrower_Applicant.toLowerCase().includes(e.target.value) || item.lenders.toLowerCase().includes(e.target.value)
-    ))
-    setTransaction(filtered)
-  }
+    const filtered = transaction2.filter((item) => {
+        // Check if item.borrower_Applicant and item.lenders are strings
+        if (typeof item.borrower_Applicant !== 'string' || typeof item.lenders !== 'string') {
+            return false;
+        }
+        
+        // Check if item.details.productDetails.name is an object and contains the property 'name'
+        if (typeof item.details.productDetails.name === 'object' && item.details.productDetails.name !== null && 'name' in item.details.productDetails.name) {
+            // Convert item.details.productDetails.name to lowercase if it's a string
+            const productName = item.details.productDetails.name.name.toLowerCase();
+            // Check if productName includes the search value
+            return productName.includes(e.target.value.toLowerCase());
+        }
+        
+        return false;
+    });
+    
+    setTransaction(filtered);
+};
 
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
-
-  const handleSort = (key) => {
-    let direction = 'ascending';
-    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending';
+  const columns = [
+    {
+      title: 'Date',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+      render: (createdAt) => new Date(createdAt).toLocaleDateString("en-US", DATE_OPTIONS)
+    },
+    {
+      title: 'Transaction Number',
+      dataIndex: '_id',
+      key: '_id'
+    },
+    {
+      title: 'Borrower',
+      dataIndex: 'borrower_Applicant',
+      key: 'borrower_Applicant'
+    },
+    {
+      title: 'Lender',
+      dataIndex: 'lenders',
+      key: 'lenders'
+    },
+    {
+      title: 'Contract Value',
+      dataIndex: ['details', 'contractDetails', 'value'],
+      key: 'contractValue',
+      render: (value) => formateCurrencyValue(value)
+    },
+    {
+      title: 'Product',
+      dataIndex: ['details', 'productDetails', 'name', 'name'],
+      key: 'product'
+    },
+    {
+      title: 'Termsheet',
+      dataIndex: 'termSheet',
+      key: 'termSheet',
+      render: (termSheet, record) => (
+        <span class='cursor-pointer'>
+          <p onClick={() => { termSheet === "Not Signed" && setShowExcelModal(true); setSendId(record._id) }}>
+            {termSheet}
+            {termSheet === "Signed" ? (
+              <Button onClick={() => { downloadTermSheet(record._id) }}><DownloadOutlined /></Button>
+            ) : (<></>)}
+          </p>
+        </span>
+      )
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (record) => (
+        <AntDropdown overlay={(
+          <Menu>
+            <Menu.Item onClick={() => { navigate(`/edit-transactions?id=${record._id}`, { state: [{ type: record.type }, { type: record?.details?.productDetails?.nature ? record.details.productDetails.nature : "" }, { isView: false },], }) }}>
+              <EditOutlined /> Edit
+            </Menu.Item>
+            <Menu.Item onClick={() => { navigate(`/edit-transactions?id=${record._id}`, { state: [{ type: record.type }, { type: record?.details?.productDetails?.nature ? record.details.productDetails.nature : "", }, { isView: true },], }) }}>
+              <EyeOutlined /> Preview
+            </Menu.Item>
+            {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" && (
+              <Menu.Item onClick={() => { dispatch(getRiskAssessment(record._id)); setSelected(record._id) }}>
+                <FormOutlined /> Risk Assessment
+              </Menu.Item>
+            )}
+            <Menu.Item onClick={() => { record.termSheet === "Not Signed" ? downloadTermSheet(record._id, "view") : ViewRiskAssessment() }}>
+              <EyeOutlined /> View Termsheet
+            </Menu.Item>
+            <Menu.Item onClick={() => { record.termSheet === "Not Signed" ? downloadTermSheet(record._id, "download") : converBase64toBlob(record.termSheetUrl) }}>
+              <DownloadOutlined /> Download Termsheet
+            </Menu.Item>
+          </Menu>
+        )}>
+          <AntButton><EllipsisOutlined /></AntButton>
+        </AntDropdown>
+      )
     }
-    setSortConfig({ key, direction });
-  };
+  ];
+
 
   return (
     <>
@@ -262,111 +348,36 @@ const Transactions = () => {
 
                 <div class="container mx-auto">
 
-                  <div class="mb-2 d-flex justify-content-between align-items-center">
+                  <div class="mb-2 d-flex justify-content-end align-items-center">
 
                     <div class="position-relative">
-                      <span class="position-absolute search"><FcSearch size={25} /></span>
-                      <input type="text" id='search' onKeyUp={e => checkSearch(e)} onChange={(e) => setSearch(e.target.value)} className="form-control w-100 ps-5" placeholder="Search transaction..." />
+                      {/* <span class="position-absolute search"><HarmonyOSOutlined /></span> */}
+                      <input type="text" id='search' onKeyUp={e => checkSearch(e)} onChange={(e) => setSearch(e.target.value)} className="form-control w-100 ps-5 fw-light border-none" placeholder="Search transaction..." />
                     </div>
 
 
                   </div>
-                  <div class="table-responsive form">
-                    <table class="table border-light border-5 table-nowrap caption-top table-hover">
-
-                      <thead>
-                        <tr className="bg-light text-center">
-                          <th  className='fw-bold fs-normal' onClick={() => handleSort('createdAt')} style={{ cursor: 'pointer' }} scope="col" width="5%">Date {' '}
-                            {sortConfig.key === 'createdAt' && (
-                              <i className={`bi bi-arrow-${sortConfig.direction === 'ascending' ? 'up' : 'down'}`}></i>
-                            )}
-                          </th>
-                          <th className='fw-bold fs-normal' scope="col" width="15%">Transaction Number</th>
-                          <th className='fw-bold fs-normal' scope="col" width="10%">Borrower</th>
-                          <th className='fw-bold fs-normal' scope="col" width="15%">Lender</th>
-                          <th className='fw-bold fs-normal' scope="col" width="10%">Contract Value</th>
-                          <th className='fw-bold fs-normal' scope="col" width="20%">Product</th>
-                          <th className='fw-bold fs-normal' scope="col" width="20%">Termsheet</th>
-                          <th className='fw-bold fs-normal' scope="col" width="20%"><span>Actions</span></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {currentTrans?.length > 0 &&
-                          currentTrans?.map((data) => (
-                            <tr key={data.id} className='text-center'>
-                              <td style={{ fontSize: "0.9rem" }} className='py-4 fst-normal'>
-                                {new Date(data.createdAt).toLocaleDateString("en-US", DATE_OPTIONS)}
-                              </td>
-                              <td style={{ fontSize: "0.9rem" }} className='py-4 fst-normal'>
-                                {data._id}
-                              </td>
-                              <td style={{ fontSize: "0.9rem" }} className='py-4 fst-normal'>
-
-                                {data.borrower_Applicant}
-
-                              </td>
-
-                              <td style={{ fontSize: "0.9rem" }} className='py-4 fst-normal'>
-                                {data.lenders}
-                              </td>
-                              <td style={{ fontSize: "0.9rem" }} className='py-4 fst-normal'>
-                                {formateCurrencyValue(data?.details?.contractDetails?.value)}
-                              </td>
-                              <td style={{ fontSize: "0.9rem" }} className='py-4 fst-normal'>
-                                {data?.details?.productDetails?.name?.name}
-                              </td>
-                              <td style={{ fontSize: "0.9rem" }} className='py-4 fst-normal cursor-pointer'>
-                                <p onClick={() => { data.termSheet === "Not Signed" && setShowExcelModal(true); setSendId(data._id) }}>
-                                  {data.termSheet}
-                                  {data.termSheet === "Signed" ? (
-                                    <Button onClick={() => { downloadTermSheet(data._id) }}><FileDownloadIcon /></Button>
-                                  ) : (<></>)
-                                  }
-                                </p>
-                              </td>
-
-                              <td class=''>
-                                <div className='container '>
-                                  <div className='d-flex py-3 justify-content-center gap-3'>
-
-
-                                    <Dropdown size='sm'>
-                                      <Dropdown.Toggle variant="light" id="dropdown-basic">
-                                        <FcSettings size={17} />
-                                      </Dropdown.Toggle>
-
-                                      <Dropdown.Menu variant="light" className="text-white" active="true">
-                                        <Dropdown.Item onClick={() => navigate(`/edit-transactions?id=${data?._id}`, { state: [{ type: data.type }, { type: data?.details?.productDetails?.nature ? data.details.productDetails.nature : "" }, { isView: false },], })}><MdEdit className="me-2 mb-1" size={15} />Edit</Dropdown.Item>
-                                        <Dropdown.Item onClick={() => navigate(`/edit-transactions?id=${data?._id}`, { state: [{ type: data.type }, { type: data?.details?.productDetails?.nature ? data.details.productDetails.nature : "", }, { isView: true },], })}><MdPreview className="me-2 mb-1" size={15} />Preview</Dropdown.Item>
-                                        {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" ?
-                                          <Dropdown.Item onClick={() => { dispatch(getRiskAssessment(data._id)); setSelected(data._id) }}><MdAssessment className="me-2 mb-1" size={15} />Risk Assesment
-                                          </Dropdown.Item> : ""}
-
-                                        <Dropdown.Item onClick={() => { data.termSheet === "Not Signed" ? downloadTermSheet(data._id, "view") : ViewRiskAssessment() }}><MdVisibility className="me-2 mb-1" size={15} />View Termsheet</Dropdown.Item>
-                                        <Dropdown.Item onClick={() => { data.termSheet === "Not Signed" ? downloadTermSheet(data._id, "download") : converBase64toBlob(data.termSheetUrl) }}><FileDownloadIcon className="me-2 mb-1" size={15} />Download Termsheet</Dropdown.Item>
-                                      </Dropdown.Menu>
-                                    </Dropdown>
-                                  </div>
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
-
-                      </tbody>
-
-                    </table>
-                    {!currentTrans && <div class="d-flex justify-content-center mx-auto container py-5 my-5 m-5">
-                      <div class="spinner-border" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                      </div>
-                    </div>}
-                    {transaction.length < 1 && <div className='text-center mx-auto container py-5 my-5 m-5'> No records were found</div>}
-                    <div class="card-footer border-0 py-2 mb-5">
+                  <div className="mt-10 table-responsive form">
+                    <Table
+                      columns={columns}
+                      dataSource={currentTrans}
+                      rowKey="_id"
+                      loading={!currentTrans}
+                      pagination={{
+                        total: getAlltransactionData?.data?.length,
+                        pageSize: postsPerPage,
+                        current: currentPage,
+                        onChange: (page) => setCurrentPage(page)
+                      }}
+                    />
+                    {/* {currentTrans?.length < 1 && <div className='text-center mx-auto container py-5 my-5 m-5'>No records were found</div>} */}
+                  </div>
+                  <div class=" border-0 mb-0">
 
                       <span class="text-muted text-sm">
-                        <Paginate postsPerPage={postsPerPage} totalPosts={getAlltransactionData?.data?.length} paginate={paginate} prevPagefunc={() => setCurrentPage(prev => prev - 1)} nextPagefunc={() => setCurrentPage(prev => prev + 1)} currentPage={currentPage} currentTrans={currentTrans} /> </span>
+                        <Paginate postsPerPage={postsPerPage} totalPosts={getAlltransactionData?.data?.length} paginate={paginate} prevPagefunc={() => setCurrentPage(prev => prev - 1)} nextPagefunc={() => setCurrentPage(prev => prev + 1)} currentPage={currentPage} currentTrans={currentTrans} />
+                      </span>
                     </div>
-                  </div>
 
                 </div>
 
@@ -386,70 +397,3 @@ const Transactions = () => {
 }
 
 export default Transactions
-
-// const userTableAction = [
-//   {
-//       icon: 'edit',
-//       tooltip: 'Edit transaction',
-//       onClick: (event, rowData) => navigate(`/edit-transactions?id=${rowData?._id}`, { state: [{ type: rowData.type }, { type: rowData?.details?.productDetails?.nature ? rowData.details.productDetails.nature : '' }, { isView: false }] })
-//   },
-//   {
-//       icon: 'download',
-//       tooltip: 'Download term sheet',
-
-//       onClick: (event, rowData) => { downloadTermSheet(rowData._id) }
-
-//   },
-// ]
-// const tableAction = [
-//   {
-//       icon: 'edit',
-//       tooltip: 'Edit transaction',
-//       onClick: (event, rowData) => navigate(`/edit-transactions?id=${rowData?._id}`, { state: [{ type: rowData.type }, { type: rowData?.details?.productDetails?.nature ? rowData.details.productDetails.nature : '' }, { isView: false }] })
-//   },
-//   {
-//       icon: 'preview',
-//       tooltip: 'View transaction',
-//       onClick: (event, rowData) => navigate(`/edit-transactions?id=${rowData?._id}`, { state: [{ type: rowData.type }, { type: rowData?.details?.productDetails?.nature ? rowData.details.productDetails.nature : '' }, { isView: true }] })
-//   },
-//   {
-//       icon: 'assessment',
-//       tooltip: 'Risk Assessment',
-//       onClick: (event, rowData) => { dispatch(getRiskAssessment(rowData._id)); setSelected(rowData._id) }
-//   },
-//   {
-//       icon: 'visibilityIcon',
-//       tooltip: 'view term sheet',
-//       onClick: (event, rowData) => { rowData.termSheet === 'Not Signed' ? downloadTermSheet(rowData._id, 'view') : ViewRiskAssessment() }
-//   },
-//   {
-//       icon: 'download',
-//       tooltip: 'Download term sheet',
-//       onClick: (event, rowData) => { rowData.termSheet === 'Not Signed' ? downloadTermSheet(rowData._id, 'download') : converBase64toBlob(rowData.termSheetUrl) }
-//   },
-// ]
-{/* <MaterialTable
-  title=""
-  columns={[
-      { title: 'Transaction Date', field: 'createdAt', type: 'date' },
-      { title: 'Transaction Number', field: '_id' },
-      { title: 'Applicant', field: 'borrower_Applicant' },
-      { title: 'Lenders', field: 'lenders' },
-      { title: 'Product', field: 'details.productDetails.name.name' },
-      { title: 'Value', render: rowData => formateCurrencyValue(rowData.details.contractDetails.value) },
-
-      { title: 'Term Sheet', render: rowData => <p onClick={() => { rowData.termSheet === 'Not Signed' && setShowExcelModal(true); setSendId(rowData._id) }}>{rowData.termSheet}{rowData.termSheet === 'Signed' ? <Button onClick={() => { downloadTermSheet(rowData._id) }}><FileDownloadIcon /></Button> : <></>}</p> },
-
-  data={transaction || <Skeleton />}
-
-  actions={AuthStorage.getStorageData(STORAGEKEY.roles) === 'superAdmin' ? (tableAction.splice(2, 1), tableAction) : AuthStorage.getStorageData(STORAGEKEY.roles) === 'user' ? tableAction : tableAction.slice(1, 2)}
-
-
-  options={{
-      filtering: true,
-      actionsColumnIndex: -1,
-      sorting: true,
-      pageSize: 10,
-      search: false,
-  }}
-  /> */}

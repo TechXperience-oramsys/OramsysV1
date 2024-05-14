@@ -6,8 +6,11 @@ import { entitiesRoleAction, entityRoleDeleteAction } from '../../redux/actions/
 import ConfirmationModel from "../../component/Modal/ConfirmationModel";
 import { Link, useNavigate } from 'react-router-dom'
 import Paginate from './entityPagination'
-import { MdDelete, MdEdit, MdPreview } from 'react-icons/md'
-import { Tooltip } from 'react-bootstrap'
+// import { MdDelete, MdEdit, MdPreview } from 'react-icons/md'
+// import { Tooltip } from 'react-bootstrap'
+
+import { Table, Tooltip, Button, Modal } from 'antd';
+import { MdEdit, MdDelete, MdPreview } from 'react-icons/md';
 
 const EntitiesRole = () => {
 
@@ -58,6 +61,48 @@ const EntitiesRole = () => {
     //page change
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
+    const columns = [
+        {
+            title: 'Role',
+            dataIndex: 'roleName',
+            key: 'roleName',
+            align: 'left',
+        },
+        {
+            title: 'Actions',
+            key: 'actions',
+            align: 'right',
+            render: (text, record) => (
+                <div className="d-flex justify-content-end m-2">
+                    <div className="align-items-center">
+                        <Tooltip title="Edit User" placement="top" effect="solid">
+                            <MdEdit
+                                onClick={() => {
+                                    setFormType('edit');
+                                    setAddEntityModal(true);
+                                    setRowData(record);
+                                }}
+                                className="cursor-pointer"
+                                size={18}
+                            />
+                        </Tooltip>
+                    </div>
+                    <div className="align-items-center ms-3">
+                        <Tooltip title="Delete User" placement="top" effect="solid">
+                            <MdDelete
+                                onClick={() => {
+                                    setRowData(record);
+                                    setShowModal(true);
+                                }}
+                                className="cursor-pointer"
+                                size={18}
+                            />
+                        </Tooltip>
+                    </div>
+                </div>
+            ),
+        },
+    ];
 
     return (
         <>
@@ -77,7 +122,7 @@ const EntitiesRole = () => {
                                 <div class='row align-items-center mb-3'>
                                     <div class='col-sm-6 col-12 mb-4 mb-sm-0'>
 
-                                        <h1 class='h2 mb-0 fw-bold fs-4 ls-tight'>Entities Role</h1>
+                                        <h2 class=' mb-0 fw-bold fs-4 ls-tight'>Entities Role</h2>
                                     </div>
 
                                     <div class='col-sm-6 col-12 text-sm-end'>
@@ -100,66 +145,27 @@ const EntitiesRole = () => {
                     <div className='container mx-auto'>
                         <div class='row g-6 mb-4'></div>
                         <div className='table-responsive'>
-                            <table class="table align-middle mb-0 bg-white border-light border-5">
-                                <thead class="bg-light">
-                                    <tr>
-                                        <th>Role</th>
-                                        <th className='text-end'>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    {getAllEntities?.length > 0 && getAllEntities?.map((data, index) => (
-                                        <tr key={index} className='text-center'>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-
-                                                    <div class="">
-                                                        <p class="fw-normal m-2">{data.roleName}</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-
-                                            <td className=''>
-                                                <div class="d-flex justify-content-end m-2">
-
-                                                    <div class="align-items-center">
-                                                        <MdEdit onClick={() => { setFormType('edit'); setAddEntityModal(true); setRowData(data) }}
-                                                            data-tooltip-id='edit-id'
-                                                            data-tooltip-content='Edit User'
-                                                            className='cursor-pointer'
-                                                            size={18} />
-                                                        <Tooltip id='edit-id' place='top' effect='solid' />
-                                                    </div>
-                                                    <div class="align-items-center ms-3">
-                                                        <MdDelete data-tooltip-id='preview-id' data-tooltip-content='Preview Information'
-                                                            onClick={() => { setRowData(data); setShowModal(true) }}
-                                                            className='cursor-pointer'
-                                                            size={18}
-                                                        />
-                                                        <Tooltip id='preview-id' place='top' effect='solid' />
-                                                    </div>
-                                                </div>
-
-                                            </td>
-
-                                        </tr>
-                                    ))}
-
-                                </tbody>
-                            </table>
-                            {!getAllEntities && <div class="d-flex justify-content-center mx-auto container py-5 my-5 m-5">
-                  <div class="spinner-border" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                </div> }
-                            {entityRole?.length < 1 && <div className='text-center mx-auto container py-5 my-5 m-5'> No records were found</div>}
-                            <div class="card-footer border-0 py-2 mb-5">
-
-                                <span class="text-muted text-sm">
-                                    <Paginate postsPerPage={postsPerPage} totalPosts={entityRoleData?.data?.length} paginate={paginate} prevPagefunc={() => setCurrentPage(prev => prev - 1)} nextPagefunc={() => setCurrentPage(prev => prev + 1)} currentPage={currentPage} getAllEntities={getAllEntities} />
-                                </span>
-                            </div>
+                            <Table
+                                dataSource={getAllEntities}
+                                columns={columns}
+                                pagination={{
+                                    pageSize: postsPerPage,
+                                    total: entityRoleData?.data?.length,
+                                    onChange: paginate,
+                                }}
+                                loading={!getAllEntities}
+                                rowKey={(record) => record.id}
+                            />
+                            {/* {!getAllEntities && (
+                                <div className="d-flex justify-content-center mx-auto container py-5 my-5 m-5">
+                                    <div className="spinner-border" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            )} */}
+                            {/* {entityRoleData?.length < 1 && (
+                                <div className="text-center mx-auto container py-5 my-5 m-5"> No records were found</div>
+                            )} */}
                         </div>
                     </div>
 

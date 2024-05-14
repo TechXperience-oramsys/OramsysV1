@@ -349,7 +349,7 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                         </Form.Group>
 
                         <Form.Group as={Col} lg={6} controlId="formGridZip">
-                            <Form.Label className='text-muted'>Contract Currency</Form.Label>
+                            <Form.Label className='text-muted'>Contract Value</Form.Label>
                             <Form.Control
                             className='text-muted'
                                 value={formateCurrencyValue(getTrans.value)}

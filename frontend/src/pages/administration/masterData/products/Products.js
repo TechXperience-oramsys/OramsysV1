@@ -5,10 +5,11 @@ import CountriesCard from '../../../../component/CountriesCard';
 import ProductCard from '../../../../component/ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { productGetAction } from '../../../../redux/actions/productAction';
-import MaterialTable from 'material-table';
-import { Tooltip } from 'react-tooltip';
+import { Table, Tooltip, Dropdown, Menu, Button } from 'antd';
 import { MdEdit, MdPreview } from 'react-icons/md';
+import { DownOutlined, EditOutlined, EllipsisOutlined, EyeOutlined } from '@ant-design/icons';
 import Paginate from './productPagination';
+// import { navigate } from '@reach/router';
 
 const Products = () => {
 
@@ -45,6 +46,121 @@ const Products = () => {
     day: "numeric",
   }
 
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      align: 'center',
+
+    },
+    {
+      title: 'Nature',
+      dataIndex: 'nature',
+      key: 'nature',
+      align: 'center',
+
+    },
+    {
+      title: 'Category',
+      dataIndex: 'category',
+      key: 'category',
+      align: 'center',
+
+    },
+    {
+      title: 'Expiry Date',
+      dataIndex: 'expiryDate',
+      key: 'expiryDate',
+      align: 'center',
+      render: (text) => <p className="fw-normal m-2">{new Date(text).toLocaleDateString("en-US", DATE_OPTIONS)}</p>,
+    },
+    {
+      title: 'Family',
+      dataIndex: 'family',
+      key: 'family',
+      align: 'center',
+
+    },
+    {
+      title: 'Type',
+      dataIndex: 'type',
+      key: 'type',
+      align: 'center',
+
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      align: 'center',
+
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      align: 'center',
+      render: (text, record) => (
+        <Dropdown overlay={(
+          <Menu>
+            <Menu.Item onClick={() => { navigate(`/edit-product?id=${record._id}`) }}>
+              <EditOutlined /> Edit
+            </Menu.Item>
+            <Menu.Item onClick={() => { navigate(`/edit-product?id=${record._id}`, { state: { isView: true } }) }}>
+              <EyeOutlined /> Preview
+            </Menu.Item>
+          </Menu>
+        )}>
+
+          <Button><EllipsisOutlined /></Button>
+        </Dropdown>
+        // <div className="d-flex justify-content-end m-2">
+        //   <div className="align-items-center">
+        //     <MdEdit
+        //       onClick={() => navigate({ pathname: '/edit-product', search: `?id=${record._id}` })}
+        //       data-tooltip-id='edit-id'
+        //       data-tooltip-content='Edit Product'
+        //       className='cursor-pointer'
+        //       size={18}
+        //     />
+        //     <Tooltip id='edit-id' placement='top' effect='solid' />
+        //   </div>
+        //   <div className="align-items-center ms-3">
+        //     <MdPreview
+        //       onClick={() => navigate(`/edit-product?id=${record._id}`, { state: { isView: true } })}
+        //       data-tooltip-id='preview-id'
+        //       data-tooltip-content='Preview Information'
+        //       className='cursor-pointer'
+        //       size={18}
+        //     />
+        //     <Tooltip id='preview-id' placement='top' effect='solid' />
+        //   </div>
+        // </div>
+      ),
+    },
+  ];
+
+  //   const checkSearch = (e) => {
+  //     const filtered = transaction2.filter((item) => {
+  //         // Check if item.borrower_Applicant and item.lenders are strings
+  //         if (typeof item.borrower_Applicant !== 'string' || typeof item.lenders !== 'string') {
+  //             return false;
+  //         }
+
+  //         // Check if item.details.productDetails.name is an object and contains the property 'name'
+  //         if (typeof item.details.productDetails.name === 'object' && item.details.productDetails.name !== null && 'name' in item.details.productDetails.name) {
+  //             // Convert item.details.productDetails.name to lowercase if it's a string
+  //             const productName = item.details.productDetails.name.name.toLowerCase();
+  //             // Check if productName includes the search value
+  //             return productName.includes(e.target.value.toLowerCase());
+  //         }
+
+  //         return false;
+  //     });
+
+  //     setTransaction(filtered);
+  // };
+
   return (
     <>
       {/* <div className='authheader_main'>
@@ -59,11 +175,6 @@ const Products = () => {
         </div>
       </div> */}
       <div className='product'>
-        {/* <div className='mb-3 d-flex justify-content-between align-items-center'>
-          <h2 className='m-0'> Products</h2>
-          <button className='add_btn me-3' onClick={() => navigate('/add-product')}> <img src='../../assets/img/about/plus.png' className='me-2' />Add</button>
-        </div> */}
-
         <div class='container-fluid'>
           <div id='dash' class='mb-npx'>
             <header class='bg-surface-primary border-bottom pt-6'>
@@ -74,12 +185,23 @@ const Products = () => {
 
                 <div class='col-sm-6 col-12 text-sm-end'>
                   <div class='mx-n1 me-5 d-flex align-items-center justify-content-end gap-2'>
+                    <div className=''>
+                      <input type="text" id='search' value={search} onChange={(e) => setSearch(e.target.value)} className="form-control ps-5 fw-light border-none" placeholder="Search product..." />
+                    </div>
+
                     <Link to='/add-product' style={{ borderColor: '#9E3E65' }} class='btn d-inline-flex btn-md btn-light border-base mx-1 me-3'>
                       <span class=' pe-2'>
                         <i class="bi bi-plus"></i>
                       </span>
                       <span className='fw-bold'>Add Product</span>
                     </Link>
+
+
+
+                    {/* <div class="position-relative">
+                      <span class="position-absolute search"><HarmonyOSOutlined /></span>
+                      <input type="text" id='search' onKeyUp={e => checkSearch(e)} onChange={(e) => setSearch(e.target.value)} className="form-control w-100 ps-5 fw-light border-none" placeholder="Search transaction..." />
+                    </div> */}
 
                   </div>
                 </div>
@@ -92,154 +214,30 @@ const Products = () => {
         {/* TABLE */}
         <div className='container mx-auto'>
           <div class='row g-6 mb-4'></div>
-          <div className='table-responsive'>
-            <table class="table align-middle mb-0 bg-white border-light border-5">
-              <thead class="bg-light">
-                <tr className='text-center'>
-                  <th className='fw-bold'>Name</th>
-                  <th className='fw-bold'>Nature</th>
-                  <th className='fw-bold'>Category</th>
-                  <th className='fw-bold'>Expiry Date</th>
-                  <th className='fw-bold'>Family</th>
-                  <th className='fw-bold'>Type</th>
-                  <th className='fw-bold'>Status</th>
-                  <th className='fw-bold text-end'>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-
-                {getAllProduct?.length > 0 && getAllProduct?.map((data, index) => (
-                  <tr key={index} className='text-center'>
-                    <td>
-                      <div class="">
-
-                        <div class="">
-                          <p class="fw-normal m-2">{data.name}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="">
-                        <div class="">
-                          <p class="fw-normal m-2">{data.nature}</p>
-                        </div>
-                      </div>
-                    </td>
-
-                    <td>
-                      <div class="">
-                        <div class="">
-                          <p class="fw-normal m-2">{data.category}</p>
-                        </div>
-                      </div>
-                    </td>
-
-                    <td>
-                      <div class="">
-                        <div class="">
-                          <p class="fw-normal m-2">{new Date(data.expiryDate).toLocaleDateString("en-US", DATE_OPTIONS)}</p>
-                          {/* {new Date(data.createdAt).toLocaleDateString("en-US", DATE_OPTIONS)} */}
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="">
-                        <div class="">
-                          <p class="fw-normal m-2">{data.family}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="">
-                        <div class="">
-                          <p class="fw-normal m-2">{data.type}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="">
-                        <div class="">
-                          <p class="fw-normal m-2">{data.status}</p>
-                        </div>
-                      </div>
-                    </td>
-
-                    <td>
-                      <div class="d-flex justify-content-end m-2">
-
-                        <div class="align-items-center">
-                          <MdEdit onClick={() => {
-                            navigate({ pathname: '/edit-product', search: `?id=${data?._id}` })
-                          }}
-                            data-tooltip-id='edit-id'
-                            data-tooltip-content='Edit Product'
-                            className='cursor-pointer'
-                            size={18} />
-                          <Tooltip id='edit-id' place='top' effect='solid' />
-                        </div>
-                        <div class="align-items-center ms-3">
-                          <MdPreview data-tooltip-id='preview-id' data-tooltip-content='Preview Information'
-                            onClick={() => navigate(`/edit-product?id=${data?._id}`, { state: { isView: true } })}
-                            className='cursor-pointer'
-                            size={18}
-                          />
-                          <Tooltip id='preview-id' place='top' effect='solid' />
-                        </div>
-                      </div>
-
-                    </td>
-
-                  </tr>
-                ))}
-
-              </tbody>
-            </table>
-            {!getAllProduct && <div class="d-flex justify-content-center mx-auto container py-5 my-5 m-5">
-                  <div class="spinner-border" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                </div> }
-            {productGetData?.length < 1 && <div className='text-center mx-auto container py-5 my-5 m-5'> No records were found</div>}
-            <div class="card-footer border-0 py-2 mb-5">
-
-              <span class="text-muted text-sm">
-                <Paginate postsPerPage={postsPerPage} totalPosts={productGetDatas?.data?.length} paginate={paginate} prevPagefunc={() => setCurrentPage(prev => prev - 1)} nextPagefunc={() => setCurrentPage(prev => prev + 1)} currentPage={currentPage} getAllProduct={getAllProduct} /> </span>
+          <Table
+            dataSource={getAllProduct}
+            columns={columns}
+            pagination={{
+              pageSize: postsPerPage,
+              total: productGetData?.data?.length,
+              onChange: (page) => setCurrentPage(page),
+            }}
+            loading={!getAllProduct}
+            rowKey={(record) => record._id}
+          />
+          {/* {!getAllProduct && (
+            <div className="d-flex justify-content-center mx-auto container py-5 my-5 m-5">
+              <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
             </div>
-          </div>
+          )} */}
+          {/* {productGetData?.length < 1 && (
+            <div className='text-center mx-auto container py-5 my-5 m-5'> No records were found</div>
+          )} */}
         </div>
 
-        {/* <MaterialTable
-          title=""
-          columns={[
-            { title: 'Name', field: 'name' },
-            { title: 'Nature', field: 'nature' },
-            { title: 'Category', field: 'category' },
-            { title: 'Expiry Date', field: 'expiryDate', type: 'date', },
-            { title: 'Family', field: 'family' },
-            { title: 'Type', field: 'type' },
-            { title: 'Status', field: 'status' },
-          ]}
-          data={productGetData?.data}
-          actions={[
-            {
-              icon: 'edit',
-              tooltip: 'Edit Product',
-              onClick: (event, rowData) => navigate({ pathname: '/edit-product', search:`?id=${rowData?._id}` })
-            },
-            {
-              icon: 'preview',
-              tooltip: 'View Product',
-              onClick: (event, rowData) => navigate(`/edit-product?id=${rowData?._id}`, { state: { isView: true } })
-            }
-          ]}
-          options={{
-            filtering: true,
-            actionsColumnIndex: -1,
-            sorting: true,
-            pageSize: 10,
-            search: false,
-          }}
-        /> */}
+
       </div>
     </>
   )

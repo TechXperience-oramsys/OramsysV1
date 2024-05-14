@@ -1,6 +1,6 @@
 import { TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Form } from 'react-bootstrap';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
@@ -34,6 +34,7 @@ const Add_Edit_Product = () => {
   const oneProductData = useSelector(state => state.product.productGetId)
   const productUpdated = useSelector(state => state.product.productUpdate)
   const productAddData = useSelector(state => state.product.productAdd)
+  const transactionData = useSelector((state) => state.transactionData.transactionData)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -194,264 +195,142 @@ const Add_Edit_Product = () => {
   return (
     <>
       <div className='add-edit-product'>
-        <h1 className=''>Product</h1>
+        <h5 className='text-gray mb-6'></h5>
         <div className='form'>
-          <h2 className='mb-3'>Details</h2>
+          <h4 className='fw-bold fs-5 mb-3 title-admin'>DETAILS</h4>
           <div>
-            <Row>
-              <Col xxl={3} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                <TextField
-                  label="Name"
-                  name="name"
-                  variant="standard"
-                  color="warning"
+            <Row className='mb-4'>
+
+              <Form.Group as={Col} controlId="formGridZip">
+                <Form.Label>Name</Form.Label>
+                <Form.Control className='no-border'
+                  name='name'
                   value={state.name}
                   onChange={handleChange}
-                  disabled={isView}
-                />
+                  disabled={isView} />
                 {error?.name && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.name}</span>}
-              </Col>
-              <Col xxl={3} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                {/* <FormControl className="">
-                  <InputLabel htmlFor="age-native-simple">Nature</InputLabel>
-                  <Select
-                    focused
-                    value={state.nature}
-                    onChange={handleChange}
-                    inputProps={{
-                      name: 'nature',
-                      id: 'age-native-simple',
-                    }}
-                    disabled={isView}
-                  >
-                    <option className='d-none' aria-label="None" value="" />
-                    <option value={"Physical"}>Physical</option>
-                    <option value={"non Physical"}>non Physical</option>
-                  </Select>
-                  {error?.nature && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.nature}</span>}
-                </FormControl> */}
-                {/* <Autocomplete
-                  label="Nature"
-                  onChange={q => setText(q)}
-                  selectOnBlur
-                  requireMatch
-                  getOptions={getOptions}
-                  query={text}
-                /> */}
+              </Form.Group>
 
-                <Autocomplete
-                  options={natureOptions}
-                  getOptionLabel={(option) => option}
-                  id="disable-clearable"
-                  label="Nature"
-                  renderInput={(params) => (
-                    <TextField {...params} label="Nature" variant="standard" />
-                  )}
+              <Form.Group as={Col} controlId="formGridZip">
+                <Form.Label>Nature</Form.Label>
+                <Form.Select className='no-border'
                   onChange={(event, newValue) => {
                     setState({ ...state, nature: newValue });
                   }}
-                  value={state.nature}
-                  disableClearable
                   disabled={isView}
-                />
+                  value={state.nature}>
+
+                  <option value="" disabled selected>Choose...</option>
+                  {natureOptions.map((item) => (
+                    <option value={item}>{item}</option>
+                  ))}
+                </Form.Select>
                 {error?.nature && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.nature}</span>}
-              </Col>
-              <Col xxl={3} xl={4} lg={6} md={4} sm={6} className='mb-3'>
+              </Form.Group>
 
-                {/* <FormControl className="">
-                  <InputLabel htmlFor="age-native-simple">Family</InputLabel>
-                  <Select
-                    focused
-                    value={state.family}
-                    onChange={handleChange}
-                    inputProps={{
-                      name: 'family',
-                      id: 'age-native-simple',
-                    }}
-                    disabled={isView}
-                  >
-                    <option className='d-none' aria-label="None" value="" />
-                    <option value={"Commodity"}>Commodity</option>
-                    <option value={"non Commodity"}>non Commodity</option>
-                  </Select>
-                  {error?.family && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.family}</span>}
-                </FormControl> */}
-                {/* <Autocomplete
-                  label="Family"
-                  onChange={q => setText(q)}
-                  selectOnBlur
-                  requireMatch
-                  getOptions={getOptions}
-                  query={text}
-                /> */}
-
-                <Autocomplete
-                  options={familyOptions}
-                  getOptionLabel={(option) => option}
-                  id="disable-clearable"
-                  label="Family"
-                  renderInput={(params) => (
-                    <TextField {...params} label="Family" variant="standard" />
-                  )}
+              <Form.Group as={Col} controlId="formGridZip">
+                <Form.Label>Family</Form.Label>
+                <Form.Select className='no-border'
                   onChange={(event, newValue) => {
                     setState({ ...state, family: newValue });
                   }}
-                  value={state.family}
-                  disableClearable
                   disabled={isView}
-                />
-                {error?.family && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.family}</span>}
-              </Col>
-              <Col xxl={3} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                {/* <FormControl className="">
-                  <InputLabel htmlFor="age-native-simple">Category</InputLabel>
-                  <Select
-                    focused
-                    value={state.category}
-                    onChange={handleChange}
-                    inputProps={{
-                      name: 'category',
-                      id: 'age-native-simple',
-                    }}
-                    disabled={isView}
-                  >
-                    <option className='d-none' aria-label="None" value="" />
-                    <option value={"Hard"}>Hard</option>
-                    <option value={"Soft"}>Soft</option>
-                    <option value={"Manufactures"}>Manufactures</option>
-                  </Select>
-                  {error?.category && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.category}</span>}
-                </FormControl> */}
-                {/* <Autocomplete
-                  label="Category"
-                  onChange={q => setText(q)}
-                  selectOnBlur
-                  requireMatch
-                  getOptions={getOptions}
-                  query={text}
-                /> */}
+                  value={state.family}>
 
-                <Autocomplete
-                  options={categoryOptions}
-                  getOptionLabel={(option) => option}
-                  id="disable-clearable"
-                  label="Category"
-                  renderInput={(params) => (
-                    <TextField {...params} label="Category" variant="standard" />
-                  )}
+                  <option value="" disabled selected>Choose...</option>
+                  {familyOptions.map((item) => (
+                    <option value={item}>{item}</option>
+                  ))}
+                </Form.Select>
+                {error?.family && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.family}</span>}
+              </Form.Group>
+
+            </Row>
+
+            <Row className='mb-4'>
+              <Form.Group as={Col} controlId="formGridZip">
+                <Form.Label>Category</Form.Label>
+                <Form.Select className='no-border'
                   onChange={(event, newValue) => {
                     setState({ ...state, category: newValue });
                   }}
-                  value={state.category}
-                  disableClearable
                   disabled={isView}
-                />
-                {error?.category && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.category}</span>}
-              </Col>
-            </Row>
-            <Row className=''>
-              <Col xxl={4} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                {/* <FormControl className="">
-                  <InputLabel htmlFor="age-native-simple">Type</InputLabel>
-                  <Select
-                    focused
-                    value={state.type}
-                    onChange={handleChange}
-                    inputProps={{
-                      name: 'type',
-                      id: 'age-native-simple',
-                    }}
-                    disabled={isView}
-                  >
-                    <option className='d-none' aria-label="None" value="" />
-                    <option value={'Commodity'}>Commodity</option>
-                  </Select>
-                  {error?.type && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.type}</span>}
-                </FormControl> */}
-                {/* <Autocomplete
-                  label="Type"
-                  onChange={q => setText(q)}
-                  selectOnBlur
-                  requireMatch
-                  getOptions={getOptions}
-                  query={text}
-                /> */}
+                  value={state.category}>
 
-                <Autocomplete
-                  options={typeOptions}
-                  getOptionLabel={(option) => option}
-                  id="disable-clearable"
-                  label="Type"
-                  renderInput={(params) => (
-                    <TextField {...params} label="Type" variant="standard" />
-                  )}
+                  <option value="" disabled selected>Choose...</option>
+                  {categoryOptions.map((item) => (
+                    <option value={item}>{item}</option>
+                  ))}
+                </Form.Select>
+                {error?.category && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.category}</span>}
+              </Form.Group>
+
+
+              <Form.Group as={Col} controlId="formGridZip">
+                <Form.Label>Type</Form.Label>
+                <Form.Select className='no-border'
                   onChange={(event, newValue) => {
                     setState({ ...state, type: newValue });
                   }}
-                  value={state.type}
-                  disableClearable
                   disabled={isView}
-                />
+                  value={state.type}>
+
+                  <option value="" disabled selected>Choose...</option>
+                  {typeOptions.map((item) => (
+                    <option value={item}>{item}</option>
+                  ))}
+                </Form.Select>
                 {error?.type && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.type}</span>}
-              </Col>
-              <Col xxl={4} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                <TextField
-                  label="Status"
-                  variant="standard"
-                  color="warning"
-                  name='status'
-                  onChange={handleChange}
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="formGridZip">
+                <Form.Label>Status</Form.Label>
+                <Form.Control className='no-border'
+                  name='name'
                   value={state.status}
-                  disabled={isView}
-                />
+                  onChange={handleChange}
+                  disabled={isView} />
                 {error?.status && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.status}</span>}
-              </Col>
-              <Col xxl={4} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                <form className="" noValidate>
-                  <TextField
-                    id="date"
-                    label="Expiry date"
-                    type="date"
-                    name='expiryDate'
-                    value={state.expiryDate}
-                    onChange={handleChange}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    disabled={isView}
-                  />
-                  {error?.expiryDate && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.expiryDate}</span>}
-                </form>
-              </Col>
+              </Form.Group>
+
+
             </Row>
             <Row className=''>
-              <Col xl={6} lg={6} md={4} sm={6} className='mb-3'>
-                <TextField
-                  id="unite"
-                  label="Product Unit"
-                  type="text"
+
+              <Form.Group as={Col} controlId="formGridZip">
+                <Form.Label>Expiry date</Form.Label>
+                <Form.Control
+                  type="date"
+                  name="expiryDate"
+                  placeholder="dd-mm-yyyy"
+                  min={transactionData.details.contractDetails.contractDate ? new Date(transactionData.details.contractDetails.contractDate).toISOString().split("T")[0] : ""}
+                  value={state.expiryDate}
+                  onChange={handleChange}
+                  required
+                />
+                {error && error?.paymentDate && <span style={{ color: 'red' }}>{error.paymentDate}</span>}
+              </Form.Group>
+              
+              
+              <Form.Group as={Col} controlId="formGridZip">
+                <Form.Label>Product Unit</Form.Label>
+                <Form.Control className='no-border'
                   name='unit'
                   value={state.unit}
                   onChange={handleChange}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  disabled={isView}
-                />
+                  disabled={isView} />
                 {error?.unit && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.unit}</span>}
-              </Col>
-              <Col xl={6} lg={6} md={4} sm={6} className='mb-3'>
-                <TextField
-                  label="Metrics"
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="formGridZip">
+                <Form.Label>Metric</Form.Label>
+                <Form.Control className='no-border'
                   name='matric'
-                  variant="standard"
-                  color="warning"
                   value={state.matric}
                   onChange={handleChange}
-                  disabled={isView}
-                />
+                  disabled={isView} />
                 {error?.matric && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.matric}</span>}
-              </Col>
+              </Form.Group>
             </Row>
           </div>
         </div>
