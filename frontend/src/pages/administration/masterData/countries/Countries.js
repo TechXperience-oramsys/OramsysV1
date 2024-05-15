@@ -11,7 +11,7 @@ import { ApiPost, BaseURL } from '../../../../helper/API/ApiData';
 import { toast } from 'react-toastify'
 import { FcSearch } from 'react-icons/fc';
 import { MdEdit, MdPreview } from 'react-icons/md';
-import { Tooltip } from 'react-tooltip';
+// import { Tooltip } from 'react-tooltip';
 import Paginate from './countryPagination';
 
 
@@ -159,11 +159,11 @@ const Countries = ({ showSidebar, setSidebar }) => {
                           <MdEdit onClick={() => {
                              setShow(true); setContryForEdit(contryData?.data?.find(item => item._id === data._id))
                            }}
-                            data-tooltip-id='edit-id'
-                            data-tooltip-content='Edit Product'
+                            // data-tooltip-id='edit-id'
+                            // data-tooltip-content='Edit Product'
                             className='cursor-pointer'
                             size={18} />
-                          <Tooltip id='edit-id' place='top' effect='solid' />
+                          {/* <Tooltip id='edit-id' place='top' effect='solid' /> */}
                         </div>
                       </div>
                     </td>

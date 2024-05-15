@@ -9,7 +9,7 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import "slick-carousel/slick/slick.css"
 // import "slick-carousel/slick/slick-theme.css"
 // import 'react-loading-skeleton/dist/skeleton.css'
-import 'react-tooltip/dist/react-tooltip.css'
+// import 'react-tooltip/dist/react-tooltip.css'
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(

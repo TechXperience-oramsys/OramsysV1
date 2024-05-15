@@ -6,7 +6,7 @@ import MaterialTable from 'material-table';
 import { useDispatch, useSelector } from 'react-redux';
 import { userGetAction } from '../../../redux/actions/userAction';
 import { MdEdit, MdPreview } from 'react-icons/md';
-import { Tooltip } from "react-tooltip"
+// import { Tooltip } from "react-tooltip"
 import Paginate from './userPagination';
 
 const Users = () => {
@@ -128,19 +128,21 @@ const Users = () => {
 
                         <div class="align-items-center">
                           <MdEdit onClick={() => { navigate(`/edit-user?id=${data?._id}`) }}
-                            data-tooltip-id='edit-id'
-                            data-tooltip-content='Edit User'
+                            // data-tooltip-id='edit-id'
+                            // data-tooltip-content='Edit User'
                             className='cursor-pointer'
                             size={18} />
-                          <Tooltip id='edit-id' place='top' effect='solid' />
+                          {/* <Tooltip id='edit-id' place='top' effect='solid' /> */}
                         </div>
                         <div class="align-items-center ms-3">
-                          <MdPreview data-tooltip-id='preview-id' data-tooltip-content='Preview Information'
+                          <MdPreview 
+                          // data-tooltip-id='preview-id' 
+                          // data-tooltip-content='Preview Information'
                             onClick={() => navigate(`/add-user?id=${data?._id}`, { state: { isView: true } })}
                             className='cursor-pointer'
                             size={18}
                           />
-                          <Tooltip id='preview-id' place='top' effect='solid' />
+                          {/* <Tooltip id='preview-id' place='top' effect='solid' /> */}
                         </div>
                       </div>
 

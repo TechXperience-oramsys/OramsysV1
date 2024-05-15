@@ -20,7 +20,6 @@ import { entityGetAction } from "../../redux/actions/entityAction"
 import { userGetAction } from "../../redux/actions/userAction"
 import { ApiGet, ApiGet2 } from "../../helper/API/ApiData"
 import Slide from 'react-reveal/Slide';
-// import { Chart as ChartJS } from 'chart.js/auto'
 import { Bar } from 'react-chartjs-2';
 
 const HomeLanding = () => {
@@ -451,15 +450,7 @@ const HomeLanding = () => {
                                   }} className='btn btn-sm btn-neutral'>
                                     View Termsheet
                                   </Link>
-                                  {/* <Button variant='outline-dark' className='btn btn-sm btn-square btn-neutral text-danger-hover'
-                                    onClick={() => {
-                                      data.termSheet === "Signed"
-                                        ? downloadTermSheet(data._id, "download")
-                                        : converBase64toBlob(data.termSheetUrl)
-                                    }}
-                                  >
-                                    <i className='bi bi-arrow-down'></i>
-                                  </Button> */}
+                                  
                                 </td>
                               </tr>
                             ))}
@@ -469,11 +460,7 @@ const HomeLanding = () => {
                       {getAlltransactionData?.data?.length < 1 && <div className='text-center mx-auto container py-5 my-5 m-5'> No records were found</div>}
 
                     </div>
-                    {/* <div className='card-footer border-0 py-5'>
-                      <span className='text-muted text-sm'>
-
-                      </span>
-                    </div> */}
+                   
                   </div>
                 </div>
               </Slide>
@@ -491,68 +478,3 @@ const HomeLanding = () => {
 
 export default HomeLanding
 
-{
-  /* <section className=''>
-                 <div className="background-shape6">
-                  <img src="./assets/img/figure/figure32.png" alt="figure" width="404" height="216" />
-                </div>
-            <div className='container dash-head'>
-                <h1 className='m-2'>Dashboard</h1>
-                <div className='row no-gutters'>
-
-                  {AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin" && (
-                    cards.map((card, i) => (
-                        <div key={i} className="col-lg-4 col-md-6 m-2">
-                        <div className="financo-activities-box1">
-                         
-                            <img src={card.img} alt="figure" height="81" width="81" />
-                            
-                          <h2 className="heading-title"><a href="/" className="text-decoration-none"><p className='heading-title'>{getCount(card.name)}</p> {" "} {card.title}</a>
-                          
-                          </h2>
-                          <p>{card.text}</p>
-                      
-                        </div>
-                      </div>
-                      ))
-                  )}
-
-                    {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" && (
-                      //{getAlltransaction?.data?.termSheet === 'Not Signed' }
-                      <div className="col-lg-4 col-md-6 my-4">
-                        <div className="financo-activities-box1">
-                                <FcApproval size={56} />
-                                <h2 className="heading-title my-3"><p className="text-decoration-none"><span className='fw-bold fs-2'>{ signedCount.length}</span> {" "} Completed Transactions</p></h2>
-                            <div className="item-button">
-                              <Link to='/transactions'className="item-btn text-decoration-none"><FaAngleRight /><span>Go to Transactions</span></Link>
-                            </div>
-                        </div>
-                      </div>
-                    )}
-                    
-                    {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" && (
-                      //{getAlltransaction?.data?.termSheet === 'Not Signed' }
-                        <div className="col-lg-4 col-md-6 my-4 mx-3">
-                            <div className="financo-activities-box1">
-                              <FcClock size={56} />
-                                <h2 className="heading-title my-3"><p className="text-decoration-none"><span className='fw-bold fs-2'>{ notSignedCount.length}</span> {" "} Transactions in Progress...</p></h2>
-                        
-                                <div className="item-button">
-                            <Link to='/transactions'className="item-btn text-decoration-none"><FaAngleRight /><span>Go to Transactions</span></Link>
-                            </div>
-                          </div>
-                      </div>
-                   
-                    )}
- 
-                </div>
-               
-                <div className="background-shape7">
-                  <img src="./assets/img/figure/figure29.png" alt="figure" width="747" height="256" />
-                </div>
-                <div className="background-shape8">
-                  <img src="./assets/img/my-img/figure33.png" alt="figure" width="783" height="439" />
-                </div>
-            </div>
-      </section> */
-}

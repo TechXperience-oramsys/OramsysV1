@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react"
-import { ButtonGroup, Col, Dropdown, DropdownButton, Form, Row } from "react-bootstrap"
+import { Dropdown } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
-import Transactionscard from "../../component/Transactionscard"
-import MaterialTable from "material-table"
 import AuthStorage from "../../helper/AuthStorage"
 import STORAGEKEY from "../../config/APP/app.config"
 import { getAllTransaction } from "../../redux/actions/transactionDataAction"
@@ -10,17 +8,12 @@ import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
 import { getRiskAssessment, riskAssessmentAction } from "../../redux/actions/riskAssessmentAction"
 import ExcelModal from "../../component/Modal/ExcelModal"
-import { ApiGet, ApiGet2 } from "../../helper/API/ApiData"
-import { Button, Icon } from "@material-ui/core"
-import FileDownloadIcon from "@mui/icons-material/FileDownload"
+import { ApiGet} from "../../helper/API/ApiData"
+import { Button } from "@material-ui/core"
 import { GET_TRANSACTION_BY_ID } from "../../redux/types"
-import { MdAssessment, MdEdit, MdPreview, MdVisibility } from "react-icons/md"
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { Tooltip } from "react-tooltip"
 import Paginate from './Pagination'
-import { FaSearch } from "react-icons/fa"
 import Fade from 'react-reveal/Fade';
-import { FcSearch, FcSettings } from "react-icons/fc"
 import { Table, Dropdown as AntDropdown, Button as AntButton, Menu } from 'antd';
 import { DownloadOutlined, EditOutlined, EyeOutlined, FormOutlined, DownOutlined, EllipsisOutlined } from '@ant-design/icons';
 
@@ -51,7 +44,6 @@ const Transactions = () => {
     let id = AuthStorage.getStorageData(STORAGEKEY.roles) !== "superAdmin"
       ? AuthStorage.getStorageData(STORAGEKEY.userId) : "all"
     dispatch(getAllTransaction(id))
-    // setTransaction(getAllTransaction(id))
   }, [])
 
   const refreshPage = useCallback(() => {
@@ -112,10 +104,7 @@ const Transactions = () => {
     //eslint-disable-next-line
   }, [getAlltransactionData])
 
-  // const cllickOnRiskAssessment = (id) => {
-  //     dispatch(getRiskAssessment(id))
-  //     setSelected(id)
-  // }
+
   useEffect(() => {
     if (riskAssessment.status === 200 && selected) {
       // if (riskAssessment && riskAssessment.data && riskAssessment.data.transactionId   ) {
@@ -351,7 +340,6 @@ const Transactions = () => {
                   <div class="mb-2 d-flex justify-content-end align-items-center">
 
                     <div class="position-relative">
-                      {/* <span class="position-absolute search"><HarmonyOSOutlined /></span> */}
                       <input type="text" id='search' onKeyUp={e => checkSearch(e)} onChange={(e) => setSearch(e.target.value)} className="form-control w-100 ps-5 fw-light border-none" placeholder="Search transaction..." />
                     </div>
 
@@ -370,7 +358,6 @@ const Transactions = () => {
                         onChange: (page) => setCurrentPage(page)
                       }}
                     />
-                    {/* {currentTrans?.length < 1 && <div className='text-center mx-auto container py-5 my-5 m-5'>No records were found</div>} */}
                   </div>
                   <div class=" border-0 mb-0">
 

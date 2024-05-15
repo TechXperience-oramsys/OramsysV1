@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { ratingAgenciesAction } from "../../../../redux/actions/ratingAgenciesAction"
 import { countrieAction } from "../../../../redux/actions/countrieAction"
 import { MdEdit, MdPreview } from "react-icons/md"
-import { Tooltip } from "react-tooltip"
+// import { Tooltip } from "react-tooltip"
 import Paginate from "./ratingPagination"
 
 const RatingAgencies = () => {
@@ -172,21 +172,23 @@ const RatingAgencies = () => {
                               state: { isView: false }
                             })
                           }}
-                            data-tooltip-id='edit-id'
-                            data-tooltip-content='Edit Agency'
+                            // data-tooltip-id='edit-id'
+                            // data-tooltip-content='Edit Agency'
                             className='cursor-pointer'
                             size={18} />
-                          <Tooltip id='edit-id' place='top' effect='solid' />
+                          {/* <Tooltip id='edit-id' place='top' effect='solid' /> */}
                         </div>
                         <div class="align-items-center ms-3">
-                          <MdPreview data-tooltip-id='preview-id' data-tooltip-content='Preview Information'
+                          <MdPreview 
+                          // data-tooltip-id='preview-id' 
+                          // data-tooltip-content='Preview Information'
                             onClick={() => navigate(`/rating-agencies-edit?id=${data?.id}`, {
                               state: { isView: true },
                             })}
                             className='cursor-pointer'
                             size={18}
                           />
-                          <Tooltip id='preview-id' place='top' effect='solid' />
+                          {/* <Tooltip id='preview-id' place='top' effect='solid' /> */}
                         </div>
                       </div>
 

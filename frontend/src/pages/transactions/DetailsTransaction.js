@@ -1,5 +1,3 @@
-import { InputAdornment, TextField } from "@material-ui/core"
-import Choices from 'choices.js';
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import { Col, Row, Button, Form, InputGroup } from 'react-bootstrap'
 import { Link, useLocation, useNavigate } from "react-router-dom"
@@ -8,21 +6,14 @@ import AddInsuranceModal from "../../component/Modal/AddInsuranceModal"
 import MaterialTable from "material-table"
 import { useDispatch, useSelector } from "react-redux"
 import { productGetAction } from "../../redux/actions/productAction"
-import TextEditerModal from "../../component/Modal/TextEditerModal"
 import { countrieAction } from "../../redux/actions/countrieAction"
-import Autocomplete from "@material-ui/lab/Autocomplete"
 import { CurrencyOptions } from "../../helper/common"
-import { formatCurrency } from "../../helper/utils"
 import { entityGetAction } from "../../redux/actions/entityAction"
 import { transactionDataAction } from "../../redux/actions/transactionDataAction"
 import moment from "moment"
 import { airPortsAction, portsAction } from "../../redux/actions/portsAction"
 import LoadingSpinner from "../../component/LoadingSpinner";
 import { ApiGet, ApiPost } from '../../helper/API/ApiData';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { DatePicker, Space } from 'antd';
-dayjs.extend(customParseFormat);
 
 
 const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalCounterParty, signalShippingCompany, signalWarehouseCompany, signalWarehouseStatus, signalContract, signalBorrower, signalLender, transaction_id, signalPricingHedgingStatus }) => {
@@ -227,36 +218,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     useEffect(() => {
 
         console.log('active on change', activeOnChange);
-        // if (
-        //     shippingOptions.shipmentMode === "SEA" &&
-        //     countries.length > 0 &&
-        //     ports?.data &&
-        //     ports.data.length > 0
-        // ) {
-
-        //     if (shippingOptions.destinationCountry && activeOnChange == 'destination') {
-        //         setPortsOptions([])
-        //         let tempData = countries.find(
-        //             (el) => el?._id === shippingOptions.destinationCountry
-        //         )?.name
-        //         ports.data[0].country === tempData && setPortsOptions(ports.data)
-        //     }
-        // } else if (
-        //     shippingOptions.shipmentMode === "AIR" &&
-        //     countries.length > 0 &&
-        //     airBase?.data &&
-        //     airBase.data.length > 0
-        // ) {
-
-        //     if (shippingOptions.destinationCountry && activeOnChange == 'destination') {
-        //         setPortsOptions([])
-        //         let tempData = countries.find(
-        //             (el) => el?._id === shippingOptions.destinationCountry
-        //         )?.name
-        //         console.log('---set port optoin-----', airBase.data)
-        //         airBase.data[0].country === tempData && setPortsOptions(airBase.data)
-        //     }
-        // }
+        
     }, [activeOnChange])
 
     useEffect(() => {
@@ -1099,31 +1061,6 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     };
     const dateFormat = 'DD/MM/YYYY'
 
-    // const togref = useRef()
-    // const [view, setView] = useState(false)
-
-    // this function toggles the selection box on and off on outside clicks
-    // useEffect(() => {
-    //     togref && window.addEventListener('click', e => { togref.current !== null && !togref.current.contains(e.target) && setView(false) }, true)
-    // }, [])
-
-    // const HandleSelection = (val) => {
-    //     const findData = borrower_Applicant.find(ele => ele === val)
-    //     if (!findData) {
-    //         // add the data
-    //         setBorrower_Applicant([...borrower_Applicant, val])
-    //     } else {
-    //         //remove the data
-    //         const filters = borrower_Applicant.filter(ele => ele !== val)
-    //         setBorrower_Applicant(filters)
-    //     }
-    // }
-
-    // const RemoveContent = val => {
-    //     const filters = borrower_Applicant.filter(ele => ele !== val)
-    //     setBorrower_Applicant(filters)
-    //     setView(false)
-    // }
     return (
         <>
             {isLoading && productDetails.length > 0 ? <LoadingSpinner /> :
@@ -1308,48 +1245,6 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                 </span>
                                             )}
                                         </Form.Group>
-
-                                        {/* <TextField
-                                            label='Product Unit'
-                                            variant='standard'
-                                            color='warning'
-                                            name='netMetric'
-                                            value={productDetails.metric}
-                                            onChange={(e) => handleChnage(e, "metric", "productDetails")}
-                                            disabled={true}
-                                        /> */}
-                                        {/* <Form.Group as={Col} controlId="formGridZip">
-                                            <Form.Label>Metric</Form.Label>
-                                            <Form.Select className='no-border'
-                                                onChange={(e, newValue) => {
-                                                    setProductDetails({ ...productDetails, metric: e.target.value });
-                                                }}
-                                                value={productDetails.metric}
-                                                defaultValue="Choose...">
-                                                <option disabled>Choose...</option>
-                                                {metricOptions.map((item) => (
-                                                    <option value={item}>{item}</option>
-                                                ))}
-
-                                            </Form.Select>
-                                            {error && error?.metric && <span style={{ color: 'red' }}>{error.metric}</span>}
-                                        </Form.Group> */}
-                                        {/* 
-                                        <Autocomplete
-                                            options={metricOptions}
-                                            getOptionLabel={(option) => option}
-                                            id="disable-clearable"
-                                            label="Metric"
-                                            renderInput={(params) => (
-                                                <TextField {...params} label="Metric" variant="standard" />
-                                            )}
-                                            onChange={(event, newValue) => {
-                                                setProductDetails({ ...productDetails, metric: newValue });
-                                            }}
-                                            disabled={isView}
-                                            disableClearable
-                                            value={productDetails.metric}
-                                        /> */}
                                         {error?.metric && (<span style={{ color: "#da251e", width: "100%", textAlign: "start", }}>{error?.metric}</span>
                                         )}
                                     </Col>
@@ -1892,45 +1787,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                             </div>
                         </div>
                     </div>
-                    {/* <div className='product'>
-                    <div className='mb-3 d-flex justify-content-between align-items-center'>
-                        <h2 className='m-0'>Insurances</h2>
-                        <button className='add_btn me-3' onClick={() => setAddInsuranceModal(true)}> <img src='../../assets/img/about/plus.png' className='me-2' />Add</button>
-                    </div>
-                    <MaterialTable
-                        title=""
-                        columns={[
-                            { title: 'Name', field: 'label' },
-                            { title: 'Product', field: 'product' },
-                            { title: 'Type', field: 'type' },
-                            // { title: 'Expiry Date', field: 'expiryDate', type: 'date', },
-                            // { title: 'Family', field: 'family' },
-                            // { title: 'Type', field: 'type' },
-                            // { title: 'Status', field: 'status' },
-                        ]}
-                        // data={productGetData?.data}
-                        data={cardData}
-                        actions={[
-                            {
-                                icon: 'edit',
-                                tooltip: 'Edit Product',
-                                onClick: () => setAddInsuranceModal(true),
-                            },
-                            {
-                                icon: 'preview',
-                                tooltip: 'View Product',
-                                onClick: () => setAddInsuranceModal(true),
-                            }
-                        ]}
-                        options={{
-                            filtering: true,
-                            actionsColumnIndex: -1,
-                            sorting: true,
-                            pageSize: 10,
-                            search: false,
-                        }}
-                    />
-                </div> */}
+                   
                     <div className='add-edit-product pt-1 pb-5'>
                         <div className='p-2 mb-3 pb-4 form' style={{ backgroundColor: "rgb(243, 243, 243)", border: "none" }}>
                             <h4 className='mb-3 fs-5 fw-bold title-admin'>PRICING DETAILS</h4>

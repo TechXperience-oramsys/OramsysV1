@@ -12,7 +12,7 @@ import { portsAction } from '../../../../redux/actions/portsAction';
 import { toast } from 'react-toastify'
 import Paginate from './portsPagination';
 import { MdEdit } from 'react-icons/md';
-import { Tooltip } from 'react-tooltip';
+// import { Tooltip } from 'react-tooltip';
 import { FcSearch } from 'react-icons/fc';
 
 
@@ -147,11 +147,11 @@ const Ports = ({ showSidebar, setSidebar }) => {
                           <MdEdit onClick={() => {
                             setShow(true); setPortForEdit(PortData?.data?.find(item => item._id === data._id))
                           }}
-                            data-tooltip-id='edit-id'
-                            data-tooltip-content='Edit Product'
+                            // data-tooltip-id='edit-id'
+                            // data-tooltip-content='Edit Product'
                             className='cursor-pointer'
                             size={18} />
-                          <Tooltip id='edit-id' place='top' effect='solid' />
+                          {/* <Tooltip id='edit-id' place='top' effect='solid' /> */}
                         </div>
                       </div>
                     </td>

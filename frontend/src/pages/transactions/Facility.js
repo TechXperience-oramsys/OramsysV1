@@ -1738,43 +1738,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
 
                 <div className='add-edit-product p-0'>
                     <div className='form' style={{ backgroundColor: "rgb(243, 243, 243)", border: "none" }}>
-                        {/* <h2 className='mb-3'>Loan</h2> */}
-                        {/* <div className='mb-3'>
-                            <Row>
-                                <Col lg={6}>
-                                    <TextField
-                                        label="Goods"
-                                        id="standard-start-adornment"
-                                        variant="standard"
-                                        color="warning"
-                                        value={productData.data.find((ele) => ele._id === transactionData.details.productDetails.name)?.name}
-                                        name='goods'
-                                        // onChange={handleChange}
-                                        multiline
-                                        maxRows={3}
-                                        // onClick={() => { setShowTextEditor(true); setType('Goods'); setSelectedName('goods') }}
-                                        disabled
-                                    />
-                                    {error && error?.goods && <span style={{ color: 'red' }}>{error.goods}</span>}
-                                </Col>
-                                <Col lg={6}>
-                                    <TextField
-                                        label="Working capital"
-                                        value={transactionData.details.pricingDetails.previousDayClosingAmount}
-                                        name='workingCapital'
-                                        id="standard-start-adornment"
-                                        variant="standard"
-                                        color="warning"
-                                        onChange={handleChange}
-                                        multiline
-                                        maxRows={3}
-                                        // onClick={() => { setShowTextEditor(true); setType('Working capital'); setSelectedName('workingCapital') }}
-                                        disabled
-                                    />
-                                    {error && error?.workingCapital && <span style={{ color: 'red' }}>{error.workingCapital}</span>}
-                                </Col>
-                            </Row>
-                        </div> */}
+                       
 
 
                         <div className='product p-0'>
@@ -1833,79 +1797,6 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                 /> : 'No data found'}
                             </div>
                         </div>
-
-                        {/* <div className='mb-3'>
-                            <Row>
-                                <Col lg={3}>
-                                    <TextField
-                                        label="Disbursement mechanism"
-                                        id="standard-start-adornment"
-                                        variant="standard"
-                                        color="warning"
-                                        value={facility.disbursementMechanism}
-                                        name='disbursementMechanism'
-                                        onChange={handleChange}
-                                        multiline
-                                        maxRows={3}
-                                        // onClick={() => { setShowTextEditor(true); setType('Disbursement mechanism'); setSelectedName('disbursementMechanism') }}
-                                        disabled={isView}
-                                    />
-                                    {error && error?.disbursementMechanism && <span style={{ color: 'red' }}>{error.disbursementMechanism}</span>}
-                                </Col>
-                                <Col lg={3}>
-                                    <TextField
-                                        label="Security undertaking"
-                                        id="standard-start-adornment"
-                                        variant="standard"
-                                        color="warning"
-                                        value={facility.securityUndertaking}
-                                        name='securityUndertaking'
-                                        disabled={isView}
-                                        onChange={handleChange}
-                                        multiline
-                                        maxRows={3}
-                                    // onClick={() => { setShowTextEditor(true); setType('Security undertaking'); setSelectedName('securityUndertaking') }}
-                                    />
-                                    {error && error?.securityUndertaking && <span style={{ color: 'red' }}>{error.securityUndertaking}</span>}
-                                </Col>
-                                <Col lg={3}>
-                                    <TextField
-                                        label="Control accounts"
-                                        id="standard-start-adornment"
-                                        variant="standard"
-                                        color="warning"
-                                        value={facility.controlAccounts}
-                                        name='controlAccounts'
-                                        disabled={isView}
-                                        onChange={handleChange}
-                                        multiline
-                                        maxRows={3}
-                                    // onClick={() => { setShowTextEditor(true); setType('Control accounts'); setSelectedName('controlAccounts') }}
-                                    />
-                                    {error && error?.controlAccounts && <span style={{ color: 'red' }}>{error.controlAccounts}</span>}
-                                </Col>
-                                <Col lg={3}>
-                                    <form className="" noValidate>
-                                        <TextField
-                                            id="date"
-                                            label="Final maturity"
-                                            type="date"
-                                            InputLabelProps={{
-                                                shrink: true,
-                                            }}
-                                            inputProps={{
-                                                min: transactionData.details.contractDetails.contractDate ? new Date(transactionData.details.contractDetails.contractDate).toISOString().split("T")[0] : ""
-                                            }}
-                                            disabled={isView}
-                                            name='finalMaturity'
-                                            value={facility.finalMaturity}
-                                            onChange={handleChange}
-                                        />
-                                    </form>
-                                    {error && error?.finalMaturity && <span style={{ color: 'red' }}>{error.finalMaturity}</span>}
-                                </Col>
-                            </Row>
-                        </div> */}
                     </div>
                 </div>
 
@@ -2407,26 +2298,6 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                 </Form.Group>
 
 
-
-                                {/* <Form.Group as={Col} controlId="formGridZip">
-                                    <Form.Label>Representions</Form.Label>
-                                    <Form.Select
-                                        onChange={(e, newValue) => {
-                                            setFacility({ ...facility, representations: e.target.value });
-                                        }}
-                                        disabled={isView}
-                                        value={facility.representations}>
-                                        <option>Choose...</option>
-                                        {repsOptions.map((item) => (
-                                            <option value={item}>{item}</option>
-                                        ))}
-
-                                    </Form.Select>
-                                    {error && error?.representations && <span style={{ color: 'red' }}>{error.representations}</span>}
-                                </Form.Group> */}
-
-
-
                                 <Form.Group className="col-md-6">
                                     <Form.Label>Events Of Default</Form.Label>
                                     <div style={StyleSheet.container}>
@@ -2456,17 +2327,6 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                     </div>
                                     {error && error?.eventsOfDefault && <span style={{ color: 'red' }}>{error.eventsOfDefault}</span>}
                                 </Form.Group>
-
-                                {/* <Form.Group as={Col} controlId="formGridZip">
-                                    <Form.Label>Events of Default</Form.Label>
-                                    <Form.Control
-                                        value={facility.eventsOfDefault}
-                                        name='eventsOfDefault'
-                                        onChange={handleChange}
-                                        disabled={isView} />
-                                   
-                                </Form.Group> */}
-
                             </Row>
                         </div>
                     </div>
