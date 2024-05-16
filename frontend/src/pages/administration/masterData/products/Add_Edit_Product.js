@@ -203,7 +203,7 @@ const Add_Edit_Product = () => {
 
               <Form.Group as={Col} controlId="formGridZip">
                 <Form.Label>Name</Form.Label>
-                <Form.Control className='no-border'
+                <Form.Control className=''
                   name='name'
                   value={state.name}
                   onChange={handleChange}
@@ -213,7 +213,7 @@ const Add_Edit_Product = () => {
 
               <Form.Group as={Col} controlId="formGridZip">
                 <Form.Label>Nature</Form.Label>
-                <Form.Select className='no-border'
+                <Form.Select className=''
                   onChange={(event, newValue) => {
                     setState({ ...state, nature: newValue });
                   }}
@@ -230,7 +230,7 @@ const Add_Edit_Product = () => {
 
               <Form.Group as={Col} controlId="formGridZip">
                 <Form.Label>Family</Form.Label>
-                <Form.Select className='no-border'
+                <Form.Select className=''
                   onChange={(event, newValue) => {
                     setState({ ...state, family: newValue });
                   }}
@@ -250,7 +250,7 @@ const Add_Edit_Product = () => {
             <Row className='mb-4'>
               <Form.Group as={Col} controlId="formGridZip">
                 <Form.Label>Category</Form.Label>
-                <Form.Select className='no-border'
+                <Form.Select className=''
                   onChange={(event, newValue) => {
                     setState({ ...state, category: newValue });
                   }}
@@ -268,7 +268,7 @@ const Add_Edit_Product = () => {
 
               <Form.Group as={Col} controlId="formGridZip">
                 <Form.Label>Type</Form.Label>
-                <Form.Select className='no-border'
+                <Form.Select className=''
                   onChange={(event, newValue) => {
                     setState({ ...state, type: newValue });
                   }}
@@ -285,7 +285,7 @@ const Add_Edit_Product = () => {
 
               <Form.Group as={Col} controlId="formGridZip">
                 <Form.Label>Status</Form.Label>
-                <Form.Control className='no-border'
+                <Form.Control className=''
                   name='name'
                   value={state.status}
                   onChange={handleChange}
@@ -303,7 +303,7 @@ const Add_Edit_Product = () => {
                   type="date"
                   name="expiryDate"
                   placeholder="dd-mm-yyyy"
-                  min={transactionData.details.contractDetails.contractDate ? new Date(transactionData.details.contractDetails.contractDate).toISOString().split("T")[0] : ""}
+                  // min={transactionData.details.contractDetails.contractDate ? new Date(transactionData.details.contractDetails.contractDate).toISOString().split("T")[0] : ""}
                   value={state.expiryDate}
                   onChange={handleChange}
                   required
@@ -314,7 +314,7 @@ const Add_Edit_Product = () => {
               
               <Form.Group as={Col} controlId="formGridZip">
                 <Form.Label>Product Unit</Form.Label>
-                <Form.Control className='no-border'
+                <Form.Control className=''
                   name='unit'
                   value={state.unit}
                   onChange={handleChange}
@@ -324,7 +324,7 @@ const Add_Edit_Product = () => {
 
               <Form.Group as={Col} controlId="formGridZip">
                 <Form.Label>Metric</Form.Label>
-                <Form.Control className='no-border'
+                <Form.Control className=''
                   name='matric'
                   value={state.matric}
                   onChange={handleChange}

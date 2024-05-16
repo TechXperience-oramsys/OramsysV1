@@ -105,10 +105,10 @@ const Products = () => {
       render: (text, record) => (
         <Dropdown overlay={(
           <Menu>
-            <Menu.Item onClick={() => { navigate(`/edit-product?id=${record._id}`) }}>
+            <Menu.Item onClick={() => { navigate({ pathname: '/edit-product', search: `?id=${record?._id}` })}}>
               <EditOutlined /> Edit
             </Menu.Item>
-            <Menu.Item onClick={() => { navigate(`/edit-product?id=${record._id}`, { state: { isView: true } }) }}>
+            <Menu.Item onClick={() => navigate(`/edit-product?id=${record?._id}`, { state: { isView: true } })}>
               <EyeOutlined /> Preview
             </Menu.Item>
           </Menu>

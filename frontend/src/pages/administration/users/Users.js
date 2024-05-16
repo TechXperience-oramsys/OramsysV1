@@ -75,11 +75,11 @@ const Users = () => {
       render: (text, record) => (
         <Dropdown overlay={(
           <Menu>
-            <Menu.Item onClick={() => navigate(`/edit-user?id=${record?._id}`)}>
+            <Menu.Item key='edit' onClick={() => navigate(`/edit-user?id=${record?._id}`)}>
             <EditOutlined /> Edit
             </Menu.Item>
 
-            <Menu.Item onClick={() => {
+            <Menu.Item key='preview' onClick={() => {
               navigate(`/add-edit-entities?id=${record._id}`, {
                 state: [{ type: `${record.type}` }, { isView: false }],
               });
@@ -142,17 +142,7 @@ const Users = () => {
               loading={!getAllUsers} // Show loading spinner if getAllUsers is not available yet
              
             />
-            {/* {!getAllUsers && <div class="d-flex justify-content-center mx-auto container py-5 my-5 m-5">
-              <div class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-            </div>}
-            {getUserDatas?.length < 1 && <div className='text-center mx-auto container py-5 my-5 m-5'> No records were found</div>}
-            <div class="card-footer border-0 py-2 mb-5">
-
-              <span class="text-muted text-sm">
-                <Paginate postsPerPage={postsPerPage} totalPosts={userData?.data?.length} paginate={paginate} prevPagefunc={() => setCurrentPage(prev => prev - 1)} nextPagefunc={() => setCurrentPage(prev => prev + 1)} currentPage={currentPage} getAllUsers={getAllUsers} /> </span>
-            </div> */}
+            
           </div>
         </div>
 
