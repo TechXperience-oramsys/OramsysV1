@@ -52,21 +52,21 @@ const Products = () => {
       dataIndex: 'name',
       key: 'name',
       align: 'center',
-
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: 'Nature',
       dataIndex: 'nature',
       key: 'nature',
       align: 'center',
-
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: 'Category',
       dataIndex: 'category',
       key: 'category',
       align: 'center',
-
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: 'Expiry Date',
@@ -74,12 +74,14 @@ const Products = () => {
       key: 'expiryDate',
       align: 'center',
       render: (text) => <p className="fw-normal m-2">{new Date(text).toLocaleDateString("en-US", DATE_OPTIONS)}</p>,
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: 'Family',
       dataIndex: 'family',
       key: 'family',
       align: 'center',
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
 
     },
     {
@@ -87,14 +89,14 @@ const Products = () => {
       dataIndex: 'type',
       key: 'type',
       align: 'center',
-
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
       align: 'center',
-
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: 'Actions',

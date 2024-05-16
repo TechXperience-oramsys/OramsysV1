@@ -11,7 +11,7 @@ import ExcelModal from "../../component/Modal/ExcelModal"
 import { ApiGet} from "../../helper/API/ApiData"
 import { Button } from "@material-ui/core"
 import { GET_TRANSACTION_BY_ID } from "../../redux/types"
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { CiSearch } from "react-icons/ci";
 import Paginate from './Pagination'
 import Fade from 'react-reveal/Fade';
 import { Table, Dropdown as AntDropdown, Button as AntButton, Menu } from 'antd';
@@ -194,6 +194,11 @@ const Transactions = () => {
     setTransaction(filtered);
 };
 
+
+const handleItemClick = (type) => {
+    navigate('/edit-transactions', { state: [{ type }] });
+  };
+
   const columns = [
     {
       title: 'Date',
@@ -205,28 +210,33 @@ const Transactions = () => {
     {
       title: 'Transaction Number',
       dataIndex: '_id',
-      key: '_id'
+      key: '_id',
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: 'Borrower',
       dataIndex: 'borrower_Applicant',
-      key: 'borrower_Applicant'
+      key: 'borrower_Applicant',
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: 'Lender',
       dataIndex: 'lenders',
-      key: 'lenders'
+      key: 'lenders',
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: 'Contract Value',
       dataIndex: ['details', 'contractDetails', 'value'],
       key: 'contractValue',
-      render: (value) => formateCurrencyValue(value)
+      render: (value) => formateCurrencyValue(value),
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: 'Product',
       dataIndex: ['details', 'productDetails', 'name', 'name'],
-      key: 'product'
+      key: 'product',
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: 'Termsheet',
@@ -237,7 +247,7 @@ const Transactions = () => {
           <p onClick={() => { termSheet === "Not Signed" && setShowExcelModal(true); setSendId(record._id) }}>
             {termSheet}
             {termSheet === "Signed" ? (
-              <Button onClick={() => { downloadTermSheet(record._id) }}><DownloadOutlined /></Button>
+              <AntButton onClick={() => { downloadTermSheet(record._id) }}><DownloadOutlined /></AntButton>
             ) : (<></>)}
           </p>
         </span>
@@ -274,6 +284,21 @@ const Transactions = () => {
     }
   ];
 
+  const menu = (
+    <Menu>
+      <Menu.Item key="import" onClick={() => handleItemClick('Import')}>
+        Import
+      </Menu.Item>
+      <Menu.SubMenu title="Export" onTitleClick={() => setShowSubData(!showSubData)}>
+        <Menu.Item key="Physical" onClick={handleRefresh}>
+          Physical commodities
+        </Menu.Item>
+        <Menu.Item key="non-physical" onClick={() => handleItemClick('Export')}>
+          Non-physical commodities
+        </Menu.Item>
+      </Menu.SubMenu>
+    </Menu>
+  );
 
   return (
     <>
@@ -294,23 +319,15 @@ const Transactions = () => {
                     <div class='mx-n1 me-5 d-flex align-items-center justify-content-end gap-2'>
 
                       {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" ? (
-                        <Dropdown className="me-2" autoClose="outside">
-                          <Dropdown.Toggle variant="light" className="btn btn-md items-center" id="dropdown-autoclose-outside" key='start'>
-                            <i class="bi bi-plus pe-2 "></i><span className="fs-6 fw-bold">Add</span>
-                          </Dropdown.Toggle>
-
-                          <Dropdown.Menu className="mt-3">
-                            <Dropdown.Item onClick={() => navigate("/edit-transactions", { state: [{ type: "Import" }], })}>Import</Dropdown.Item>
-                            <Dropdown.Item onClick={() => setShowSubData(!showSubData)}>Export <MdOutlineKeyboardArrowDown size={42} className='ps-3' /></Dropdown.Item>
-                            {(showSubData && (
-                              <>
-                                <Dropdown.Item className='ps-3' onClick={handleRefresh}>Physical commodities</Dropdown.Item>
-                                <Dropdown.Item className='ps-3' onClick={() => navigate("/edit-transactions", { state: [{ type: "Export" }, { type: "Non-physical" }], })}>Non-physical commodities</Dropdown.Item>
-                              </>
-                            ))}
-
-                          </Dropdown.Menu>
-                        </Dropdown>
+                         <AntDropdown overlay={menu} trigger={['click']}>
+                        
+                         <AntButton class='btn d-inline-flex btn-md btn-light border-base mx-1 py-2 me-3' id="dropdown-autoclose-outside">
+                           <span class=' pe-2'>
+                             <i class="bi bi-plus"></i>
+                           </span>
+                           <span className='fw-bold'>Create Transaction</span>
+                         </AntButton>
+                       </AntDropdown>
                       ) : (
                         <></>
                       )}
@@ -337,9 +354,10 @@ const Transactions = () => {
 
                 <div class="container mx-auto">
 
-                  <div class="mb-2 d-flex justify-content-end align-items-center">
+                  <div class="mb-2 d-flex justify-content-start align-items-center">
 
                     <div class="position-relative">
+                    <span class="position-absolute search"><CiSearch size={25} /></span>
                       <input type="text" id='search' onKeyUp={e => checkSearch(e)} onChange={(e) => setSearch(e.target.value)} className="form-control w-100 ps-5 fw-light border-none" placeholder="Search transaction..." />
                     </div>
 

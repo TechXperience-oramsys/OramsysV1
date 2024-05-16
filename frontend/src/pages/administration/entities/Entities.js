@@ -5,9 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AuthStorage from '../../../helper/AuthStorage';
 import STORAGEKEY from '../../../config/APP/app.config';
 import { COMPANY_DATA, EDIT_ENTITY, ENTITY_GET_BY_ID } from '../../../redux/types';
-import Paginate from './entityPag';
 import { Table, Space, Tooltip, Button, Menu, Dropdown } from 'antd';
-import { MdEdit, MdPreview, MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { EditOutlined, EyeOutlined, EllipsisOutlined } from '@ant-design/icons';
 
 const Entities = () => {
@@ -95,24 +93,28 @@ const Entities = () => {
       dataIndex: 'type',
       key: 'type',
       align: 'center',
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
       align: 'center',
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: 'Name',
       dataIndex: ['details', 'name'],
       key: 'name',
       align: 'center',
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: 'Country',
       dataIndex: ['details', 'country', 'name'],
       key: 'country',
       align: 'center',
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: 'Actions',
@@ -204,11 +206,7 @@ const Entities = () => {
 
                     {AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin" ? (
                       <Dropdown overlay={menu} trigger={['click']}>
-                        {/* <Button className="me-2 border border-2" type="light" size="lg" id="dropdown-autoclose-outside">
-                        <i className="bi bi-plus pe-2"></i>
-                        <span className="fs-6 fw-bold">Add</span>
-                        <MdOutlineKeyboardArrowDown size={20} className="ps-2" />
-                      </Button> */}
+                        
                         <Button class='btn d-inline-flex btn-md btn-light border-base mx-1 me-3' id="dropdown-autoclose-outside">
                           <span class=' pe-2'>
                             <i class="bi bi-plus"></i>

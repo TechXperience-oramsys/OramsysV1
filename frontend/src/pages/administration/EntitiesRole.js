@@ -5,13 +5,10 @@ import EntitiesRoleAddModal from '../../component/Modal/EntitiesRoleAddModal'
 import { entitiesRoleAction, entityRoleDeleteAction } from '../../redux/actions/entitiesRoleAction'
 import ConfirmationModel from "../../component/Modal/ConfirmationModel";
 import { Link, useNavigate } from 'react-router-dom'
-import Paginate from './entityPagination'
-// import { MdDelete, MdEdit, MdPreview } from 'react-icons/md'
-// import { Tooltip } from 'react-bootstrap'
 
-import { Table, Tooltip, Button, Modal } from 'antd';
-import { MdEdit, MdDelete, MdPreview } from 'react-icons/md';
-
+import { Table, Dropdown, Button, Menu } from 'antd';
+import { MdEdit, MdDelete,  } from 'react-icons/md';
+import { EditOutlined, EllipsisOutlined, EyeOutlined, DeleteOutlined } from '@ant-design/icons';
 const EntitiesRole = () => {
 
     const navigate = useNavigate()
@@ -73,33 +70,28 @@ const EntitiesRole = () => {
             key: 'actions',
             align: 'right',
             render: (text, record) => (
-                <div className="d-flex justify-content-end m-2">
-                    <div className="align-items-center">
-                        <Tooltip title="Edit User" placement="top" effect="solid">
-                            <MdEdit
-                                onClick={() => {
+                <Dropdown overlay={(
+                    <Menu>
+                      <Menu.Item  onClick={() => {
                                     setFormType('edit');
                                     setAddEntityModal(true);
                                     setRowData(record);
-                                }}
-                                className="cursor-pointer"
-                                size={18}
-                            />
-                        </Tooltip>
-                    </div>
-                    <div className="align-items-center ms-3">
-                        <Tooltip title="Delete User" placement="top" effect="solid">
-                            <MdDelete
-                                onClick={() => {
+                                }}>
+                      <EditOutlined /> Edit
+                      </Menu.Item>
+          
+                      <Menu.Item onClick={() => {
                                     setRowData(record);
                                     setShowModal(true);
-                                }}
-                                className="cursor-pointer"
-                                size={18}
-                            />
-                        </Tooltip>
-                    </div>
-                </div>
+                                }}>
+                      <DeleteOutlined /> Delete
+                      </Menu.Item>
+                    </Menu>
+                  )}>
+                      <Button><EllipsisOutlined /></Button>
+                  </Dropdown>
+
+              
             ),
         },
     ];
