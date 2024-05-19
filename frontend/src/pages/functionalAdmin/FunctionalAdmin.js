@@ -106,13 +106,13 @@ const FunctionalAdmin = () => {
                         </div>
                     </div>
                     <div className="rgt-pan">
-                        <h1>Create Account</h1>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore modi omnis vero a autem harum quidem quo deserunt quos minus
+                        <h1>Create A Coperate Account</h1>
+                        <p> Log in with your coopertae credentials
                         </p>
-                        <a onClick={() => navigate('/signup')} className="ghost">Create Account</a>
                         <p>OR</p>
-                        <a onClick={btnLogic} className="ghost">{buttonText}</a>
+                        <a onClick={() => navigate('/signup')} className="ghost">Create Account</a>
+                        
+                        {/* <a onClick={btnLogic} className="ghost">{buttonText}</a> */}
                     </div>
                 </div>
             </div>
