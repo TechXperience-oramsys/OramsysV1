@@ -7,6 +7,7 @@ import { ApiPostNoAuth } from '../../helper/API/ApiData';
 import AuthStorage from '../../helper/AuthStorage';
 import { LOGIN } from '../../redux/types';
 import { toast } from 'react-toastify'
+import { useOktaAuth } from '@okta/okta-react';
 
 
 const FunctionalAdmin = () => {
@@ -80,6 +81,13 @@ const FunctionalAdmin = () => {
             console.log(error);
         })
     }
+    const { authState, oktaAuth } = useOktaAuth();
+    const loginWithRedirect = () =>
+        oktaAuth.signInWithRedirect({ originalUri: `/` });
+    const logOut = () => oktaAuth.signOut();
+
+    const buttonText = authState?.isAuthenticated ? "Logout" : "Login";
+    const btnLogic = authState?.isAuthenticated ? logOut : loginWithRedirect;
     return (
         <section className="login">
             <div className="container">
@@ -98,13 +106,13 @@ const FunctionalAdmin = () => {
                         </div>
                     </div>
                     <div className="rgt-pan">
-                        {/* <h1>Create Account</h1> */}
-                        {/* <p>
+                        <h1>Create Account</h1>
+                        <p>
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore modi omnis vero a autem harum quidem quo deserunt quos minus
-                        </p> */}
-                        {/* <a onClick={() => navigate('/signup')} className="ghost">Create Account</a> */}
-                        {/* <p>OR</p> */}
-                        {/* <a onClick={btnLogic} className="ghost">{buttonText}</a> */}
+                        </p>
+                        <a onClick={() => navigate('/signup')} className="ghost">Create Account</a>
+                        <p>OR</p>
+                        <a onClick={btnLogic} className="ghost">{buttonText}</a>
                     </div>
                 </div>
             </div>

@@ -89,7 +89,7 @@ const SignIn = () => {
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                        <li class="breadcrumb-item"><a href='#' onClick={() => navigate('/admin-login')}>Admin</a></li>
+                                        <li class="breadcrumb-item"><a href='#' onClick={() => navigate('/fa-login')}>Admin</a></li>
                                     </ol>
                                 </nav>
                                 <div class="mb-4">
