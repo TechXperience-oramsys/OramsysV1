@@ -1,17 +1,13 @@
-import MaterialTable from 'material-table'
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import EntitiesRoleAddModal from '../../component/Modal/EntitiesRoleAddModal'
 import { entitiesRoleAction, entityRoleDeleteAction } from '../../redux/actions/entitiesRoleAction'
 import ConfirmationModel from "../../component/Modal/ConfirmationModel";
-import { Link, useNavigate } from 'react-router-dom'
-
+// import { useNavigate } from 'react-router-dom'
 import { Table, Dropdown, Button, Menu } from 'antd';
-import { MdEdit, MdDelete,  } from 'react-icons/md';
-import { EditOutlined, EllipsisOutlined, EyeOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, EllipsisOutlined, DeleteOutlined } from '@ant-design/icons';
 const EntitiesRole = () => {
 
-    const navigate = useNavigate()
 
     const dispatch = useDispatch()
 
@@ -23,7 +19,7 @@ const EntitiesRole = () => {
     const [rowData, setRowData] = useState({})
     const [showModal, setShowModal] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
-    const [postsPerPage, setPostsPerPage] = useState(10)
+    const [postsPerPage] = useState(10)
 
     const entityRoleData = useSelector(state => state.entityRoleData.entityRole)
     useEffect(() => {

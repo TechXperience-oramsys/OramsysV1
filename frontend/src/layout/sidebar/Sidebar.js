@@ -2,21 +2,17 @@ import React, { useState, useEffect } from 'react'
 import { Navbar, Nav } from 'react-bootstrap'
 import { NavLink, useNavigate } from 'react-router-dom';
 import STORAGEKEY from '../../config/APP/app.config';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import AuthStorage from '../../helper/AuthStorage';
-import { LOGIN } from '../../redux/types';
-import { toast } from 'react-toastify'
 import { Link } from "react-router-dom"
 import LogoutModal from '../../component/Modal/LogoutModal';
-import { BiHomeAlt2 } from "react-icons/bi";
-import { BsAirplane, BsFillBarChartFill, BsFillPeopleFill, BsFlag } from 'react-icons/bs';
-import { GrClose, GrDatabase, GrFlagFill, GrUserAdmin } from 'react-icons/gr';
-import { FaBoxOpen, FaPeopleCarry } from 'react-icons/fa';
+import { BsAirplane } from 'react-icons/bs';
+import { GrClose, GrFlagFill, GrUserAdmin } from 'react-icons/gr';
+import { FaBoxOpen, } from 'react-icons/fa';
 import { HiOutlineLogout, HiOutlineUsers } from "react-icons/hi";
 import { GiCargoShip } from "react-icons/gi";
 import { ImOffice } from "react-icons/im";
 import { FcHome, FcLock,FcCollaboration, FcWorkflow, FcViewDetails, FcPositiveDynamic } from "react-icons/fc";
-import { IoMdLogOut } from "react-icons/io";
 import Fade from 'react-reveal/Fade';
 
 
@@ -47,7 +43,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
       }
     }
   }
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   let navbarData = [];
 
   const navbarDataForSuperAdmin = [
@@ -160,17 +156,19 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
   } else if (AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin") {
     navbarData = navbarDataForSuperAdmin
   }
+
+  const getData = AuthStorage.getStorageData(STORAGEKEY.roles)
   useEffect(() => {
     if (AuthStorage.getStorageData(STORAGEKEY.roles) === "admin") {
       setShowItem("Administration")
     }
-  },[AuthStorage.getStorageData(STORAGEKEY.roles)])
+  },[getData])
 
-  
+  const getStorage = AuthStorage.getStorageData(STORAGEKEY.userData)
 
   useEffect(() => {
     setUserData(JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)) ?? {})
-  }, [AuthStorage.getStorageData(STORAGEKEY.userData)])
+  }, [getStorage])
 
   // useEffect(() => {
   //   setUserData(JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)))
@@ -186,13 +184,12 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
       <Fade left>
         <div className={`${showSidebar ? ' sidebar-main' : 'sidebar-main '}`}>
           <GrClose size={30} className="close_sidebar" onClick={() => setSidebar(!showSidebar)} />
-          {/* <img src="../../../assets/img/about/close.png" className="close_sidebar" onClick={() => setSidebar(!showSidebar)} /> */}
           <div className='profile-content pe-5'>
-              <img src='../../../assets/img/logo.png' alt="" className='align-items-center m-2 mx-auto mt-3 profile-img' />
-              <img src='../../../assets/img/profile.png' className='user_img' />
+              <img alt="" src='../../../assets/img/logo.png' className='align-items-center m-2 mx-auto mt-3 profile-img' />
+              <img alt="" src='../../../assets/img/profile.png' className='user_img' />
               <div className='profile-name text-center'>
                 <h1>{userData?.name}</h1>
-                {/* <img src='../../../assets/img/about/logout.png' onClick={(e) => Logout(e)} className='mt-2' style={{ cursor: "pointer" }} /> */}
+                {/* <img alt="" src='../../../assets/img/about/logout.png' onClick={(e) => Logout(e)} className='mt-2' style={{ cursor: "pointer" }} /> */}
               </div>
           </div>
 
@@ -204,7 +201,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
                     <div key={item} className={`${item.text === "Jobs" ? "d-block navbar-body" : 'navbar-body'} text-white`}>
                       <div className='d-flex align-items-center ps-3 gap-3 mx-2 my-4'>
                         <item.img size={20} />
-                        <Nav.Link className=' p-0' onClick={() => ShowSubItem({ text: item.text, path: item.path })}>{item.text} {item.text === "Administration" ? <img src='../../../../../assets/img/about/down-filled-triangular-arrow.png' className={`${showItem === "Administration" ? 'img-roted' : 'img-roted_unset'}`} /> : ""}</Nav.Link>
+                        <Nav.Link className=' p-0' onClick={() => ShowSubItem({ text: item.text, path: item.path })}>{item.text} {item.text === "Administration" ? <img alt="" src='../../../../../assets/img/about/down-filled-triangular-arrow.png' className={`${showItem === "Administration" ? 'img-roted' : 'img-roted_unset'}`} /> : ""}</Nav.Link>
                       </div>
                       {
                         showItem === item.text && "subItem" in item &&
@@ -212,7 +209,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
                           return <>
                             <div key={subItem} className='d-flex align-items-center gap-3 mx-4 my-4 ps-2'>
                               <subItem.img size={20} />
-                              <Nav.Link className=' p-0 ' onClick={() => ShowSubItem({ text: subItem.text, path: subItem.path })}>{subItem.text} {subItem.text === 'Master Data' ? <img src='../../../../../assets/img/about/down-filled-triangular-arrow.png' className={`${showSubItem === "Master Data" ? 'img-roted' : 'img-roted_unset'}`} /> : ""}</Nav.Link>
+                              <Nav.Link className=' p-0 ' onClick={() => ShowSubItem({ text: subItem.text, path: subItem.path })}>{subItem.text} {subItem.text === 'Master Data' ? <img alt="" src='../../../../../assets/img/about/down-filled-triangular-arrow.png' className={`${showSubItem === "Master Data" ? 'img-roted' : 'img-roted_unset'}`} /> : ""}</Nav.Link>
                             </div>
                             {
                               showSubItem === subItem.text && "subData" in subItem &&

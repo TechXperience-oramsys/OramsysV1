@@ -27,7 +27,7 @@ const Details = ({ hendelNext, entityType }) => {
 
     const [common, setCommon] = useState({
         email: '',
-        // password: '',
+        password: '',
         type: entityType
     })
 
@@ -84,13 +84,13 @@ const Details = ({ hendelNext, entityType }) => {
     useEffect(() => {
         dispatch(countrieAction("all"))
         dispatch(sectorAction())
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         if (companyData && id) {
             setCommon({
                 email: companyData.email,
-                // password: companyData.password,
+                password: companyData.password,
                 type: companyData.type
             })
             setDetails({
@@ -205,14 +205,14 @@ const Details = ({ hendelNext, entityType }) => {
             error.email = "Please enter valid email!"
             flag = true
         }
-        // if (!common.password) {
-        //     error.password = "Please enter password!"
-        //     flag = true
-        // }
-        // else if (common.password.length < 8) {
-        //     error.password = "Please enter minimun 8 character password!"
-        //     flag = true
-        // }
+        if (!common.password) {
+            error.password = "Please enter password!"
+            flag = true
+        }
+        else if (common.password.length < 8) {
+            error.password = "Please enter minimun 8 character password!"
+            flag = true
+        }
         if (!details.name) {
             error.name = "Please enter name!"
             flag = true
@@ -384,7 +384,7 @@ const Details = ({ hendelNext, entityType }) => {
         let body = {
             ...companyData,
             email: common.email,
-            // password: common.password,
+            password: common.password,
             type: entityType,
             detail: details,
             addresses: [bilingAddress, shippingAddress],
@@ -401,7 +401,7 @@ const Details = ({ hendelNext, entityType }) => {
                 <div className='form'>
                     <h2 className='mb-3'>Details</h2>
                     <div>
-                        {/* <Row className='mb-3'>
+                        <Row className='mb-3'>
                             <Col lg={6}>
                                 <TextField
                                     label="Email"
@@ -428,7 +428,7 @@ const Details = ({ hendelNext, entityType }) => {
                                 />
                                 {formErrors && formErrors?.password && <span style={{ color: 'red' }}>{formErrors.password}</span>}
                             </Col>
-                        </Row> */}
+                        </Row>
                         <Row>
                             <Col xxl={3} xl={4} lg={6} md={4} sm={6} className='mb-3'>
                                 <TextField
@@ -441,7 +441,7 @@ const Details = ({ hendelNext, entityType }) => {
                                 />
                                 {formErrors && formErrors?.name && <span style={{ color: 'red' }}>{formErrors.name}</span>}
                             </Col>
-                            <Col xxl={3} xl={4} lg={6} md={4} sm={6}>
+                            {/* <Col xxl={3} xl={4} lg={6} md={4} sm={6}>
                                 <TextField
                                     label="Email"
                                     variant="standard"
@@ -452,7 +452,7 @@ const Details = ({ hendelNext, entityType }) => {
                                     disabled={isView}
                                 />
                                 {formErrors && formErrors?.email && <span style={{ color: 'red' }}>{formErrors.email}</span>}
-                            </Col>
+                            </Col> */}
                             <Col xxl={3} xl={4} lg={6} md={4} sm={6} className='mb-3'>
                                 <Autocomplete
                                     label="Country"

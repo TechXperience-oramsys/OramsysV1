@@ -5,7 +5,7 @@ var Schema = mongoose.Schema
 
 const RoleSchema = new Schema({
     roleId: { type: Schema.Types.ObjectId, ref: "EntityRoles", required: false },
-    justification: { type: String, require: false, default: null }
+    justification: { type: String, required: false, default: null }
 })
 
 

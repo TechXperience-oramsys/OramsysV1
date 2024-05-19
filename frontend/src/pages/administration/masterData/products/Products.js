@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import CountriesCard from '../../../../component/CountriesCard';
-import ProductCard from '../../../../component/ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { productGetAction } from '../../../../redux/actions/productAction';
-import { Table, Tooltip, Dropdown, Menu, Button } from 'antd';
-import { MdEdit, MdPreview } from 'react-icons/md';
-import { DownOutlined, EditOutlined, EllipsisOutlined, EyeOutlined } from '@ant-design/icons';
-import Paginate from './productPagination';
+import { Table, Dropdown, Menu, Button } from 'antd';
+import { EditOutlined, EllipsisOutlined, EyeOutlined } from '@ant-design/icons';
 // import { navigate } from '@reach/router';
 
 const Products = () => {
@@ -18,7 +13,7 @@ const Products = () => {
   const [productGetData, setProductGetData] = useState()
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
-  const [postsPerPage, setPostsPerPage] = useState(10)
+  const [postsPerPage] = useState(10)
 
   const productGetDatas = useSelector(state => state.product.product)
 
@@ -222,7 +217,7 @@ const Products = () => {
             pagination={{
               pageSize: postsPerPage,
               total: productGetData?.data?.length,
-              onChange: (page) => setCurrentPage(page),
+              onChange: paginate,
             }}
             loading={!getAllProduct}
             rowKey={(record) => record._id}

@@ -1,25 +1,22 @@
 import React, { useEffect, useState, useCallback } from "react"
-import { Dropdown } from "react-bootstrap"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import AuthStorage from "../../helper/AuthStorage"
 import STORAGEKEY from "../../config/APP/app.config"
 import { getAllTransaction } from "../../redux/actions/transactionDataAction"
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
-import { getRiskAssessment, riskAssessmentAction } from "../../redux/actions/riskAssessmentAction"
+import { getRiskAssessment } from "../../redux/actions/riskAssessmentAction"
 import ExcelModal from "../../component/Modal/ExcelModal"
 import { ApiGet} from "../../helper/API/ApiData"
-import { Button } from "@material-ui/core"
 import { GET_TRANSACTION_BY_ID } from "../../redux/types"
 import { CiSearch } from "react-icons/ci";
 import Paginate from './Pagination'
 import Fade from 'react-reveal/Fade';
 import { Table, Dropdown as AntDropdown, Button as AntButton, Menu } from 'antd';
-import { DownloadOutlined, EditOutlined, EyeOutlined, FormOutlined, DownOutlined, EllipsisOutlined } from '@ant-design/icons';
+import { DownloadOutlined, EditOutlined, EyeOutlined, FormOutlined, EllipsisOutlined } from '@ant-design/icons';
 
 const Transactions = () => {
   const dispatch = useDispatch()
-  const [showspan, setShowspan] = useState(false)
   const [selected, setSelected] = useState("")
   const [showExcelModal, setShowExcelModal] = useState(false)
   const [sendId, setSendId] = useState()
@@ -29,9 +26,8 @@ const Transactions = () => {
   const [transaction, setTransaction] = useState([])
   const [transaction2, setTransaction2] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
-  const [postsPerPage, setPostsPerPage] = useState(10)
-  const [search, setSearch] = useState('')
-  const [searched, setSearched] = useState(true)
+  const [postsPerPage] = useState(10)
+  const [ setSearch] = useState('')
 
   const getAlltransactionData = useSelector(
     (state) => state.transactionData.getAllTransaction
@@ -44,7 +40,7 @@ const Transactions = () => {
     let id = AuthStorage.getStorageData(STORAGEKEY.roles) !== "superAdmin"
       ? AuthStorage.getStorageData(STORAGEKEY.userId) : "all"
     dispatch(getAllTransaction(id))
-  }, [])
+  }, [dispatch])
 
   const refreshPage = useCallback(() => {
     console.log(getAlltransactionData.data);
@@ -111,7 +107,7 @@ const Transactions = () => {
       navigate(`/risk-assessment?id=${selected}`)
       // }
     }
-  }, [riskAssessment, selected])
+  }, [riskAssessment, selected, navigate])
 
   const downloadTermSheet = (id, name) => {
     ApiGet(`transaction/termSheet/${id}`)

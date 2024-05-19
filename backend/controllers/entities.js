@@ -202,11 +202,11 @@ class entitiesController {
         let warehouses = req.body.warehouses;
         let roles = req.body.roles;
         let updateData = {}
-        // const newPassword = await hashPassword(req.body.password, 10);
+        const newPassword = await hashPassword(req.body.password, 10);
         const newEntity =
         {
             email: body.email.toLowerCase(),
-            // password: newPassword,
+            password: newPassword,
             type: body.type,
         }
         try {

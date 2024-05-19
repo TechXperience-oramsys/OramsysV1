@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col } from 'react-bootstrap';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import UserCard from '../../../component/UserCard';
-import MaterialTable from 'material-table';
 import { useDispatch, useSelector } from 'react-redux';
 import { userGetAction } from '../../../redux/actions/userAction';
-import { Table, Space, Badge, Button, Menu, Dropdown } from 'antd';
+import { Table, Badge, Button, Menu, Dropdown } from 'antd';
 
 import { EditOutlined, EllipsisOutlined, EyeOutlined } from '@ant-design/icons';
 
 const Users = () => {
-  const [showspan, setShowspan] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [getUserDatas, setGetUserDatas] = useState()
   const [currentPage, setCurrentPage] = useState(1)
-  const [postsPerPage, setPostsPerPage] = useState(10)
+  const [postsPerPage] = useState(10)
 
   const userData = useSelector(state => state.userData?.getUserData)
 

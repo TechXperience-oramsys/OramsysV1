@@ -1,16 +1,11 @@
-import { TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Form } from 'react-bootstrap';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { productAddAction, productGetByIdAction, productUpdateAction } from '../../../../redux/actions/productAction';
 import moment from 'moment';
 import { PRODUCTADD, PRODUCT_GET_BY_ID, PRODUCT_UPDATE } from '../../../../redux/types';
 import { toast } from 'react-toastify'
-import Autocomplete from "@material-ui/lab/Autocomplete";
 
 const Add_Edit_Product = () => {
   const searchParams = new URLSearchParams(window.location.search)
@@ -34,7 +29,7 @@ const Add_Edit_Product = () => {
   const oneProductData = useSelector(state => state.product.productGetId)
   const productUpdated = useSelector(state => state.product.productUpdate)
   const productAddData = useSelector(state => state.product.productAdd)
-  const transactionData = useSelector((state) => state.transactionData.transactionData)
+  // const transactionData = useSelector((state) => state.transactionData.transactionData)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -43,7 +38,7 @@ const Add_Edit_Product = () => {
     if (id) {
       dispatch(productGetByIdAction(id))
     }
-  }, [id])
+  }, [id, dispatch])
 
   useEffect(() => {
     return (() => {
@@ -52,7 +47,7 @@ const Add_Edit_Product = () => {
         payload: null
       })
     })
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     if (oneProductData && oneProductData.data) {
@@ -69,7 +64,7 @@ const Add_Edit_Product = () => {
         matric: oneProductData.data.matric
       })
     }
-  }, [oneProductData])
+  }, [state, oneProductData])
 
 
 
@@ -82,7 +77,7 @@ const Add_Edit_Product = () => {
       navigate('/products')
       toast.success(productAddData.message)
     }
-  }, [productAddData])
+  }, [dispatch, productAddData])
 
   useEffect(() => {
     console.log('state', state)
