@@ -73,17 +73,17 @@ const SignUp = () => {
         <div class="content">
             <div class="container">
                 <div class="row">
-                   
+
                     <div class="col-md-6 contents">
                         <div class="row justify-content-center">
                             <div class="col-md-8">
-                            <nav aria-label="breadcrumb">
-                                        <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="#" onClick={() => navigate('/')}>Home</a></li>
-                                        </ol>
-                                    </nav>
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="#" onClick={() => navigate('/')}>Home</a></li>
+                                    </ol>
+                                </nav>
                                 <div class="mb-4">
-                                    <h3 className='title'>Sign Up</h3> 
+                                    <h3 className='title'>Sign Up</h3>
                                 </div>
 
                                 <div className='form'>
@@ -101,25 +101,26 @@ const SignUp = () => {
                                     <div class="form-floating mb-4">
                                         <input type="password" onChange={(e) => handelChange(e)} name='password' class="form-control" id="floatingPassword1" placeholder="Password" />
                                         <label for="floatingInputValue">Password</label>
-                                        {registerError.password && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{registerError.password}</span>}                                    
+                                        {registerError.password && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{registerError.password}</span>}
                                     </div>
                                     <div class="form-floating mb-4">
                                         <input type="password" onChange={(e) => handelChange(e)} name='conformPassword' class="form-control" id="floatingConfirmPassword" placeholder="Confirm password" />
                                         <label for="floatingInputValue">Confirm password</label>
-                                        {registerError.conformPassword && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{registerError.conformPassword}</span>}                                    </div>
+                                        {registerError.conformPassword && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{registerError.conformPassword}</span>}
+                                    </div>
 
                                     <div class="d-flex mb-5 align-items-center">
                                         <div className='row'>
                                             <div className='col-12 text-center'>
                                                 <label class="control control--checkbox mb-0">
-                                                    <span class="caption">Already Registered? {" "} 
-                                                    <a className='fw-semibold' onClick={() => navigate('/')}>Log In</a></span>
+                                                    <span class="caption">Already Registered? {" "}
+                                                        <a className='fw-semibold' onClick={() => navigate('/')}>Log In</a></span>
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <button onClick={(e) => register(e)} class="btn btn-block btn-primary">Sign Up</button>     
+                                    <button onClick={(e) => register(e)} class="btn btn-block btn-primary">Sign Up</button>
                                 </div>
 
                             </div>
@@ -127,7 +128,7 @@ const SignUp = () => {
 
                     </div>
                     <div class="col-md-6">
-                        <img src={svgIcon} style={{ height: '480x'}} alt="Image" className='img-slide img-responsive' />
+                        <img src={svgIcon} style={{ height: '480x' }} alt="Image" className='img-slide img-responsive' />
                     </div>
 
                 </div>

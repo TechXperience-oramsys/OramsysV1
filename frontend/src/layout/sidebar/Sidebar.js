@@ -74,11 +74,6 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           path: "",
           subData: [
             {
-              img: FaBoxOpen,
-              text: 'Products',
-              path: "products",
-            },
-            {
               img: GrFlagFill,
               text: 'Countries',
               path: "countries",
@@ -100,12 +95,18 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
             },
           ]
         },
-        {
-          img: HiOutlineUsers,
-          text: 'Users',
-          path: "users"
-        },
+        
       ]
+    },
+    {
+      img: FaBoxOpen,
+      text: 'Products',
+      path: "products",
+    },
+    {
+      img: HiOutlineUsers,
+      text: 'Users',
+      path: "users"
     },
     {
       img: FcPositiveDynamic,
@@ -130,6 +131,11 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           img: FcWorkflow,
           text: 'Entities Role',
           path: "entities-role"
+        },
+        {
+          img: FcPositiveDynamic,
+          text: 'Transactions',
+          path: "transactions"
         },
       ]
     }

@@ -120,7 +120,15 @@ const Index = () => {
         {
             path: "add-edit-entities",
             component: Add_Edit_Entities,
-        }
+        },
+        {
+            path: "transactions",
+            component: Transactions,
+        },
+        {
+            path: "edit-transactions",
+            component: Edit_Transactions,
+        },
     ]
     const superAdminRoutes = [
         {
