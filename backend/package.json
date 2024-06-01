@@ -37,6 +37,7 @@
     "mongodb": "^4.7.0",
     "mongoose": "^6.4.1",
     "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.13",
     "nodemon": "^2.0.18",
     "pdfkit": "^0.13.0"
   },
