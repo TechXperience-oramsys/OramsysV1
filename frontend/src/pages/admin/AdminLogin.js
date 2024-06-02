@@ -6,12 +6,19 @@ import AuthStorage from '../../helper/AuthStorage';
 import { LOGIN } from '../../redux/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify'
-import svgIcon from '../../css/undraw_developer_activity_re_39tg.svg'
+import svgIcon from '../../css/lock.svg'
 import '../../css/login.css'
 import '../../css/bootstrap.min.css'
+import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
+
 
 
 const AdminLogin = () => {
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
+
     let emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -20,6 +27,8 @@ const AdminLogin = () => {
 
     const [login, setLogin] = useState({})
     const [loginFormError, setLoginFormError] = useState({})
+    const [loading, setLoading] = useState(false)
+
 
     useEffect(() => {
         if (loginData) {
@@ -54,7 +63,7 @@ const AdminLogin = () => {
         setLoginFormError(error);
         return param
     }
-    const Login = (e) => {
+    const Login = async (e) => {
         e.preventDefault();
         if (validation()) {
             return
@@ -63,7 +72,9 @@ const AdminLogin = () => {
             user_name: login.email,
             password: login.password
         }
-        ApiPostNoAuth('superAdmin/login', data).then(res => {
+        setLoading(true)
+
+        await ApiPostNoAuth('superAdmin/login', data).then(res => {
             dispatch({
                 type: LOGIN,
                 payload: { res: res, is_loggedin: true }
@@ -81,6 +92,8 @@ const AdminLogin = () => {
         }).catch((error) => {
             console.log(error);
         })
+        setLoading(false)
+
     }
     return (
         <>
@@ -93,14 +106,14 @@ const AdminLogin = () => {
                         <div class="col-md-6 contents">
                             <div class="row justify-content-center">
                                 <div class="col-md-8">
-                                    <nav aria-label="breadcrumb">
+                                    {/* <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
                                             <li class="breadcrumb-item"><a href="#">Home</a></li>
                                             <li class="breadcrumb-item"><a href="#" onClick={() => navigate('/')}>Client Login</a></li>
                                         </ol>
-                                    </nav>
+                                    </nav> */}
                                     <div class="mb-4">
-                                        <h3 className='title-admin'>Administration</h3>
+                                        <h3 className='title-admin'>Super Admin</h3>
                                         <p class="mb-4">This is the administrative portal, if you are not an administrator you cannot have access. Please go to the client login</p>
                                     </div>
 
@@ -112,13 +125,26 @@ const AdminLogin = () => {
                                             {loginFormError.email && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{loginFormError.email}</span>}
                                         </div>
 
-                                        <div class="form-floating mb-4">
-                                            <input type="password" onChange={(e) => handelChange(e)} name='password' class="form-control" id="floatingPassword" placeholder="Password" />
+                                        <div class="position-relative form-floating mb-4">
+                                            <input type={passwordVisible ? 'text' : 'password'} onChange={(e) => handelChange(e)} name='password' class="form-control" id="floatingPassword" placeholder="Password" />
                                             <label for="floatingInputValue">Password</label>
                                             {loginFormError.password && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{loginFormError.password}</span>}
+
+                                            <span className="position-absolute end-0 top-50 text-lg translate-middle-y me-3 cursor-pointer"
+                                                onClick={togglePasswordVisibility}>
+                                                {passwordVisible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                                            </span>
                                         </div>
 
-                                        <button onClick={(e) => Login(e)} class="btn btn-block btn-primary">Log In</button>
+                                        <button onClick={(e) => Login(e)} class="btn btn-block btn-primary">
+                                           {!loading ? 'Log In' : ''}
+                                            {loading && <div class="d-flex justify-content-center">
+                                                <strong className='me-2'>Logging in...</strong>
+                                                <div className="spinner-border spinner-border-sm mt-1" role="status">
+                                                    <span class="visually-hidden">Loading...</span>
+                                                </div>
+                                            </div>}
+                                        </button>
                                     </div>
 
                                 </div>

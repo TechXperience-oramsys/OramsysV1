@@ -10,8 +10,13 @@ import { LOGIN } from '../../redux/types';
 import svgIcon from '../../css/undraw_remotely_2j6y.svg'
 import '../../css/login.css'
 import '../../css/bootstrap.min.css'
+import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
 
 const SignIn = () => {
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
     let emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -65,7 +70,7 @@ const SignIn = () => {
         }
         dispatch(loginAction(data))
     }
-     
+
 
     const { authState, oktaAuth } = useOktaAuth();
     const loginWithRedirect = () =>
@@ -77,59 +82,64 @@ const SignIn = () => {
 
 
     return (
-        <div class="content">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
+        <div className="content">
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-6">
                         <img src={svgIcon} style={{ height: '480x' }} alt="Image" className='img-slide img-responsive' />
                     </div>
-                    <div class="col-md-6 contents">
-                        <div class="row justify-content-center">
-                            <div class="col-md-8">
+                    <div className="col-md-6 contents">
+                        <div className="row justify-content-center">
+                            <div className="col-md-8">
                                 <nav aria-label="breadcrumb">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                        <li class="breadcrumb-item"><a href='#' onClick={() => navigate('/fa-login')}>Admin</a></li>
+                                    <ol className="breadcrumb">
+                                        {/* <li className="breadcrumb-item"><a href="#">Home</a></li> */}
+                                        <li className="breadcrumb-item"><a href='#' onClick={() => navigate('/fa-login')}>Admin</a></li>
                                     </ol>
                                 </nav>
-                                <div class="mb-4">
+                                <div className="mb-4">
                                     <h3 className='title'>Sign In</h3>
                                 </div>
 
                                 <div className='form'>
 
-                                    <div class="form-floating mb-3">
-                                        <input type="email" name='email' onChange={(e) => handelChange(e)} class="form-control" id="floatingInput" placeholder="Email" />
-                                        <label for="floatingInputValue">Email address</label>
+                                    <div className="form-floating mb-3">
+                                        <input type="email" name='email' onChange={(e) => handelChange(e)} className="form-control" id="floatingInput" placeholder="Email" />
+                                        <label htmlFor="floatingInputValue">Email address</label>
                                         {loginFormError.email && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{loginFormError.email}</span>}
                                     </div>
 
-                                    <div class="form-floating mb-4">
-                                        <input type="password" onChange={(e) => handelChange(e)} name='password' class="form-control" id="floatingPassword" placeholder="Password" />
-                                        <label for="floatingInputValue">Password</label>
+                                    <div className="position-relative form-floating mb-4">
+                                        <input type={passwordVisible ? 'text' : 'password'} onChange={(e) => handelChange(e)} name='password' className="form-control" id="floatingPassword" placeholder="Password" />
+                                        <label htmlFor="floatingInputValue">Password</label>
                                         {loginFormError.password && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{loginFormError.password}</span>}
+
+                                        <span className="position-absolute end-0 top-50 text-lg translate-middle-y me-3 cursor-pointer"
+                                                onClick={togglePasswordVisibility}>
+                                                {passwordVisible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                                            </span>
                                     </div>
 
-                                    <div class="d-flex mb-5 align-items-center">
+                                    <div className="d-flex mb-5 align-items-center">
                                         <div className='row'>
                                             <div className='col-12 text-center'>
-                                                <label class="control control--checkbox mb-0">
-                                                    <span class="caption">Don't Have an account? {" "}
+                                                {/* <label className="control control--checkbox mb-0">
+                                                    <span className="caption">Don't Have an account? {" "}
                                                         <a className='fw-semibold' onClick={() => navigate('/signup')}>Register here{" "}<FontAwesomeIcon icon={faArrowRightLong} style={{ color: "#da251e" }}></FontAwesomeIcon></a></span>
-                                                </label>
+                                                </label> */}
                                             </div>
                                             <div className='col-12 text-center mt-4'>
-                                                <span class="ml-auto"><a href="#" class="text-decoration-none forgot-pass">Forgot Password?</a></span>
+                                                <span className="ml-auto"><a href="#" className="text-decoration-none forgot-pass">Forgot Password?</a></span>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <button onClick={(e) => Login(e)} class="btn btn-block btn-primary">Log In</button>
+                                    <button onClick={(e) => Login(e)} className="btn btn-block btn-primary">Log In</button>
 
-                                    {/* <span class="d-block text-left my-4 text-muted">&mdash; or login as &mdash;</span> */}
+                                    {/* <span className="d-block text-left my-4 text-muted">&mdash; or login as &mdash;</span> */}
 
                                     {/* 
-                                    <div class="social-login">
+                                    <div classname="social-login">
                                          <a href='#' onClick={() => navigate('/admin-login')}> Admin </a>{" "} <i className='fa-1.5x bi bi-arrow-right'></i>
                                     </div> */}
                                 </div>

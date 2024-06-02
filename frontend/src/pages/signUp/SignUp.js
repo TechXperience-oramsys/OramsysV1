@@ -89,23 +89,23 @@ const SignUp = () => {
                                 <div className='form'>
                                     <div class="form-floating mb-3">
                                         <input type="text" name='name' onChange={(e) => handelChange(e)} class="form-control" id="floatingInput1" placeholder="Name" />
-                                        <label for="floatingInputValue">Name</label>
+                                        <label htmlFor="floatingInputValue">Name</label>
                                         {registerError.name && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{registerError.name}</span>}                                    </div>
 
                                     <div class="form-floating mb-3">
                                         <input type="email" name='email' onChange={(e) => handelChange(e)} class="form-control" id="floatingInput" placeholder="Email" />
-                                        <label for="floatingInputValue">Email address</label>
+                                        <label htmlFor="floatingInputValue">Email address</label>
                                         {registerError.email && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{registerError.email}</span>}
                                     </div>
 
                                     <div class="form-floating mb-4">
                                         <input type="password" onChange={(e) => handelChange(e)} name='password' class="form-control" id="floatingPassword1" placeholder="Password" />
-                                        <label for="floatingInputValue">Password</label>
+                                        <label htmlFor="floatingInputValue">Password</label>
                                         {registerError.password && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{registerError.password}</span>}
                                     </div>
                                     <div class="form-floating mb-4">
                                         <input type="password" onChange={(e) => handelChange(e)} name='conformPassword' class="form-control" id="floatingConfirmPassword" placeholder="Confirm password" />
-                                        <label for="floatingInputValue">Confirm password</label>
+                                        <label htmlFor="floatingInputValue">Confirm password</label>
                                         {registerError.conformPassword && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{registerError.conformPassword}</span>}
                                     </div>
 

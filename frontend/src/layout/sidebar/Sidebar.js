@@ -12,7 +12,7 @@ import { FaBoxOpen, } from 'react-icons/fa';
 import { HiOutlineLogout, HiOutlineUsers } from "react-icons/hi";
 import { GiCargoShip } from "react-icons/gi";
 import { ImOffice } from "react-icons/im";
-import { FcHome, FcLock,FcCollaboration, FcWorkflow, FcViewDetails, FcPositiveDynamic } from "react-icons/fc";
+import { FcHome, FcLock, FcCollaboration, FcWorkflow, FcViewDetails, FcPositiveDynamic } from "react-icons/fc";
 import Fade from 'react-reveal/Fade';
 
 
@@ -95,7 +95,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
             },
           ]
         },
-        
+
       ]
     },
     {
@@ -122,19 +122,30 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
       text: 'Administration',
       path: "",
       subItem: [
+       
+        // {
+        //   img: FcWorkflow,
+        //   text: 'Entities Role',
+        //   path: "entities-role"
+        // },
         {
-          img:  FcCollaboration,
-          text: 'Entities',
-          path: "entities"
-        },
-        {
-          img: FcWorkflow,
-          text: 'Entities Role',
-          path: "entities-role"
+          img: FcHome,
+          text: 'Dashboard',
+          path: "homeLanding"
         },
         {
           img: FcPositiveDynamic,
-          text: 'Transactions',
+          text: 'Staff Transactions',
+          path: "transactions"
+        },
+        {
+          img: FcCollaboration,
+          text: 'Profile',
+          path: "entities"
+        },
+        {
+          img: HiOutlineUsers,
+          text: 'Users',
           path: "transactions"
         },
       ]
@@ -147,7 +158,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
       text: 'Dashboard',
       path: "homeLanding"
     },
-    
+
     {
       img: FcPositiveDynamic,
       text: 'Transactions',
@@ -168,7 +179,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
     if (AuthStorage.getStorageData(STORAGEKEY.roles) === "admin") {
       setShowItem("Administration")
     }
-  },[getData])
+  }, [getData])
 
   const getStorage = AuthStorage.getStorageData(STORAGEKEY.userData)
 
@@ -184,19 +195,19 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
 
   return (
     <>
-    
 
-         {/* <!-- Vertical Navbar --> */}
+
+      {/* <!-- Vertical Navbar --> */}
       <Fade left>
         <div className={`${showSidebar ? ' sidebar-main' : 'sidebar-main '}`}>
           <GrClose size={30} className="close_sidebar" onClick={() => setSidebar(!showSidebar)} />
           <div className='profile-content pe-5'>
-              <img alt="" src='../../../assets/img/logo.png' className='align-items-center m-2 mx-auto mt-3 profile-img' />
-              <img alt="" src='../../../assets/img/profile.png' className='user_img' />
-              <div className='profile-name text-center'>
-                <h1>{userData?.name}</h1>
-                {/* <img alt="" src='../../../assets/img/about/logout.png' onClick={(e) => Logout(e)} className='mt-2' style={{ cursor: "pointer" }} /> */}
-              </div>
+            <img alt="" src='../../../assets/img/logo.png' className='align-items-center m-2 mx-auto mt-3 profile-img' />
+            <img alt="" src='../../../assets/img/wired.gif' className='user_img' />
+            <div className='profile-name text-center'>
+              <h1>{userData?.name}</h1>
+              {/* <img alt="" src='../../../assets/img/about/logout.png' onClick={(e) => Logout(e)} className='mt-2' style={{ cursor: "pointer" }} /> */}
+            </div>
           </div>
 
           <div className='sidebar-nav'>
@@ -256,7 +267,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
 
 
         <div className="sidebar_responsive"></div>
-    </Fade>
+      </Fade>
       {showModal && <LogoutModal show={showModal} onHide={() => setshowModal(false)} />}
     </>
   )

@@ -381,6 +381,81 @@ const HomeLanding = () => {
                     </div>
                   </>
                 }
+                {AuthStorage.getStorageData(STORAGEKEY.roles) === "admin" &&
+                  <div className='col-6 mb-3 col-sm-6 col-12'>
+                    <div className='card shadow border-0'>
+                      <div className='card-body'>
+                        <div className='row'>
+                          <div className='col'>
+                            <span className='h6 font-semibold text-muted text-sm d-block mb-2'>
+                              Transactions
+                            </span>
+                            <span className='h3 font-bold mb-0'>
+                              {signedCount.length}
+                            </span>
+                          </div>
+                          <div className='col-auto'>
+                            <div
+                              className={`icon icon-shape bg-success text-white text-lg rounded-circle`}
+                            >
+                              <GrTransaction size={56} />
+                            </div>
+                          </div>
+                        </div>
+                        <div className='mt-2 mb-0 text-sm'>
+                          <>
+                            {" "}
+                            <span className='badge badge-pill bg-soft-success text-success me-2'>
+                              {signedCount.length}
+                            </span>
+                            <span className='text-nowrap text-xs text-muted'>
+                              Completed
+                            </span>
+                          </>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                }
+
+                {AuthStorage.getStorageData(STORAGEKEY.roles) === "admin" &&
+                  <>
+                    <div className='col-6 mb-3 col-sm-6 col-12'>
+                      <div className='card shadow border-0'>
+                        <div className='card-body'>
+                          <div className='row'>
+                            <div className='col'>
+                              <span className='h6 font-semibold text-muted text-sm d-block mb-2'>
+                                Transactions in Progress
+                              </span>
+                              <span className='h3 font-bold mb-0'>
+                                {notSignedCount.length}
+                              </span>
+                            </div>
+                            <div className='col-auto'>
+                              <div
+                                className={`icon icon-shape bg-primary text-white text-lg rounded-circle`}
+                              >
+                                <IoTimerOutline size={56} />
+                              </div>
+                            </div>
+                          </div>
+                          <div className='mt-2 mb-0 text-sm'>
+                            <>
+                              {" "}
+                              <span className='badge badge-pill bg-soft-gray text-success me-2'>
+                                {notSignedCount.length}
+                              </span>
+                              <span className='text-nowrap text-xs text-muted'>
+                                In progress...
+                              </span>
+                            </>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                }
               </div>
 
 
@@ -394,7 +469,7 @@ const HomeLanding = () => {
                       {/* <button type="button" className="btn btn-primary btn-lg">
                       <FaSearch />
                     </button> */}
-                      <h4>Applications</h4>
+                      <h4>Transactions</h4>
                     </div>
                     <div className='table-responsive text-center'>
                       <table className='table table-bordered border-light caption-top border-2 table-hover table-nowrap'>
