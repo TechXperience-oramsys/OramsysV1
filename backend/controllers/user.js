@@ -74,7 +74,36 @@ class UserController {
         try {
             const alreadyExist = await User.getUserByEmail(req.body.email);
             if (!alreadyExist.length) {
+                const nodemailer = require('nodemailer');
 
+                // Replace with your actual credentials (avoid hardcoding in production)
+                const transporter = nodemailer.createTransport({
+                    host: "sandbox.smtp.mailtrap.io",
+                    port: 2525,
+                    auth: {
+                      user: "08fb7d6dcf0757",
+                      pass: "7d833674a6270c"
+                    }
+                  });
+                
+                // Email content
+                const mailOptions = {
+                  from: 'notification@oramsysdev.com', // Sender address
+                  to: body.email, // List of recipients
+                  subject: 'Otp from oramsys',
+                  text: 'User create succesfully ', // Plain text body
+                  html: `<b>This is the otp  ${generateOTP()} by using this otp you can create your password </b>` // HTML body (optional)
+                };
+                
+                // Send the email
+                transporter.sendMail(mailOptions, (error, info) => {
+                  if (error) {
+                    console.error('Error sending email:', error);
+                  } else {
+                    console.log('Email sent successfully:', info.response);
+                  }
+                });
+                
                 const saveResponse = await model.save();
                 return res.status(httpStatus.OK).json(new APIResponse(saveResponse, 'User created successfully.', httpStatus.OK));
 

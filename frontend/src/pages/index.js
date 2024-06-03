@@ -30,6 +30,7 @@ import RiskAssessment from './transactions/riskAssessment/RiskAssessment';
 import Ports from './administration/masterData/ports/Ports';
 import AirBases from './administration/masterData/airBases/AirBases';
 import { ApiGet, ApiPost } from '../helper/API/ApiData';
+import { Create_new_password } from './administration/users/CreatePassword';
 
 
 
@@ -207,6 +208,10 @@ const Index = () => {
         {
             path: "final-page",
             component: FinalPage,
+        },
+        {
+            path: "verify-user",
+            component: Create_new_password,
         },
     ]
 
