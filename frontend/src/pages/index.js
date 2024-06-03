@@ -24,6 +24,7 @@ import Edit_Transactions from './transactions/Edit_Transactions';
 import FinalPage from './transactions/FinalPage';
 import AdminLogin from './admin/AdminLogin';
 import FunctionalAdmin from './functionalAdmin/FunctionalAdmin';
+import AdminInvite from './functionalAdmin/AdminInvite';
 import EntitiesRole from './administration/EntitiesRole';
 import STORAGEKEY from '../config/APP/app.config';
 import RiskAssessment from './transactions/riskAssessment/RiskAssessment';
@@ -128,6 +129,10 @@ const Index = () => {
         {
             path: "edit-transactions",
             component: Edit_Transactions,
+        },
+        {
+            path: "invite",
+            component: AdminInvite,
         },
     ]
     const superAdminRoutes = [

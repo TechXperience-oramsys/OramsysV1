@@ -12,7 +12,7 @@ import { FaBoxOpen, } from 'react-icons/fa';
 import { HiOutlineLogout, HiOutlineUsers } from "react-icons/hi";
 import { GiCargoShip } from "react-icons/gi";
 import { ImOffice } from "react-icons/im";
-import { FcHome, FcLock, FcCollaboration, FcWorkflow, FcViewDetails, FcPositiveDynamic } from "react-icons/fc";
+import { FcHome, FcLock, FcInvite, FcCollaboration, FcWorkflow, FcViewDetails, FcPositiveDynamic } from "react-icons/fc";
 import Fade from 'react-reveal/Fade';
 
 
@@ -147,6 +147,11 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           img: HiOutlineUsers,
           text: 'Users',
           path: "transactions"
+        },
+        {
+          img: FcInvite,
+          text: 'Invite',
+          path: "/invite"
         },
       ]
     }
