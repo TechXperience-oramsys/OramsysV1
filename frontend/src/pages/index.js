@@ -102,6 +102,7 @@ const Index = () => {
             path: "final-page",
             component: FinalPage,
         },
+  
     ]
 
     const AdminRoutes = [
