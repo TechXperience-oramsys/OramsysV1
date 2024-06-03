@@ -48,7 +48,7 @@ const Header = () => {
               <div className="topbar-left">
                 <p className="item-paragraph">Not a User?</p>
                 <div className="header-button">
-                  <a href="/">Sign up or Register <FontAwesomeIcon icon={faArrowRightLong} style={{ color: "#da251e" }}></FontAwesomeIcon></a>
+                  <a href="/">You have to be registered under an institution <FontAwesomeIcon icon={faArrowRightLong} style={{ color: "#da251e" }}></FontAwesomeIcon></a>
                 </div>
               </div>
             </div>
@@ -66,8 +66,8 @@ const Header = () => {
                   </li>
                 </ul> */}
                 <div className="header-right-button">
-                  <a onClick={() =>navigate('/signup') } className="header-btn">Register Now</a>
-                  <a onClick={() =>navigate('/') } className="header-btn s-up">Sign In</a>
+                  {/* <a onClick={() =>navigate('/signup') } className="header-btn">Register Now</a> */}
+                  <a onClick={() => navigate('/')} className="header-btn s-up">Sign In</a>
                 </div>
               </div>
             </div>

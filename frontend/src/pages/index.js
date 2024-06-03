@@ -70,7 +70,7 @@ const Index = () => {
         "airBases",
 
         "risk-assessment",
-        
+
         "final-page",
 
     ]
@@ -224,7 +224,7 @@ const Index = () => {
                     if (AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin") {
                         navigate("/homeLanding");
                     } else if (AuthStorage.getStorageData(STORAGEKEY.roles) === "admin") {
-                        navigate("/entities");
+                        navigate("/homeLanding");
                     } else if (AuthStorage.getStorageData(STORAGEKEY.roles) === "user") {
                         navigate("/homeLanding");
                     }
@@ -244,12 +244,12 @@ const Index = () => {
                 }
                 localStorage.clear();
             });
-        } 
+        }
     };
     useEffect(() => {
         checkUserRoleAndNavigate();
     }, [])
- 
+
 
     if (AuthStorage.getStorageData(STORAGEKEY.roles) === "user") {
         primaryLinks = userRoutes
@@ -271,7 +271,7 @@ const Index = () => {
                         <Route path="/admin-login" element={<AdminLogin />} />
                         <Route path="/fa-login" element={<FunctionalAdmin />} />
                     </Routes>
-                </Layout> ) : (
+                </Layout>) : (
                 <AuthLayOut>
                     <Routes>
 
@@ -282,7 +282,7 @@ const Index = () => {
                     </Routes>
                 </AuthLayOut>
             )}
-            
+
         </>
     )
 }
@@ -306,7 +306,7 @@ const PublicRoutes = () => {
     const isAuthenticated = AuthStorage.isUserAuthenticated();
     const navigate = useNavigate();
     const location = useLocation();
- 
+
 
     useEffect(() => {
         !isAuthenticated ? (
