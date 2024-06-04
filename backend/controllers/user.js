@@ -58,8 +58,17 @@ class UserController {
 
     async signUp(req, res, next) {
         let body = req.body;
+        function generateOTP() {
+            let otp = '';
+            for (let i = 0; i < 4; i++) {
+                otp += Math.floor(Math.random() * 10);
+            }
+            return otp;
+
+        }
+        const otp = generateOTP()
         let newPassword = ""
-        if(req.body.password) {
+        if (req.body.password) {
             newPassword = await hashPassword(req.body.password, 10);
         } else {
             newPassword = await hashPassword('', 10);
@@ -69,7 +78,9 @@ class UserController {
             name: body.name,
             email: body.email.toLowerCase(),
             password: newPassword,
+            otp: otp
         }
+        console.log(generateOTP())
         const model = new User(newUser);
         try {
             const alreadyExist = await User.getUserByEmail(req.body.email);
@@ -77,42 +88,36 @@ class UserController {
             if (!alreadyExist.length) {
                 const nodemailer = require('nodemailer');
 
-
-                function generateOTP() {
-                    let otp = '';
-                    for (let i = 0; i < 4; i++) {
-                        otp += Math.floor(Math.random() * 10);
-                    }
-                    return otp;
-                }
                 // Replace with your actual credentials (avoid hardcoding in production)
                 const transporter = nodemailer.createTransport({
                     host: "sandbox.smtp.mailtrap.io",
                     port: 2525,
                     auth: {
-                      user: "08fb7d6dcf0757",
-                      pass: "7d833674a6270c"
+                        user: "08fb7d6dcf0757",
+                        pass: "7d833674a6270c"
                     }
-                  });
-                
+                });
+
                 // Email content
                 const mailOptions = {
-                  from: 'notification@oramsysdev.com', // Sender address
-                  to: body.email, // List of recipients
-                  subject: 'Otp from oramsys',
-                  text: 'User create succesfully ', // Plain text body
-                  html: `<b>This is the otp  ${generateOTP()} by using this otp you can create your password </b>` // HTML body (optional)
+                    from: 'notification@oramsysdev.com', // Sender address
+                    to: body.email, // List of recipients
+                    subject: 'Otp from oramsys',
+                    text: 'User create succesfully ', // Plain text body
+                    html: `<b>This is the otp  ${otp} by using this otp you can create your password </b>
+                    <a href="http://localhost:3000/verify-user"> Verify Account</a>`,
+
+                    // HTML body (optional)
                 };
-                
+
                 // Send the email
                 transporter.sendMail(mailOptions, (error, info) => {
-                  if (error) {
-                    console.error('Error sending email:', error);
-                  } else {
-                    console.log('Email sent successfully:', info.response);
-                  }
+                    if (error) {
+                        console.error('Error sending email:', error);
+                    } else {
+                        console.log('Email sent successfully:', info.response);
+                    }
                 });
-                
                 const saveResponse = await model.save();
                 return res.status(httpStatus.OK).json(new APIResponse(saveResponse, 'User created successfully.', httpStatus.OK));
 
@@ -288,6 +293,42 @@ class UserController {
         }
     }
 
+    async verifyOtp(req, res, next) {
+        try {
+            const otp = req.body.otp;
+            if (!otp) {
+                return res.status(httpStatus.BAD_REQUEST).json(new APIResponse(null, "OTP is required", httpStatus.BAD_REQUEST));
+            }
+            const user = await User.findOne({ otp });
+            if (!user) {
+                return res.status(httpStatus.UNAUTHORIZED).json(new APIResponse(null, "Invalid OTP", httpStatus.UNAUTHORIZED));
+            }
+            return res.status(httpStatus.OK).json(new APIResponse(user, "OTP verified", httpStatus.OK));
+        } catch (error) {
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(new APIResponse(null, "Error verifying OTP", httpStatus.INTERNAL_SERVER_ERROR, error));
+        }
+    }
+
+
+
+    async updatePassword(req, res, next) {
+        try {
+
+            const user = await User.getById(req.params.id);
+            if (!user) {
+                return res.status(httpStatus.BAD_REQUEST).send({ message: "Invalid Id!" });
+            }
+            const { password, conform_password } = req.body;
+            if (password !== conform_password) {
+                return res.status(httpStatus.BAD_REQUEST).send({ message: "Password not matched!" });
+            }
+            const newPassword = await hashPassword(password, 10);
+            const updatedUser = await User.updateUser({ password: newPassword }, user._id);
+            return res.status(httpStatus.OK).json(new APIResponse(updatedUser, 'User updated successfully.', httpStatus.OK));
+        } catch (error) {
+            return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(new APIResponse(null, 'Error updating password', httpStatus.INTERNAL_SERVER_ERROR, error));
+        }
+    }
 
 }
 

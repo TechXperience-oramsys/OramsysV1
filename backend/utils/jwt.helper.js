@@ -3,6 +3,7 @@ const { jwtSecret } = require("../config");
 
 function decodeToken(token) {
   return jwt.decode(token.replace("Bearer ", ""));
+  
 }
 
 function verifyJWTToken(token) {
