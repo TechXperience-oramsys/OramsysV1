@@ -73,9 +73,18 @@ class UserController {
         const model = new User(newUser);
         try {
             const alreadyExist = await User.getUserByEmail(req.body.email);
+            console.log('tetstyuuuo jhyuh');
             if (!alreadyExist.length) {
                 const nodemailer = require('nodemailer');
 
+
+                function generateOTP() {
+                    let otp = '';
+                    for (let i = 0; i < 4; i++) {
+                        otp += Math.floor(Math.random() * 10);
+                    }
+                    return otp;
+                }
                 // Replace with your actual credentials (avoid hardcoding in production)
                 const transporter = nodemailer.createTransport({
                     host: "sandbox.smtp.mailtrap.io",
