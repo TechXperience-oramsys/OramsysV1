@@ -11,6 +11,7 @@ var Schema = new Schema({
     isDeleted: { type: Boolean, required: true, default: false },
     department: { type: String, required: false, enum: UserDepartmentTypes, default: UserDepartmentTypes.Information_Technology },
     profile: { type: String, required: true, enum: UserProfileTypes, default: UserProfileTypes.User },
+    otp: { type: Number }
 }, {
     timestamps: true
 })
@@ -31,7 +32,10 @@ Schema.statics.getUserByEmail = async function (loginUser) {
     return await this.find({ email: loginUser, isDeleted: false }).exec()
 }
 
-Schema.statics.updateUser = async function (data,id) {
+
+
+Schema.statics.updateUser = async function (data, id) {
+
     return await this.findOneAndUpdate({
         _id: id
     }, {

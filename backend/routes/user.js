@@ -40,7 +40,8 @@ router.get("/get", Validate, userController.getAllUser);
 router.get('/getById/:id', Validate, userController.getUserById);
 router.post('/edit/:id', editValidate, userController.editUser);
 router.delete('/remove/:id', Validate, userController.deleteUser);
-
+router.get('/verifyOtp', Validate, userController.verifyOtp);
+router.put('/updatePassword/:id', Validate, userController.updatePassword);
 function signUpValidate(req, res, next) {
     const Data = req.body;
     const { error, value } = createValidation.validate(Data);
