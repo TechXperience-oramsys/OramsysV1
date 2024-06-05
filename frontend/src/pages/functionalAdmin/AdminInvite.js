@@ -57,17 +57,18 @@ const AdminInvite = () => {
   };
 
   return (
-    <div className="container-fluid px-1 py-5 mx-auto">
+    <div className="container-fluid overflow-x-hidden px-1 py-5 mx-auto">
       <div className="row d-flex justify-content-center">
         <div className="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
-          <h3>Request a Demo</h3>
-          <p className="text-info">Just answer a few questions<br /> so that we can personalize the right experience for you.</p>
+
+          <h3 className='justify-content-center mx-auto text-center'>Staff Onboard Invite</h3>
+
           <div className="card shadow-sm p-4 mt-5 mb-5">
-            <h5 className="text-center mb-4">Powering world-class companies</h5>
+            {/* <h5 className="justify-content-center mx-auto mb-4">Onboard Staff</h5> */}
             <form className="form-card" onSubmit={handleSubmit}>
               <div className="row justify-content-between text-left">
                 <div className="form-group col-sm-6">
-                  <label className="form-control-label px-3">
+                  <label className="form-control-label px-1">
                     First name <span className="text-danger"> *</span>
                   </label>
                   <input
@@ -82,7 +83,7 @@ const AdminInvite = () => {
                   />
                 </div>
                 <div className="form-group col-sm-6">
-                  <label className="form-control-label px-3">
+                  <label className="form-control-label ">
                     Last name <span className="text-danger"> *</span>
                   </label>
                   <input
@@ -99,7 +100,7 @@ const AdminInvite = () => {
               </div>
               <div className="row justify-content-between text-left">
                 <div className="form-group col-sm-6">
-                  <label className="form-control-label px-3">
+                  <label className="form-control-label px-1">
                     Business email <span className="text-danger"> *</span>
                   </label>
                   <input
@@ -114,7 +115,7 @@ const AdminInvite = () => {
                   />
                 </div>
                 <div className="form-group col-sm-6">
-                  <label className="form-control-label px-3">
+                  <label className="form-control-label px-1">
                     Phone number <span className="text-danger"> *</span>
                   </label>
                   <input
@@ -131,7 +132,7 @@ const AdminInvite = () => {
               </div>
               <div className="row justify-content-between text-left">
                 <div className="form-group col-sm-6">
-                  <label className="form-control-label px-3">
+                  <label className="form-control-label px-1">
                     Job title <span className="text-danger"> *</span>
                   </label>
                   <input
@@ -146,24 +147,8 @@ const AdminInvite = () => {
                   />
                 </div>
               </div>
-              <div className="row justify-content-between text-left">
-                <div className="form-group col-12">
-                  <label className="form-control-label px-3">
-                    What would you be using Flinks for? <span className="text-danger"> *</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="ans"
-                    name="ans"
-                    className={`form-control ${formErrors.ans ? 'is-invalid' : ''}`}
-                    placeholder="Enter your answer"
-                    value={formData.ans}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                </div>
-              </div>
-              <div className="row justify-content-end">
+
+              <div className="row justify-content-center">
                 <div className="form-group col-sm-6">
                   <button type="submit" className="btn btn-primary btn-block">
                     Request a demo
