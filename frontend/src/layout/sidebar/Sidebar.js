@@ -133,26 +133,26 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           text: 'Dashboard',
           path: "homeLanding"
         },
-        {
-          img: FcPositiveDynamic,
-          text: 'Staff Transactions',
-          path: "transactions"
-        },
+        // {
+        //   img: FcPositiveDynamic,
+        //   text: 'Staff Transactions',
+        //   path: "transactions"
+        // },
         {
           img: FcCollaboration,
           text: 'Profile',
           path: "entities"
         },
-        {
-          img: HiOutlineUsers,
-          text: 'Users',
-          path: "transactions"
-        },
-        {
-          img: FcInvite,
-          text: 'Invite',
-          path: "invite"
-        },
+        // {
+        //   img: HiOutlineUsers,
+        //   text: 'Users',
+        //   path: "transactions"
+        // },
+        // {
+        //   img: FcInvite,
+        //   text: 'Invite',
+        //   path: "invite"
+        // },
       ]
     }
   ]
