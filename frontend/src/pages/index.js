@@ -73,6 +73,8 @@ const Index = () => {
 
         "final-page",
 
+        "invite",
+
     ]
     const location = useLocation()
     const token = AuthStorage.getToken()

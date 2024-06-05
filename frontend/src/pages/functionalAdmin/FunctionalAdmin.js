@@ -100,36 +100,36 @@ const FunctionalAdmin = () => {
     return (
         <>
 
-            <div className="content">
+            {/* <div classname="content">
 
-                <div className="container">
+                <div classname="container">
 
-                    <div className="row">
+                    <div classname="row">
 
-                        <div className="col-md-6 contents">
-                            <div className="row justify-content-center">
-                                <div className="col-md-8">
+                        <div classname="col-md-6 contents">
+                            <div classname="row justify-content-center">
+                                <div classname="col-md-8">
                                     <nav aria-label="breadcrumb">
-                                        <ol className="breadcrumb">
-                                            {/* <li className="breadcrumb-item"><a href="#">Home</a></li> */}
-                                            <li className="breadcrumb-item"><a href="#" onClick={() => navigate('/')}>Staff Login</a></li>
+                                        <ol classname="breadcrumb">
+                                            <li classname="breadcrumb-item"><a href="#">Home</a></li>
+                                            <li classname="breadcrumb-item"><a href="#" onClick={() => navigate('/')}>Staff Login</a></li>
                                         </ol>
                                     </nav>
-                                    <div className="mb-4">
+                                    <div classname="mb-4">
                                         <h3 className='title-admin'>Admin Login</h3>
-                                        <p className="mb-4">This is the admin login portal, if you are not an admin you cannot have access. Please go to the staff login</p>
+                                        <p classname="mb-4">This is the admin login portal, if you are not an admin you cannot have access. Please go to the staff login</p>
                                     </div>
 
                                     <div className='form'>
 
-                                        <div className="form-floating mb-3">
-                                            <input type="email" name='email' onChange={handelChange} className="form-control" id="floatingInput" placeholder="Email" />
+                                        <div classname="form-floating mb-3">
+                                            <input type="email" name='email' onChange={handelChange} classname="form-control" id="floatingInput" placeholder="Email" />
                                             <label htmlFor="floatingInputValue">Email address</label>
                                             {loginFormError.email && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{loginFormError.email}</span>}
                                         </div>
 
-                                        <div className="position-relative form-floating mb-4">
-                                            <input type={passwordVisible ? 'text' : 'password'} onChange={handelChange} name='password' className="form-control" id="floatingPassword" placeholder="Password" />
+                                        <div classname="position-relative form-floating mb-4">
+                                            <input type={passwordVisible ? 'text' : 'password'} onChange={handelChange} name='password' classname="form-control" id="floatingPassword" placeholder="Password" />
                                             <label htmlFor="floatingInputValue">Password</label>
                                             {loginFormError.password && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{loginFormError.password}</span>}
 
@@ -139,12 +139,12 @@ const FunctionalAdmin = () => {
                                             </span>
                                         </div>
 
-                                        <button onClick={(e) => Login(e)} className="btn btn-block btn-primary">
+                                        <button onClick={(e) => Login(e)} classname="btn btn-block btn-primary">
                                         {!loading ? 'Log In' : ''}
-                                        {loading && <div className="d-flex justify-content-center">
+                                        {loading && <div classname="d-flex justify-content-center">
                                             <strong className='me-2'>Logging in...</strong>
                                             <div className="spinner-border spinner-border-sm mt-1" role="status">
-                                                <span className="visually-hidden">Loading...</span>
+                                                <span classname="visually-hidden">Loading...</span>
                                             </div>
                                         </div>}
                                         </button>
@@ -155,7 +155,7 @@ const FunctionalAdmin = () => {
                             </div>
                         </div>
 
-                        <div className="col-md-6">
+                        <div classname="col-md-6">
                             <img src={svgIcon} style={{ height: '480x' }} alt="Image" className='img-slide img-responsive' />
                         </div>
 
@@ -163,12 +163,12 @@ const FunctionalAdmin = () => {
 
                     </div>
                 </div>
-            </div>
+            </div> */}
 
 
 
 
-            {/* <section className="login">
+            <section className="login">
                 <div className="container">
                     <div className="sign-grd">
                         <div className="lft-pan">
@@ -194,7 +194,7 @@ const FunctionalAdmin = () => {
                         </div>
                     </div>
                 </div>
-            </section> */}
+            </section>
         </>
 
     )

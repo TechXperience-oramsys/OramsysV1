@@ -151,7 +151,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
         {
           img: FcInvite,
           text: 'Invite',
-          path: "/invite"
+          path: "invite"
         },
       ]
     }
