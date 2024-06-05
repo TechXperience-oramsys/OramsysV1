@@ -424,6 +424,7 @@ const HomeLanding = () => {
                       <div className='card shadow border-0'>
                         <div className='card-body'>
                           <div className='row'>
+
                             <div className='col'>
                               <span className='h6 font-semibold text-muted text-sm d-block mb-2'>
                                 Transactions in Progress
@@ -432,6 +433,7 @@ const HomeLanding = () => {
                                 {notSignedCount.length}
                               </span>
                             </div>
+                            
                             <div className='col-auto'>
                               <div
                                 className={`icon icon-shape bg-primary text-white text-lg rounded-circle`}

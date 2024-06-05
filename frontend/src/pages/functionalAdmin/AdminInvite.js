@@ -75,7 +75,7 @@ const AdminInvite = () => {
                     type="text"
                     id="fname"
                     name="fname"
-                    className={`form-control ${formErrors.fname ? 'is-invalid' : ''}`}
+                    className={`form-control ${formErrors.fname ? 'is-invalid' : ''} fw-lighter`}
                     placeholder="Enter your first name"
                     value={formData.fname}
                     onChange={handleChange}
@@ -90,7 +90,7 @@ const AdminInvite = () => {
                     type="text"
                     id="lname"
                     name="lname"
-                    className={`form-control ${formErrors.lname ? 'is-invalid' : ''}`}
+                    className={`form-control ${formErrors.lname ? 'is-invalid' : ''} fw-lighter`}
                     placeholder="Enter your last name"
                     value={formData.lname}
                     onChange={handleChange}
@@ -107,7 +107,7 @@ const AdminInvite = () => {
                     type="email"
                     id="email"
                     name="email"
-                    className={`form-control ${formErrors.email ? 'is-invalid' : ''}`}
+                    className={`form-control ${formErrors.email ? 'is-invalid' : ''} fw-lighter`}
                     placeholder="Enter your email"
                     value={formData.email}
                     onChange={handleChange}
@@ -122,7 +122,7 @@ const AdminInvite = () => {
                     type="text"
                     id="mob"
                     name="mob"
-                    className={`form-control ${formErrors.mob ? 'is-invalid' : ''}`}
+                    className={`form-control ${formErrors.mob ? 'is-invalid' : ''} fw-lighter`}
                     placeholder="Enter your phone number"
                     value={formData.mob}
                     onChange={handleChange}
@@ -139,7 +139,7 @@ const AdminInvite = () => {
                     type="text"
                     id="job"
                     name="job"
-                    className={`form-control ${formErrors.job ? 'is-invalid' : ''}`}
+                    className={`form-control ${formErrors.job ? 'is-invalid' : ''} fw-lighter`}
                     placeholder="Enter your job title"
                     value={formData.job}
                     onChange={handleChange}
@@ -151,7 +151,7 @@ const AdminInvite = () => {
               <div className="row justify-content-center">
                 <div className="form-group col-sm-6">
                   <button type="submit" className="btn btn-primary btn-block">
-                    Request a demo
+                    Send Invitation
                   </button>
                 </div>
               </div>
