@@ -819,7 +819,15 @@ Schema.statics.getById = async function (id) {
 }
 Schema.statics.getByUserId = async function (userId , adminId) {
 console.log(userId , adminId , 'idss');
-    let query = adminId ?  this.find({admin : adminId ,  userId: userId, isDeleted: false }) :  this.find({ userId: userId, isDeleted: false })
+    let query = adminId ?  this.find({ userId: userId, isDeleted: false }) : this.find({
+        isDeleted: false,
+        $or: [
+          { admin: userId },
+          { userId: userId }
+        ]
+      });
+      
+      
 
     return await query
         .populate({
