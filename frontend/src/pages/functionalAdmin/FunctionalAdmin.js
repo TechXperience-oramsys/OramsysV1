@@ -28,7 +28,7 @@ const FunctionalAdmin = () => {
     const [login, setLogin] = useState({})
     const [loginFormError, setLoginFormError] = useState({})
     const [loading, setLoading] = useState(false)
-
+  
     useEffect(() => {
         if (loginData) {
             console.log('loginData', loginData)
