@@ -49,7 +49,7 @@ const Routes = () => {
     ) {
       navigate("/");
     } else {
-      navigate("/verify-user");
+      navigate(path);
     }
   };
 

@@ -27,13 +27,14 @@ class UserController {
             email: req.body.email,
             role: "user",
           });
-
+console.log(user[0] , 'here  new user');
           let newUser;
           newUser = {
             id: user[0].id,
             name: user[0].name,
             email: user[0].email,
             token: token,
+            admin : user[0].createdBy
           };
 
           return res
@@ -85,6 +86,7 @@ class UserController {
       email: body.email.toLowerCase(),
       password: newPassword,
       otp: otp,
+      createdBy : body.createdBy
     };
     console.log(generateOTP());
     const model = new User(newUser);
@@ -160,8 +162,11 @@ class UserController {
   }
 
   async getAllUser(req, res, next) {
-    try {
-      const user = await User.getAll();
+    // try {
+
+      
+
+      const user = await User.getAll(req.query.id , req.query.role);
 
       if (user) {
         return res
@@ -172,11 +177,14 @@ class UserController {
       return res
         .status(httpStatus.BAD_REQUEST)
         .send({ message: "user not found" });
-    } catch (e) {
-      return res
-        .status(httpStatus.BAD_REQUEST)
-        .send({ message: "Somethig went wrong" });
-    }
+
+        console.log(user , 'pipoiooj');
+    // } catch (e) {
+    //     console.log(e , 'eee');
+    //   return res
+    //     .status(httpStatus.BAD_REQUEST)
+    //     .send({ message: "Somethig went wrong" });
+    // }
   }
 
   async getUserById(req, res, next) {

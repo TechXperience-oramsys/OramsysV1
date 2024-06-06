@@ -16,6 +16,7 @@ var Schema = new Schema({
     fundFlow: { type: Schema.Types.ObjectId, ref: "TransactionFundFlow", required: false, default: null },
     facility: { type: Schema.Types.ObjectId, ref: "TransactionFacility", required: false, default: null },
     isDeleted: { type: Boolean, required: true, default: false },
+    admin : { type: String, required: true, default: null },
 }, {
     timestamps: true
 })
@@ -816,8 +817,11 @@ Schema.statics.getById = async function (id) {
             }
         }).exec();
 }
-Schema.statics.getByUserId = async function (userId) {
-    return await this.find({ userId: userId, isDeleted: false })
+Schema.statics.getByUserId = async function (userId , adminId) {
+console.log(userId , adminId , 'idss');
+    let query = adminId ?  this.find({admin : adminId ,  userId: userId, isDeleted: false }) :  this.find({ userId: userId, isDeleted: false })
+
+    return await query
         .populate({
             path: "details",
             populate: [

@@ -133,6 +133,18 @@ const Index = () => {
       path: "/edit-transactions",
       component: Edit_Transactions,
     },
+    {
+      path: "/add-user",
+      component: Add_Edit_User,
+    },
+    {
+      path: "/edit-user",
+      component: Add_Edit_User,
+    },
+    {
+      path: "/users",
+      component: Users,
+    },
   ];
   const superAdminRoutes = [
     {

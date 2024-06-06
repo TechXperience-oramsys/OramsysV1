@@ -18,6 +18,7 @@ class entitiesController {
 
     async login(req, res, next) {
         try {
+            console.log('hfrio');
             const entityLogin = req.body.user_name.toLowerCase()
             const entity = await entities.getByEmail(entityLogin)
             if (entity) {
@@ -36,6 +37,7 @@ class entitiesController {
                     } else {
                         name = null
                     }
+                    console.log(entity , 'entities');
                     let newEntity;
                     newEntity = {
                         id: entity.id,

@@ -34,7 +34,6 @@ class AuthStorage {
         localStorage.removeItem(STORAGEKEY.userName);
         localStorage.removeItem(STORAGEKEY.userData);
         localStorage.removeItem(STORAGEKEY.roles);
-
         sessionStorage.removeItem(STORAGEKEY.token);
         sessionStorage.removeItem(STORAGEKEY.userId);
         sessionStorage.removeItem(STORAGEKEY.userName);

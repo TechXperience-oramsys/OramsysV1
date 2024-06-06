@@ -9,7 +9,7 @@ const transactionController = require("../controllers/transaction");
 const { decodeToken } = require("../utils/jwt.helper");
 
 router.get('/get-ports', Validate, transactionController.getPorts);
-router.get('/get/:userId', Validate, transactionController.getAll);
+router.get('/get', Validate, transactionController.getAll);
 router.get('/getById/:id', Validate, transactionController.getById);
 router.post('/add', Validate, transactionController.create);
 router.post('/edit/:id', Validate, transactionController.edit);

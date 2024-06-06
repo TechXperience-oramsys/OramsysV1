@@ -146,6 +146,11 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
         {
           img: HiOutlineUsers,
           text: 'Users',
+          path: "users"
+        },
+        {
+          img: FcPositiveDynamic,
+          text: 'Transactions',
           path: "transactions"
         },
       ]

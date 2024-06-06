@@ -130,6 +130,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
         liborRate: "",
         sofrRate: "",
         otherRate: "",
+        admin : ''
     })
 
     const [currencyHedgeDetailsModal, setCurrencyHedgeDetailsModal] = useState(false)
@@ -874,12 +875,16 @@ const Facility = ({ hendelCancel, hendelNext }) => {
             userId: AuthStorage.getStorageData(STORAGEKEY.userId)
         }
 
+        let user = localStorage.getItem('userData') && JSON.parse( localStorage.getItem('userData') ) 
+        body.admin = user.admin
+
         console.log('body final===', body)
         // return false;
+
         setLoading(true)
         await dispatch(addTransaction(body))
         setLoading(false)
-        navigate("/final-page")
+        // navigate("/final-page")
     }
 
     useEffect(() => {
