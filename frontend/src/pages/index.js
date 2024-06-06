@@ -91,19 +91,19 @@ const Index = () => {
       component: HomeLanding,
     },
     {
-      path: "transactions",
+      path: "/transactions",
       component: Transactions,
     },
     {
-      path: "edit-transactions",
+      path: "/edit-transactions",
       component: Edit_Transactions,
     },
     {
-      path: "risk-assessment",
+      path: "/risk-assessment",
       component: RiskAssessment,
     },
     {
-      path: "final-page",
+      path: "/final-page",
       component: FinalPage,
     },
   ];
@@ -114,23 +114,23 @@ const Index = () => {
       component: HomeLanding,
     },
     {
-      path: "entities",
+      path: "/entities",
       component: Entities,
     },
     {
-      path: "entities-role",
+      path: "/entities-role",
       component: EntitiesRole,
     },
     {
-      path: "add-edit-entities",
+      path: "/add-edit-entities",
       component: Add_Edit_Entities,
     },
     {
-      path: "transactions",
+      path: "/transactions",
       component: Transactions,
     },
     {
-      path: "edit-transactions",
+      path: "/edit-transactions",
       component: Edit_Transactions,
     },
   ];
@@ -140,75 +140,75 @@ const Index = () => {
       component: HomeLanding,
     },
     {
-      path: "add-product",
+      path: "/add-product",
       component: Add_Edit_Product,
     },
     {
-      path: "edit-product",
+      path: "/edit-product",
       component: Add_Edit_Product,
     },
     {
-      path: "products",
+      path: "/products",
       component: Products,
     },
     {
-      path: "entities",
+      path: "/entities",
       component: Entities,
     },
     {
-      path: "entities-role",
+      path: "/entities-role",
       component: EntitiesRole,
     },
     {
-      path: "add-edit-entities",
+      path: "/add-edit-entities",
       component: Add_Edit_Entities,
     },
     {
-      path: "transactions",
+      path: "/transactions",
       component: Transactions,
     },
     {
-      path: "edit-transactions",
+      path: "/edit-transactions",
       component: Edit_Transactions,
     },
     {
-      path: "rating-agencies",
+      path: "/rating-agencies",
       component: RatingAgencies,
     },
     {
-      path: "rating-agencies-edit",
+      path: "/rating-agencies-edit",
       component: RatingAgenciesEdit,
     },
     {
-      path: "add-user",
+      path: "/add-user",
       component: Add_Edit_User,
     },
     {
-      path: "edit-user",
+      path: "/edit-user",
       component: Add_Edit_User,
     },
     {
-      path: "users",
+      path: "/users",
       component: Users,
     },
     {
-      path: "countries",
+      path: "/countries",
       component: Countries,
     },
     {
-      path: "ports",
+      path: "/ports",
       component: Ports,
     },
     {
-      path: "airports",
+      path: "/airports",
       component: AirBases,
     },
     {
-      path: "risk-assessment",
+      path: "/risk-assessment",
       component: RiskAssessment,
     },
     {
-      path: "final-page",
+      path: "/final-page",
       component: FinalPage,
     },
     // {
