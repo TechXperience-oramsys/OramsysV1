@@ -225,6 +225,7 @@ const handleItemClick = (type) => {
       title: 'Contract Value',
       dataIndex: ['details', 'contractDetails', 'value'],
       key: 'contractValue',
+      align: 'center',
       render: (value) => formateCurrencyValue(value),
       sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },

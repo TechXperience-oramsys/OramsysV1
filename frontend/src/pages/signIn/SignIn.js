@@ -123,10 +123,10 @@ const SignIn = () => {
                                     <div className="d-flex mb-5 align-items-center">
                                         <div className='row'>
                                             <div className='col-12 text-center'>
-                                                <label className="control control--checkbox mb-0">
+                                                {/* <label className="control control--checkbox mb-0">
                                                     <span className="caption">Don't Have an account? {" "}
                                                         <a className='fw-semibold' onClick={() => navigate('/signup')}>Register here{" "}<FontAwesomeIcon icon={faArrowRightLong} style={{ color: "#da251e" }}></FontAwesomeIcon></a></span>
-                                                </label>
+                                                </label> */}
                                             </div>
                                             <div className='col-12 text-center mt-4'>
                                                 <span className=""><a href="#" className="mx-auto text-decoration-none forgot-pass">Forgot Password?</a></span>
