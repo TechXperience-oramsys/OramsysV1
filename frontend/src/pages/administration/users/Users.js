@@ -109,6 +109,8 @@ const Users = () => {
                   <div class='mx-n1 me-5 d-flex align-items-center justify-content-end gap-2'>
 
 
+{
+ ( localStorage.getItem('roles').toLowerCase() == 'admin' ||   localStorage.getItem('roles').toLowerCase() == 'superAdmin')  && 
 
                     <Link to='/add-user' style={{ borderColor: '#9E3E65' }} class='btn d-inline-flex btn-md btn-light border-base mx-1 me-3'>
                       <span class=' pe-2'>
@@ -116,7 +118,7 @@ const Users = () => {
                       </span>
                       <span className='fw-bold'>Add User</span>
                     </Link>
-
+}
                   </div>
                 </div>
               </div>

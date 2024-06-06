@@ -24,6 +24,7 @@ const Add_Edit_User = () => {
         email: "",
         department: "",
         profile: "",
+     createdBy : ''
     });
     const [error, setError] = useState()
 
@@ -56,6 +57,7 @@ const Add_Edit_User = () => {
                 email: userEdit.data?.email,
                 department: userEdit.data?.department,
                 profile: userEdit.data?.profile,
+                createdBy : localStorage.getItem('userId')
             })
         }
     }, [userEdit])
@@ -124,6 +126,7 @@ const Add_Edit_User = () => {
             return
         }
         if (id) {
+            state.createdBy = localStorage.getItem('userId')
             dispatch(userUpdateAction(state, id))
         }
     }
@@ -132,6 +135,7 @@ const Add_Edit_User = () => {
             return
         }
         // if (id) {
+          state.createdBy = localStorage.getItem('userId')
             dispatch(registerAction(state))
         // }
     }

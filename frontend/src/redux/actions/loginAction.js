@@ -16,6 +16,9 @@ export const loginAction = (body) => async (dispatch) => {
         })
         await ApiPostNoAuth(`user/login`, body)
             .then((res) => {
+
+                console.log(res , 'response is here');
+
                 dispatch({
                     type: LOGIN,
                     payload: { res: res, is_loggedin: true }

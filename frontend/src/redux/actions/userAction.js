@@ -12,7 +12,11 @@ export const userGetAction = () => async (dispatch) => {
             type: GET_USER_DATA_LOADING,
             payload: true
         })
-        await ApiGet(`user/get`)
+
+        let id = localStorage.getItem('userId');
+        let role = localStorage.getItem('roles')
+
+        await ApiGet(`user/get?id=${id}&role=${role}`)
             .then((res) => {
                 dispatch({
                     type: GET_USER_DATA,

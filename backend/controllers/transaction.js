@@ -39,6 +39,7 @@ class transactionController {
             userId: body.userId,
             lenders: body.lenders,
             borrower_Applicant: body.borrower_Applicant,
+            admin : body.admin
         }
         try {
             const model = new transaction(newTransaction);
@@ -244,13 +245,18 @@ class transactionController {
     }
 
     async getAll(req, res, next) {
-        let userId = req.params.userId
+        let userId = req.query.id
         try {
             let transactions = []
             if (userId === "all") {
                 transactions = await transaction.getAll()
             } else {
-                transactions = await transaction.getByUserId(userId)
+                if(req.query.role.toLowerCase() == 'user'){
+                    let adminId= req.query.adminId
+                    transactions = await transaction.getByUserId(userId , adminId)
+                }else{
+                    transactions = await transaction.getByUserId(req.query.id)
+                } 
             }
             return res.status(httpStatus.OK).json(new APIResponse(transactions, 'Transactions fetch successfully.', httpStatus.OK));
         } catch (e) {

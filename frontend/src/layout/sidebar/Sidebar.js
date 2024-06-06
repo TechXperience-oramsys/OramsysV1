@@ -143,16 +143,16 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           text: 'Profile',
           path: "entities"
         },
-        // {
-        //   img: HiOutlineUsers,
-        //   text: 'Users',
-        //   path: "transactions"
-        // },
-        // {
-        //   img: FcInvite,
-        //   text: 'Invite',
-        //   path: "invite"
-        // },
+        {
+          img: HiOutlineUsers,
+          text: 'Users',
+          path: "users"
+        },
+        {
+          img: FcPositiveDynamic,
+          text: 'Transactions',
+          path: "transactions"
+        },
       ]
     }
   ]

@@ -1012,6 +1012,8 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
             warehouse_status,
             type: transactionType,
         }
+
+
         dispatch(transactionDataAction(body))
         signalContract(body.details.contractDetails)
         signalBorrower(body.borrower_Applicant)

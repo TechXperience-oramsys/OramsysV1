@@ -11,6 +11,8 @@ var Schema = new Schema({
     isDeleted: { type: Boolean, required: true, default: false },
     department: { type: String, required: false, enum: UserDepartmentTypes, default: UserDepartmentTypes.Information_Technology },
     profile: { type: String, required: true, enum: UserProfileTypes, default: UserProfileTypes.User },
+    otp: { type: Number }, 
+    createdBy :{type : String}
 }, {
     timestamps: true
 })
@@ -19,9 +21,39 @@ Schema.statics.createUser = async function () {
     return await this.Save()
 }
 
-Schema.statics.getAll = async function () {
-    return await this.find({ isDeleted: false }).sort({ name: 1 }).exec();
+// Schema.statics.getAll = async function () {
+//     return await this.find({ isDeleted: false }).sort({ name: 1 }).exec();
+// }
+
+// Schema.statics.getAll = async function (createdBy , userType) {
+// console.log(userType , createdBy , 'logs here');
+
+//     if(userType.toLowerCase() == 'admin'){
+//         return await this.find({ isDeleted: false ,  createdBy: createdBy }).sort({ name: 1 }).exec();
+//     }else{
+//         return await this.find({ isDeleted: false }).sort({ name: 1 }).exec();
+//     }
+  
+// }
+
+
+Schema.statics.getAll = async function (createdBy, userType) {
+    console.log(userType, createdBy, 'logs here');
+
+    const query = { isDeleted: false };
+    if (userType?.toLowerCase() === 'admin') {
+        query.createdBy = createdBy;
+        return await this.find(query).sort({ name: 1 }).exec();
+    }else{
+        return await this.find({ isDeleted: false }).sort({ name: 1 }).exec();
+
+    }
+
+   
 }
+
+
+
 
 Schema.statics.getById = async function (id) {
     return await this.findOne({ _id: id, isDeleted: false }).exec();
@@ -31,7 +63,10 @@ Schema.statics.getUserByEmail = async function (loginUser) {
     return await this.find({ email: loginUser, isDeleted: false }).exec()
 }
 
-Schema.statics.updateUser = async function (data,id) {
+
+
+Schema.statics.updateUser = async function (data, id) {
+
     return await this.findOneAndUpdate({
         _id: id
     }, {
