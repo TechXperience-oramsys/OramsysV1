@@ -27,7 +27,7 @@ class UserController {
             email: req.body.email,
             role: "user",
           });
-console.log(user[0] , 'here  new user');
+
           let newUser;
           newUser = {
             id: user[0].id,
