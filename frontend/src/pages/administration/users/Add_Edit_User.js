@@ -24,7 +24,7 @@ const Add_Edit_User = () => {
         email: "",
         department: "",
         profile: "",
-     createdBy : ''
+        createdBy : ''
     });
     const [error, setError] = useState()
 
@@ -126,7 +126,7 @@ const Add_Edit_User = () => {
             return
         }
         if (id) {
-            state.createdBy = localStorage.getItem('userId')
+           delete state.createdBy
             dispatch(userUpdateAction(state, id))
         }
     }

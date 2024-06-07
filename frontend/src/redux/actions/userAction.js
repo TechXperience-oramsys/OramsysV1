@@ -112,6 +112,7 @@ export const userUpdateAction = (userUpdate, id) => async (dispatch) => {
             type: GET_USER_DATA_LOADING,
             payload: true
         })
+     
         await ApiPost(`user/edit/${id}`, userUpdate)
             .then((res) => {
                 dispatch({
