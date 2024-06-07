@@ -12,7 +12,7 @@ export const ratingAgenciesAction = () => async (dispatch) => {
             type: RATINGAGENCIES_LOADING,
             payload: true
         })
-        await ApiGet('ratingAgencies/get?id=all')
+        await ApiGet('ratingAgencies/get/all')
             .then((res) => {
                 dispatch({
                     type: RATINGAGENCIES,

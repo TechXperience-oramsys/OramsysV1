@@ -193,7 +193,7 @@ const Entities = () => {
             <header class='bg-surface-primary border-bottom pt-6'>
               <div class='row align-items-center mb-3'>
                 <div class='col-sm-6 col-12 mb-4 mb-sm-0'>
-                  <h1 class='h2 mb-0 fw-normal fs-4 text-muted ls-tight'>Entities</h1>
+                  <h1 class='h2 mb-0 fw-bold fs-4 ls-tight'>{userId ? 'Profile' : 'Entities'}</h1>
                 </div>
 
                 <div class='col-sm-6 col-12 text-sm-end'>

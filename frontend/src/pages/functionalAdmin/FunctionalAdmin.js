@@ -10,6 +10,8 @@ import { toast } from 'react-toastify'
 import { useOktaAuth } from '@okta/okta-react';
 import svgIcon from '../../css/undraw_developer_activity_re_39tg.svg'
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
+import '../../css/login.css'
+import '../../css/bootstrap.min.css'
 
 
 const FunctionalAdmin = () => {
@@ -26,13 +28,13 @@ const FunctionalAdmin = () => {
     const [login, setLogin] = useState({})
     const [loginFormError, setLoginFormError] = useState({})
     const [loading, setLoading] = useState(false)
-
+  
     useEffect(() => {
         if (loginData) {
             console.log('loginData', loginData)
             if (loginData.status === 200 && loginData.message === "Login Successfully") {
                 // toast.success(loginData.message);
-                navigate('/entities')
+                navigate('/homeLanding')
             }
         }
     }, [loginData])
@@ -77,7 +79,7 @@ const FunctionalAdmin = () => {
             })
             if (res.status === 200 && res.data.token) {
                 toast.success(res.message);
-                navigate("/entities")
+                navigate("/homeLanding")
                 AuthStorage.setStorageData(STORAGEKEY.token, res.data.token, true)
                 AuthStorage.setStorageData(STORAGEKEY.roles, "admin", true)
                 AuthStorage.setStorageData(STORAGEKEY.userId, res.data.id, true)
@@ -100,37 +102,37 @@ const FunctionalAdmin = () => {
     return (
         <>
 
-            <div className="content">
+            <div class="content">
 
-                <div className="container">
+                <div class="container">
 
-                    <div className="row">
+                    <div class="row">
 
-                        <div className="col-md-6 contents">
-                            <div className="row justify-content-center">
-                                <div className="col-md-8">
+                        <div class="col-md-6 contents">
+                            <div class="row justify-content-center">
+                                <div class="col-md-8">
                                     <nav aria-label="breadcrumb">
-                                        <ol className="breadcrumb">
-                                            {/* <li className="breadcrumb-item"><a href="#">Home</a></li> */}
-                                            <li className="breadcrumb-item"><a href="#" onClick={() => navigate('/')}>Staff Login</a></li>
+                                        <ol class="breadcrumb">
+                                            {/* <li class="breadcrumb-item"><a href="#">Home</a></li> */}
+                                            <li class="breadcrumb-item"><a href="#" onClick={() => navigate('/')}>Client Login</a></li>
                                         </ol>
                                     </nav>
-                                    <div className="mb-4">
+                                    <div class="mb-4">
                                         <h3 className='title-admin'>Admin Login</h3>
-                                        <p className="mb-4">This is the admin login portal, if you are not an admin you cannot have access. Please go to the staff login</p>
+                                        <p class="mb-4">This is the admin login portal, if you are not an admin you cannot have access. Please go to the staff login</p>
                                     </div>
 
                                     <div className='form'>
 
-                                        <div className="form-floating mb-3">
-                                            <input type="email" name='email' onChange={handelChange} className="form-control" id="floatingInput" placeholder="Email" />
-                                            <label htmlFor="floatingInputValue">Email address</label>
+                                        <div class="form-floating mb-3">
+                                            <input type="email" name='email' onChange={handelChange} class="form-control" id="floatingInput" placeholder="Email" />
+                                            <label for="floatingInputValue">Email address</label>
                                             {loginFormError.email && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{loginFormError.email}</span>}
                                         </div>
 
-                                        <div className="position-relative form-floating mb-4">
-                                            <input type={passwordVisible ? 'text' : 'password'} onChange={handelChange} name='password' className="form-control" id="floatingPassword" placeholder="Password" />
-                                            <label htmlFor="floatingInputValue">Password</label>
+                                        <div class="position-relative form-floating mb-4">
+                                            <input type={passwordVisible ? 'text' : 'password'} onChange={handelChange} name='password' class="form-control" id="floatingPassword" placeholder="Password" />
+                                            <label for="floatingInputValue">Password</label>
                                             {loginFormError.password && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{loginFormError.password}</span>}
 
                                             <span className="position-absolute end-0 top-50 text-lg translate-middle-y me-3 cursor-pointer"
@@ -139,23 +141,22 @@ const FunctionalAdmin = () => {
                                             </span>
                                         </div>
 
-                                        <button onClick={(e) => Login(e)} className="btn btn-block btn-primary">
-                                        {!loading ? 'Log In' : ''}
-                                        {loading && <div className="d-flex justify-content-center">
-                                            <strong className='me-2'>Logging in...</strong>
-                                            <div className="spinner-border spinner-border-sm mt-1" role="status">
-                                                <span className="visually-hidden">Loading...</span>
-                                            </div>
-                                        </div>}
+                                        <button onClick={(e) => Login(e)} class="btn btn-block btn-primary">
+                                           {!loading ? 'Log In' : ''}
+                                            {loading && <div class="d-flex justify-content-center">
+                                                <strong className='me-2'>Logging in...</strong>
+                                                <div className="spinner-border spinner-border-sm mt-1" role="status">
+                                                    <span class="visually-hidden">Loading...</span>
+                                                </div>
+                                            </div>}
                                         </button>
-                                        
                                     </div>
 
                                 </div>
                             </div>
                         </div>
 
-                        <div className="col-md-6">
+                        <div class="col-md-6">
                             <img src={svgIcon} style={{ height: '480x' }} alt="Image" className='img-slide img-responsive' />
                         </div>
 

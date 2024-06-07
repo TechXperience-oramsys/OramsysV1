@@ -12,7 +12,7 @@ import { FaBoxOpen, } from 'react-icons/fa';
 import { HiOutlineLogout, HiOutlineUsers } from "react-icons/hi";
 import { GiCargoShip } from "react-icons/gi";
 import { ImOffice } from "react-icons/im";
-import { FcHome, FcLock, FcCollaboration, FcWorkflow, FcViewDetails, FcPositiveDynamic } from "react-icons/fc";
+import { FcHome, FcLock, FcInvite, FcCollaboration, FcWorkflow, FcViewDetails, FcPositiveDynamic } from "react-icons/fc";
 import Fade from 'react-reveal/Fade';
 
 
@@ -133,11 +133,11 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           text: 'Dashboard',
           path: "homeLanding"
         },
-        {
-          img: FcPositiveDynamic,
-          text: 'Staff Transactions',
-          path: "transactions"
-        },
+        // {
+        //   img: FcPositiveDynamic,
+        //   text: 'Staff Transactions',
+        //   path: "transactions"
+        // },
         {
           img: FcCollaboration,
           text: 'Profile',
@@ -220,7 +220,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
               <div style={{ 'width': "100%", 'zIndex': '11111' }} className='navbar-light'>
                 {
                   navbarData.map((item, i) => (
-                    <div key={item} className={`${item.text === "Jobs" ? "d-block navbar-body" : 'navbar-body'} text-white`}>
+                    <div key={i} className={`${item.text === "Jobs" ? "d-block navbar-body" : 'navbar-body'} text-white`}>
                       <div className='d-flex align-items-center ps-3 gap-3 mx-2 my-4'>
                         <item.img size={20} />
                         <Nav.Link className=' p-0' onClick={() => ShowSubItem({ text: item.text, path: item.path })}>{item.text} {item.text === "Administration" ? <img alt="" src='../../../../../assets/img/about/down-filled-triangular-arrow.png' className={`${showItem === "Administration" ? 'img-roted' : 'img-roted_unset'}`} /> : ""}</Nav.Link>
@@ -229,14 +229,14 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
                         showItem === item.text && "subItem" in item &&
                         item.subItem?.map((subItem, i) => {
                           return <>
-                            <div key={subItem} className='d-flex align-items-center gap-3 mx-4 my-4 ps-2'>
+                            <div key={i} className='d-flex align-items-center gap-3 mx-4 my-4 ps-2'>
                               <subItem.img size={20} />
                               <Nav.Link className=' p-0 ' onClick={() => ShowSubItem({ text: subItem.text, path: subItem.path })}>{subItem.text} {subItem.text === 'Master Data' ? <img alt="" src='../../../../../assets/img/about/down-filled-triangular-arrow.png' className={`${showSubItem === "Master Data" ? 'img-roted' : 'img-roted_unset'}`} /> : ""}</Nav.Link>
                             </div>
                             {
                               showSubItem === subItem.text && "subData" in subItem &&
                               subItem.subData?.map((subSubItem, i) => (
-                                <div key={subSubItem} className='d-flex align-items-center gap-3 my-4 mx-4 ps-3'>
+                                <div key={i} className='d-flex align-items-center gap-3 my-4 mx-4 ps-3'>
                                   <subSubItem.img size={16} />
                                   <NavLink className='text-white text-decoration-none' to={subSubItem.path} style={{ display: "block" }}>{subSubItem.text}</NavLink>
                                 </div>

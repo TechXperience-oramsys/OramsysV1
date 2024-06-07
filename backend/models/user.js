@@ -12,7 +12,7 @@ var Schema = new Schema({
     department: { type: String, required: false, enum: UserDepartmentTypes, default: UserDepartmentTypes.Information_Technology },
     profile: { type: String, required: true, enum: UserProfileTypes, default: UserProfileTypes.User },
     otp: { type: Number }, 
-    createdBy :{type : String}
+    createdBy: {type : String}
 }, {
     timestamps: true
 })

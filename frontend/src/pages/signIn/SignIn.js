@@ -129,7 +129,7 @@ const SignIn = () => {
                                                 </label> */}
                                             </div>
                                             <div className='col-12 text-center mt-4'>
-                                                <span className="ml-auto"><a href="#" className="text-decoration-none forgot-pass">Forgot Password?</a></span>
+                                                <span className=""><a href="#" className="mx-auto text-decoration-none forgot-pass">Forgot Password?</a></span>
                                             </div>
                                         </div>
                                     </div>
