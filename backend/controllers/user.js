@@ -27,14 +27,14 @@ class UserController {
             email: req.body.email,
             role: "user",
           });
-console.log(user[0] , 'here  new user');
+          console.log(user[0], 'here  new user');
           let newUser;
           newUser = {
             id: user[0].id,
             name: user[0].name,
             email: user[0].email,
             token: token,
-            admin : user[0].createdBy
+            admin: user[0].createdBy
           };
 
           return res
@@ -86,7 +86,7 @@ console.log(user[0] , 'here  new user');
       email: body.email.toLowerCase(),
       password: newPassword,
       otp: otp,
-      createdBy : body.createdBy
+      createdBy: body.createdBy
     };
     console.log(generateOTP());
     const model = new User(newUser);
@@ -101,15 +101,13 @@ console.log(user[0] , 'here  new user');
           host: "c116604.sgvps.net",
           port: 465,
           auth: {
-            user: "notification@oramsysdev.com ",
+            user: "notification@techxperience.ng",
             pass: "0ramsys!@#",
           },
         });
-
-     
         // Email content
         const mailOptions = {
-          from: "notification@oramsysdev.com", // Sender address
+          from: "notification@techxperience.ng", // Sender address
           to: body.email, // List of recipients
           subject: "Otp from oramsys",
           text: "User create succesfully ", // Plain text body
@@ -165,21 +163,21 @@ console.log(user[0] , 'here  new user');
   async getAllUser(req, res, next) {
     // try {
 
-      
 
-      const user = await User.getAll(req.query.id , req.query.role);
 
-      if (user) {
-        return res
-          .status(httpStatus.OK)
-          .json(new APIResponse(user, "User get successfully.", httpStatus.OK));
-      }
+    const user = await User.getAll(req.query.id, req.query.role);
 
+    if (user) {
       return res
-        .status(httpStatus.BAD_REQUEST)
-        .send({ message: "user not found" });
+        .status(httpStatus.OK)
+        .json(new APIResponse(user, "User get successfully.", httpStatus.OK));
+    }
 
-        console.log(user , 'pipoiooj');
+    return res
+      .status(httpStatus.BAD_REQUEST)
+      .send({ message: "user not found" });
+
+    console.log(user, 'pipoiooj');
     // } catch (e) {
     //     console.log(e , 'eee');
     //   return res
