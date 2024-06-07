@@ -24,9 +24,9 @@ const RatingAgencies = () => {
     dispatch(countrieAction("all"))
   }, [dispatch])
 
-  // useEffect(() => {
-  //   setratingData(ratingAgenciesDatas)
-  // }, [ratingAgenciesDatas])
+  useEffect(() => {
+    setratingData(ratingAgenciesDatas)
+  }, [ratingAgenciesDatas])
 
   useEffect(() => {
     // console.log('ratingAgenciesDatas', ratingAgenciesDatas.data)
@@ -52,6 +52,7 @@ const RatingAgencies = () => {
   const indexOfLastItem = currentPage * postsPerPage
   const indexOfFirstItem = indexOfLastItem - postsPerPage
   const getAgencies = ratingData?.slice(indexOfFirstItem, indexOfLastItem)
+  console.log('check agencies', getAgencies)
   //page change
   const paginate = (pageNumber) => setCurrentPage(pageNumber)
 

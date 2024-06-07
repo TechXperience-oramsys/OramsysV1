@@ -1,13 +1,8 @@
-import React, { useState, useEffect, useCallback } from "react"
-import Nav from "react-bootstrap/Nav"
-import { FaAngleRight, FaSearch } from "react-icons/fa"
-import { BsCheckCircle, BsBox, BsFillPeopleFill } from "react-icons/bs"
+import React, { useState, useEffect, useCallback, useMemo } from "react"
+import { BsBox, BsFillPeopleFill } from "react-icons/bs"
 import { IoTimerOutline } from "react-icons/io5"
-import { FcBusinessman, FcApproval, FcClock } from "react-icons/fc"
+import { FcBusinessman } from "react-icons/fc"
 import { GrTransaction } from "react-icons/gr"
-import Button from "react-bootstrap/Button"
-import ButtonGroup from "react-bootstrap/ButtonGroup"
-import Dropdown from "react-bootstrap/Dropdown"
 import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 import AuthStorage from "../../helper/AuthStorage"
@@ -18,9 +13,10 @@ import { productGetAction } from "../../redux/actions/productAction"
 import { getAllTransaction } from "../../redux/actions/transactionDataAction"
 import { entityGetAction } from "../../redux/actions/entityAction"
 import { userGetAction } from "../../redux/actions/userAction"
+import { ratingAgenciesAction } from "../../redux/actions/ratingAgenciesAction"
 import { ApiGet, ApiGet2 } from "../../helper/API/ApiData"
 import Slide from 'react-reveal/Slide';
-import { Bar } from 'react-chartjs-2';
+import { BankOutlined, StockOutlined } from '@ant-design/icons'
 
 const HomeLanding = () => {
   const token = AuthStorage.getToken()
@@ -28,19 +24,6 @@ const HomeLanding = () => {
   const [showSubData, setShowSubData] = useState(false)
   const [search, setSearch] = useState('')
   console.log(search)
-
-  const data = {
-    labels: ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5'],
-    datasets: [
-      {
-        label: 'Graph Data',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
-        data: [12, 19, 8, 10, 9],
-      },
-    ],
-  };
 
   const dispatch = useDispatch()
   const cards = [
@@ -73,16 +56,39 @@ const HomeLanding = () => {
       color: "bg-warning",
       name: "entities",
     },
+    {
+      title: "Rating Agencies",
+      img: "rating",
+      icon: BankOutlined,
+      color: "bg-red-600",
+      name: "rating",
+    },
+    {
+      title: "Total Sales",
+      img: "sales",
+      icon: StockOutlined,
+      color: "bg-teal-500",
+      name: "entities",
+    },
+    
   ]
 
-  const getAlltransactionData = useSelector(
-    (state) => state.transactionData.getAllTransaction
-  )
+  const getAlltransactionData = useSelector((state) => state.transactionData.getAllTransaction)
   const productGetDatas = useSelector((state) => state.product.product)
   const getAllUsers = useSelector((state) => state.userData.getUserData)
   const getAllEntities = useSelector((state) => state.entityData.entity)
-  // console.log("alltransactionn", getAlltransactionData)
+  const ratingAgenciesDatas = useSelector((state) => state.ratingAgenciesData?.ratingAgencies)
 
+  const totalValue = useMemo(() => {
+    if (!getAlltransactionData?.data) return 0;
+
+    return getAlltransactionData.data.reduce((acc, item) => {
+      const value = item?.details?.contractDetails?.value;
+      return acc + (value ? Number(value) : 0);
+    }, 0);
+  }, [getAlltransactionData]);
+
+console.log("alltransactionn", getAlltransactionData)
   //Get data counts on everything
   const getCount = useCallback(
     (name) => {
@@ -95,11 +101,13 @@ const HomeLanding = () => {
           return getAllUsers?.data?.length // or the array of users like users.length;
         case "entities":
           return getAllEntities?.data?.length
+        case "rating":
+          return ratingAgenciesDatas?.data?.length
         default:
           return
       }
     },
-    [getAllUsers, getAlltransactionData, productGetDatas, getAllEntities]
+    [getAllUsers, getAlltransactionData, productGetDatas, getAllEntities, ratingAgenciesDatas]
   )
 
   const signedCount = []
@@ -119,8 +127,7 @@ const HomeLanding = () => {
 
   //get all transaction
   const Authsend = useCallback(() => {
-    let id =
-      AuthStorage.getStorageData(STORAGEKEY.roles) !== "superAdmin"
+    let id = AuthStorage.getStorageData(STORAGEKEY.roles) !== "superAdmin"
         ? AuthStorage.getStorageData(STORAGEKEY.userId)
         : "all"
     dispatch(getAllTransaction(id))
@@ -136,12 +143,17 @@ const HomeLanding = () => {
   const userAction = useCallback(() => {
     dispatch(userGetAction())
   }, [dispatch])
+  const agencyAction = useCallback(() => {
+    dispatch(ratingAgenciesAction())
+  }, [dispatch])
+ 
 
   useEffect(() => {
     dispatch(() => Authsend())
     dispatch(() => prodAction())
     dispatch(() => entityAction())
     dispatch(() => userAction())
+    dispatch(() => agencyAction())
     // console.log(getAlltransactionData)
     // eslint-disable-next-line
   }, [])
@@ -229,7 +241,7 @@ const HomeLanding = () => {
                           <div className='card-body'>
                             <div className='row'>
                               <div className='col'>
-                                <span className='h6 font-semibold text-muted text-sm d-block mb-2'>
+                                <span className='h6 font-semibold fw-2 text-muted text-md d-block mb-2'>
                                   {card.title}
                                 </span>
                                 <span className='h3 font-bold mb-0'>
@@ -237,9 +249,7 @@ const HomeLanding = () => {
                                 </span>
                               </div>
                               <div className='col-auto'>
-                                <div
-                                  className={`icon icon-shape ${card.color} text-white text-lg rounded-circle`}
-                                >
+                                <div className={`icon icon-shape ${card.color} text-white text-lg rounded-circle`}>
                                   <card.icon size={56} />
                                 </div>
                               </div>
@@ -268,28 +278,16 @@ const HomeLanding = () => {
                                   </span>
                                   <span className='text-nowrap text-xs text-muted'>
                                     {card.title === "Available Products" ? (
-                                      <Link
-                                        className='text-decoration-none'
-                                        to='/products'
-                                      >
-                                        View Products{" "}
-                                        <i className='bi bi-arrow-right me-1'></i>
+                                      <Link className='text-decoration-none'to='/products'>
+                                        View Products{" "} <i className='bi bi-arrow-right me-1'></i>
                                       </Link>
                                     ) : card.title === "Registered Users" ? (
-                                      <Link
-                                        className='text-decoration-none'
-                                        to='/users'
-                                      >
-                                        View Users{" "}
-                                        <i className='bi bi-arrow-right me-1'></i>
+                                      <Link className='text-decoration-none'to='/users'>
+                                        View Users{" "} <i className='bi bi-arrow-right me-1'></i>
                                       </Link>
                                     ) : card.title === "Entities" ? (
-                                      <Link
-                                        className='text-decoration-none'
-                                        to='/entities'
-                                      >
-                                        View Entities{" "}
-                                        <i className='bi bi-arrow-right me-1'></i>
+                                      <Link className='text-decoration-none' to='/entities'>
+                                        View Entities{" "} <i className='bi bi-arrow-right me-1'></i>
                                       </Link>
                                     ) : (
                                       ""
@@ -433,7 +431,7 @@ const HomeLanding = () => {
                                 {notSignedCount.length}
                               </span>
                             </div>
-                            
+
                             <div className='col-auto'>
                               <div
                                 className={`icon icon-shape bg-primary text-white text-lg rounded-circle`}
@@ -490,7 +488,7 @@ const HomeLanding = () => {
                             getAlltransactionData?.data?.filter((item) => {
                               return search.toLowerCase() === '' ? item : item.borrower_Applicant.toLowerCase().includes(search)
                             }).map((data, i) => (
-                              <tr key={data} >
+                              <tr key={i} >
                                 <td>
                                   {new Date(data.createdAt).toLocaleDateString("en-US", DATE_OPTIONS)}
                                 </td>
@@ -527,7 +525,7 @@ const HomeLanding = () => {
                                   }} className='btn btn-sm btn-neutral'>
                                     View Termsheet
                                   </Link>
-                                  
+
                                 </td>
                               </tr>
                             ))}
@@ -537,7 +535,7 @@ const HomeLanding = () => {
                       {getAlltransactionData?.data?.length < 1 && <div className='text-center mx-auto container py-5 my-5 m-5'> No records were found</div>}
 
                     </div>
-                   
+
                   </div>
                 </div>
               </Slide>

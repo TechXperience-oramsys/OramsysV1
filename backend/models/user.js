@@ -7,7 +7,7 @@ var Schema = mongoose.Schema
 var Schema = new Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: { type: String, required: false },
     isDeleted: { type: Boolean, required: true, default: false },
     department: { type: String, required: false, enum: UserDepartmentTypes, default: UserDepartmentTypes.Information_Technology },
     profile: { type: String, required: true, enum: UserProfileTypes, default: UserProfileTypes.User },
