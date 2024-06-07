@@ -98,14 +98,15 @@ class UserController {
 
         // Replace with your actual credentials (avoid hardcoding in production)
         const transporter = nodemailer.createTransport({
-          host: "sandbox.smtp.mailtrap.io",
-          port: 2525,
+          host: "c116604.sgvps.net",
+          port: 465,
           auth: {
-            user: "08fb7d6dcf0757",
-            pass: "7d833674a6270c",
+            user: "notification@oramsysdev.com ",
+            pass: "0ramsys!@#",
           },
         });
 
+     
         // Email content
         const mailOptions = {
           from: "notification@oramsysdev.com", // Sender address
@@ -113,7 +114,7 @@ class UserController {
           subject: "Otp from oramsys",
           text: "User create succesfully ", // Plain text body
           html: `<b>This is the otp  ${otp} by using this otp you can create your password </b>
-                    <a href="http://localhost:3000/verify-user"> Verify Account</a>`,
+                    <a href="https://oramsysdev.com/verify-user"> Verify Account</a>`,
 
           // HTML body (optional)
         };
