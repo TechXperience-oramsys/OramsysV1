@@ -27,7 +27,7 @@ class UserController {
             email: req.body.email,
             role: "user",
           });
-
+console.log(user[0] , 'here  new user');
           let newUser;
           newUser = {
             id: user[0].id,
@@ -92,20 +92,18 @@ class UserController {
     const model = new User(newUser);
     try {
       const alreadyExist = await User.getUserByEmail(req.body.email);
-      console.log("tetstyuuuo jhyuh" );
+      console.log("tetstyuuuo jhyuh");
       if (!alreadyExist.length) {
         const nodemailer = require("nodemailer");
 
-          // return console.log('check exist', alreadyExist)
-
         // Replace with your actual credentials (avoid hardcoding in production)
-        var transport = nodemailer.createTransport({
+        const transporter = nodemailer.createTransport({
           host: "sandbox.smtp.mailtrap.io",
           port: 2525,
           auth: {
-            user: "3213cb28c75eb4",
-            pass: "2800890103699d"
-          }
+            user: "08fb7d6dcf0757",
+            pass: "7d833674a6270c",
+          },
         });
 
         // Email content
@@ -121,7 +119,7 @@ class UserController {
         };
 
         // Send the email
-        transport.sendMail(mailOptions, (error, info) => {
+        transporter.sendMail(mailOptions, (error, info) => {
           if (error) {
             console.error("Error sending email:", error);
           } else {
