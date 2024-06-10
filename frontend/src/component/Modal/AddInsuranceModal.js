@@ -3,7 +3,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
 import { Col, Row } from 'react-bootstrap';
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import { FormControl, InputLabel, Select, TextField } from '@material-ui/core';
 import { DropzoneArea } from 'material-ui-dropzone';
 import { Autocomplete } from "@autocomplete/material-ui";

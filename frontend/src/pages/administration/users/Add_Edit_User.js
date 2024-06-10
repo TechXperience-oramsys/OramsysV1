@@ -7,7 +7,7 @@ import Select from '@material-ui/core/Select';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userGetByIdAction, userUpdateAction } from '../../../redux/actions/userAction';
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import { REGISTER, USER_GET_BY_ID, USER_UPDATE } from '../../../redux/types';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { registerAction } from '../../../redux/actions/registerAction';
@@ -24,7 +24,7 @@ const Add_Edit_User = () => {
         email: "",
         department: "",
         profile: "",
-        createdBy : ''
+        createdBy: ''
     });
     const [error, setError] = useState()
 
@@ -57,7 +57,7 @@ const Add_Edit_User = () => {
                 email: userEdit.data?.email,
                 department: userEdit.data?.department,
                 profile: userEdit.data?.profile,
-                createdBy : localStorage.getItem('userId')
+                createdBy: localStorage.getItem('userId')
             })
         }
     }, [userEdit])
@@ -126,7 +126,7 @@ const Add_Edit_User = () => {
             return
         }
         if (id) {
-           delete state.createdBy
+            delete state.createdBy
             dispatch(userUpdateAction(state, id))
         }
     }
@@ -135,8 +135,8 @@ const Add_Edit_User = () => {
             return
         }
         // if (id) {
-          state.createdBy = localStorage.getItem('userId')
-            dispatch(registerAction(state))
+        state.createdBy = localStorage.getItem('userId')
+        dispatch(registerAction(state))
         // }
     }
 

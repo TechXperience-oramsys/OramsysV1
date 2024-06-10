@@ -2,8 +2,7 @@ import Pages from "../pages";
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Security } from "@okta/okta-react";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from 'react-hot-toast';
 import { useEffect, useState } from "react";
 
 const OKTA_DOMAIN = "dev-09386955";
@@ -58,7 +57,7 @@ const Routes = () => {
   };
   return (
     <Security restoreOriginalUri={restoreOriginalUri} oktaAuth={oktaAuth}>
-      <ToastContainer />
+      <Toaster />
       <Pages />
     </Security>
   );

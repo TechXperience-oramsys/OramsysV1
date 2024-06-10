@@ -5,7 +5,7 @@ import { ApiPostNoAuth } from '../../helper/API/ApiData';
 import AuthStorage from '../../helper/AuthStorage';
 import { LOGIN } from '../../redux/types';
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import svgIcon from '../../css/lock.svg'
 import '../../css/login.css'
 import '../../css/bootstrap.min.css'
@@ -137,7 +137,7 @@ const AdminLogin = () => {
                                         </div>
 
                                         <button onClick={(e) => Login(e)} class="btn btn-block btn-primary">
-                                           {!loading ? 'Log In' : ''}
+                                            {!loading ? 'Log In' : ''}
                                             {loading && <div class="d-flex justify-content-center">
                                                 <strong className='me-2'>Logging in...</strong>
                                                 <div className="spinner-border spinner-border-sm mt-1" role="status">

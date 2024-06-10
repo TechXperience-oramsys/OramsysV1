@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux'
 import AuthStorage from '../../helper/AuthStorage'
 import STORAGEKEY from '../../config/APP/app.config'
 import { ADD_TRANSACTION, EDIT_TRANSACTION, GET_TRANSACTION_BY_ID } from '../../redux/types'
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import moment from "moment"
 import { productGetAction } from '../../redux/actions/productAction'
 import { companydataAction } from '../../redux/actions/companydataAction'
@@ -130,7 +130,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
         liborRate: "",
         sofrRate: "",
         otherRate: "",
-        admin : ''
+        admin: ''
     })
 
     const [currencyHedgeDetailsModal, setCurrencyHedgeDetailsModal] = useState(false)
@@ -875,7 +875,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
             userId: AuthStorage.getStorageData(STORAGEKEY.userId)
         }
 
-        let user = localStorage.getItem('userData') && JSON.parse( localStorage.getItem('userData') ) 
+        let user = localStorage.getItem('userData') && JSON.parse(localStorage.getItem('userData'))
         body.admin = user.admin
 
         console.log('body final===', body)
@@ -1050,36 +1050,36 @@ const Facility = ({ hendelCancel, hendelNext }) => {
         precedentTogref.current && window.addEventListener('click', (e) => {
             precedentTogref.current.contains && !precedentTogref.current.contains(e.target) && setViewsPrecedent(false);
         }, true);
-    
+
         subsequentTogref.current && window.addEventListener('click', (e) => {
             subsequentTogref.current.contains && !subsequentTogref.current.contains(e.target) && setViewsSubsequent(false);
         }, true);
-    
+
         repsTogref.current && window.addEventListener('click', (e) => {
             repsTogref.current.contains && !repsTogref.current.contains(e.target) && setViewsReps(false);
         }, true);
-    
+
         bacTogref.current && window.addEventListener('click', (e) => {
             bacTogref.current.contains && !bacTogref.current.contains(e.target) && setViewsBac(false);
         }, true);
-    
+
         fincovTogref.current && window.addEventListener('click', (e) => {
             fincovTogref.current.contains && !fincovTogref.current.contains(e.target) && setViewsFincov(false);
         }, true);
-    
+
         infocovTogref.current && window.addEventListener('click', (e) => {
             infocovTogref.current.contains && !infocovTogref.current.contains(e.target) && setViewsInfo(false);
         }, true);
-    
+
         undertakingsTogref.current && window.addEventListener('click', (e) => {
             undertakingsTogref.current.contains && !undertakingsTogref.current.contains(e.target) && setViewsUndertakings(false);
         }, true);
-    
+
         eventsTogref.current && window.addEventListener('click', (e) => {
             eventsTogref.current.contains && !eventsTogref.current.contains(e.target) && setEventOfDefault(false);
         }, true);
-    }, []); 
-    
+    }, []);
+
 
     // const HandleSelection = (val) => {
     //     const findData = facility.representations.find(ele => ele === val);
@@ -1743,14 +1743,14 @@ const Facility = ({ hendelCancel, hendelNext }) => {
 
                 <div className='add-edit-product p-0'>
                     <div className='form' style={{ backgroundColor: "rgb(243, 243, 243)", border: "none" }}>
-                       
+
 
 
                         <div className='product p-0'>
                             <div className='mb-5'>
                                 <div className='mb-3 d-flex justify-content-between align-items-center'>
                                     <h6 className="fs-5 fw-bold">Source of Repayment</h6>
-                   
+
                                     <Button onClick={() => { setAddSourceOfRepayment(true) }} class='btn d-inline-flex btn-md btn-light border-base mx-1 me-1'>
                                         <span class=' pe-2'><i class="bi bi-plus pe-1 "></i></span>
                                         <span className='fw-bold'>Add</span>
@@ -1927,18 +1927,18 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                     <Form.Label>Conditions Precedent</Form.Label>
                                     <div style={StyleSheet.container}>
                                         {facility.conditionsPrecedent && (
-                                             <div ref={precedentTogref} style={viewsPrecedent ? StyleSheet.overall : StyleSheet.closeView}>
-                                             {precedentOptions.map((item, i) => (
-                                                 <div onClick={() => HandleSelection('conditionsPrecedent', item, precedentTogref)} style={facility.conditionsPrecedent.includes(item) ? StyleSheet.datashown : StyleSheet.data} key={i}>
-                                                     {item}
-                                                 </div>
-                                             ))}
-                                             {facility.conditionsPrecedent.length === precedentOptions.length && (
-                                                 <div>No more options to select</div>
-                                             )}
-                                         </div>
+                                            <div ref={precedentTogref} style={viewsPrecedent ? StyleSheet.overall : StyleSheet.closeView}>
+                                                {precedentOptions.map((item, i) => (
+                                                    <div onClick={() => HandleSelection('conditionsPrecedent', item, precedentTogref)} style={facility.conditionsPrecedent.includes(item) ? StyleSheet.datashown : StyleSheet.data} key={i}>
+                                                        {item}
+                                                    </div>
+                                                ))}
+                                                {facility.conditionsPrecedent.length === precedentOptions.length && (
+                                                    <div>No more options to select</div>
+                                                )}
+                                            </div>
                                         )}
-                                       
+
                                         <div onClick={() => setViewsPrecedent(true)} style={StyleSheet.fieldPadding} className="border rounded-2 border-1 h-fit-content">
                                             {facility.conditionsPrecedent.length > 0 ? (
                                                 <div style={StyleSheet.showRoom}>

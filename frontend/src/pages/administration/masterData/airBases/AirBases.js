@@ -9,7 +9,7 @@ import { Backdrop, Fade, Modal, TextField } from '@material-ui/core';
 import axios from 'axios';
 import { ApiPost, BaseURL } from '../../../../helper/API/ApiData';
 import { airPortsAction } from '../../../../redux/actions/portsAction';
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import { MdEdit } from 'react-icons/md';
 // import { Tooltip } from 'react-tooltip';
 import Paginate from './airbasePagination';
@@ -74,7 +74,7 @@ const AirBases = ({ showSidebar, setSidebar }) => {
         </div>
       </div> */}
       <div className='product'>
-      <div class='col-sm-6 col-12 mb-4 mb-sm-0'>
+        <div class='col-sm-6 col-12 mb-4 mb-sm-0'>
           <h1 class='h2 mb-0 fw-bold fs-2 ls-tight'>AirPorts</h1>
         </div>
 
@@ -122,8 +122,8 @@ const AirBases = ({ showSidebar, setSidebar }) => {
                       <div class="d-flex justify-content-end m-2">
                         <div class="align-items-center">
                           <MdEdit onClick={() => {
-                             setShow(true); setAirPortForEdit(airPortData?.data?.find(item => item._id === data._id))
-                           }}
+                            setShow(true); setAirPortForEdit(airPortData?.data?.find(item => item._id === data._id))
+                          }}
                             // data-tooltip-id='edit-id'
                             // data-tooltip-content='Edit Product'
                             className='cursor-pointer'
@@ -139,10 +139,10 @@ const AirBases = ({ showSidebar, setSidebar }) => {
               </tbody>
             </table>
             {!getAirbases && <div class="d-flex justify-content-center mx-auto container py-5 my-5 m-5">
-                  <div class="spinner-border" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                </div> }
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>}
             {airPortData?.length < 1 && <div className='text-center mx-auto container py-5 my-5 m-5'> No records were found</div>}
             <div class="card-footer border-0 py-2 mb-5">
 
@@ -220,7 +220,7 @@ const AirBases = ({ showSidebar, setSidebar }) => {
                       name='refcode'
                       value={airPortForEdit?.refcode}
                       onChange={(e) => setAirPortForEdit({ ...airPortForEdit, refcode: e.target.value })}
-                    /> 
+                    />
                   </Col>
                 </Row>
               </div>
@@ -228,7 +228,7 @@ const AirBases = ({ showSidebar, setSidebar }) => {
                 <div>
                   <button onClick={() => setShow(false)} className="footer_cancel_btn">cancel</button>
                 </div>
-                <button onClick={() => editAirBase() } className={`footer_next_btn`}>Save</button>
+                <button onClick={() => editAirBase()} className={`footer_next_btn`}>Save</button>
               </div>
             </div>
           </div>

@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { companydataAction } from '../../../../redux/actions/companydataAction'
 import { editEntityAction, entityAddAction } from '../../../../redux/actions/entityAction';
 import { COMPANY_DATA, EDIT_ENTITY, ENTITY_ADD, ENTITY_GET_BY_ID } from '../../../../redux/types';
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import { useLocation, useNavigate } from 'react-router-dom';
 import ReactHtmlParser from 'react-html-parser';
 import { entitiesRoleAction } from '../../../../redux/actions/entitiesRoleAction';
@@ -200,9 +200,9 @@ const Roles = ({ hendelNext, hendelCancel }) => {
                 <div className='footer_'>
                     <button onClick={() => { hendelCancel() }} className="footer_cancel_btn">cancel</button>
                     <button onClick={() => id ? edit() : Save()} className={`footer_next_btn ${isView ? 'd-none' : 'd-block'}`}>
-                    {!loading ? <>{id ? "Edit" : "Save"}</> : null}
+                        {!loading ? <>{id ? "Edit" : "Save"}</> : null}
                         {loading && <div class="d-flex justify-content-center">
-                        <strong className='me-2'>Saving...</strong>
+                            <strong className='me-2'>Saving...</strong>
                             <div className="spinner-border spinner-border-sm mt-1" role="status">
                                 <span class="visually-hidden">Loading...</span>
                             </div>

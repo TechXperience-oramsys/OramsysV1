@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { loginAction } from '../../redux/actions/loginAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { useOktaAuth } from '@okta/okta-react';
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import { LOGIN } from '../../redux/types';
 import svgIcon from '../../css/undraw_remotely_2j6y.svg'
 import '../../css/login.css'
@@ -84,13 +84,13 @@ const SignIn = () => {
     return (
         <div className="content">
             <div className="container">
-                <div className="row">
-                    <div className="col-md-6">
+                <div className="">
+                    {/* <div className="col-md-6">
                         <img src={svgIcon} style={{ height: '480x' }} alt="Image" className='img-slide img-responsive' />
-                    </div>
-                    <div className="col-md-6 contents">
+                    </div> */}
+                    <div className=" contents">
                         <div className="row justify-content-center">
-                            <div className="col-md-8">
+                            <div className="col-md-6">
                                 <nav aria-label="breadcrumb">
                                     <ol className="breadcrumb">
                                         {/* <li className="breadcrumb-item"><a href="#">Home</a></li> */}
@@ -115,19 +115,19 @@ const SignIn = () => {
                                         {loginFormError.password && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{loginFormError.password}</span>}
 
                                         <span className="position-absolute end-0 top-50 text-lg translate-middle-y me-3 cursor-pointer"
-                                                onClick={togglePasswordVisibility}>
-                                                {passwordVisible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
-                                            </span>
+                                            onClick={togglePasswordVisibility}>
+                                            {passwordVisible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                                        </span>
                                     </div>
 
                                     <div className="d-flex mb-5 align-items-center">
-                                        <div className='row'>
-                                            <div className='col-12 text-center'>
-                                                {/* <label className="control control--checkbox mb-0">
+                                        <div className='mx-auto'>
+                                            {/* <div className='col-12 text-center'>
+                                                <label className="control control--checkbox mb-0">
                                                     <span className="caption">Don't Have an account? {" "}
                                                         <a className='fw-semibold' onClick={() => navigate('/signup')}>Register here{" "}<FontAwesomeIcon icon={faArrowRightLong} style={{ color: "#da251e" }}></FontAwesomeIcon></a></span>
-                                                </label> */}
-                                            </div>
+                                                </label>
+                                            </div> */}
                                             <div className='col-12 text-center mt-4'>
                                                 <span className=""><a href="#" className="mx-auto text-decoration-none forgot-pass">Forgot Password?</a></span>
                                             </div>

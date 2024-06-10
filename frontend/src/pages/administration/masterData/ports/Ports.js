@@ -9,7 +9,7 @@ import { Backdrop, Fade, Modal, TextField } from '@material-ui/core';
 import axios from 'axios';
 import { ApiPost, BaseURL } from '../../../../helper/API/ApiData';
 import { portsAction } from '../../../../redux/actions/portsAction';
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import Paginate from './portsPagination';
 import { MdEdit } from 'react-icons/md';
 // import { Tooltip } from 'react-tooltip';

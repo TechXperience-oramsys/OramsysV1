@@ -6,7 +6,7 @@ import STORAGEKEY from '../../config/APP/app.config';
 import { ApiPostNoAuth } from '../../helper/API/ApiData';
 import AuthStorage from '../../helper/AuthStorage';
 import { LOGIN } from '../../redux/types';
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import { useOktaAuth } from '@okta/okta-react';
 import svgIcon from '../../css/undraw_developer_activity_re_39tg.svg'
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
@@ -28,7 +28,7 @@ const FunctionalAdmin = () => {
     const [login, setLogin] = useState({})
     const [loginFormError, setLoginFormError] = useState({})
     const [loading, setLoading] = useState(false)
-  
+
     useEffect(() => {
         if (loginData) {
             console.log('loginData', loginData)
@@ -108,9 +108,9 @@ const FunctionalAdmin = () => {
 
                     <div class="row">
 
-                        <div class="col-md-6 contents">
+                        <div class=" contents">
                             <div class="row justify-content-center">
-                                <div class="col-md-8">
+                                <div class="col-md-6">
                                     <nav aria-label="breadcrumb">
                                         <ol class="breadcrumb">
                                             {/* <li class="breadcrumb-item"><a href="#">Home</a></li> */}
@@ -142,7 +142,7 @@ const FunctionalAdmin = () => {
                                         </div>
 
                                         <button onClick={(e) => Login(e)} class="btn btn-block btn-primary">
-                                           {!loading ? 'Log In' : ''}
+                                            {!loading ? 'Log In' : ''}
                                             {loading && <div class="d-flex justify-content-center">
                                                 <strong className='me-2'>Logging in...</strong>
                                                 <div className="spinner-border spinner-border-sm mt-1" role="status">
@@ -155,10 +155,10 @@ const FunctionalAdmin = () => {
                                 </div>
                             </div>
                         </div>
-
+{/* 
                         <div class="col-md-6">
                             <img src={svgIcon} style={{ height: '480x' }} alt="Image" className='img-slide img-responsive' />
-                        </div>
+                        </div> */}
 
 
 

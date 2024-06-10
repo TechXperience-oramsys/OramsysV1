@@ -7,7 +7,7 @@ import { countrieAction } from '../../../../redux/actions/countrieAction';
 import { editEntityAction, entityAddAction } from '../../../../redux/actions/entityAction';
 import { Autocomplete } from "@material-ui/lab";
 import { COMPANY_DATA, EDIT_ENTITY, ENTITY_ADD, ENTITY_GET_BY_ID } from '../../../../redux/types';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 
 const IndividualAddress = ({ handleNext, hendelCancel, sendDetailData, common }) => {
 
@@ -303,16 +303,16 @@ const IndividualAddress = ({ handleNext, hendelCancel, sendDetailData, common })
         if (validation()) {
             return;
         }
-        let final = { 
-            detail: sendDetailData, 
-            email: common?.email, 
-            password: common?.password, 
-            type: common?.type, 
-            addresses: [ResidentialState, ProfessionalState] 
+        let final = {
+            detail: sendDetailData,
+            email: common?.email,
+            password: common?.password,
+            type: common?.type,
+            addresses: [ResidentialState, ProfessionalState]
         }
         setLoading(true)
-       await dispatch(editEntityAction(id, final))
-       setLoading(false)
+        await dispatch(editEntityAction(id, final))
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -505,7 +505,7 @@ const IndividualAddress = ({ handleNext, hendelCancel, sendDetailData, common })
             <div className='add-edit-product pt-0 pb-5'>
                 <div className='form' style={{ backgroundColor: "rgb(243, 243, 243)", border: "none" }}>
                     <h2 className='mb-3'>Professional Address</h2>
-                    <button className='footer_next_btn mb-3' onClick={()=> setProfessionalState({...ResidentialState, type: "Professional"})}>Use Residential Address</button>
+                    <button className='footer_next_btn mb-3' onClick={() => setProfessionalState({ ...ResidentialState, type: "Professional" })}>Use Residential Address</button>
 
                     <div>
                         <Row>
@@ -673,13 +673,13 @@ const IndividualAddress = ({ handleNext, hendelCancel, sendDetailData, common })
             <div className='footer_'>
                 <button onClick={() => { hendelCancel() }} className="footer_cancel_btn">cancel</button>
                 <button onClick={() => { id ? edit() : Save() }} className={`footer_next_btn ${isView ? 'd-none' : 'd-block'}`}>
-                     {!loading ? <>{id ? "Edit" : "Save"}</> : null}
+                    {!loading ? <>{id ? "Edit" : "Save"}</> : null}
                     {loading && <div class="d-flex justify-content-center">
                         <strong className='me-2'>Saving...</strong>
-                            <div className="spinner-border spinner-border-sm mt-1" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>}
+                        <div className="spinner-border spinner-border-sm mt-1" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>}
                 </button>
             </div>
         </>

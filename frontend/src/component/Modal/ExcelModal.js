@@ -4,7 +4,7 @@ import { Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { termSheetAction } from '../../redux/actions/termSheetAction'
 // import { termSheetAction } from '../../redux/actions/termSheetAction'
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import { TERM_SHEET } from '../../redux/types'
 import Loader from '../../layout/loader/Loader'
 
