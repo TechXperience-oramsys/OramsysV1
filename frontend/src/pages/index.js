@@ -39,7 +39,7 @@ import AirBases from "./administration/masterData/airBases/AirBases";
 import { ApiGet, ApiPost } from "../helper/API/ApiData";
 import { Create_new_password } from "./administration/users/CreatePassword";
 
-const pathForLayout = ["/", "/signup", "/home", "/admin-login", "/fa-login"];
+const pathForLayout = ["/", "/signup", "/home", "/admin-login", "/fa-login","/verify-user"];
 const Index = () => {
   const pathForAuthLayout = [
     "add-product",
@@ -76,7 +76,7 @@ const Index = () => {
 
     "risk-assessment",
 
-    "final-page",
+    "final-page"
   ];
   const location = useLocation();
   const token = AuthStorage.getToken();
@@ -222,11 +222,7 @@ const Index = () => {
     {
       path: "/final-page",
       component: FinalPage,
-    },
-    // {
-    //   path: "verify-user",
-    //   component: Create_new_password,
-    // },
+    }
   ];
 
   let primaryLinks = [];
@@ -292,6 +288,7 @@ const Index = () => {
               <Route path="/home" element={<Home />} />
               <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/fa-login" element={<FunctionalAdmin />} />
+              <Route path="/verify-user" element={<Create_new_password />} />
             </Routes>
           </Layout>
         )}
@@ -310,7 +307,6 @@ const Index = () => {
           </AuthLayOut>
         )}
       <Routes>
-        <Route path="/verify-user" element={<Create_new_password />} />
       </Routes>
     </>
   );
