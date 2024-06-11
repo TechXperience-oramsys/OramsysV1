@@ -3,7 +3,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
 import { Col, Row } from 'react-bootstrap';
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux';
 import { TextField } from '@material-ui/core';
 import { entitiesRoleAction } from '../../redux/actions/entitiesRoleAction';

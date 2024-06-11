@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Backdrop, Fade, Modal, TextField } from '@material-ui/core';
 import axios from 'axios';
 import { ApiPost, BaseURL } from '../../../../helper/API/ApiData';
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import { FcSearch } from 'react-icons/fc';
 import { MdEdit, MdPreview } from 'react-icons/md';
 // import { Tooltip } from 'react-tooltip';
@@ -96,7 +96,7 @@ const Countries = ({ showSidebar, setSidebar }) => {
 
                 <div class='col-sm-6 col-12 text-sm-end'>
                   <div class='mx-n1 me-5 d-flex align-items-center justify-content-end gap-2'>
-                  <div class="position-relative">
+                    <div class="position-relative">
                       <span class="position-absolute search"><FcSearch size={25} /></span>
                       <input type="text" id='search' value={search} onChange={(e) => setSearch(e.target.value)} className="form-control w-100 ps-5" placeholder="Search..." />
                     </div>
@@ -157,8 +157,8 @@ const Countries = ({ showSidebar, setSidebar }) => {
                       <div class="d-flex justify-content-end m-2">
                         <div class="align-items-center">
                           <MdEdit onClick={() => {
-                             setShow(true); setContryForEdit(contryData?.data?.find(item => item._id === data._id))
-                           }}
+                            setShow(true); setContryForEdit(contryData?.data?.find(item => item._id === data._id))
+                          }}
                             // data-tooltip-id='edit-id'
                             // data-tooltip-content='Edit Product'
                             className='cursor-pointer'
@@ -174,10 +174,10 @@ const Countries = ({ showSidebar, setSidebar }) => {
               </tbody>
             </table>
             {!getCountries && <div class="d-flex justify-content-center mx-auto container py-5 my-5 m-5">
-                  <div class="spinner-border" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                </div> }
+              <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>}
             {contryData?.length < 1 && <div className='text-center mx-auto container py-5 my-5 m-5'> No records were found</div>}
             <div class="card-footer border-0 py-2 mb-5">
 

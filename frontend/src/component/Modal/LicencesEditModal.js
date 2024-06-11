@@ -3,7 +3,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
 import { Col, Row } from 'react-bootstrap';
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import { DropzoneArea } from 'material-ui-dropzone';
 import { TextField } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
@@ -45,7 +45,7 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
 
   useEffect(() => {
     dispatch(countrieAction("all"))
-  }, [])  
+  }, [])
 
   useEffect(() => {
     if (mode === "Edit" || mode === "View" && companyData.licenses) {

@@ -4,7 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import Fade from '@material-ui/core/Fade';
 import { Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import { TextField } from '@material-ui/core';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { countrieAction } from '../../redux/actions/countrieAction';
@@ -111,7 +111,7 @@ const WarehouseEditModal = ({ onHide, show, mode, editData }) => {
         }
         if (!warehouse.typeOfDoc) {
             flag = true
-            error.typeOfDoc= 'Please select type of warehouse document'
+            error.typeOfDoc = 'Please select type of warehouse document'
         }
 
         setError(error)

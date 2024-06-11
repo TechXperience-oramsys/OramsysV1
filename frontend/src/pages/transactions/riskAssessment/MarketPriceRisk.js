@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import LoanPurposeRiskModal from '../../../component/Modal/LoanPurposeRiskModal'
 import CurrencyHedgeDetailsModal from '../../../component/Modal/CurrencyHedgeDetailsModal'
 import FinancingSufficientlyModal from '../../../component/Modal/FinancingSufficientlyModal'
@@ -157,7 +157,7 @@ const MarketPriceRisk = ({ hendelNext, hendelCancel }) => {
         <>
             <div className='add-edit-product'>
                 <div className='d-flex align-items-center justify-content-center error-info mb-3'>
-                    <img src={`../../../assets/img/about/${marketPriceRisk?.contractsBasis?.justification||marketPriceRisk?.priceHedge?.hedgingMethod || marketPriceRisk?.financingSufficiently?.justification ? "error-info-success.png" : "error-info.png"}`} className='me-3' />
+                    <img src={`../../../assets/img/about/${marketPriceRisk?.contractsBasis?.justification || marketPriceRisk?.priceHedge?.hedgingMethod || marketPriceRisk?.financingSufficiently?.justification ? "error-info-success.png" : "error-info.png"}`} className='me-3' />
                     {marketPriceRisk?.contractsBasis?.justification || marketPriceRisk?.priceHedge?.hedgingMethod || marketPriceRisk?.financingSufficiently?.contractValue ?
                         <p className='success'>Risks are acceptable due to mitigants</p> :
                         <p className='error'>The below risks require your attention</p>
@@ -188,13 +188,13 @@ const MarketPriceRisk = ({ hendelNext, hendelCancel }) => {
             <div className='footer_'>
                 <button onClick={() => hendelCancel()} className="footer_cancel_btn">cancel</button>
                 <button onClick={() => { saveData() }} className='footer_next_btn'>
-                {!loading ? <>Save </> : null}
-                        {loading && <div class="d-flex justify-content-center">
+                    {!loading ? <>Save </> : null}
+                    {loading && <div class="d-flex justify-content-center">
                         <strong className='me-2'>Saving...</strong>
-                            <div className="spinner-border spinner-border-sm mt-1" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>}
+                        <div className="spinner-border spinner-border-sm mt-1" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>}
                 </button>
             </div>
 

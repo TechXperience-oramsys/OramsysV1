@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { productAddAction, productGetByIdAction, productUpdateAction } from '../../../../redux/actions/productAction';
 import moment from 'moment';
 import { PRODUCTADD, PRODUCT_GET_BY_ID, PRODUCT_UPDATE } from '../../../../redux/types';
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 
 const Add_Edit_Product = () => {
   const searchParams = new URLSearchParams(window.location.search)
@@ -305,8 +305,8 @@ const Add_Edit_Product = () => {
                 />
                 {error && error?.paymentDate && <span style={{ color: 'red' }}>{error.paymentDate}</span>}
               </Form.Group>
-              
-              
+
+
               <Form.Group as={Col} controlId="formGridZip">
                 <Form.Label>Product Unit</Form.Label>
                 <Form.Control className=''

@@ -1,7 +1,7 @@
 import STORAGEKEY from '../../config/APP/app.config'
 import { ApiPostNoAuth } from '../../helper/API/ApiData'
 import AuthStorage from '../../helper/AuthStorage'
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import { CHANGE_LOGIN_STATE, IS_LOADING, LOGIN, LOGIN_ERROR, LOGIN_LOADING } from '../types'
 
 export const loginAction = (body) => async (dispatch) => {
@@ -28,7 +28,7 @@ export const loginAction = (body) => async (dispatch) => {
                     AuthStorage.setStorageData(STORAGEKEY.token, res.data.token, true)
                     AuthStorage.setStorageData(STORAGEKEY.roles, "user", true)
                     AuthStorage.setStorageData(STORAGEKEY.userId, res.data.id, true)
-                    AuthStorage.setStorageData(STORAGEKEY.userData, JSON.stringify(res.data), true)
+                    return AuthStorage.setStorageData(STORAGEKEY.userData, JSON.stringify(res.data), true)
                 } else {
                     toast.error(res.message);
                 }

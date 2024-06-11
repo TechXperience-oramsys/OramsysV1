@@ -15,26 +15,35 @@ class UserController {
   async login(req, res, next) {
     try {
       const userLogin = req.body.user_name.toLowerCase();
-      const user = await User.getUserByEmail(userLogin);
-      if (user.length) {
+      const user = await User.findOne({ email: userLogin });
+      if (!user) {
+        return res
+          .status(httpStatus.OK)
+          .json(new APIResponse(null, "Wrong Email", httpStatus.NOT_FOUND));
+      }
         const match = await comparePassword(
           req.body.password,
-          user[0].password
+          user.password
         );
-        if (match) {
-          const token = getJWTToken({
-            id: user[0].id,
+        if (!match) {
+          return res
+            .status(httpStatus.OK)
+            .json(new APIResponse(null, "Wrong Password", httpStatus.NOT_FOUND ));
+        }
+
+        const token = getJWTToken({
+            id: user.id,
             email: req.body.email,
             role: "user",
           });
           console.log(user[0], 'here  new user');
           let newUser;
           newUser = {
-            id: user[0].id,
-            name: user[0].name,
-            email: user[0].email,
+            id: user.id,
+            name: user.name,
+            email: user.email,
             token: token,
-            admin: user[0].createdBy
+            admin: user.createdBy
           };
 
           return res
@@ -42,22 +51,9 @@ class UserController {
             .json(
               new APIResponse(newUser, "Login Successfully", httpStatus.OK)
             );
-        }
-        return res
-          .status(httpStatus.OK)
-          .json(
-            new APIResponse(
-              null,
-              "Wrong Password",
-              httpStatus.OK,
-              "Wrong Password"
-            )
-          );
-      }
+        
+      
 
-      return res
-        .status(httpStatus.OK)
-        .json(new APIResponse(user, "Wrong Email", httpStatus.OK));
     } catch (e) {
       return res
         .status(httpStatus.BAD_REQUEST)
@@ -107,6 +103,7 @@ class UserController {
         });
         // Email content
         const mailOptions = {
+<<<<<<< HEAD
           from: "notification@techxperience.ng", // Sender address
           to: body.email, // List of recipients
           subject: "Otp from oramsys",
@@ -118,7 +115,29 @@ class UserController {
                     `,
 
           // HTML body (optional)
+=======
+          from: "notification@techxperience.ng",
+          to: body.email, 
+          subject: "OTP from Oramsys",
+          text: "User created successfully",
+          html: `
+            <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
+              <p styyle="font-size: 16px">Hi, ${body.name}</p>
+              <p styyle="font-size: 12px">You have been onboarded on the Oramsys platform. Click on the link below to enter the OTP and create a password.</p>
+              <p style="font-weight: bold; font-size: 20px;">OTP: ${otp}</p>
+              <p>
+                <a 
+                  href="https://oramsysdev.com/verify-user" 
+                  style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;"
+                >
+                  Verify Account
+                </a>
+              </p>
+            </div>
+          `, 
+>>>>>>> 7baf1850d4d714709b98658386d217ce79b6c32a
         };
+        
 
         // Send the email
         transporter.sendMail(mailOptions, (error, info) => {
