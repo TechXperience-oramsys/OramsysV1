@@ -121,13 +121,13 @@ const AdminLogin = () => {
 
                                         <div class="form-floating mb-3">
                                             <input type="email" name='email' onChange={(e) => handelChange(e)} class="form-control" id="floatingInput" placeholder="Email" />
-                                            <label for="floatingInputValue">Email address</label>
+                                            <label htmlFor="floatingInputValue">Email address</label>
                                             {loginFormError.email && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{loginFormError.email}</span>}
                                         </div>
 
                                         <div class="position-relative form-floating mb-4">
                                             <input type={passwordVisible ? 'text' : 'password'} onChange={(e) => handelChange(e)} name='password' class="form-control" id="floatingPassword" placeholder="Password" />
-                                            <label for="floatingInputValue">Password</label>
+                                            <label htmlFor="floatingInputValue">Password</label>
                                             {loginFormError.password && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{loginFormError.password}</span>}
 
                                             <span className="position-absolute end-0 top-50 text-lg translate-middle-y me-3 cursor-pointer"

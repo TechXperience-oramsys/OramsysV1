@@ -103,10 +103,10 @@ class UserController {
         });
         // Email content
         const mailOptions = {
-          from: "notification@techxperience.ng", // Sender address
-          to: body.email, // List of recipients
+          from: "notification@techxperience.ng",
+          to: body.email, 
           subject: "OTP from Oramsys",
-          text: "User created successfully", // Plain text body (fallback for non-HTML email clients)
+          text: "User created successfully",
           html: `
             <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
               <p styyle="font-size: 16px">Hi, ${body.name}</p>
@@ -121,7 +121,7 @@ class UserController {
                 </a>
               </p>
             </div>
-          `, // HTML body
+          `, 
         };
         
 

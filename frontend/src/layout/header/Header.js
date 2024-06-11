@@ -67,7 +67,7 @@ const Header = () => {
                 </ul> */}
                 <div className="header-right-button">
                   {/* <a onClick={() =>navigate('/signup') } className="header-btn">Register Now</a> */}
-                  <a onClick={() => navigate('/')} className="header-btn s-up">Sign In</a>
+                  <a onClick={() => navigate('/admin-login')} className="header-btn s-up">Administration</a>
                 </div>
               </div>
             </div>
