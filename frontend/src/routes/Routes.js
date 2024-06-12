@@ -40,18 +40,6 @@ const Routes = () => {
 
   const path = useFindPath();
 
-  // window.onload = function () {
-  //   if (
-  //     !localStorage.getItem("userId") &&
-  //     path !== "/admin-login" &&
-  //     path !== "/verify-user"
-  //   ) {
-  //     navigate("/");
-  //   } else {
-  //     navigate(path);
-  //   }
-  // };
-
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
     navigate(toRelativeUrl(originalUri || "/", window.location.origin));
   };
