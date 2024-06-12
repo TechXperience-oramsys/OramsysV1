@@ -10,12 +10,7 @@ let isLocalApi = +port >= 5000;
 
 export let API;
 // if(window.location.origin.includes('oramsysdev.com')) {
-<<<<<<< HEAD
-API = 'https://backend.oramsysdev.com/'
-
-=======
 API = 'https://backend.oramsysdev.com/' 
->>>>>>> c362c709e5ee84d696c2af58b24c8d2866246e59
 // API = "http://localhost:5003/";
 // }
 // else {
