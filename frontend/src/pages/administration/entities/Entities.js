@@ -168,19 +168,19 @@ const Entities = () => {
 
   const checkSearch = (e) => {
     const filtered = entityTableData?.filter((item) => {
-        // Check if item.details.productDetails.name is an object and contains the property 'name'
-        if (typeof item.details.name === 'object' && item.details.name !== null && 'name' in item.details.name) {
-            // Convert item.details.name to lowercase if it's a string
-            const productName = item.details.name.name.toLowerCase();
-            // Check if productName includes the search value
-            return productName.includes(e.target.value.toLowerCase());
-        }
-        
-        return false;
+      // Check if item.details.productDetails.name is an object and contains the property 'name'
+      if (typeof item.details.name === 'object' && item.details.name !== null && 'name' in item.details.name) {
+        // Convert item.details.name to lowercase if it's a string
+        const productName = item.details.name.name.toLowerCase();
+        // Check if productName includes the search value
+        return productName.includes(e.target.value.toLowerCase());
+      }
+
+      return false;
     });
-    
+
     setEntityTableData(filtered);
-};
+  };
 
 
   return (
@@ -199,14 +199,13 @@ const Entities = () => {
                 <div class='col-sm-6 col-12 text-sm-end'>
                   <div class='mx-n1 me-5 d-flex align-items-center justify-content-end gap-2'>
 
-                  <div className=''>
-                     <input type="text" id='search' onKeyUp={e => checkSearch(e)} onChange={(e) => setSearch(e.target.value)} className="form-control w-100 ps-5 fw-light border-none" placeholder="Search product..." />
-
+                    <div className=''>
+                      {userId ? '' : <input type="text" id='search' onKeyUp={e => checkSearch(e)} onChange={(e) => setSearch(e.target.value)} className="form-control w-100 ps-5 fw-light border-none" placeholder="Search Entity..." />}
                     </div>
 
                     {AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin" ? (
                       <Dropdown overlay={menu} trigger={['click']}>
-                        
+
                         <Button class='btn d-inline-flex btn-md btn-light border-base mx-1 me-3' id="dropdown-autoclose-outside">
                           <span class=' pe-2'>
                             <i class="bi bi-plus"></i>
@@ -218,7 +217,7 @@ const Entities = () => {
                       <></>
                     )}
 
-                    
+
 
                   </div>
                 </div>
