@@ -21,38 +21,38 @@ class UserController {
           .status(httpStatus.OK)
           .json(new APIResponse(null, "Wrong Email", httpStatus.NOT_FOUND));
       }
-        const match = await comparePassword(
-          req.body.password,
-          user.password
+      const match = await comparePassword(
+        req.body.password,
+        user.password
+      );
+      if (!match) {
+        return res
+          .status(httpStatus.OK)
+          .json(new APIResponse(null, "Wrong Password", httpStatus.NOT_FOUND));
+      }
+
+      const token = getJWTToken({
+        id: user.id,
+        email: req.body.email,
+        role: "user",
+      });
+      console.log(user[0], 'here  new user');
+      let newUser;
+      newUser = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        token: token,
+        admin: user.createdBy
+      };
+
+      return res
+        .status(httpStatus.OK)
+        .json(
+          new APIResponse(newUser, "Login Successfully", httpStatus.OK)
         );
-        if (!match) {
-          return res
-            .status(httpStatus.OK)
-            .json(new APIResponse(null, "Wrong Password", httpStatus.NOT_FOUND ));
-        }
 
-        const token = getJWTToken({
-            id: user.id,
-            email: req.body.email,
-            role: "user",
-          });
-          console.log(user[0], 'here  new user');
-          let newUser;
-          newUser = {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            token: token,
-            admin: user.createdBy
-          };
 
-          return res
-            .status(httpStatus.OK)
-            .json(
-              new APIResponse(newUser, "Login Successfully", httpStatus.OK)
-            );
-        
-      
 
     } catch (e) {
       return res
@@ -104,7 +104,7 @@ class UserController {
         // Email content
         const mailOptions = {
           from: "notification@techxperience.ng",
-          to: body.email, 
+          to: body.email,
           subject: "OTP from Oramsys",
           text: "User created successfully",
           html: `
@@ -114,16 +114,16 @@ class UserController {
               <p style="font-weight: bold; font-size: 20px;">OTP: ${otp}</p>
               <p>
                 <a 
-                  href="https://oramsysdev.com/verify-user" 
+                  href="https://oramsys.com/verify-user" 
                   style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;"
                 >
                   Verify Account
                 </a>
               </p>
             </div>
-          `, 
+          `,
         };
-        
+
 
         // Send the email
         transporter.sendMail(mailOptions, (error, info) => {
