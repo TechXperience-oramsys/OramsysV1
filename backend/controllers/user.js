@@ -114,7 +114,7 @@ class UserController {
               <p style="font-weight: bold; font-size: 20px;">OTP: ${otp}</p>
               <p>
                 <a 
-                  href="https://oramsys.com/verify-user" 
+                  href="https://oramsysdev.com/verify-user" 
                   style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;"
                 >
                   Verify Account
