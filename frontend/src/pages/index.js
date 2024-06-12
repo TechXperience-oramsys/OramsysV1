@@ -1,12 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  Routes,
-  Route,
-  useLocation,
-  useNavigate,
-  Navigate,
-  Outlet,
-} from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate, Navigate, Outlet } from "react-router-dom";
 import AuthStorage from "../helper/AuthStorage";
 import AuthLayOut from "../layout/AuthLayOut";
 import Layout from "../layout/Layout";
@@ -41,49 +34,11 @@ import { Create_new_password } from "./administration/users/CreatePassword";
 
 const pathForLayout = ["/", "/signup", "/home", "/admin-login", "/fa-login","/verify-user"];
 const Index = () => {
-  const pathForAuthLayout = [
-    "add-product",
-
-    "edit-product",
-
-    "products",
-
-    "entities",
-
-    "entities-role",
-
-    "add-edit-entities",
-
-    "transactions",
-
-    "edit-transactions",
-
-    "rating-agencies",
-
-    "rating-agencies-edit",
-
-    "add-user",
-
-    "edit-user",
-
-    "users",
-
-    "countries",
-
-    "ports",
-
-    "airBases",
-
-    "risk-assessment",
-
-    "final-page"
-  ];
+ 
   const location = useLocation();
   const token = AuthStorage.getToken();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const [role, setRole] = useState("");
 
   const userRoutes = [
     {
