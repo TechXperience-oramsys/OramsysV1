@@ -23,6 +23,12 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y sshpass
 
+    - name: Debug Environment Variables
+      run: |
+        echo "SSH_USER=${{ secrets.SSH_USER }}"
+        echo "SSH_HOST=${{ secrets.SSH_HOST }}"
+        echo "SSH_PASSWORD is set"
+
     - name: Deploy to EC2
       env:
         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
@@ -30,4 +36,4 @@ jobs:
         SSH_HOST: ${{ secrets.SSH_HOST }}
       run: |
         echo "Connecting to EC2 instance"
-        sshpass -p "${SSH_PASSWORD}" ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "bash /data/deploy_backend.sh"
+        sshpass -p "${SSH_PASSWORD}" ssh -vvv -o StrictHostKeyChecking=no "${SSH_USER}@${SSH_HOST}" "bash /data/deploy_backend.sh"
