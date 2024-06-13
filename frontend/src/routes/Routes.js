@@ -2,8 +2,7 @@ import Pages from "../pages";
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Security } from "@okta/okta-react";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from 'react-hot-toast';
 import { useEffect, useState } from "react";
 
 const OKTA_DOMAIN = "dev-09386955";
@@ -41,24 +40,12 @@ const Routes = () => {
 
   const path = useFindPath();
 
-  window.onload = function () {
-    if (
-      !localStorage.getItem("userId") &&
-      path !== "/admin-login" &&
-      path !== "/verify-user"
-    ) {
-      navigate("/");
-    } else {
-      navigate(path);
-    }
-  };
-
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
     navigate(toRelativeUrl(originalUri || "/", window.location.origin));
   };
   return (
     <Security restoreOriginalUri={restoreOriginalUri} oktaAuth={oktaAuth}>
-      <ToastContainer />
+      <Toaster />
       <Pages />
     </Security>
   );

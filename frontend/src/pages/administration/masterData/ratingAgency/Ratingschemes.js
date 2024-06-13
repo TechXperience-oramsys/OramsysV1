@@ -8,7 +8,7 @@ import RatingSchemesCard from '../../../../component/RatingSchemesCard'
 import TextEditerModal from '../../../../component/Modal/TextEditerModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { RATINGAGENCIES, RATINGAGENCIES_GET_BY_ID, RATINGAGENCY_UPDATE } from '../../../../redux/types';
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import { ratingAgencyAddAction, ratingAgencyGetByIdAction, ratingAgencyUpdateAction } from '../../../../redux/actions/ratingAgenciesAction';
 
 const Ratingschemes = ({ hendelCancel, hendelNext, detailData }) => {
@@ -77,10 +77,10 @@ const Ratingschemes = ({ hendelCancel, hendelNext, detailData }) => {
   }, [dataGetById])
 
   useEffect(() => {
-    return(() => {
+    return (() => {
       dispatch({
-          type: RATINGAGENCIES_GET_BY_ID,
-          payload: null
+        type: RATINGAGENCIES_GET_BY_ID,
+        payload: null
       })
     })
   }, [])

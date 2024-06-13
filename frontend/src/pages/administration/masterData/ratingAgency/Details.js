@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { countrieAction } from '../../../../redux/actions/countrieAction';
 import { ratingAgencyGetByIdAction } from '../../../../redux/actions/ratingAgenciesAction';
-// import { toast } from 'react-toastify'
+// import { toast } from 'react-hot-toast'
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { RATINGAGENCIES_GET_BY_ID } from '../../../../redux/types';
 
@@ -27,7 +27,7 @@ const Details = ({ hendelNext, hendelCancel, getData }) => {
     });
     const [error, setError] = useState()
     const dispatch = useDispatch()
-    
+
     const handleChange = (event) => {
         const name = event.target.name;
         let postcode = /^[0-9\b]*$/;
@@ -103,7 +103,7 @@ const Details = ({ hendelNext, hendelCancel, getData }) => {
     const validation = () => {
         let param = false
         let error = {}
-        let postcode =  /^[1-6]\d{0,6}$/
+        let postcode = /^[1-6]\d{0,6}$/
         if (!state.name) {
             param = true
             error.name = "Please enter name!"

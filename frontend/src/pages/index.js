@@ -1,12 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  Routes,
-  Route,
-  useLocation,
-  useNavigate,
-  Navigate,
-  Outlet,
-} from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate, Navigate, Outlet } from "react-router-dom";
 import AuthStorage from "../helper/AuthStorage";
 import AuthLayOut from "../layout/AuthLayOut";
 import Layout from "../layout/Layout";
@@ -39,51 +32,13 @@ import AirBases from "./administration/masterData/airBases/AirBases";
 import { ApiGet, ApiPost } from "../helper/API/ApiData";
 import { Create_new_password } from "./administration/users/CreatePassword";
 
-const pathForLayout = ["/", "/signup", "/home", "/admin-login", "/fa-login"];
+const pathForLayout = ["/", "/signup", "/home", "/admin-login", "/fa-login","/verify-user"];
 const Index = () => {
-  const pathForAuthLayout = [
-    "add-product",
-
-    "edit-product",
-
-    "products",
-
-    "entities",
-
-    "entities-role",
-
-    "add-edit-entities",
-
-    "transactions",
-
-    "edit-transactions",
-
-    "rating-agencies",
-
-    "rating-agencies-edit",
-
-    "add-user",
-
-    "edit-user",
-
-    "users",
-
-    "countries",
-
-    "ports",
-
-    "airBases",
-
-    "risk-assessment",
-
-    "final-page",
-  ];
+ 
   const location = useLocation();
   const token = AuthStorage.getToken();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const [role, setRole] = useState("");
 
   const userRoutes = [
     {
@@ -222,11 +177,7 @@ const Index = () => {
     {
       path: "/final-page",
       component: FinalPage,
-    },
-    // {
-    //   path: "verify-user",
-    //   component: Create_new_password,
-    // },
+    }
   ];
 
   let primaryLinks = [];
@@ -292,6 +243,7 @@ const Index = () => {
               <Route path="/home" element={<Home />} />
               <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/fa-login" element={<FunctionalAdmin />} />
+              <Route path="/verify-user" element={<Create_new_password />} />
             </Routes>
           </Layout>
         )}
@@ -310,7 +262,6 @@ const Index = () => {
           </AuthLayOut>
         )}
       <Routes>
-        <Route path="/verify-user" element={<Create_new_password />} />
       </Routes>
     </>
   );

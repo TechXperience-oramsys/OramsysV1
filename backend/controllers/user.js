@@ -15,49 +15,45 @@ class UserController {
   async login(req, res, next) {
     try {
       const userLogin = req.body.user_name.toLowerCase();
-      const user = await User.getUserByEmail(userLogin);
-      if (user.length) {
-        const match = await comparePassword(
-          req.body.password,
-          user[0].password
-        );
-        if (match) {
-          const token = getJWTToken({
-            id: user[0].id,
-            email: req.body.email,
-            role: "user",
-          });
-          console.log(user[0], 'here  new user');
-          let newUser;
-          newUser = {
-            id: user[0].id,
-            name: user[0].name,
-            email: user[0].email,
-            token: token,
-            admin: user[0].createdBy
-          };
-
-          return res
-            .status(httpStatus.OK)
-            .json(
-              new APIResponse(newUser, "Login Successfully", httpStatus.OK)
-            );
-        }
+      const user = await User.findOne({ email: userLogin });
+      if (!user) {
         return res
           .status(httpStatus.OK)
-          .json(
-            new APIResponse(
-              null,
-              "Wrong Password",
-              httpStatus.OK,
-              "Wrong Password"
-            )
-          );
+          .json(new APIResponse(null, "Wrong Email", httpStatus.NOT_FOUND));
       }
+      const match = await comparePassword(
+        req.body.password,
+        user.password
+      );
+      if (!match) {
+        return res
+          .status(httpStatus.OK)
+          .json(new APIResponse(null, "Wrong Password", httpStatus.NOT_FOUND));
+      }
+
+      const token = getJWTToken({
+        id: user.id,
+        email: req.body.email,
+        role: "user",
+      });
+      console.log(user[0], 'here  new user');
+      let newUser;
+      newUser = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        token: token,
+        admin: user.createdBy
+      };
 
       return res
         .status(httpStatus.OK)
-        .json(new APIResponse(user, "Wrong Email", httpStatus.OK));
+        .json(
+          new APIResponse(newUser, "Login Successfully", httpStatus.OK)
+        );
+
+
+
     } catch (e) {
       return res
         .status(httpStatus.BAD_REQUEST)
@@ -118,6 +114,7 @@ class UserController {
 
           // HTML body (optional)
         };
+
 
         // Send the email
         transporter.sendMail(mailOptions, (error, info) => {

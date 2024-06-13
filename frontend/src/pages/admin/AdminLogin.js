@@ -5,7 +5,7 @@ import { ApiPostNoAuth } from '../../helper/API/ApiData';
 import AuthStorage from '../../helper/AuthStorage';
 import { LOGIN } from '../../redux/types';
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify'
+import { toast } from 'react-hot-toast'
 import svgIcon from '../../css/lock.svg'
 import '../../css/login.css'
 import '../../css/bootstrap.min.css'
@@ -121,13 +121,13 @@ const AdminLogin = () => {
 
                                         <div class="form-floating mb-3">
                                             <input type="email" name='email' onChange={(e) => handelChange(e)} class="form-control" id="floatingInput" placeholder="Email" />
-                                            <label for="floatingInputValue">Email address</label>
+                                            <label htmlFor="floatingInputValue">Email address</label>
                                             {loginFormError.email && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{loginFormError.email}</span>}
                                         </div>
 
                                         <div class="position-relative form-floating mb-4">
                                             <input type={passwordVisible ? 'text' : 'password'} onChange={(e) => handelChange(e)} name='password' class="form-control" id="floatingPassword" placeholder="Password" />
-                                            <label for="floatingInputValue">Password</label>
+                                            <label htmlFor="floatingInputValue">Password</label>
                                             {loginFormError.password && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{loginFormError.password}</span>}
 
                                             <span className="position-absolute end-0 top-50 text-lg translate-middle-y me-3 cursor-pointer"
@@ -137,7 +137,7 @@ const AdminLogin = () => {
                                         </div>
 
                                         <button onClick={(e) => Login(e)} class="btn btn-block btn-primary">
-                                           {!loading ? 'Log In' : ''}
+                                            {!loading ? 'Log In' : ''}
                                             {loading && <div class="d-flex justify-content-center">
                                                 <strong className='me-2'>Logging in...</strong>
                                                 <div className="spinner-border spinner-border-sm mt-1" role="status">

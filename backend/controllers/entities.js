@@ -21,9 +21,19 @@ class entitiesController {
             console.log('hfrio');
             const entityLogin = req.body.user_name.toLowerCase()
             const entity = await entities.getByEmail(entityLogin)
-            if (entity) {
+
+            
+            
+                if (!entity) {
+                    return res.status(httpStatus.OK).json(new APIResponse(null, "Wrong Email", httpStatus.NOT_FOUND))
+                }
                 const match = await comparePassword(req.body.password, entity.password)
-                if (match) {
+
+                if(!match) {
+                    return res
+                    .status(httpStatus.OK)
+                    .json(new APIResponse(null, "Wrong Password", httpStatus.NOT_FOUND ));
+                } 
                     const token = getJWTToken({
                         id: entity._id,
                         email: entity.email,
@@ -51,20 +61,10 @@ class entitiesController {
                         .json(
                             new APIResponse(newEntity, "Login successfully", httpStatus.OK)
                         );
-                }
-                return res
-                    .status(httpStatus.OK)
-                    .json(
-                        new APIResponse(
-                            null,
-                            "Wrong Password",
-                            httpStatus.OK,
-                            "Wrong Password"
-                        )
-                    );
-            }
+                
+               
+            
 
-            return res.status(httpStatus.OK).json(new APIResponse(user, 'Wrong email', httpStatus.OK));
         }
         catch (e) {
             return res
@@ -369,9 +369,11 @@ class entitiesController {
         let warehouses = req.body.warehouses;
         let roles = req.body.roles;
         let updateData = {}
+        const newPassword = await hashPassword(req.body.password, 10);
         const newEntity =
         {
             email: body.email.toLowerCase(),
+            password: newPassword,
             isLicense: body?.isLicense || false,
             isRatings: body?.isRatings || false,
             isWarehouse: body?.isWarehouse || false,
