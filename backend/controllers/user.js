@@ -90,6 +90,8 @@ class UserController {
     };
     console.log(generateOTP());
     const model = new User(newUser);
+
+
     try {
       const alreadyExist = await User.getUserByEmail(req.body.email);
       console.log("tetstyuuuo jhyuh");
@@ -112,7 +114,7 @@ class UserController {
           subject: "Otp from oramsys",
           text: "User create succesfully ", // Plain text body
           html: `<b>This is the otp  ${otp} by using this otp you can create your password </b>
-                    <a href="https://oramsysdev.com/verify-user"> Verify Account</a>`,
+                     <a href="https://oramsysdev.com/verify-user/${model._id}"> Verify Account</a>`,
 
           // HTML body (optional)
         };
@@ -341,19 +343,20 @@ class UserController {
   }
 
   async verifyOtp(req, res, next) {
+    console.log(req.params.id)
     try {
       const otp = req.body.otp;
-      console.log(otp, "otp");
-      if (!otp) {
+
+      if (!req.params.id) {
         return res
           .status(httpStatus.BAD_REQUEST)
           .json(
             new APIResponse(null, "OTP is required", httpStatus.BAD_REQUEST)
           );
       }
-      const user = await User.findOne({ otp });
-      console.log(user, "user");
-      if (!user) {
+      const user = await User.findOne({ _id: req.params.id });
+
+      if (user.otp !== otp) {
         return res
           .status(httpStatus.UNAUTHORIZED)
           .json(new APIResponse(null, "Invalid OTP", httpStatus.UNAUTHORIZED));
