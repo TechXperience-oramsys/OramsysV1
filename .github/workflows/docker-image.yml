@@ -29,6 +29,5 @@ jobs:
         SSH_USER: ${{ secrets.SSH_USER }}
         SSH_HOST: ${{ secrets.SSH_HOST }}
       run: |
-        # Run deploy scripts on the server using SSHpass
         echo "Connecting to EC2 instance"
-        sshpass -p "${SSH_PASSWORD}" ssh -vvv -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "bash /data/deploy_backend.sh"
+        sshpass -p "${SSH_PASSWORD}" ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "bash /data/deploy_backend.sh"
