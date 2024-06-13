@@ -110,7 +110,7 @@ class UserController {
           subject: "Otp from oramsys",
           text: "User create succesfully ", // Plain text body
           html: `<b>This is the otp  ${otp} by using this otp you can create your password </b>
-                     <a href="https://oramsysdev.com/verify-user/${model._id}"> Verify Account</a>`,
+                     <a href="http://localhost:3001/verify.html?id=${model._id}"> Verify Account</a>`,
 
           // HTML body (optional)
         };

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html x-data="data">
+<html x-data="data" x-init="userId= params.get('id')">
   <head>
-    <title>Forget Password</title>
+    <title>create Password</title>
     <script
       src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js"
       defer
@@ -13,14 +13,15 @@
   </head>
   <body>
     <div class="container mt-5">
-      <h2 class="text-center mb-4">Forget Password</h2>
+      <h2 class="text-center mb-4">create new Password</h2>
       <h5 x-text="alertDanger" class="text-danger"></h5>
       <h5 x-text="alertSuccess" class="text-success"></h5>
       <div x-show="step === 'otp'" class="card p-4 mt-3">
         <p>Enter the OTP sent to your email:</p>
         <div class="form-group mb-3">
           <input
-            type="text"
+            type="number"
+            max="4"
             x-model="otp"
             placeholder="OTP"
             required
@@ -28,9 +29,13 @@
           />
           <span x-text="errorMessage" class="text-danger"></span>
         </div>
-        <button x-on:click="verifyOTP" class="btn btn-primary">
-          Verify OTP
-        </button>
+        <button
+          x-on:click="verifyOTP"
+          x-bind:disabled="btnDisabled"
+          class="btn btn-primary"
+          id="verify-btn"
+          x-text="btnText"
+        ></button>
       </div>
 
       <div x-show="step === 'newPassword'" class="card p-4 mt-3">
@@ -55,90 +60,127 @@
             class="form-control"
           />
         </div>
-        <button x-on:click="updatePassword" class="btn btn-primary">
-          Update Password
-        </button>
+        <button
+          x-on:click="updatePassword"
+          x-bind:disabled="btnDisabled"
+          class="btn btn-primary"
+          x-text="btnText"
+        ></button>
       </div>
     </div>
 
     <script>
       const data = {
+        params: new URLSearchParams(window.location.search),
         step: "otp",
         otp: "",
         newPassword: "",
         newPasswordConfirm: "",
-        baseUrl: "https://backend.oramsysdev.com/",
+        baseUrl: "https://backend.oramsysdev.com/user/",
         alertSuccess: "",
         alertDanger: "",
         errorMessage: "",
-        userId: "666a96865faf8d99938f9271",
+        userId: "",
+        btnText: "Verify OTP",
+        btnDisabled: false, // Initially button is enabled
+
         verifyOTP: function () {
+          this.btnDisabled = true; // Disable the button
+          this.btnText = "Loading..";
+
           // Prepare the data to be sent in the request body
           if (!this.otp) {
             this.errorMessage = "Please enter the OTP";
+            this.btnText = "Verify OTP";
+            this.btnDisabled = false; // Enable the button
             return;
           }
+          if (!this.otp.length == 4) {
+            this.btnText = "Verify OTP";
+            this.btnDisabled = false; // Enable the button
+            this.errorMessage = "OTP Must contain 4 digits";
+            return;
+          }
+
           const requestBody = JSON.stringify({
-            otp: this.otp,
+            otp: parseInt(this.otp),
           });
+
           // Send the request to verify the OTP
           fetch(this.baseUrl + "verifyOtp/" + this.userId, {
             method: "POST",
             body: requestBody,
             headers: {
               "Content-Type": "application/json",
-              Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp0cGxhcnRpc2FuQGdtYWlsLmNvbSIsInN1YiI6MSwiaWF0IjoxNzE4MjU0OTM2LCJleHAiOjE3MTg4NTk3MzZ9.g1lL2DLSVb0dKLT-Rnwzi9wQjgEMCeTWeghF4553KGI",
             },
           })
             .then((response) => {
               if (response.ok) {
                 this.step = "newPassword";
+                this.btnText = "Update Password";
                 this.alertSuccess = "OTP verified successfully";
                 this.alertDanger = "";
                 this.errorMessage = "";
+                this.btnDisabled = false; // Enable the button
               } else {
+                this.btnText = "Verify OTP";
                 this.alertSuccess = "";
                 this.errorMessage = "Invalid OTP";
                 this.alertDanger = "Invalid OTP";
+                this.btnDisabled = false; // Enable the button
               }
             })
             .catch((error) => {
               console.error("Error:", error);
               this.alertSuccess = "";
+              this.btnText = "Verify OTP";
               this.errorMessage = "Failed to verify OTP";
               this.alertDanger = "Failed to verify OTP";
+              this.btnDisabled = false; // Enable the button
             });
         },
         updatePassword: function () {
+          this.btnDisabled = true; // Disable the button
+          // Validate password and confirm password
           if (!this.newPassword || !this.newPasswordConfirm) {
-            this.errorMessage = "Please enter your new password";
+            this.errorMessage =
+              "Please enter your new password and confirm it.";
+            this.btnDisabled = false; // Enable the button
             return;
           }
-          // Prepare the data to be sent in the request body
+
+          if (this.newPassword !== this.newPasswordConfirm) {
+            this.errorMessage = "Passwords do not match.";
+            this.btnDisabled = false; // Enable the button
+            return;
+          }
+
+          if (this.newPassword.length != 6) {
+            this.errorMessage = "Password must be at least 6 characters long.";
+            this.btnDisabled = false; // Enable the button
+            return;
+          }
+
           const requestBody = JSON.stringify({
             password: this.newPassword,
             confirm_password: this.newPasswordConfirm,
           });
-          // Send the request to update the password
+
           fetch(this.baseUrl + "updatePassword/" + this.userId, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
-              Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp0cGxhcnRpc2FuQGdtYWlsLmNvbSIsInN1YiI6MSwiaWF0IjoxNzE4MjU0OTM2LCJleHAiOjE3MTg4NTk3MzZ9.g1lL2DLSVb0dKLT-Rnwzi9wQjgEMCeTWeghF4553KGI",
             },
             body: requestBody,
           })
             .then((response) => response.json())
             .then((response) => {
               if (response.status && response.status == 200) {
-                // Password updated successfully
                 this.alertSuccess = response.message;
                 this.alertDanger = "";
-                // Redirect to login page or show success message
+                window.location.href = location.origin;
+                return;
               } else {
-                // Failed to update password
                 this.alertSuccess = "";
                 this.alertDanger = response.message;
               }
@@ -146,6 +188,9 @@
             .catch((error) => {
               this.alertSuccess = ""; // Clear the "Working on it..." message
               this.alertDanger = "Failed to update password";
+            })
+            .finally(() => {
+              this.btnDisabled = false; // Enable the button
             });
         },
       };
