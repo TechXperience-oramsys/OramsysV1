@@ -1,6 +1,7 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightLong, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { Carousel } from 'antd';
 
 
 const Home = () => {
@@ -30,75 +31,72 @@ const Home = () => {
 
   // });
 
+  const contentStyle = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: '400px',
+    backgroundImage: 'linear-gradient(to right, #fbffff, #f8fcfc, #f5fafa, #f3f7f7, #f0f5f5)',
+    color: '#181B1B',
+    padding: '0 50px',
+  };
 
   return (
     <>
-      {/* <div ClassName="slider-area slider-layout1">
-        <div ClassName="slider-bg-img1" data-sal="zoom-in" data-sal-duration="1500" data-sal-delay="300">
-          <img src="./assets/img/figure/figure96.png" alt="figure" />
-        </div>
-        <div ClassName="slider-bg-img2">
-          <img src="./assets/img/figure/figure97.png" alt="figure" data-sal="slide-up" data-sal-duration="1300" data-sal-delay="700" />
-        </div>
-        <div ClassName="bend niceties preview-1">
-          <div id="ensign-nivoslider-1" ClassName="slides">
-            <img src="./assets/img/my-img/bn.png" alt="slider" width="1920" height="720" title="#slider-direction-1" />
-            <img src="./assets/img/slider/slider2.png" alt="slider" width="1920" height="720" title="#slider-direction-2" />
-            <img src="./assets/img/slider/slider1.png" alt="slider" width="1920" height="720" title="#slider-direction-3" />
-          </div>
-          <div id="slider-direction-1" ClassName="t-cn slider-direction">
-            <div ClassName="slider-content s-tb slide-1">
-              <div ClassName="text-left title-container s-tb-c">
-                <div ClassName="container">
-                  <p ClassName="item-subtitle">Lorem ipsum dolor</p>
-                  <h2 ClassName="item-title">dolor sit amet consectetur adipisicing.</h2>
-                  <div ClassName="item-paragraph">Bhen an unknown printer took a galley of type and scrambled ype specimen book. It has survived .</div>
-                  <ul ClassName="item-btn">
-                    <li><a href="#" style={{ textDecoration: "none" }}>Free Consulting
-                      <i ClassName="fas fa-long-arrow-alt-right"></i>
-                    </a></li>
-                    <li><a href="#" ClassName="circle-btn"><span ClassName="circle-icon">
-                      <i ClassName="fas fa-play-circle"></i>
-                      Watch The Video</span></a></li>
-                  </ul>
+      <div className="container my-5">
+        <Carousel autoplay>
+          <div>
+            <div style={contentStyle}>
+              <div className="text-left">
+                <p className="h5">Lorem ipsum dolor</p>
+                <h2>dolor sit amet consectetur adipisicing.</h2>
+                <p>Bhen an unknown printer took a galley of type and scrambled ype specimen book. It has survived.</p>
+                <div>
+                  <a href="#" className="btn btn-primary mr-3">Free Consulting<i className="fas fa-long-arrow-alt-right ml-2"></i></a>
+                  <a href="#" className="btn btn-secondary"><i className="fas fa-play-circle mr-2"></i>Watch The Video</a>
                 </div>
+              </div>
+              <div>
+                <img src="./assets/img/my-img/bn.png" alt="slider" width="960" height="720" />
               </div>
             </div>
           </div>
-          <div id="slider-direction-2" className="t-cn slider-direction">
-            <div className="slider-content s-tb slide-2">
-              <div className="text-left title-container s-tb-c">
-                <div className="container">
-                  <p className="item-subtitle">Lorem ipsum dolor</p>
-                  <h2 className="item-title">dolor sit amet consectetur adipisicing.</h2>
-                  <div className="item-paragraph">Bhen an unknown printer took a galley of type and scrambled ype specimen book. It has survived .</div>
-                  <ul className="item-btn">
-                    <li><a href="#">Free Consulting<i className="fas fa-long-arrow-alt-right"></i></a></li>
-                    <li><a href="#" className="circle-btn"><span className="circle-icon"><i className="fas fa-play-circle"></i>Watch The Video</span></a></li>
-                  </ul>
+          <div>
+            <div style={contentStyle}>
+              <div className="text-left">
+                <p className="h5 ">Lorem ipsum dolor</p>
+                <h2>dolor sit amet consectetur adipisicing.</h2>
+                <p>Bhen an unknown printer took a galley of type and scrambled ype specimen book. It has survived.</p>
+                <div>
+                  <a href="#" className="btn btn-primary mr-3">Free Consulting<i className="fas fa-long-arrow-alt-right ml-2"></i></a>
+                  <a href="#" className="btn btn-secondary"><i className="fas fa-play-circle mr-2"></i>Watch The Video</a>
                 </div>
+              </div>
+              <div>
+                <img src="./assets/img/slider/slider2.png" alt="slider" width="960" height="720" />
               </div>
             </div>
           </div>
-          <div id="slider-direction-3" className="t-cn slider-direction">
-            <div className="slider-content s-tb slide-3">
-              <div className="text-left title-container s-tb-c">
-                <div className="container">
-                  <p className="item-subtitle">Lorem ipsum dolor</p>
-                  <h2 className="item-title">dolor sit amet consectetur adipisicing.</h2>
-                  <div className="item-paragraph">Bhen an unknown printer took a galley of type and scrambled ype specimen book. It has survived .</div>
-                  <ul className="item-btn">
-                    <li><a href="#">Free Consulting<i className="fas fa-long-arrow-alt-right"></i></a></li>
-                    <li><a href="#" className="circle-btn"><span className="circle-icon"><i className="fas fa-play-circle"></i>Watch The Video</span></a></li>
-                  </ul>
+          <div>
+            <div style={contentStyle}>
+              <div className="text-left">
+                <p className="h5">Lorem ipsum dolor</p>
+                <h2>dolor sit amet consectetur adipisicing.</h2>
+                <p>Bhen an unknown printer took a galley of type and scrambled ype specimen book. It has survived.</p>
+                <div>
+                  <a href="#" className="btn btn-primary mr-3">Free Consulting<i className="fas fa-long-arrow-alt-right ml-2"></i></a>
+                  <a href="#" className="btn btn-secondary"><i className="fas fa-play-circle mr-2"></i>Watch The Video</a>
                 </div>
+              </div>
+              <div>
+                <img src="./assets/img/slider/slider1.png" alt="slider" width="960" height="720" />
               </div>
             </div>
           </div>
-        </div>
-      </div> */}
+        </Carousel>
+      </div>
 
-      <section className="financo-activities-wrap1">
+      <section className="financo-activities-wrap1 mt-2">
         <div className="container">
           <div className="row no-gutters">
             <div className="col-lg-4 col-md-6">
@@ -589,7 +587,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* <section className="testimonial-wrap1">
+      <section className="testimonial-wrap1">
         <div className="container">
           <div className="testimonial-box1">
             <div className="slick-carousel slick-slider" data-slick='{"arrows": true, "slidesToShow": 1, "autoplay": false, "vertical": true}'>
@@ -632,12 +630,12 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section> */}
+      </section>
 
 
       <section className="personal-info-wrap1">
         <div className="container-fluid">
-          <div className="row align-items-center" style={{justifyContent:"space-between"}}>
+          <div className="row align-items-center" style={{ justifyContent: "space-between" }}>
             <div className="col-xl-4 col-lg-8">
               <div className="personal-details">
                 <div className="row">
