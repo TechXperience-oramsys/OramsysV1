@@ -1,45 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dummy HTML Page</title>
-    <style>
-        /* Add your CSS styles here */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-        }
+<html x-data="data">
+  <head>
+    <title>Forget Password</title>
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js"
+      defer
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h2 class="text-center mb-4">Forget Password</h2>
+      <h5 x-text="alertDanger" class="text-danger"></h5>
+      <h5 x-text="alertSuccess" class="text-success"></h5>
+      <div x-show="step === 'otp'" class="card p-4 mt-3">
+        <p>Enter the OTP sent to your email:</p>
+        <div class="form-group mb-3">
+          <input
+            type="text"
+            x-model="otp"
+            placeholder="OTP"
+            required
+            class="form-control"
+          />
+          <span x-text="errorMessage" class="text-danger"></span>
+        </div>
+        <button x-on:click="verifyOTP" class="btn btn-primary">
+          Verify OTP
+        </button>
+      </div>
 
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            color: #333;
-            text-align: center;
-        }
-
-        p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        /* Add more styles as needed */
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Welcome to Dummy HTML Page</h1>
-        <p>This is a dummy HTML page. You can customize it as per your requirements.</p>
-        <p>Feel free to add more HTML elements, CSS styles, and JavaScript code to create your desired layout and functionality.</p>
+      <div x-show="step === 'newPassword'" class="card p-4 mt-3">
+        <p>Enter your new password:</p>
+        <div class="form-group mb-3">
+          <input
+            type="password"
+            x-model="newPassword"
+            placeholder="New Password"
+            required
+            class="form-control"
+          />
+          <span x-text="errorMessage" class="text-danger"></span>
+        </div>
+        <p>Enter your new password again:</p>
+        <div class="form-group mb-3">
+          <input
+            type="password"
+            x-model="newPasswordConfirm"
+            placeholder="New Password Confirm"
+            required
+            class="form-control"
+          />
+        </div>
+        <button x-on:click="updatePassword" class="btn btn-primary">
+          Update Password
+        </button>
+      </div>
     </div>
-</body>
+
+    <script>
+      const data = {
+        step: "otp",
+        otp: "",
+        newPassword: "",
+        newPasswordConfirm: "",
+        baseUrl: "https://backend.oramsysdev.com/",
+        alertSuccess: "",
+        alertDanger: "",
+        errorMessage: "",
+        userId: "666a96865faf8d99938f9271",
+        verifyOTP: function () {
+          // Prepare the data to be sent in the request body
+          if (!this.otp) {
+            this.errorMessage = "Please enter the OTP";
+            return;
+          }
+          const requestBody = JSON.stringify({
+            otp: this.otp,
+          });
+          // Send the request to verify the OTP
+          fetch(this.baseUrl + "verifyOtp/" + this.userId, {
+            method: "POST",
+            body: requestBody,
+            headers: {
+              "Content-Type": "application/json",
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp0cGxhcnRpc2FuQGdtYWlsLmNvbSIsInN1YiI6MSwiaWF0IjoxNzE4MjU0OTM2LCJleHAiOjE3MTg4NTk3MzZ9.g1lL2DLSVb0dKLT-Rnwzi9wQjgEMCeTWeghF4553KGI",
+            },
+          })
+            .then((response) => {
+              if (response.ok) {
+                this.step = "newPassword";
+                this.alertSuccess = "OTP verified successfully";
+                this.alertDanger = "";
+                this.errorMessage = "";
+              } else {
+                this.alertSuccess = "";
+                this.errorMessage = "Invalid OTP";
+                this.alertDanger = "Invalid OTP";
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              this.alertSuccess = "";
+              this.errorMessage = "Failed to verify OTP";
+              this.alertDanger = "Failed to verify OTP";
+            });
+        },
+        updatePassword: function () {
+          if (!this.newPassword || !this.newPasswordConfirm) {
+            this.errorMessage = "Please enter your new password";
+            return;
+          }
+          // Prepare the data to be sent in the request body
+          const requestBody = JSON.stringify({
+            password: this.newPassword,
+            confirm_password: this.newPasswordConfirm,
+          });
+          // Send the request to update the password
+          fetch(this.baseUrl + "updatePassword/" + this.userId, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp0cGxhcnRpc2FuQGdtYWlsLmNvbSIsInN1YiI6MSwiaWF0IjoxNzE4MjU0OTM2LCJleHAiOjE3MTg4NTk3MzZ9.g1lL2DLSVb0dKLT-Rnwzi9wQjgEMCeTWeghF4553KGI",
+            },
+            body: requestBody,
+          })
+            .then((response) => response.json())
+            .then((response) => {
+              if (response.status && response.status == 200) {
+                // Password updated successfully
+                this.alertSuccess = response.message;
+                this.alertDanger = "";
+                // Redirect to login page or show success message
+              } else {
+                // Failed to update password
+                this.alertSuccess = "";
+                this.alertDanger = response.message;
+              }
+            })
+            .catch((error) => {
+              this.alertSuccess = ""; // Clear the "Working on it..." message
+              this.alertDanger = "Failed to update password";
+            });
+        },
+      };
+    </script>
+  </body>
 </html>
