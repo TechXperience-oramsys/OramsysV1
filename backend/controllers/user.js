@@ -86,6 +86,8 @@ class UserController {
     };
     console.log(generateOTP());
     const model = new User(newUser);
+
+
     try {
       const alreadyExist = await User.getUserByEmail(req.body.email);
       console.log("tetstyuuuo jhyuh");
@@ -103,25 +105,14 @@ class UserController {
         });
         // Email content
         const mailOptions = {
-          from: "notification@techxperience.ng",
-          to: body.email,
-          subject: "OTP from Oramsys",
-          text: "User created successfully",
-          html: `
-            <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
-              <p styyle="font-size: 16px">Hi, ${body.name}</p>
-              <p styyle="font-size: 12px">You have been onboarded on the Oramsys platform. Click on the link below to enter the OTP and create a password.</p>
-              <p style="font-weight: bold; font-size: 20px;">OTP: ${otp}</p>
-              <p>
-                <a 
-                  href="https://oramsysdev.com/verify-user" 
-                  style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;"
-                >
-                  Verify Account
-                </a>
-              </p>
-            </div>
-          `,
+          from: "notification@techxperience.ng", // Sender address
+          to: body.email, // List of recipients
+          subject: "Otp from oramsys",
+          text: "User create succesfully ", // Plain text body
+          html: `<b>This is the otp  ${otp} by using this otp you can create your password </b>
+                     <a href="https://oramsysdev.com/verify-user/${model._id}"> Verify Account</a>`,
+
+          // HTML body (optional)
         };
 
 
@@ -349,19 +340,20 @@ class UserController {
   }
 
   async verifyOtp(req, res, next) {
+    console.log(req.params.id)
     try {
       const otp = req.body.otp;
-      console.log(otp, "otp");
-      if (!otp) {
+
+      if (!req.params.id) {
         return res
           .status(httpStatus.BAD_REQUEST)
           .json(
             new APIResponse(null, "OTP is required", httpStatus.BAD_REQUEST)
           );
       }
-      const user = await User.findOne({ otp });
-      console.log(user, "user");
-      if (!user) {
+      const user = await User.findOne({ _id: req.params.id });
+
+      if (user.otp !== otp) {
         return res
           .status(httpStatus.UNAUTHORIZED)
           .json(new APIResponse(null, "Invalid OTP", httpStatus.UNAUTHORIZED));

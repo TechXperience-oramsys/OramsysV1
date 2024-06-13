@@ -18,7 +18,7 @@ const createValidation = Joi.object({
     .email()
     .error(new Error("Please enter valid Email")),
   profile: Joi.string().error(new Error("Please enter valid Profile")),
-  createdBy : Joi.string().error(new Error("Please enter valid Profile")),
+  createdBy: Joi.string().error(new Error("Please enter valid Profile")),
 });
 
 const editValidation = Joi.object({
@@ -47,11 +47,11 @@ router.get("/get", Validate, userController.getAllUser);
 router.get("/getById/:id", Validate, userController.getUserById);
 router.post("/edit/:id", editValidate, userController.editUser);
 router.delete("/remove/:id", Validate, userController.deleteUser);
-router.post("/verifyOtp", userController.verifyOtp);
+router.post("/verifyOtp/:id", userController.verifyOtp);
 router.put("/updatePassword/:id", userController.updatePassword);
 function signUpValidate(req, res, next) { 
   const Data = req.body;
-  console.log(Data , 'data');
+  console.log(Data, 'data');
   const { error, value } = createValidation.validate(Data);
   if (error) {
     return res
