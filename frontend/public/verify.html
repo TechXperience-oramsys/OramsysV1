@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html x-data="data" x-init="userId= params.get('id')">
+  <head>
+    <title>create Password</title>
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js"
+      defer
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h2 class="text-center mb-4">create new Password</h2>
+      <h5 x-text="alertDanger" class="text-danger"></h5>
+      <h5 x-text="alertSuccess" class="text-success"></h5>
+      <div x-show="step === 'otp'" class="card p-4 mt-3">
+        <p>Enter the OTP sent to your email:</p>
+        <div class="form-group mb-3">
+          <input
+            type="number"
+            max="4"
+            x-model="otp"
+            placeholder="OTP"
+            required
+            class="form-control"
+          />
+          <span x-text="errorMessage" class="text-danger"></span>
+        </div>
+        <button
+          x-on:click="verifyOTP"
+          x-bind:disabled="btnDisabled"
+          class="btn btn-primary"
+          id="verify-btn"
+          x-text="btnText"
+        ></button>
+      </div>
+
+      <div x-show="step === 'newPassword'" class="card p-4 mt-3">
+        <p>Enter your new password:</p>
+        <div class="form-group mb-3">
+          <input
+            type="password"
+            x-model="newPassword"
+            placeholder="New Password"
+            required
+            class="form-control"
+          />
+          <span x-text="errorMessage" class="text-danger"></span>
+        </div>
+        <p>Enter your new password again:</p>
+        <div class="form-group mb-3">
+          <input
+            type="password"
+            x-model="newPasswordConfirm"
+            placeholder="New Password Confirm"
+            required
+            class="form-control"
+          />
+        </div>
+        <button
+          x-on:click="updatePassword"
+          x-bind:disabled="btnDisabled"
+          class="btn btn-primary"
+          x-text="btnText"
+        ></button>
+      </div>
+    </div>
+
+    <script>
+      const data = {
+        params: new URLSearchParams(window.location.search),
+        step: "otp",
+        otp: "",
+        newPassword: "",
+        newPasswordConfirm: "",
+        baseUrl: "https://backend.oramsysdev.com/user/",
+        alertSuccess: "",
+        alertDanger: "",
+        errorMessage: "",
+        userId: "",
+        btnText: "Verify OTP",
+        btnDisabled: false, // Initially button is enabled
+
+        verifyOTP: function () {
+          this.btnDisabled = true; // Disable the button
+          this.btnText = "Loading..";
+
+          // Prepare the data to be sent in the request body
+          if (!this.otp) {
+            this.errorMessage = "Please enter the OTP";
+            this.btnText = "Verify OTP";
+            this.btnDisabled = false; // Enable the button
+            return;
+          }
+          if (!this.otp.length == 4) {
+            this.btnText = "Verify OTP";
+            this.btnDisabled = false; // Enable the button
+            this.errorMessage = "OTP Must contain 4 digits";
+            return;
+          }
+
+          const requestBody = JSON.stringify({
+            otp: parseInt(this.otp),
+          });
+
+          // Send the request to verify the OTP
+          fetch(this.baseUrl + "verifyOtp/" + this.userId, {
+            method: "POST",
+            body: requestBody,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => {
+              if (response.ok) {
+                this.step = "newPassword";
+                this.btnText = "Update Password";
+                this.alertSuccess = "OTP verified successfully";
+                this.alertDanger = "";
+                this.errorMessage = "";
+                this.btnDisabled = false; // Enable the button
+              } else {
+                this.btnText = "Verify OTP";
+                this.alertSuccess = "";
+                this.errorMessage = "Invalid OTP";
+                this.alertDanger = "Invalid OTP";
+                this.btnDisabled = false; // Enable the button
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              this.alertSuccess = "";
+              this.btnText = "Verify OTP";
+              this.errorMessage = "Failed to verify OTP";
+              this.alertDanger = "Failed to verify OTP";
+              this.btnDisabled = false; // Enable the button
+            });
+        },
+        updatePassword: function () {
+          this.btnDisabled = true; // Disable the button
+          // Validate password and confirm password
+          if (!this.newPassword || !this.newPasswordConfirm) {
+            this.errorMessage =
+              "Please enter your new password and confirm it.";
+            this.btnDisabled = false; // Enable the button
+            return;
+          }
+
+          if (this.newPassword !== this.newPasswordConfirm) {
+            this.errorMessage = "Passwords do not match.";
+            this.btnDisabled = false; // Enable the button
+            return;
+          }
+
+          if (this.newPassword.length != 6) {
+            this.errorMessage = "Password must be at least 6 characters long.";
+            this.btnDisabled = false; // Enable the button
+            return;
+          }
+
+          const requestBody = JSON.stringify({
+            password: this.newPassword,
+            confirm_password: this.newPasswordConfirm,
+          });
+
+          fetch(this.baseUrl + "updatePassword/" + this.userId, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: requestBody,
+          })
+            .then((response) => response.json())
+            .then((response) => {
+              if (response.status && response.status == 200) {
+                this.alertSuccess = response.message;
+                this.alertDanger = "";
+                window.location.href = location.origin;
+                return;
+              } else {
+                this.alertSuccess = "";
+                this.alertDanger = response.message;
+              }
+            })
+            .catch((error) => {
+              this.alertSuccess = ""; // Clear the "Working on it..." message
+              this.alertDanger = "Failed to update password";
+            })
+            .finally(() => {
+              this.btnDisabled = false; // Enable the button
+            });
+        },
+      };
+    </script>
+  </body>
+</html>
