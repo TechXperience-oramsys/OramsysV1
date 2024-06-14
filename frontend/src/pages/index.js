@@ -32,9 +32,9 @@ import AirBases from "./administration/masterData/airBases/AirBases";
 import { ApiGet, ApiPost } from "../helper/API/ApiData";
 import { Create_new_password } from "./administration/users/CreatePassword";
 
-const pathForLayout = ["/", "/signup", "/home", "/admin-login", "/fa-login","/verify-user"];
+const pathForLayout = ["/", "/signin", "/signup", "/admin-login", "/fa-login", "/verify-user"];
 const Index = () => {
- 
+
   const location = useLocation();
   const token = AuthStorage.getToken();
   const dispatch = useDispatch();
@@ -238,9 +238,9 @@ const Index = () => {
         pathForLayout.includes(location.pathname) && (
           <Layout>
             <Routes>
-              <Route path="/" element={<SignIn />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/signin" element={<SignIn />} />
               <Route path="/signup" element={<SignUp />} />
-              <Route path="/home" element={<Home />} />
               <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/fa-login" element={<FunctionalAdmin />} />
               <Route path="/verify-user" element={<Create_new_password />} />

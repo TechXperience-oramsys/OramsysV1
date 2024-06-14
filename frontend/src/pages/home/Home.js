@@ -2,6 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightLong, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { Carousel } from 'antd';
+import { ArrowRightOutlined, PlayCircleOutlined } from '@ant-design/icons'
 
 
 const Home = () => {
@@ -46,14 +47,14 @@ const Home = () => {
       <div className="container my-5">
         <Carousel autoplay>
           <div>
-            <div style={contentStyle}>
-              <div className="text-left">
+            <div className="d-flex flex-column flex-md-row justify-content-between align-items-center" style={contentStyle}>
+              <div className="text-left mb-4 mb-md-0">
                 <p className="h5">Lorem ipsum dolor</p>
                 <h2>dolor sit amet consectetur adipisicing.</h2>
                 <p>Bhen an unknown printer took a galley of type and scrambled ype specimen book. It has survived.</p>
                 <div>
-                  <a href="#" className="btn btn-primary mr-3">Free Consulting<i className="fas fa-long-arrow-alt-right ml-2"></i></a>
-                  <a href="#" className="btn btn-secondary"><i className="fas fa-play-circle mr-2"></i>Watch The Video</a>
+                  <a href="#" className="btn btn-danger mr-3">Free Consulting<ArrowRightOutlined size={20} className='ml-2' /></a>
+                  <a href="#" className="btn btn-secondary"><PlayCircleOutlined size={20} className='mr-2 font-bold' />Watch The Video</a>
                 </div>
               </div>
               <div>
@@ -62,14 +63,14 @@ const Home = () => {
             </div>
           </div>
           <div>
-            <div style={contentStyle}>
-              <div className="text-left">
-                <p className="h5 ">Lorem ipsum dolor</p>
+            <div className="d-flex flex-column flex-md-row justify-content-between align-items-center" style={contentStyle}>
+              <div className="text-left mb-4 mb-md-0">
+                <p className="h5">Lorem ipsum dolor</p>
                 <h2>dolor sit amet consectetur adipisicing.</h2>
                 <p>Bhen an unknown printer took a galley of type and scrambled ype specimen book. It has survived.</p>
                 <div>
-                  <a href="#" className="btn btn-primary mr-3">Free Consulting<i className="fas fa-long-arrow-alt-right ml-2"></i></a>
-                  <a href="#" className="btn btn-secondary"><i className="fas fa-play-circle mr-2"></i>Watch The Video</a>
+                  <a href="#" className="btn btn-danger mr-3">Free Consulting<ArrowRightOutlined size={20} className='ml-2' /></a>
+                  <a href="#" className="btn btn-secondary"><PlayCircleOutlined size={20} className='mr-2 font-bold' />Watch The Video</a>
                 </div>
               </div>
               <div>
@@ -78,14 +79,14 @@ const Home = () => {
             </div>
           </div>
           <div>
-            <div style={contentStyle}>
-              <div className="text-left">
+            <div className="d-flex flex-column flex-md-row justify-content-between align-items-center" style={contentStyle}>
+              <div className="text-left mb-4 mb-md-0">
                 <p className="h5">Lorem ipsum dolor</p>
                 <h2>dolor sit amet consectetur adipisicing.</h2>
                 <p>Bhen an unknown printer took a galley of type and scrambled ype specimen book. It has survived.</p>
                 <div>
-                  <a href="#" className="btn btn-primary mr-3">Free Consulting<i className="fas fa-long-arrow-alt-right ml-2"></i></a>
-                  <a href="#" className="btn btn-secondary"><i className="fas fa-play-circle mr-2"></i>Watch The Video</a>
+                  <a href="#" className="btn btn-danger mr-3">Free Consulting<ArrowRightOutlined size={20} className='ml-2' /></a>
+                  <a href="#" className="btn btn-secondary"><PlayCircleOutlined size={20} className='mr-2 font-bold' />Watch The Video</a>
                 </div>
               </div>
               <div>
@@ -96,9 +97,9 @@ const Home = () => {
         </Carousel>
       </div>
 
-      <section className="financo-activities-wrap1 mt-2">
+      <section className="financo-activities-wrap1">
         <div className="container">
-          <div className="row no-gutters">
+          <div className="row pt-20">
             <div className="col-lg-4 col-md-6">
               <div className="financo-activities-box1">
                 <div className="item-img-round">
