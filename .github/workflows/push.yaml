@@ -35,5 +35,5 @@ jobs:
         SSH_HOST: ${{ secrets.SSH_HOST }}
       run: |
         echo "$SSH_PRIVATE_KEY" > staging-server-oramyses.pem
-        chmod 600 deploy_key.pem
+        chmod 600 staging-server-oramyse.pem
         ssh -i staging-server-oramyses.pem -o StrictHostKeyChecking=no "${SSH_USER}@${SSH_HOST}" "bash /var/www/deploy.sh"
