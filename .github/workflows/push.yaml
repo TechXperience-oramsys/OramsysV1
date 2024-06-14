@@ -18,22 +18,22 @@ jobs:
       with:
         node-version: '16'
 
-    - name: Install SSHpass
+    - name: Install SSH client
       run: |
         sudo apt-get update
-        sudo apt-get install -y sshpass
+        sudo apt-get install -y openssh-client
 
     - name: Debug Environment Variables
       run: |
         echo "SSH_USER=${{ secrets.SSH_USER }}"
         echo "SSH_HOST=${{ secrets.SSH_HOST }}"
-        echo "SSH_PASSWORD is set"
 
     - name: Deploy to EC2
       env:
-        SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         SSH_USER: ${{ secrets.SSH_USER }}
         SSH_HOST: ${{ secrets.SSH_HOST }}
       run: |
-        echo "Connecting to EC2 instance"
-        sshpass -p "${SSH_PASSWORD}" ssh -o StrictHostKeyChecking=no "${SSH_USER}@${SSH_HOST}" "bash /data/deploy_backend.sh"
+        echo "$SSH_PRIVATE_KEY" > staging-server-oramyses.pem
+        chmod 600 deploy_key.pem
+        ssh -i staging-server-oramyses.pem -o StrictHostKeyChecking=no "${SSH_USER}@${SSH_HOST}" "bash /var/www/deploy.sh"
