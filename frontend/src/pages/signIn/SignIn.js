@@ -31,7 +31,7 @@ const SignIn = () => {
             console.log('loginData', loginData)
             if (loginData.status === 200 && loginData?.data?.token) {
                 // toast.success(loginData.message);
-                navigate('/homeLanding')
+                navigate('/dashboard')
             }
         }
     }, [loginData])

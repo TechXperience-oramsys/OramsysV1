@@ -34,7 +34,7 @@ const FunctionalAdmin = () => {
             console.log('loginData', loginData)
             if (loginData.status === 200 && loginData.message === "Login Successfully") {
                 // toast.success(loginData.message);
-                navigate('/homeLanding')
+                navigate('/Dashboard')
             }
         }
     }, [loginData])
@@ -79,7 +79,7 @@ const FunctionalAdmin = () => {
             })
             if (res.status === 200 && res.data.token) {
                 toast.success(res.message);
-                navigate("/homeLanding")
+                navigate("/dashboard")
                 AuthStorage.setStorageData(STORAGEKEY.token, res.data.token, true)
                 AuthStorage.setStorageData(STORAGEKEY.roles, "admin", true)
                 AuthStorage.setStorageData(STORAGEKEY.userId, res.data.id, true)
@@ -155,7 +155,7 @@ const FunctionalAdmin = () => {
                                 </div>
                             </div>
                         </div>
-{/* 
+                        {/* 
                         <div className="col-md-6">
                             <img src={svgIcon} style={{ height: '480x' }} alt="Image" className='img-slide img-responsive' />
                         </div> */}

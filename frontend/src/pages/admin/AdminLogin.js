@@ -35,7 +35,7 @@ const AdminLogin = () => {
             console.log('loginData', loginData)
             if (loginData.status === 200 && loginData.message === "Login Successfully") {
                 // toast.success(loginData.message);
-                navigate('/homeLanding')
+                navigate('/dashboard')
             }
         }
     }, [loginData])
@@ -81,7 +81,7 @@ const AdminLogin = () => {
             })
             if (res.status === 200 && res.data != undefined) {
                 toast.success(res.message);
-                navigate('/homeLanding');
+                navigate('/Dashboard');
                 AuthStorage.setStorageData(STORAGEKEY.token, res.data.token, true)
                 AuthStorage.setStorageData(STORAGEKEY.roles, "superAdmin", true)
                 AuthStorage.setStorageData(STORAGEKEY.userId, res.data.id, true)

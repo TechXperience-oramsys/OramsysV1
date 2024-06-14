@@ -50,7 +50,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
     {
       img: FcHome,
       text: 'Dashboard',
-      path: "homeLanding"
+      path: "dashboard"
     },
     {
       img: FcLock,
@@ -122,7 +122,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
       text: 'Administration',
       path: "",
       subItem: [
-       
+
         // {
         //   img: FcWorkflow,
         //   text: 'Entities Role',
@@ -131,7 +131,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
         {
           img: FcHome,
           text: 'Dashboard',
-          path: "homeLanding"
+          path: "dashboard"
         },
         // {
         //   img: FcPositiveDynamic,
@@ -161,7 +161,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
     {
       img: FcHome,
       text: 'Dashboard',
-      path: "homeLanding"
+      path: "dashboard"
     },
 
     {

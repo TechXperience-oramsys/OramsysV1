@@ -86,7 +86,7 @@ export const Create_new_password = () => {
         .then((response) => {
           console.log(response.data);
           toast.success(response.data.message);
-          navigate("/");
+          navigate("/signin");
         })
         .catch((error) => {
           console.log(error.response.data);

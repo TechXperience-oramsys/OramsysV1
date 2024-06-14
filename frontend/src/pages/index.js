@@ -4,7 +4,7 @@ import AuthStorage from "../helper/AuthStorage";
 import AuthLayOut from "../layout/AuthLayOut";
 import Layout from "../layout/Layout";
 import Home from "./home/Home";
-import HomeLanding from "./home/HomeLanding";
+import Dashboard from "./home/Dashboard";
 import SignIn from "./signIn/SignIn";
 import SignUp from "./signUp/SignUp";
 import { useDispatch } from "react-redux";
@@ -42,8 +42,8 @@ const Index = () => {
 
   const userRoutes = [
     {
-      path: "/homeLanding",
-      component: HomeLanding,
+      path: "/dashboard",
+      component: Dashboard,
     },
     {
       path: "/transactions",
@@ -65,8 +65,8 @@ const Index = () => {
 
   const AdminRoutes = [
     {
-      path: "/homeLanding",
-      component: HomeLanding,
+      path: "/dashboard",
+      component: Dashboard,
     },
     {
       path: "/entities",
@@ -103,8 +103,8 @@ const Index = () => {
   ];
   const superAdminRoutes = [
     {
-      path: "/homeLanding",
-      component: HomeLanding,
+      path: "/dashboard",
+      component: Dashboard,
     },
     {
       path: "/add-product",
@@ -189,15 +189,15 @@ const Index = () => {
           console.log(res, "resp");
           if (res.status === 200) {
             if (AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin") {
-              navigate("/homeLanding");
+              navigate("/dashboard");
             } else if (
               AuthStorage.getStorageData(STORAGEKEY.roles) === "admin"
             ) {
-              navigate("/homeLanding");
+              navigate("/dashboard");
             } else if (
               AuthStorage.getStorageData(STORAGEKEY.roles) === "user"
             ) {
-              navigate("/homeLanding");
+              navigate("/dashboard");
             }
           } else {
             if (pathForLayout.includes(location.pathname)) {
