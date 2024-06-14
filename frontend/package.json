@@ -63,6 +63,7 @@
     "awssync": "aws s3 sync ./build 's3://oramsys.com/'",
     "server": "node server/index.js",
     "build": "NODE_OPTIONS=--max-old-space-size=8096 react-scripts build",
+    "build:local": "SET NODE_OPTIONS=--max-old-space-size=8096 react-scripts build",
     "postbuild": "cpx public/.htaccess build/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
