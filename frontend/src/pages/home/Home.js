@@ -51,7 +51,7 @@ const Home = () => {
           </div>
           <div className="slider-bg-img2">
             <img src="./assets/img/figure/figure97.png" alt="figure" data-sal="slide-up" data-sal-duration="1300" data-sal-delay="700" />
-          </div>
+          </div> 
           
           <Carousel autoplay>
             <div>
