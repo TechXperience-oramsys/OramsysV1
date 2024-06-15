@@ -57,7 +57,7 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
         <div className="d-flex align-items-center">
           {/* <img src='./assets/img/my-img/barmanu.svg' alt='' width="30px"  /> */}
           <MenuOutlined className='fs-5' onClick={() => setSidebar(!showSidebar)} />
-          <span className="ms-2 fw-bold fs-5">Oramsys</span>
+          <span className="ms-2 fw-bold fs-5"></span>
         </div>
         <div className="d-flex align-items-center me-5 ms-auto">
           <div className='me-2'>

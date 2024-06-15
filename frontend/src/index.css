@@ -24,12 +24,21 @@ code {
   z-index: 999 !important;
 }
 
+
 .topbar-right .header-right-button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
+.ant-carousel .slick-dots li button {
+  background: #DC3545;
+  opacity: 0.4;
+}
 
+.ant-carousel .slick-dots li.slick-active button {
+  opacity: 1;
+  background: #DC3545;
+}
 .topbar-right .header-right-button .header-btn.s-up {
   background-image: linear-gradient(
     30deg,
