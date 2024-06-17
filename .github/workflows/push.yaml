@@ -20,8 +20,8 @@ jobs:
 
       - name: Install SSH client
         run: |
-          sudo apt-get update
-          sudo apt-get install -y openssh-client
+          apt-get update
+          apt-get install -y openssh-client
 
       - name: Debug Environment Variables
         run: |
@@ -29,11 +29,11 @@ jobs:
           echo "SSH_HOST=${{ secrets.SSH_HOST }}"
 
       - name: Deploy to EC2
-        env:
+        env: 
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
-          echo "$SSH_PRIVATE_KEY" > staging-server-oramyses.pem
-          chmod 600 staging-server-oramyses.pem
-          ssh -i staging-server-oramyses.pem -o StrictHostKeyChecking=no "${SSH_USER}@${SSH_HOST}" "bash /var/www/deploy.sh"
+          echo "$SSH_PRIVATE_KEY" > $HOME/.ssh/staging-server-oramyses.pem
+          chmod 600 $HOME/.ssh/staging-server-oramyses.pem
+          ssh -i $HOME/.ssh/staging-server-oramyses.pem -o StrictHostKeyChecking=no "${SSH_USER}@${SSH_HOST}" "bash /var/www/deploy.sh"
