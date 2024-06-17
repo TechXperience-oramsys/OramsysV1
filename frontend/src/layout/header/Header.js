@@ -48,7 +48,7 @@ const Header = () => {
       <div id="rt-sticky-placeholder"></div>
       <div id="header-menu" className="header-menu menu-layout1">
         <div className="container">
-          <div className="row d-flex align-items-center">
+          <div className="row m-0 p-0 d-flex align-items-center">
             <div className="col-xl-2 col-lg-2">
               <div className="logo-area">
                 <a href="/" className="temp-logo">
