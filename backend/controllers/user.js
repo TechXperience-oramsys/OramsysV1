@@ -113,10 +113,7 @@ class UserController {
               <p styyle="font-size: 12px">You have been onboarded on the Oramsys platform. Click on the link below to enter the OTP and create a password.</p>
               <p style="font-weight: bold; font-size: 20px;">OTP: ${otp}</p>
               <p>
-                <a 
-                https://oramsysdev.com/verify-user" 
-                  style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;"
-                >
+                <a href="https://oramsysdev.com/verify-user" style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">
                   Verify Account
                 </a>
               </p>
