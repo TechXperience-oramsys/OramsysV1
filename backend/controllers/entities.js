@@ -22,48 +22,48 @@ class entitiesController {
             const entityLogin = req.body.user_name.toLowerCase()
             const entity = await entities.getByEmail(entityLogin)
 
-            
-            
-                if (!entity) {
-                    return res.status(httpStatus.OK).json(new APIResponse(null, "Wrong Email", httpStatus.NOT_FOUND))
-                }
-                const match = await comparePassword(req.body.password, entity.password)
 
-                if(!match) {
-                    return res
+
+            if (!entity) {
+                return res.status(httpStatus.OK).json(new APIResponse(null, "Wrong Email", httpStatus.NOT_FOUND))
+            }
+            const match = await comparePassword(req.body.password, entity.password)
+
+            if (!match) {
+                return res
                     .status(httpStatus.OK)
-                    .json(new APIResponse(null, "Wrong Password", httpStatus.NOT_FOUND ));
-                } 
-                    const token = getJWTToken({
-                        id: entity._id,
-                        email: entity.email,
-                        role:"admin"
-                    });
-                    let name
-                    if (entity.details.name) {
-                        name = entity.details.name
-                    } else if (entity.details.givenName) {
-                        name = entity.details.givenName
-                    } else {
-                        name = null
-                    }
-                    console.log(entity , 'entities');
-                    let newEntity;
-                    newEntity = {
-                        id: entity.id,
-                        email: entity.email,
-                        name: name,
-                        token: token
-                    };
+                    .json(new APIResponse(null, "Wrong Password", httpStatus.NOT_FOUND));
+            }
+            const token = getJWTToken({
+                id: entity._id,
+                email: entity.email,
+                role: "admin"
+            });
+            let name
+            if (entity.details.name) {
+                name = entity.details.name
+            } else if (entity.details.givenName) {
+                name = entity.details.givenName
+            } else {
+                name = null
+            }
+            console.log(entity, 'entities');
+            let newEntity;
+            newEntity = {
+                id: entity.id,
+                email: entity.email,
+                name: name,
+                token: token
+            };
 
-                    return res
-                        .status(httpStatus.OK)
-                        .json(
-                            new APIResponse(newEntity, "Login successfully", httpStatus.OK)
-                        );
-                
-               
-            
+            return res
+                .status(httpStatus.OK)
+                .json(
+                    new APIResponse(newEntity, "Login successfully", httpStatus.OK)
+                );
+
+
+
 
         }
         catch (e) {
@@ -146,7 +146,7 @@ class entitiesController {
         let id = params.id;
 
         try {
-            const updatedData = await entityRoles.updateEntityRoles(body,id)
+            const updatedData = await entityRoles.updateEntityRoles(body, id)
             return res.status(httpStatus.OK).json(new APIResponse(updatedData, 'Role updated successfully.', httpStatus.OK));
 
         } catch (e) {
@@ -175,19 +175,19 @@ class entitiesController {
     //     try {
     //       const roleId = req.params.id; // Extract the role ID from the request parameters
     //       const updatedRoleData = req.body; // Extract the updated role information from the reque`enter code here`st body
-      
+
     //       const existingRole = await entityRoles.findById(roleId);
     //       if (!existingRole) {
     //         return res.status(httpStatus.NOT_FOUND).send({ message: "Role not found." });
     //       }
-      
+
     //       // Update the existing role with the updated role information
     //       existingRole.name = updatedRoleData.name;
     //       existingRole.description = updatedRoleData.description;
     //       // Update other properties as needed
-      
+
     //       const updatedRole = await existingRole.save();
-      
+
     //       return res.status(httpStatus.OK).json(new APIResponse(updatedRole, 'Role updated successfully.', httpStatus.OK));
     //     } catch (error) {
     //       return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(new APIResponse({}, 'Error updating role.', httpStatus.INTERNAL_SERVER_ERROR, error));
@@ -405,8 +405,15 @@ class entitiesController {
                                 ...element,
                                 entityId: saveResponse._id
                             }
-                            const entityAddressResponse = await entityAddress.updateEntityAddress(element, element._id);
-                            addressesIds.push(entityAddressResponse._id)
+                            if (!element?._id) {
+                                const entityAddressModel = new entityAddress(element);
+                                const entityAddressResponse = await entityAddressModel.save();
+                                addressesIds.push(entityAddressResponse._id)
+                            } else {
+                                const entityAddressResponse = await entityAddress.updateEntityAddress(element, element._id);
+                                addressesIds.push(entityAddressResponse._id)
+                            }
+                           
                         }
 
 
