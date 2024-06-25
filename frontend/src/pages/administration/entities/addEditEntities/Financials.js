@@ -1,11 +1,12 @@
 import { InputAdornment, TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Form, InputGroup } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { companydataAction } from '../../../../redux/actions/companydataAction';
+import { OptionalSpan, RequiredSpan } from '../../../transactions/Helpers/OptionalTags';
 
-const Financials = ({ hendelNext, hendelCancel }) => {
+const Financials = ({ handleNext, handleBack }) => {
 
     const dispatch = useDispatch()
     const location = useLocation()
@@ -127,176 +128,159 @@ const Financials = ({ hendelNext, hendelCancel }) => {
             financial: financials
         }
         dispatch(companydataAction(body))
-        hendelNext()
+        handleNext()
     }
 
     return (
         <>
             <div className='add-edit-product'>
-                <h1 className=''>Financials</h1>
                 <div className='form'>
-                    <h2 className='mb-3'>Financials</h2>
+                    <h4 className='fw-bold fs-5 mb-3 title-admin'>Financials</h4>
                     <div>
-                        <Row>
-                            <Col xxl={3} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                                <TextField
-                                    label="Net profit margin"
-                                    variant="standard"
-                                    color="warning"
-                                    InputProps={{
-                                        endAdornment: <InputAdornment position="start">%</InputAdornment>,
-                                    }}
-                                    value={financials.netProfitMargin}
-                                    onChange={(e) => handleChange(e, "netProfitMargin")}
-                                    disabled={isView}
-                                />
+                        <Row className='mt-4'>
+                            <Form.Group as={Col} lg={3} controlId="formGridZip">
+                                <Form.Label>Net Profit Margin</Form.Label>
+                                <InputGroup>
+                                    <Form.Control
+                                        name='netProfitMargin'
+                                        value={financials.netProfitMargin}
+                                        onChange={(e) => handleChange(e, "netProfitMargin")}
+                                    />
+                                    <InputGroup.Text>%</InputGroup.Text>
+                                </InputGroup>
+
                                 {formErrors && formErrors?.netProfitMargin && <span style={{ color: 'red' }}>{formErrors.netProfitMargin}</span>}
-                            </Col>
-                            <Col xxl={3} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                                <TextField
-                                    label="ROE"
-                                    variant="standard"
-                                    color="warning"
-                                    InputProps={{
-                                        endAdornment: <InputAdornment position="start">%</InputAdornment>,
-                                    }}
-                                    value={financials.ROE}
-                                    onChange={(e) => handleChange(e, "ROE")}
-                                    disabled={isView}
-                                />
+                            </Form.Group>
+
+                            <Form.Group as={Col} lg={3} controlId="formGridZip">
+                                <Form.Label>ROE</Form.Label>
+                                <InputGroup>
+                                    <Form.Control
+                                        value={financials.ROE}
+                                        onChange={(e) => handleChange(e, "ROE")}
+                                    />
+                                    <InputGroup.Text>%</InputGroup.Text>
+                                </InputGroup>
                                 {formErrors && formErrors?.ROE && <span style={{ color: 'red' }}>{formErrors.ROE}</span>}
-                            </Col>
-                            <Col xxl={3} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                                <TextField
-                                    label="ROA"
-                                    variant="standard"
-                                    color="warning"
-                                    InputProps={{
-                                        endAdornment: <InputAdornment position="start">%</InputAdornment>,
-                                    }}
-                                    value={financials.ROA}
-                                    onChange={(e) => handleChange(e, "ROA")}
-                                    disabled={isView}
-                                />
+                            </Form.Group>
+
+                            <Form.Group as={Col} lg={3} controlId="formGridZip">
+                                <Form.Label>ROA</Form.Label>
+                                <InputGroup>
+                                    <Form.Control
+                                        value={financials.ROA}
+                                        onChange={(e) => handleChange(e, "ROA")}
+                                    />
+                                    <InputGroup.Text>%</InputGroup.Text>
+                                </InputGroup>
                                 {formErrors && formErrors?.ROA && <span style={{ color: 'red' }}>{formErrors.ROA}</span>}
-                            </Col>
-                            <Col xxl={3} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                                <TextField
-                                    label="Operating cash flow"
-                                    variant="standard"
-                                    color="warning"
-                                    InputProps={{
-                                        endAdornment: <InputAdornment position="start">%</InputAdornment>,
-                                    }}
-                                    value={financials.operatingCashFlow}
-                                    onChange={(e) => handleChange(e, "operatingCashFlow")}
-                                    disabled={isView}
-                                />
+                            </Form.Group>
+
+                            <Form.Group as={Col} lg={3} controlId="formGridZip">
+                                <Form.Label>Operating cash flow</Form.Label>
+                                <InputGroup>
+                                    <Form.Control
+                                        value={financials.operatingCashFlow}
+                                        onChange={(e) => handleChange(e, "operatingCashFlow")}
+                                    />
+                                    <InputGroup.Text>%</InputGroup.Text>
+                                </InputGroup>
                                 {formErrors && formErrors?.operatingCashFlow && <span style={{ color: 'red' }}>{formErrors.operatingCashFlow}</span>}
-                            </Col>
-                            <Col xxl={3} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                                <TextField
-                                    label="Debt service coverage ratio"
-                                    variant="standard"
-                                    color="warning"
-                                    InputProps={{
-                                        endAdornment: <InputAdornment position="start">%</InputAdornment>,
-                                    }}
-                                    value={financials.debtServiceCoverageRatio}
-                                    onChange={(e) => handleChange(e, "debtServiceCoverageRatio")}
-                                    disabled={isView}
-                                />
+                            </Form.Group>
+                        </Row>
+
+                        <Row className="mt-4" class>
+                            <Form.Group as={Col} lg={3} controlId="formGridZip">
+                                <Form.Label>Debt service coverage ratio</Form.Label>
+                                <InputGroup>
+                                    <Form.Control
+                                        value={financials.debtServiceCoverageRatio}
+                                        onChange={(e) => handleChange(e, "debtServiceCoverageRatio")}
+                                        disabled={isView}
+                                    />
+                                    <InputGroup.Text>%</InputGroup.Text>
+                                </InputGroup>
                                 {formErrors && formErrors?.debtServiceCoverageRatio && <span style={{ color: 'red' }}>{formErrors.debtServiceCoverageRatio}</span>}
-                            </Col>
-                            <Col xxl={3} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                                <TextField
-                                    label="Interest coverage ratio"
-                                    variant="standard"
-                                    color="warning"
-                                    InputProps={{
-                                        endAdornment: <InputAdornment position="start">%</InputAdornment>,
-                                    }}
-                                    value={financials.interestCoverageRatio}
-                                    onChange={(e) => handleChange(e, "interestCoverageRatio")}
-                                    disabled={isView}
-                                />
+                            </Form.Group>
+
+                            <Form.Group as={Col} lg={3} controlId="formGridZip">
+                                <Form.Label>Interest coverage ratio</Form.Label>
+                                <InputGroup>
+                                    <Form.Control
+                                        value={financials.interestCoverageRatio}
+                                        onChange={(e) => handleChange(e, "interestCoverageRatio")}
+                                    />
+                                    <InputGroup.Text>%</InputGroup.Text>
+                                </InputGroup>
                                 {formErrors && formErrors?.interestCoverageRatio && <span style={{ color: 'red' }}>{formErrors.interestCoverageRatio}</span>}
-                            </Col>
-                            <Col xxl={3} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                                <TextField
-                                    label="Net gearing ratio"
-                                    variant="standard"
-                                    color="warning"
-                                    InputProps={{
-                                        endAdornment: <InputAdornment position="start">%</InputAdornment>,
-                                    }}
-                                    value={financials.netGearingRatio}
-                                    onChange={(e) => handleChange(e, "netGearingRatio")}
-                                    disabled={isView}
-                                />
+                            </Form.Group>
+
+                            <Form.Group as={Col} lg={3} controlId="formGridZip">
+                                <Form.Label>Net gearing ratio</Form.Label>
+                                <InputGroup>
+                                    <Form.Control
+                                        value={financials.netGearingRatio}
+                                        onChange={(e) => handleChange(e, "netGearingRatio")}
+                                    />
+                                    <InputGroup.Text>%</InputGroup.Text>
+                                </InputGroup>
                                 {formErrors && formErrors?.netGearingRatio && <span style={{ color: 'red' }}>{formErrors.netGearingRatio}</span>}
-                            </Col>
-                            <Col xxl={3} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                                <TextField
-                                    label="Total debt to total capital"
-                                    variant="standard"
-                                    color="warning"
-                                    InputProps={{
-                                        endAdornment: <InputAdornment position="start">%</InputAdornment>,
-                                    }}
-                                    value={financials.totalDebtToTotalCapital}
-                                    onChange={(e) => handleChange(e, "totalDebtToTotalCapital")}
-                                    disabled={isView}
-                                />
+                            </Form.Group>
+
+                            <Form.Group as={Col} lg={3} controlId="formGridZip">
+                                <Form.Label>Total debt to total capital</Form.Label>
+                                <InputGroup>
+                                    <Form.Control
+                                        value={financials.totalDebtToTotalCapital}
+                                        onChange={(e) => handleChange(e, "totalDebtToTotalCapital")}
+                                    />
+                                    <InputGroup.Text>%</InputGroup.Text>
+                                </InputGroup>
                                 {formErrors && formErrors?.totalDebtToTotalCapital && <span style={{ color: 'red' }}>{formErrors.totalDebtToTotalCapital}</span>}
-                            </Col>
-                            <Col xxl={4} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                                <TextField
-                                    label="Current ratio"
-                                    variant="standard"
-                                    color="warning"
-                                    InputProps={{
-                                        endAdornment: <InputAdornment position="start">%</InputAdornment>,
-                                    }}
-                                    value={financials.currentRatio}
-                                    onChange={(e) => handleChange(e, "currentRatio")}
-                                    disabled={isView}
-                                />
+                            </Form.Group>
+                        </Row>
+
+                        <Row className='mt-4'>
+                            <Form.Group as={Col} lg={4} controlId="formGridZip">
+                                <Form.Label>Current ratio</Form.Label>
+                                <InputGroup>
+                                    <Form.Control
+                                       value={financials.currentRatio}
+                                       onChange={(e) => handleChange(e, "currentRatio")}
+                                    />
+                                    <InputGroup.Text>%</InputGroup.Text>
+                                </InputGroup>
                                 {formErrors && formErrors?.currentRatio && <span style={{ color: 'red' }}>{formErrors.currentRatio}</span>}
-                            </Col>
-                            <Col xxl={4} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                                <TextField
-                                    label="Quick ratio"
-                                    variant="standard"
-                                    color="warning"
-                                    InputProps={{
-                                        endAdornment: <InputAdornment position="start">%</InputAdornment>,
-                                    }}
-                                    value={financials.quickRatio}
-                                    onChange={(e) => handleChange(e, "quickRatio")}
-                                    disabled={isView}
-                                />
+                            </Form.Group>
+
+                            <Form.Group as={Col} lg={4} controlId="formGridZip">
+                                <Form.Label>Quick ratio</Form.Label>
+                                <InputGroup>
+                                    <Form.Control
+                                       value={financials.quickRatio}
+                                       onChange={(e) => handleChange(e, "quickRatio")}
+                                    />
+                                    <InputGroup.Text>%</InputGroup.Text>
+                                </InputGroup>
                                 {formErrors && formErrors?.quickRatio && <span style={{ color: 'red' }}>{formErrors.quickRatio}</span>}
-                            </Col>
-                            <Col xxl={4} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                                <TextField
-                                    label="Cash flow before financing sales"
-                                    variant="standard"
-                                    color="warning"
-                                    InputProps={{
-                                        endAdornment: <InputAdornment position="start">%</InputAdornment>,
-                                    }}
-                                    value={financials.cashFlowBeforeFinancingSales}
-                                    onChange={(e) => handleChange(e, "cashFlowBeforeFinancingSales")}
-                                    disabled={isView}
-                                />
+                            </Form.Group>
+
+                            <Form.Group as={Col} lg={4} controlId="formGridZip">
+                                <Form.Label>Cash flow before financing sales</Form.Label>
+                                <InputGroup>
+                                    <Form.Control
+                                       value={financials.cashFlowBeforeFinancingSales}
+                                       onChange={(e) => handleChange(e, "cashFlowBeforeFinancingSales")}
+                                    />
+                                    <InputGroup.Text>%</InputGroup.Text>
+                                </InputGroup>
                                 {formErrors && formErrors?.cashFlowBeforeFinancingSales && <span style={{ color: 'red' }}>{formErrors.cashFlowBeforeFinancingSales}</span>}
-                            </Col>
+                            </Form.Group>
                         </Row>
                     </div>
                 </div>
                 <div className='footer_'>
-                    <button onClick={() => { hendelCancel() }} className="footer_cancel_btn">cancel</button>
+                    <button onClick={() => { handleBack() }} className="footer_cancel_btn">Back</button>
                     <button onClick={() => { next() }} className='footer_next_btn'> Next</button>
                 </div>
             </div>

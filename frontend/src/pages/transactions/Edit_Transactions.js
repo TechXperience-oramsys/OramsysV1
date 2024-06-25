@@ -103,7 +103,7 @@ const Edit_Transactions = () => {
 
     const getStepIcon = (label) => {
         switch (label) {
-            case 'TransactionDetails':
+            case 'Transaction Details':
                 return <FaCheckCircle />;
             case 'Key Parties':
                 return <FaUser />;

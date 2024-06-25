@@ -8,7 +8,7 @@ import {Col, Row} from "react-bootstrap"
 import {TextField} from "@material-ui/core"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 
-const Warehouse = ({ hendelNext, hendelCancel }) => {
+const Warehouse = ({ handleNext, handleBack }) => {
 
     const dispatch = useDispatch()
 
@@ -163,8 +163,8 @@ const Warehouse = ({ hendelNext, hendelCancel }) => {
                     />}
                 </div>
                 <div className='footer_'>
-                    <button onClick={() => { hendelCancel() }} className="footer_cancel_btn">cancel</button>
-                    <button onClick={() => { ((companyData?.warehouses?.length > 0 && companyData.isWarehouse) || companyData.isWarehouse === false) && hendelNext() }} className='footer_next_btn'> Next</button>
+                    <button onClick={() => { handleBack() }} className="footer_cancel_btn">Back</button>
+                    <button onClick={() => { ((companyData?.warehouses?.length > 0 && companyData.isWarehouse) || companyData.isWarehouse === false) && handleNext() }} className='footer_next_btn'> Next</button>
                 </div>
             </div>
             {

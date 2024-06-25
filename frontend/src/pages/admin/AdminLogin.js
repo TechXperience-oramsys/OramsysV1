@@ -81,7 +81,7 @@ const AdminLogin = () => {
             })
             if (res.status === 200 && res.data != undefined) {
                 toast.success(res.message);
-                navigate('/Dashboard');
+                navigate('/dashboard');
                 AuthStorage.setStorageData(STORAGEKEY.token, res.data.token, true)
                 AuthStorage.setStorageData(STORAGEKEY.roles, "superAdmin", true)
                 AuthStorage.setStorageData(STORAGEKEY.userId, res.data.id, true)

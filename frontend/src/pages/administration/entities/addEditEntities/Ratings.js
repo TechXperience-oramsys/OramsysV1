@@ -9,7 +9,7 @@ import {Col, Row} from "react-bootstrap"
 import {TextField} from "@material-ui/core"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 
-const Ratings = ({ hendelNext, hendelCancel }) => {
+const Ratings = ({ handleNext, handleBack }) => {
 
     const dispatch = useDispatch()
     const [editModal, setEditModal] = useState(false)
@@ -160,8 +160,8 @@ const Ratings = ({ hendelNext, hendelCancel }) => {
                     />}
                 </div>
                 <div className='footer_'>
-                    <button onClick={() => { hendelCancel() }} className="footer_cancel_btn">cancel</button>
-                    <button onClick={() => { ((companyData?.ratings?.length > 0 && companyData.isRatings) || companyData.isRatings === false) && hendelNext() }} className='footer_next_btn'> Next</button>
+                    <button onClick={() => { handleBack() }} className="footer_cancel_btn">Back</button>
+                    <button onClick={() => { ((companyData?.ratings?.length > 0 && companyData.isRatings) || companyData.isRatings === false) && handleNext() }} className='footer_next_btn'> Next</button>
                 </div>
             </div>
             {

@@ -24,20 +24,19 @@ code {
   z-index: 999 !important;
 }
 
-
 .topbar-right .header-right-button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 .ant-carousel .slick-dots li button {
-  background: #DC3545;
+  background: #dc3545;
   opacity: 0.4;
 }
 
 .ant-carousel .slick-dots li.slick-active button {
   opacity: 1;
-  background: #DC3545;
+  background: #dc3545;
 }
 .topbar-right .header-right-button .header-btn.s-up {
   background-image: linear-gradient(
@@ -15825,14 +15824,7 @@ div#wrapper.open > .offcanvas-mask {
   /* padding: 25px; */
   /* background: #082979; */
   /* height: 100vh; */
-  background-image: linear-gradient(
-    to top,
-    #141327,
-    #1a1930,
-    #201e39,
-    #272342,
-    #2e294b
-  );
+  background: #111827;
   border-right: 1px solid #f1f1f1;
   display: block;
   position: none;
@@ -15862,14 +15854,7 @@ div#wrapper.open > .offcanvas-mask {
   box-sizing: border-box;
   /* max-width: 100%; */
   /* background-image: linear-gradient(to right bottom, #f14d4c, #f25756, #f26160, #f26a6a, #f17373); */
-  background-image: linear-gradient(
-    to top,
-    #141327,
-    #1a1930,
-    #201e39,
-    #272342,
-    #2e294b
-  );
+  background: l#111827;
   /* background-color: #F1F1F1; */
   min-width: 0px;
   min-height: 0px;

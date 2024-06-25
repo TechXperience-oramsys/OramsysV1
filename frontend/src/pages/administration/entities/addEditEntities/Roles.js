@@ -11,7 +11,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ReactHtmlParser from 'react-html-parser';
 import { entitiesRoleAction } from '../../../../redux/actions/entitiesRoleAction';
 
-const Roles = ({ hendelNext, hendelCancel }) => {
+const Roles = ({ hendelNext, handleBack }) => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -50,7 +50,7 @@ const Roles = ({ hendelNext, hendelCancel }) => {
     const Delete = (data) => {
         let body = {
             ...companyData,
-            roles: companyData.roles.filter((e, i) => i !== data.tableData.id)
+            roles: companyData?.roles?.filter((e, i) => i !== data?.tableData.id)
         }
         dispatch(companydataAction(body))
     }
@@ -67,20 +67,20 @@ const Roles = ({ hendelNext, hendelCancel }) => {
                 delete ele._id
                 return ele
             }),
-            financial: companyData.financial,
-            licenses: companyData.licenses.map((ele) => {
+            financial: companyData?.financial,
+            licenses: companyData?.licenses?.map((ele) => {
                 delete ele._id
                 return ele
             }),
-            ratings: companyData.ratings.map((ele) => {
+            ratings: companyData?.ratings?.map((ele) => {
                 delete ele._id
                 return ele
             }),
-            warehouses: companyData.warehouses.map((ele) => {
+            warehouses: companyData?.warehouses?.map((ele) => {
                 delete ele._id
                 return ele
             }),
-            roles: companyData.roles.map((ele) => {
+            roles: companyData?.roles?.map((ele) => {
                 delete ele._id
                 return ele
             }),
@@ -103,19 +103,19 @@ const Roles = ({ hendelNext, hendelCancel }) => {
 
     const edit = async () => {
         const body = {
-            email: companyData.email,
-            password: companyData.password,
-            type: companyData.type,
-            detail: companyData.detail,
-            addresses: companyData.addresses,
-            financial: companyData.financial,
-            licenses: companyData.licenses,
-            ratings: companyData.ratings,
-            warehouses: companyData.warehouses,
-            roles: companyData.roles,
-            isLicense: companyData.isLicense || false,
-            isRatings: companyData.isRatings || false,
-            isWarehouse: companyData.isWarehouse || false,
+            email: companyData?.email,
+            password: companyData?.password,
+            type: companyData?.type,
+            detail: companyData?.detail,
+            addresses: companyData?.addresses,
+            financial: companyData?.financial,
+            licenses: companyData?.licenses,
+            ratings: companyData?.ratings,
+            warehouses: companyData?.warehouses,
+            roles: companyData?.roles,
+            isLicense: companyData?.isLicense || false,
+            isRatings: companyData?.isRatings || false,
+            isWarehouse: companyData?.isWarehouse || false,
         }
         setLoading(true)
         await dispatch(editEntityAction(id, body))
@@ -198,7 +198,7 @@ const Roles = ({ hendelNext, hendelCancel }) => {
 
 
                 <div className='footer_'>
-                    <button onClick={() => { hendelCancel() }} className="footer_cancel_btn">cancel</button>
+                    <button onClick={() => { handleBack() }} className="footer_cancel_btn">Back</button>
                     <button onClick={() => id ? edit() : Save()} className={`footer_next_btn ${isView ? 'd-none' : 'd-block'}`}>
                         {!loading ? <>{id ? "Edit" : "Save"}</> : null}
                         {loading && <div class="d-flex justify-content-center">

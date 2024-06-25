@@ -8,10 +8,11 @@ import { Link } from "react-router-dom"
 import LogoutModal from '../../component/Modal/LogoutModal';
 import { BsAirplane } from 'react-icons/bs';
 import { GrClose, GrFlagFill, GrUserAdmin } from 'react-icons/gr';
-import { FaBoxOpen, } from 'react-icons/fa';
+import { FaBoxOpen, FaThList, } from 'react-icons/fa';
 import { HiOutlineLogout, HiOutlineUsers } from "react-icons/hi";
 import { GiCargoShip } from "react-icons/gi";
 import { ImOffice } from "react-icons/im";
+import { MdAdminPanelSettings } from "react-icons/md";
 import { FcHome, FcLock, FcInvite, FcCollaboration, FcWorkflow, FcViewDetails, FcPositiveDynamic } from "react-icons/fc";
 import Fade from 'react-reveal/Fade';
 
@@ -48,12 +49,12 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
 
   const navbarDataForSuperAdmin = [
     {
-      img: FcHome,
+      img: FaThList,
       text: 'Dashboard',
       path: "dashboard"
     },
     {
-      img: FcLock,
+      img: MdAdminPanelSettings,
       text: 'Administration',
       path: "",
       subItem: [
@@ -129,7 +130,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
         //   path: "entities-role"
         // },
         {
-          img: FcHome,
+          img: FaThList,
           text: 'Dashboard',
           path: "dashboard"
         },
@@ -159,7 +160,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
 
   const navbarDataForUser = [
     {
-      img: FcHome,
+      img: FaThList,
       text: 'Dashboard',
       path: "dashboard"
     },

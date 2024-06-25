@@ -62,20 +62,23 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
         <div className="d-flex align-items-center me-5 ms-auto">
           <div className='me-2'>
             {/* <IoSettingsOutline className='me-1' size={15} /> */}
-            <span>Welcome, {userData?.name}</span>
+            <span className='badge badge-lg text-heading badge-dot py-auto'>
+              <i className='bg-success '></i> 
+              <span className='font-normal h6 text-muted'>{userData?.name}</span>
+            </span>
           </div>
 
           <div className='ms-2 mx-auto'>
-           
+
             <Link onClick={() => setshowModal(true)} className="nav-link" href="#">
-            <HiOutlineLogout className='me-1' size={15} />
-            <span>Logout</span>
+              <HiOutlineLogout className='me-1' size={15} />
+              <span>Logout</span>
               {/* <HiOutlineLogout className='text-white' size={22} /><span className='ps-3 fw-semibold text-danger'>Logout</span> */}
             </Link>
           </div>
 
         </div>
-        
+
       </div>
       {showModal && <LogoutModal show={showModal} onHide={() => setshowModal(false)} />}
     </>

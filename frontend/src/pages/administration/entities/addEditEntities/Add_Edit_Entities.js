@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { Steps, Button, Typography } from 'antd';
 import Details from './Details'
 import Financials from './Financials'
 import Licences from './Licences'
@@ -8,16 +9,22 @@ import Warehouse from './Warehouse'
 import Roles from './Roles'
 import Box from '@material-ui/core/Box';
 import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
+// import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import IndividualDetail from '../individual/Details'
 import IndividualAddress from '../individual/Address'
 import { useDispatch } from 'react-redux'
 import { entityGetByIdAction } from '../../../../redux/actions/entityAction'
 import { useSelector } from 'react-redux'
 import { companydataAction } from '../../../../redux/actions/companydataAction'
+import { FaCheckCircle, FaDollarSign, FaFileAlt, FaMoneyCheckAlt, FaTh, FaThLarge, FaUser, FaWarehouse } from 'react-icons/fa';
+import { FaSheetPlastic } from "react-icons/fa6";
+import { FcRatings } from "react-icons/fc";
+
+
+
+const { Step } = Steps;
+const { Title } = Typography;
 
 const Add_Edit_Entities = () => {
 
@@ -151,7 +158,7 @@ const Add_Edit_Entities = () => {
             }
             dispatch(companydataAction(companydata))
         }
-    }, [entityGetById])
+    }, [entityGetById, dispatch])
 
     useEffect(() => {
         console.log('entityType', entityType)
@@ -172,51 +179,75 @@ const Add_Edit_Entities = () => {
     const getIndividualDetailData = (e) => {
         setIndividualDetailData(e)
     }
+
+    const getStepIcon = (label) => {
+        switch (label) {
+            case 'Details':
+                return <FaCheckCircle />;
+            case 'Financials':
+                return <FaMoneyCheckAlt />;
+            case 'Licences':
+                return <FaSheetPlastic />;
+            case 'Ratings':
+                return <FcRatings />;
+            case 'Warehouse':
+                return <FaWarehouse />;
+            case 'Roles':
+                return <FaThLarge />;
+            default:
+                return null;
+        }
+    };
     return (
         <>
 
-            <Box sx={{ width: '100%' }}>
-                <Stepper activeStep={activeStep} alternativeLabel>
-                    {steps.length && steps.map((label, index) => {
-                        const stepProps = {};
-                        const labelProps = {};
-                        return (
-                            <Step key={label} {...stepProps}>
-                                <StepLabel {...labelProps}>{label}</StepLabel>
-                            </Step>
-                        );
-                    })}
-                </Stepper>
-                {activeStep === steps.length ? (
-                    <React.Fragment>
-                        <Typography sx={{ mt: 2, mb: 1 }}>
-                            All steps completed - you&apos;re finished
-                        </Typography>
-                        <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                            <Box sx={{ flex: '1 1 auto' }} />
+            <div className='add-edit-product'>
+                <Box sx={{ width: '100%' }}>
+                    <Steps  className='container mb-5' current={activeStep} direction="horizontal">
+                        {steps.map((label, index) => (
+                            <Step key={label} title={label} icon={getStepIcon(label)} />
+                        ))}
+                    </Steps>
+                    {activeStep === steps.length ? (
+                        <div style={{ textAlign: 'center', marginTop: 20 }}>
+                            <Title level={4}>All steps completed - you&apos;re finished</Title>
                             <Button onClick={handleReset}>Reset</Button>
-                        </Box>
-                    </React.Fragment>
-                ) : (
-                    <>
-                        {entityType === "Company" ?
-                            <React.Fragment>
-                                {activeStep + 1 === 1 && <Details hendelNext={handleNext} entityType={entityType} />}
-                                {activeStep + 1 === 2 && <Financials hendelNext={handleNext} hendelCancel={handleBack} />}
-                                {activeStep + 1 === 3 && <Licences hendelNext={handleNext} hendelCancel={handleBack} />}
-                                {activeStep + 1 === 4 && <Ratings hendelNext={handleNext} hendelCancel={handleBack} />}
-                                {activeStep + 1 === 5 && <Warehouse hendelNext={handleNext} hendelCancel={handleBack} />}
-                                {activeStep + 1 === 6 && <Roles hendelNext={handleNext} hendelCancel={handleBack} />}
-                            </React.Fragment> :
-                            <React.Fragment>
-                                {activeStep + 1 === 1 && <IndividualDetail hendelNext={handleNext} getDetailData={getIndividualDetailData} getCommonData={setCommon} entityType={entityType} />}
-                                {activeStep + 1 === 2 && <IndividualAddress hendelNext={handleNext} hendelCancel={handleBack} sendDetailData={individualDetailData} common={common} />}
-                            </React.Fragment>
-                        }
-                    </>
-
-                )}
-            </Box>
+                        </div>
+                    ) : (
+                        <div style={{ marginTop: 20 }}>
+                            {entityType === "Company" ? (
+                                <>
+                                    {activeStep === 0 && <Details handleNext={handleNext} entityType="Company" />}
+                                    {activeStep === 1 && <Financials handleNext={handleNext} handleBack={handleBack} />}
+                                    {activeStep === 2 && <Licences handleNext={handleNext} handleBack={handleBack} />}
+                                    {activeStep === 3 && <Ratings handleNext={handleNext} handleBack={handleBack} />}
+                                    {activeStep === 4 && <Warehouse handleNext={handleNext} handleBack={handleBack} />}
+                                    {activeStep === 5 && <Roles handleNext={handleNext} handleBack={handleBack} />}
+                                </>
+                            ) : (
+                                <>
+                                    {activeStep === 0 && (
+                                        <IndividualDetail
+                                            handleNext={handleNext}
+                                            getDetailData={getIndividualDetailData}
+                                            getCommonData={setCommon}
+                                            entityType="Individual"
+                                        />
+                                    )}
+                                    {activeStep === 1 && (
+                                        <IndividualAddress
+                                            handleNext={handleNext}
+                                            handleBack={handleBack}
+                                            sendDetailData={individualDetailData}
+                                            common={common}
+                                        />
+                                    )}
+                                </>
+                            )}
+                        </div>
+                    )}
+                    </Box>
+            </div>
         </>
     )
 }
