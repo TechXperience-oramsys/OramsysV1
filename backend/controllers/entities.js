@@ -413,7 +413,7 @@ class entitiesController {
                                 const entityAddressResponse = await entityAddress.updateEntityAddress(element, element._id);
                                 addressesIds.push(entityAddressResponse._id)
                             }
-                           
+
                         }
 
 
@@ -442,15 +442,24 @@ class entitiesController {
                                 ...element,
                                 entityId: saveResponse._id
                             }
-                            const entityLicenseResponse = await entityLicense.updateEntityLicense(element, element._id);
-                            licensesIds.push(entityLicenseResponse._id)
+                            if (!element?._id) {
+                                const entityLicenseModel = new entityLicense(element);
+                                const entityLicenseResponse = await entityLicenseModel.save();
+                                licensesIds.push(entityLicenseResponse._id)
+                                console.log('add new lic')
+                            } else {
+                                const entityLicenseResponse = await entityLicense.findOneAndUpdate({ _id: element._id }, element);
+                                licensesIds.push(entityLicenseResponse._id)
+                                console.log('update existing lic')
+                            }
                         }
-
+                        console.log('returns here')
 
                         updateData = {
                             ...updateData,
                             licenses: licensesIds
                         }
+                        console.log('below the data')
                     }
                     if (ratings) {
                         let ratingsIds = []
@@ -460,8 +469,14 @@ class entitiesController {
                                 ...element,
                                 entityId: saveResponse._id
                             }
-                            const entityRatingResponse = await entityRating.updateEntityRating(element, element._id);
-                            ratingsIds.push(entityRatingResponse._id)
+                            if (!element?._id) {
+                                const entityRatingModel = new entityRating(element);
+                                const entityRatingResponse = await entityRatingModel.save();
+                                ratingsIds.push(entityRatingResponse._id)
+                            } else {
+                                const entityRatingResponse = await entityRating.findOneAndUpdate({ _id: element._id }, element);
+                                ratingsIds.push(entityRatingResponse._id)
+                            }
                         }
 
 
@@ -478,8 +493,15 @@ class entitiesController {
                                 ...element,
                                 entityId: saveResponse._id
                             }
-                            const entityWarehouseResponse = await entityWarehouse.updateEntityWarehouse(element, element._id);
-                            warehousesIds.push(entityWarehouseResponse._id)
+                            if (!element?._id) {
+                                const entityWarehouseModel = new entityWarehouse(element);
+                                const entityWarehouseResponse = await entityWarehouseModel.save();
+                                warehousesIds.push(entityWarehouseResponse._id)
+                            } else {
+                                const entityWarehouseResponse = await entityWarehouse.findOneAndUpdate({ _id: element._id }, element);
+                                warehousesIds.push(entityWarehouseResponse._id)
+                            }
+
                         }
 
 

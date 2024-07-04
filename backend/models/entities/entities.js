@@ -10,8 +10,8 @@ const RoleSchema = new Schema({
 
 
 var Schema = new Schema({
-    email: { type: String, required: true },
-    password: { type: String, required: true },
+    email: { type: String, required: false },
+    password: { type: String, required: false },
     type: { type: String, required: true },
     details: { type: Schema.Types.ObjectId, ref: "EntityDetails", required: false },
     addresses: [{ type: Schema.Types.ObjectId, ref: "EntityAddress", required: false }],

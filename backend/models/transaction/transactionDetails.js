@@ -10,6 +10,7 @@ var Warehouses = new Schema({
 var ProductDetails = new Schema({
     nature: { type: String, require: false, default: null },
     type: { type: String, require: false, default: null },
+    otherProduct: { type: String, require: false, default: null },
     commodityType: { type: String, require: false, default: null },
     commoditySubType: { type: String, require: false, default: null },
     name: { type: Schema.Types.ObjectId, ref: "Product", required: false },
