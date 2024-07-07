@@ -39,7 +39,7 @@ class transactionController {
             userId: body.userId,
             lenders: body.lenders,
             borrower_Applicant: body.borrower_Applicant,
-            admin : body.admin
+            admin: body.admin
         }
         try {
             const model = new transaction(newTransaction);
@@ -65,9 +65,9 @@ class transactionController {
                     details: transactionDetailsResponse._id
                 }
             }
-            console.log('---keyParties.length----',keyParties.keyParties.length);
+            console.log('---keyParties.length----', keyParties.keyParties.length);
             if (keyParties.keyParties.length) {
-                
+
                 let keyParty = []
                 for (let i = 0; i < keyParties.keyParties.length; i++) {
                     let element = keyParties.keyParties[i];
@@ -86,7 +86,7 @@ class transactionController {
                     ...updateData,
                     keyParties: transactionKeyPartiesResponse._id
                 }
-                console.log('---updateData----',updateData);
+                console.log('---updateData----', updateData);
             }
             if (documentFlow) {
 
@@ -135,7 +135,7 @@ class transactionController {
                     facility: transactionFacilityResponse._id
                 }
             }
-            
+
             const Transaction = await transaction.updateTransaction(updateData, saveResponse._id)
             if (Transaction) {
                 return res.status(httpStatus.OK).json(new APIResponse(Transaction, 'Transaction added successfully.', httpStatus.OK));
@@ -187,9 +187,9 @@ class transactionController {
                         parties: keyParty,
                         relatedParties: keyParties?.relatedParties
                     }
-                    console.log('element keyparties',element);
+                    console.log('element keyparties', element);
                     const transactionKeyPartiesResponse = await transactionKeyParties.updateTransactionKeyParties(element, keyParties._id);
-                    console.log('element keyparties',transactionKeyPartiesResponse);
+                    console.log('element keyparties', transactionKeyPartiesResponse);
                     updateData = {
                         ...updateData,
                         keyParties: transactionKeyPartiesResponse._id
@@ -251,12 +251,12 @@ class transactionController {
             if (userId === "all") {
                 transactions = await transaction.getAll()
             } else {
-                if(req.query.role.toLowerCase() == 'user'){
-                    let adminId= req.query.adminId
-                    transactions = await transaction.getByUserId(userId , adminId)
-                }else{
+                if (req.query.role.toLowerCase() == 'user') {
+                    let adminId = req.query.adminId
+                    transactions = await transaction.getByUserId(userId, adminId)
+                } else {
                     transactions = await transaction.getByUserId(req.query.id)
-                } 
+                }
             }
             return res.status(httpStatus.OK).json(new APIResponse(transactions, 'Transactions fetch successfully.', httpStatus.OK));
         } catch (e) {

@@ -6,6 +6,7 @@ var Schema = mongoose.Schema
 var Schema = new Schema({
     entityId: { type: String, required: true, default: null },
     type: { type: String, required: false, default: null },
+    otherLiscenceType: { type: String, required: false, default: null },
     number: { type: String, required: false, default: null },
     authority: { type: String, required: false, default: null },
     country: { type: String, required: false, default: null },
