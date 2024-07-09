@@ -15,6 +15,8 @@ var Schema = new Schema({
     city: { type: String, required: false, default: null },
     country: { type: Schema.Types.ObjectId, ref: "Countries", required: false, default: null },
     mobile: { type: String, required: false, default: null },
+    shippingCountryCode: { type: String, required: false, default: null },
+    billingCountryCode: { type: String, required: false, default: null },
     telephone: { type: String, required: false, default: null },
     fax: { type: String, required: false, default: null },
     email: { type: String, required: false, default: null },
