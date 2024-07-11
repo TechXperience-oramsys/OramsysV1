@@ -12,6 +12,7 @@
     "create:superadmin": "node utils/createSuperAdmin.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "proxy": "https://backend.oramsysdev.com",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/miteshpatel7/oramsys-backend.git"
