@@ -12,6 +12,58 @@ const {
 } = require("../utils/jwt.helper");
 
 class UserController {
+  // 
+  // async function login(req, res, next) {
+  //   try {
+  //     const { user_name, password } = req.body;
+  //     if (!user_name || !password) {
+  //       return res
+  //         .status(httpStatus.BAD_REQUEST)
+  //         .json(new APIResponse(null, "Username and password are required", httpStatus.BAD_REQUEST));
+  //     }
+  
+  //     const userLogin = user_name.toLowerCase();
+  //     const user = await User.findOne({ email: userLogin });
+  
+  //     if (!user) {
+  //       return res
+  //         .status(httpStatus.UNAUTHORIZED)
+  //         .json(new APIResponse(null, "Invalid credentials", httpStatus.UNAUTHORIZED));
+  //     }
+  
+  //     const match = await bcrypt.compare(password, user.password);
+  //     if (!match) {
+  //       return res
+  //         .status(httpStatus.UNAUTHORIZED)
+  //         .json(new APIResponse(null, "Invalid credentials", httpStatus.UNAUTHORIZED));
+  //     }
+  
+  //     const token = getJWTToken({
+  //       id: user.id,
+  //       email: user.email,
+  //       role: "user",
+  //     });
+  
+  //     const newUser = {
+  //       id: user.id,
+  //       name: user.name,
+  //       email: user.email,
+  //       token: token,
+  //       admin: user.createdBy
+  //     };
+  
+  //     return res
+  //       .status(httpStatus.OK)
+  //       .json(new APIResponse(newUser, "Login Successful", httpStatus.OK));
+  
+  //   } catch (e) {
+  //     console.error("Login error:", e);
+  //     return res
+  //       .status(httpStatus.INTERNAL_SERVER_ERROR)
+  //       .send({ message: "Something went wrong" });
+  //   }
+  // }
+  // 
   async login(req, res, next) {
     try {
       const userLogin = req.body.user_name.toLowerCase();
