@@ -126,9 +126,26 @@ const WarehouseEditModal = ({ onHide, show, mode, editData }) => {
         if (validation()) {
             return
         }
+        let warehouseId = {}
+        if (warehouse._id === "") {
+            warehouseId = {}
+        } else {
+            warehouseId = { _id: warehouse._id }
+        }
+
+        const warehouseDataToSend = {
+            ...warehouseId,
+            nature: warehouse.nature,
+            name: warehouse.name,
+            type: warehouse.type,
+            city: warehouse.city,
+            country: warehouse.country,
+            governingLaw: warehouse.governingLaw,
+            typeOfDoc: warehouse.typeOfDoc,
+        }
         const body = {
             ...companyData,
-            warehouses: companyData.warehouses ? [...companyData.warehouses, warehouse] : [warehouse]
+            warehouses: companyData.warehouses ? [...companyData.warehouses, warehouseDataToSend] : [warehouseDataToSend]
         }
         dispatch(companydataAction(body))
         onHide()

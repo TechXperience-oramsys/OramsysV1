@@ -1,6 +1,6 @@
 import { Backdrop, Fade, FormControl, InputLabel, Modal, Select, TextField } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
-import { Col, Row } from 'react-bootstrap'
+import { Col, Form, Row } from 'react-bootstrap'
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useDispatch, useSelector } from 'react-redux';
 import { entitiesRoleAction } from '../../redux/actions/entitiesRoleAction';
@@ -29,15 +29,34 @@ const PartiesEditModal = ({ show, onHide, getModalData, isView, editData }) => {
 
     useEffect(() => {
         if (typeOptions?.data) {
-            setTypes(typeOptions?.data)
+            const typeList = typeOptions.data.map(type => ({
+                label: type.roleName,
+                value: type._id
+            }));
+            setTypes(typeList);
         }
-    }, [typeOptions])
+    }, [typeOptions]);
 
     useEffect(() => {
-        if (nameOption?.data) {
-            setNames(nameOption?.data)
+        if (nameOption?.data && typeOptions?.data) {
+            const nameList = nameOption.data.reduce((acc, ele) => {
+                ele.roles.forEach(role => {
+                    if (role?.roleId?.roleName) {
+                        const matchingType = typeOptions.data.find(type => type.roleName === role.roleId.roleName);
+                        if (matchingType) {
+                            acc.push({
+                                label: ele.details.name || ele.details.givenName,
+                                value: ele._id,
+                                roleName: role.roleId.roleName,
+                            });
+                        }
+                    }
+                });
+                return acc;
+            }, []);
+            setNames(nameList);
         }
-    }, [nameOption])
+    }, [nameOption, typeOptions]);
 
     useEffect(() => {
         if (editData) {
@@ -108,43 +127,49 @@ const PartiesEditModal = ({ show, onHide, getModalData, isView, editData }) => {
                             <img src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                         </div>
                         <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
-                            <div className='form'>
+                            <div className=''>
                                 <Row>
                                     <Col lg={12} className="mb-4">
-                                        <Autocomplete
-                                            options={types}
-                                            getOptionLabel={(option) => option.roleName}
-                                            id="disable-clearable"
-                                            label="Type"
-                                            renderInput={(params) => (
-                                                <TextField {...params} label="Type" variant="standard" />
-                                            )}
-                                            disabled={isView}
-                                            onChange={(event, newValue) => {
-                                                setParties({ ...parties, type: { value: newValue._id, label: newValue.roleName } });
-                                            }}
-                                            value={(types && parties.type) && types.find((ele) => ele._id === parties.type?.value)}
-                                            disableClearable
-                                        />
-                                        {error && error?.type && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error.type}</span>}
+                                        <Form.Group as={Col} controlId="formGridType">
+                                            <Form.Label>Role</Form.Label>
+                                            <Form.Select
+                                                className='no-border'
+                                                onChange={(e) => {
+                                                    const selectedType = types.find(type => type.value === e.target.value);
+                                                    setParties({ ...parties, type: selectedType });
+                                                }}
+                                                disabled={isView}
+                                                value={parties.type.value || ""}
+                                            >
+                                                <option value="" disabled>Choose...</option>
+                                                {types.map((item, i) => (
+                                                    <option key={i} value={item.value}>{item.label}</option>
+                                                ))}
+                                            </Form.Select>
+                                            {error?.type && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error.type}</span>}
+                                        </Form.Group>
                                     </Col>
                                     <Col lg={12} className="mb-4">
-                                        <Autocomplete
-                                            options={names}
-                                            getOptionLabel={(option) =>(option.details && option.details?.name)? option.details?.name : option.details?.givenName}
-                                            id="disable-clearable"
-                                            label="Party"
-                                            renderInput={(params) => (
-                                                <TextField {...params} label="Name" variant="standard" />
-                                            )}
-                                            onChange={(event, newValue) => {
-                                                setParties({ ...parties, name: { value: newValue._id, label: (newValue.details.name != undefined ? newValue.details?.name:newValue.details?.givenName) } });
-                                            }}
-                                            disabled={isView}
-                                            value={(names && parties.name) && names.find((ele) => ele._id === parties.name?.value)}
-                                            disableClearable
-                                        />
-                                        {error && error?.name && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error.name}</span>}
+                                        <Form.Group as={Col} controlId="formGridParty">
+                                            <Form.Label>Party</Form.Label>
+                                            <Form.Select
+                                                className='no-border'
+                                                onChange={(e) => {
+                                                    const selectedName = names.find(name => name.value === e.target.value);
+                                                    setParties({ ...parties, name: selectedName });
+                                                }}
+                                                disabled={isView}
+                                                value={parties.name.value || ""}
+                                            >
+                                                <option value="" disabled>Choose...</option>
+                                                {names
+                                                    .filter(item => item.roleName === parties.type.label)
+                                                    .map((item, i) => (
+                                                        <option key={i} value={item.value}>{item.label}</option>
+                                                    ))}
+                                            </Form.Select>
+                                            {error?.name && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error.name}</span>}
+                                        </Form.Group>
                                     </Col>
                                 </Row>
                             </div>
@@ -165,3 +190,24 @@ const PartiesEditModal = ({ show, onHide, getModalData, isView, editData }) => {
 }
 
 export default PartiesEditModal
+
+    // useEffect(() => {
+//     if (nameOption?.data && typeOptions?.data) {
+//         const nameList = nameOption.data.reduce((acc, ele) => {
+//             ele.roles.forEach(role => {
+//                 if (role?.roleId?.roleName) {
+//                     const matchingType = typeOptions.data.find(type => type.roleName === role.roleId.roleName);
+//                     if (matchingType) {
+//                         acc.push({
+//                             label: ele.details.name || ele.details.givenName,
+//                             value: ele._id,
+//                             roleName: role.roleId.roleName,
+//                         });
+//                     }
+//                 }
+//             });
+//             return acc;
+//         }, []);
+//         setNames(nameList);
+//     }
+// }, [nameOption, typeOptions]);

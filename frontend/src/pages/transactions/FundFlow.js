@@ -12,54 +12,32 @@ import { CurrencyOptions } from '../../helper/common'
 import { transactionDataAction } from '../../redux/actions/transactionDataAction'
 import { formatCurrency } from '../../helper/utils'
 import { useLocation } from 'react-router-dom'
+import { useAtom } from 'jotai'
+import { beneficiaryAtom, contractDetailAtom, countryAtom, editeRowDataAtom, fundFlowAtom, lettersOfCreditAtom, selectedNameAtom, showTextEditorAtom } from './Helpers/atoms';
+
 
 const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
     console.log(getTrans)
 
     const dispatch = useDispatch()
 
-    const [fundFlow, setFundFlow] = useState({
-        _id: "",
-        contractCurrency: "",
-        contractValue: "",
+    const [fundFlow, setFundFlow] = useAtom(fundFlowAtom)
 
-        paymentMethod: "",
-        openAccount: "",
+    const [contractDetails, setContractDetails] = useAtom(contractDetailAtom)
+    const [selectedName, setSelectedName] = useAtom(selectedNameAtom)
+    const [country, setCountry] = useAtom(countryAtom)
+    const [beneficiary, setbeneficiary] = useAtom(beneficiaryAtom)
+    const [lettersOfCredit, setLettersOfCredit] = useAtom(lettersOfCreditAtom)
 
-        paymentDate: "",
-        terms: "",
-        paymentOrigin: "",
-        beneficiary: "",
-        additonalCharges: false,
-
-        payer: "",
-        dutiesCurrency: "",
-        dutiesValue: "",
-        taxesCurrency: "",
-        taxesValue: "",
-        certificationCurrency: "",
-        certificationValue: "",
-        leviesCurrency: "",
-        leviesValue: "",
-    })
-
-    const [contractDetails, setContractDetails] = useState({
-        curency: "",
-        value: ""
-    })
-
-    const [showTextEditor, setShowTextEditor] = useState(false)
-    const [lettersOfCredit, setLettersOfCredit] = useState([])
-    const [editeRowData, setEditeRowData] = useState({})
+    const [showTextEditor, setShowTextEditor] = useAtom(showTextEditorAtom)
+    const [editeRowData, setEditeRowData] = useAtom(editeRowDataAtom)
 
     const location = useLocation()
     const isView = location?.state[2]?.isView
 
     const [showEditModal, setShowEditModal] = useState(false)
     const [type, setType] = useState('')
-    const [selectedName, setSelectedName] = useState('')
-    const [country, setCountry] = useState([])
-    const [beneficiary, setbeneficiary] = useState([])
+
     const [error, setError] = useState({})
 
     const transactionData = useSelector((state) => state.transactionData.transactionData)
@@ -342,7 +320,7 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                         <Form.Group as={Col} lg={6} controlId="formGridZip">
                             <Form.Label className='text-muted'>Contract Currency</Form.Label>
                             <Form.Control
-                            className='text-muted'
+                                className='text-muted'
                                 value={getTrans.currency}
                                 name="currency"
                                 disabled={true} />
@@ -351,7 +329,7 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                         <Form.Group as={Col} lg={6} controlId="formGridZip">
                             <Form.Label className='text-muted'>Contract Value</Form.Label>
                             <Form.Control
-                            className='text-muted'
+                                className='text-muted'
                                 value={formateCurrencyValue(getTrans.value)}
                                 name="value"
                                 onChange={handleChange}
@@ -735,26 +713,26 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                                         </Form.Group>
 
                                         <Form.Group as={Col} controlId="formGridZip">
-                                                <Form.Label className='text-muted'>Taxes Currency</Form.Label>
-                                                <Form.Control className='text-muted'
-                                                    value={fundFlow.taxesCurrency}
-                                                    disabled />
-                                            </Form.Group>
+                                            <Form.Label className='text-muted'>Taxes Currency</Form.Label>
+                                            <Form.Control className='text-muted'
+                                                value={fundFlow.taxesCurrency}
+                                                disabled />
+                                        </Form.Group>
 
-                                            <Form.Group as={Col} controlId="formGridZip">
+                                        <Form.Group as={Col} controlId="formGridZip">
                                             <Form.Label className='text-muted'>Receiver Payout</Form.Label>
                                             <Form.Control className='text-muted'
-                                                 value={fundFlow.certificationValue ? fundFlow.leviesValue ? formateCurrencyValue(JSON.stringify(parseInt(fundFlow.leviesValue.replace(",", "")) + parseInt(fundFlow.certificationValue.replace(",", "")))) : formateCurrencyValue(fundFlow.certificationValue) : (fundFlow.leviesValue ? formateCurrencyValue(fundFlow.leviesValue) : formateCurrencyValue(fundFlow.certificationValue))}
-                                                 disabled />
+                                                value={fundFlow.certificationValue ? fundFlow.leviesValue ? formateCurrencyValue(JSON.stringify(parseInt(fundFlow.leviesValue.replace(",", "")) + parseInt(fundFlow.certificationValue.replace(",", "")))) : formateCurrencyValue(fundFlow.certificationValue) : (fundFlow.leviesValue ? formateCurrencyValue(fundFlow.leviesValue) : formateCurrencyValue(fundFlow.certificationValue))}
+                                                disabled />
                                         </Form.Group>
-                                       
+
                                         <Form.Group as={Col} controlId="formGridZip">
-                                                <Form.Label className='text-muted'>Receiver Payout Currency</Form.Label>
-                                                <Form.Control className='text-muted'
-                                                    value={fundFlow.certificationCurrency}
-                                                    disabled />
-                                            </Form.Group>
-                                        
+                                            <Form.Label className='text-muted'>Receiver Payout Currency</Form.Label>
+                                            <Form.Control className='text-muted'
+                                                value={fundFlow.certificationCurrency}
+                                                disabled />
+                                        </Form.Group>
+
                                     </Row>
                                 </div>
                             </div>

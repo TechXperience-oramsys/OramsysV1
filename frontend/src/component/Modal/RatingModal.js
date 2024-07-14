@@ -40,15 +40,15 @@ const RatingModal = ({ onHide, show, mode, editData }) => {
     }, [])
 
     useEffect(() => {
-        if (rating.agency && agency) {
-            setAgencyRatingOptions(agency.find((ele) => ele._id === rating.agency).ratingSchema)
+        if (rating?.agency && agency) {
+            setAgencyRatingOptions(agency?.find((ele) => ele?._id === rating?.agency)?.ratingSchema)
         }
-    }, [rating.agency, agency])
+    }, [rating?.agency, agency])
 
     useEffect(() => {
         console.log('editData', editData)
         if (mode === "Edit" || mode === "View" && companyData.ratings) {
-            let temp = companyData.ratings.find((e, i) => i == editData)
+            let temp = companyData.ratings?.find((e, i) => i == editData)
             setRating({
                 _id: temp?._id,
                 agency: temp?.agency,
@@ -96,9 +96,22 @@ const RatingModal = ({ onHide, show, mode, editData }) => {
         if (validation()) {
             return
         }
+        let ratingId = {}
+        if (rating._id === "") {
+            ratingId = {}
+        } else {
+            ratingId = { _id: rating._id }
+        }
+        const ratingsToSend = {
+            ...ratingId,
+            agency: rating.agency,
+            rating: rating.rating,
+            dateOfRating: rating.dateOfRating,
+            expiryDate: rating.expiryDate,
+        }
         const body = {
             ...companyData,
-            ratings: companyData.ratings ? [...companyData.ratings, rating] : [rating]
+            ratings: companyData.ratings ? [...companyData.ratings, ratingsToSend] : [ratingsToSend]
         }
         dispatch(companydataAction(body))
         onHide()
@@ -110,7 +123,7 @@ const RatingModal = ({ onHide, show, mode, editData }) => {
         }
         const body = {
             ...companyData,
-            ratings: companyData.ratings.map((ele, i) => i == editData ? rating : ele)
+            ratings: companyData.ratings?.map((ele, i) => i == editData ? rating : ele)
         }
         dispatch(companydataAction(body))
         onHide()
@@ -143,14 +156,14 @@ const RatingModal = ({ onHide, show, mode, editData }) => {
                                         <Autocomplete
                                             label="Agency"
                                             id="disable-clearable"
-                                            onChange={(e, newVal) => setRating({ ...rating, agency: newVal._id })}
-                                            getOptionLabel={(option) => option.name}
+                                            onChange={(e, newVal) => setRating({ ...rating, agency: newVal?._id })}
+                                            getOptionLabel={(option) => option?.name || ""}
                                             options={agency}
                                             disableClearable
                                             renderInput={(params) => (
                                                 <TextField {...params} label="Agency" variant="standard" />
                                             )}
-                                            value={(agency.length && rating.agency) ? agency.find(item => item._id === rating?.agency) : {}}
+                                            value={(agency.length > 0 && rating?.agency) ? agency?.find(item => item?._id === rating?.agency) || {} : {}}
                                             disabled={mode === "View"}
                                         />
                                         {error && error?.agency && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error.agency}</span>}
@@ -159,14 +172,14 @@ const RatingModal = ({ onHide, show, mode, editData }) => {
                                         <Autocomplete
                                             label="Rating"
                                             id="disable-clearable"
-                                            onChange={(e, newVal) => setRating({ ...rating, rating: newVal._id })}
-                                            getOptionLabel={(option) => option.grade}
+                                            onChange={(e, newVal) => setRating({ ...rating, rating: newVal?._id })}
+                                            getOptionLabel={(option) => option.grade || ""}
                                             options={agencyRatingOptions}
                                             disableClearable
                                             renderInput={(params) => (
                                                 <TextField {...params} label="Rating" variant="standard" />
                                             )}
-                                            value={(agencyRatingOptions.length && rating.rating) ? agencyRatingOptions.find(item => item._id === rating?.rating) : {}}
+                                            value={(agencyRatingOptions.length > 0 && rating?.rating) ? agencyRatingOptions?.find(item => item?._id === rating?.rating) || {} : {}}
                                             disabled={mode === "View"}
                                         />
                                         {error && error?.rating && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error.rating}</span>}

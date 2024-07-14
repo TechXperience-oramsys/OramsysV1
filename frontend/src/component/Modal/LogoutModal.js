@@ -7,15 +7,15 @@ import { LOGIN } from '../../redux/types';
 import { useNavigate } from 'react-router-dom';
 
 
-const LogoutModal = ({ show, onHide}) => {
-//   const [show, setShow] = useState(false);
+const LogoutModal = ({ show, onHide }) => {
+  //   const [show, setShow] = useState(false);
 
-//   const handleClose = () => setShow(false);
-//   const handleShow = () => setShow(true);
-const dispatch = useDispatch()
-const navigate = useNavigate();
+  //   const handleClose = () => setShow(false);
+  //   const handleShow = () => setShow(true);
+  const dispatch = useDispatch()
+  const navigate = useNavigate();
 
-const Logout = (e) => {
+  const Logout = (e) => {
     dispatch({
       type: LOGIN,
       payload: []
@@ -31,7 +31,7 @@ const Logout = (e) => {
         Launch demo modal
       </Button> */}
 
-      <Modal show={show} onHide={onHide}  backdrop="static"
+      <Modal show={show} onHide={onHide} backdrop="static"
         keyboard={false}>
         <Modal.Header closeButton>
           <Modal.Title>Oramsys</Modal.Title>

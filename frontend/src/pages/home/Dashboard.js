@@ -207,23 +207,23 @@ const Dashboard = () => {
       <div className='mx-5 d-flex flex-column flex-lg-row h-lg-full'>
         <div id='dash' className='h-screen flex-grow-1'>
           {/* <!-- Header --> */}
-          <header className='bg-surface-primary border-bottom pt-6'>
+          <header className='bg-surface-primary pt-6'>
             <div className='container-fluid'>
               <div id='dash' className='mb-npx'>
-                <div className='row align-items-center mb-4'>
+                <div className='row align-items-center text-indigo-900 mb-4'>
                   <div className='col-sm-6 col-12 mb-4 mb-sm-0'>
                     {/* <!-- Title --> */}
                     <h1 className='h2 mb-0 fw-bold fs-4 ls-tight'>Dashboard</h1>
                   </div>
                   {/* <!-- Actions --> */}
                   <div className='col-sm-6 col-12 text-sm-end'>
-                    <div className='mx-n1'>
+                    {/* <div className='mx-n1'>
                       <Link to='/transactions' className='btn btn-primary rounded d-inline-flex btn-md border-base mx-1'>
                         <span className=' pe-2'><i className='bi bi-pencil'></i></span>
                         <span>Transactions</span>
                       </Link>
 
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
@@ -249,8 +249,8 @@ const Dashboard = () => {
                                 </span>
                               </div>
                               <div className='col-auto'>
-                                <div className={`icon icon-shape ${card.color} text-white text-lg rounded-circle`}>
-                                  <card.icon size={56} />
+                                <div className={`icon icon-shape rounded-circle`}>
+                                  <card.icon size={30} />
                                 </div>
                               </div>
                             </div>
@@ -508,7 +508,7 @@ const Dashboard = () => {
                                 <td>
                                   {formateCurrencyValue(data?.details?.contractDetails?.value)}
                                 </td>
-                                <td>
+                                <td className={` ${data.termSheet === "Not Signed" ? 'bg-red-100' : 'bg-green-200'}`}>
                                   {data.termSheet === "Signed" ? (
                                     <span className='badge badge-lg text-heading badge-dot'>
                                       <i className='bg-success'></i>Signed

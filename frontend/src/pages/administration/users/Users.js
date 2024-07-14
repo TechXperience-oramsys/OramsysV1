@@ -72,7 +72,7 @@ const Users = () => {
         <Dropdown overlay={(
           <Menu>
             <Menu.Item key='edit' onClick={() => navigate(`/edit-user?id=${record?._id}`)}>
-            <EditOutlined /> Edit
+              <EditOutlined /> Edit
             </Menu.Item>
 
             <Menu.Item key='preview' onClick={() => {
@@ -80,13 +80,13 @@ const Users = () => {
                 state: [{ type: `${record.type}` }, { isView: false }],
               });
             }}>
-            <EyeOutlined /> Preview
+              <EyeOutlined /> Preview
             </Menu.Item>
           </Menu>
         )}>
-            <Button><EllipsisOutlined /></Button>
+          <Button><EllipsisOutlined /></Button>
         </Dropdown>
-       
+
       ),
     },
   ];
@@ -98,8 +98,8 @@ const Users = () => {
       <div className='product'>
         <div class='container-fluid'>
           <div id='dash' class='mb-npx'>
-            <header class='bg-surface-primary border-bottom pt-6'>
-              <div class='row align-items-center mb-3'>
+            <header class='bg-surface-primary pt-6'>
+              <div class='row align-items-center text-white mb-3 product' style={{ backgroundImage: "linear-gradient(to right, #111827, #121b2f, #131f37, #142240, #152548)" }}>
                 <div class='col-sm-6 col-12 mb-4 mb-sm-0'>
 
                   <h1 class='h2 mb-0 fw-bold fs-4 ls-tight'>Users</h1>
@@ -109,16 +109,16 @@ const Users = () => {
                   <div class='mx-n1 me-5 d-flex align-items-center justify-content-end gap-2'>
 
 
-{
- ( localStorage.getItem('roles').toLowerCase() == 'admin' ||   localStorage.getItem('roles').toLowerCase() == 'superAdmin')  && 
+                    {
+                      (localStorage.getItem('roles').toLowerCase() == 'admin' || localStorage.getItem('roles').toLowerCase() == 'superAdmin') &&
 
-                    <Link to='/add-user' style={{ borderColor: '#9E3E65' }} class='btn d-inline-flex btn-md btn-light border-base mx-1 me-3'>
-                      <span class=' pe-2'>
-                        <i class="bi bi-plus"></i>
-                      </span>
-                      <span className='fw-bold'>Add User</span>
-                    </Link>
-}
+                      <Link to='/add-user' style={{ borderColor: '#9E3E65' }} class='btn d-inline-flex btn-md btn-light border-base mx-1 me-3'>
+                        <span class=' pe-2'>
+                          <i class="bi bi-plus"></i>
+                        </span>
+                        <span className='fw-bold'>Add User</span>
+                      </Link>
+                    }
                   </div>
                 </div>
               </div>
@@ -138,9 +138,9 @@ const Users = () => {
                 onChange: paginate,
               }}
               loading={!getAllUsers} // Show loading spinner if getAllUsers is not available yet
-             
+
             />
-            
+
           </div>
         </div>
 

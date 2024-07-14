@@ -106,8 +106,8 @@ const EntitiesRole = () => {
 
                     <div class='container-fluid'>
                         <div id='dash' class='mb-npx'>
-                            <header class='bg-surface-primary border-bottom pt-6'>
-                                <div class='row align-items-center mb-3'>
+                            <header class='bg-surface-primary pt-6'>
+                                <div class='row align-items-center mb-3 text-white product' style={{ backgroundImage: "linear-gradient(to right, #111827, #121b2f, #131f37, #142240, #152548)" }}>
                                     <div class='col-sm-6 col-12 mb-4 mb-sm-0'>
 
                                         <h2 class=' mb-0 fw-bold fs-4 ls-tight'>Entities Role</h2>

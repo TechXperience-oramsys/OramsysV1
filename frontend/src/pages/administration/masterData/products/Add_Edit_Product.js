@@ -13,7 +13,7 @@ const Add_Edit_Product = () => {
   const location = useLocation();
   const isView = location.state?.isView
 
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     name: "",
     nature: "",
     family: "",
@@ -201,7 +201,9 @@ const Add_Edit_Product = () => {
                 <Form.Control className=''
                   name='name'
                   value={state.name}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    setState({ ...state, name: e.target.value })
+                  }}
                   disabled={isView} />
                 {error?.name && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.name}</span>}
               </Form.Group>
@@ -209,8 +211,8 @@ const Add_Edit_Product = () => {
               <Form.Group as={Col} controlId="formGridZip">
                 <Form.Label>Nature</Form.Label>
                 <Form.Select className=''
-                  onChange={(event, newValue) => {
-                    setState({ ...state, nature: newValue });
+                  onChange={(e, newValue) => {
+                    setState({ ...state, nature: e.target.value });
                   }}
                   disabled={isView}
                   value={state.nature}>

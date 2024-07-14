@@ -12,7 +12,7 @@ import { toast } from 'react-hot-toast'
 import { FcSearch } from 'react-icons/fc';
 import { MdEdit, MdPreview } from 'react-icons/md';
 // import { Tooltip } from 'react-tooltip';
-import Paginate from './countryPagination';
+import { Spin, Table } from 'antd';
 
 
 
@@ -26,7 +26,7 @@ const Countries = ({ showSidebar, setSidebar }) => {
   const dispatch = useDispatch()
 
   const [currentPage, setCurrentPage] = useState(1)
-  const [postsPerPage, setPostsPerPage] = useState(10)
+  const [postsPerPage, setPostsPerPage] = useState(20)
   useEffect(() => {
     dispatch(countrieAction(search ? search : "all"))
     // console.log('search===============??', search)
@@ -60,6 +60,46 @@ const Countries = ({ showSidebar, setSidebar }) => {
 
   const navigate = useNavigate()
 
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      render: (text) => <p className="fw-normal m-2">{text}</p>,
+    },
+    {
+      title: 'Nature',
+      dataIndex: 'code',
+      key: 'code',
+      render: (text) => <p className="fw-normal m-2">{text}</p>,
+    },
+    {
+      title: 'Flag',
+      dataIndex: 'code',
+      key: 'flag',
+      render: (code) => (
+        <Col xs={2} className="mt-auto p-0">
+          <img className="img-fluid" src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${code}.svg`} alt="" />
+        </Col>
+      ),
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      align: 'right',
+      render: (text, record) => (
+        <MdEdit
+          onClick={() => {
+            setShow(true);
+            setContryForEdit(contryData?.data?.find(item => item._id === record._id));
+          }}
+          className='cursor-pointer'
+          size={18}
+        />
+      ),
+    },
+  ];
+
   return (
     <>
       {/* <div className='authheader_main'>
@@ -88,8 +128,8 @@ const Countries = ({ showSidebar, setSidebar }) => {
         </div> */}
         <div class='container-fluid'>
           <div id='dash' class='mb-npx'>
-            <header class='bg-surface-primary border-bottom pt-6'>
-              <div class='row align-items-center mb-3'>
+            <header class='bg-surface-primary pt-6'>
+              <div class='row align-items-center mb-3 text-white product' style={{ backgroundImage: "linear-gradient(to right, #111827, #121b2f, #131f37, #142240, #152548)" }}>
                 <div class='col-sm-6 col-12 mb-4 mb-sm-0'>
                   <h1 class='h2 mb-0 fw-bold fs-4 ls-tight'>Countires</h1>
                 </div>
@@ -113,77 +153,31 @@ const Countries = ({ showSidebar, setSidebar }) => {
         <div className='container mx-auto'>
           <div class='row g-6 mb-4'></div>
           <div className='table-responsive'>
-            <table class="table align-middle mb-0 bg-white border-light border-5">
-              <thead class="bg-light">
-                <tr className=''>
-                  <th className='fw-bold'>Name</th>
-                  <th className='fw-bold'>Nature</th>
-                  <th className='fw-bold'>Flag</th>
-                  <th className='fw-bold text-end'>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-
-                {getCountries?.length > 0 && getCountries?.map((data, index) => (
-                  <tr key={index} className='text-center'>
-                    <td>
-                      <div class="d-flex align-items-center">
-
-                        <div class="align-items-center">
-                          <p class="fw-normal m-2">{data.name}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <div class="align-items-center">
-                          <p class="fw-normal m-2">{data.code}</p>
-                        </div>
-                      </div>
-                    </td>
-
-                    <td>
-                      <div class="">
-                        <div class="">
-                          <p class="fw-normal m-2">
-                            <Col xs={2} className="mt-auto p-0"><img className="img-fluid" src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${data.code}.svg`} alt="" />
-                            </Col>
-                          </p>
-                        </div>
-                      </div>
-                    </td>
-
-                    <td>
-                      <div class="d-flex justify-content-end m-2">
-                        <div class="align-items-center">
-                          <MdEdit onClick={() => {
-                            setShow(true); setContryForEdit(contryData?.data?.find(item => item._id === data._id))
-                          }}
-                            // data-tooltip-id='edit-id'
-                            // data-tooltip-content='Edit Product'
-                            className='cursor-pointer'
-                            size={18} />
-                          {/* <Tooltip id='edit-id' place='top' effect='solid' /> */}
-                        </div>
-                      </div>
-                    </td>
-
-                  </tr>
-                ))}
-
-              </tbody>
-            </table>
-            {!getCountries && <div class="d-flex justify-content-center mx-auto container py-5 my-5 m-5">
-              <div class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-            </div>}
-            {contryData?.length < 1 && <div className='text-center mx-auto container py-5 my-5 m-5'> No records were found</div>}
-            <div class="card-footer border-0 py-2 mb-5">
-
-              <span class="text-muted text-sm">
-                <Paginate postsPerPage={postsPerPage} totalPosts={country?.data?.length} paginate={paginate} prevPagefunc={() => setCurrentPage(prev => prev - 1)} nextPagefunc={() => setCurrentPage(prev => prev + 1)} currentPage={currentPage} getCountries={getCountries} /> </span>
-            </div>
+            <Table
+              columns={columns}
+              dataSource={getCountries}
+              rowKey={record => record._id}
+              pagination={{
+                pageSize: postsPerPage,
+                total: country?.data?.length,
+                onChange: paginate
+              }}
+              loading={!getCountries && { indicator: <Spin /> }}
+              locale={{ emptyText: contryData?.length < 1 ? 'No records were found' : 'Loading...' }}
+            />
+            {/* <div className="card-footer border-0 py-2 mb-5">
+              <span className="text-muted text-sm">
+                <Paginate
+                  postsPerPage={postsPerPage}
+                  totalPosts={country?.data?.length}
+                  paginate={paginate}
+                  prevPagefunc={() => setCurrentPage(prev => prev - 1)}
+                  nextPagefunc={() => setCurrentPage(prev => prev + 1)}
+                  currentPage={currentPage}
+                  getCountries={getCountries}
+                />
+              </span>
+            </div> */}
           </div>
         </div>
         {/* <MaterialTable

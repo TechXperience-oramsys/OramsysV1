@@ -1,29 +1,22 @@
-import { FormControl, InputLabel, Select, TextField } from '@material-ui/core'
-import React, { useState } from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
+import React, { useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Details from './Details';
-
-import Box from '@material-ui/core/Box';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import Ratingschemes from './Ratingschemes';
+import { Steps, Button, Typography } from 'antd';
+import Box from '@material-ui/core/Box';
 
-const steps = ['Details','Rating agencies'];
+const { Step } = Steps;
+const { Title, Paragraph } = Typography;
+
+const steps = ['Details', 'Rating agencies'];
+
 const RatingAgenciesEdit = () => {
+    const navigate = useNavigate();
+    const [page, setPage] = useState('Details');
+    const [details, setDetails] = useState({});
+    const [activeStep, setActiveStep] = useState(0);
 
-    const navigate = useNavigate()
-    const [page, setPage] = useState('Details')
-    const [details, setDetails] = useState({})
-
-    const [activeStep, setActiveStep] = React.useState(0);
-
-    const isStepOptional = (step) => {
-        return step === 1;
-    };
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
@@ -35,41 +28,47 @@ const RatingAgenciesEdit = () => {
     const handleReset = () => {
         setActiveStep(0);
     };
-    return (
-        <>
-            <div className='add-edit-product'>
-                <Box sx={{ width: '100%' }}>
-                    <Stepper activeStep={activeStep} alternativeLabel>
-                        {steps.map((label, index) => {
-                            const stepProps = {};
-                            const labelProps = {};
-                            return (
-                                <Step key={label} {...stepProps}>
-                                    <StepLabel {...labelProps}>{label}</StepLabel>
-                                </Step>
-                            );
-                        })}
-                    </Stepper>
-                    {activeStep === steps.length ? (
-                        <React.Fragment>
-                            <Typography sx={{ mt: 2, mb: 1 }}>
-                                All steps completed - you&apos;re finished
-                            </Typography>
-                            <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                                <Box sx={{ flex: '1 1 auto' }} />
-                                <Button onClick={handleReset}>Reset</Button>
-                            </Box>
-                        </React.Fragment>
-                    ) : (
-                        <React.Fragment>
-                            {activeStep + 1 === 1 && <Details hendelNext={handleNext} getData = {setDetails} />}
-                            {activeStep + 1 === 2 && <Ratingschemes hendelNext={handleNext} hendelCancel={handleBack} detailData = {details} />}
-                        </React.Fragment>
-                    )}
-                </Box>
-            </div>
-        </>
-    )
-}
 
-export default RatingAgenciesEdit
+    return (
+        <div className='add-edit-product'>
+            <Box sx={{ width: '100%' }}>
+                <Steps className='container mb-5' current={activeStep}>
+                    {steps.map((label, index) => (
+                        <Step key={index} title={label} />
+                    ))}
+                </Steps>
+                <div className='steps-content'>
+                    {activeStep === steps.length ? (
+                        <>
+                            <Title level={3} style={{ marginTop: 16 }}>
+                                All steps completed - you&apos;re finished
+                            </Title>
+                            <Button onClick={handleReset} style={{ marginTop: 16 }}>
+                                Reset
+                            </Button>
+                        </>
+                    ) : (
+                        <>
+                            {activeStep === 0 && <Details hendelNext={handleNext} getData={setDetails} />}
+                            {activeStep === 1 && <Ratingschemes hendelNext={handleNext} hendelCancel={handleBack} detailData={details} />}
+                        </>
+                    )}
+                </div>
+                {/* <div className='steps-action'>
+                    {activeStep > 0 && (
+                        <Button style={{ margin: '0 8px' }} onClick={handleBack}>
+                            Previous
+                        </Button>
+                    )}
+                    {activeStep < steps.length - 1 && (
+                        <Button type='primary' onClick={handleNext}>
+                            Next
+                        </Button>
+                    )}
+                </div> */}
+            </Box>
+        </div>
+    );
+};
+
+export default RatingAgenciesEdit;

@@ -1,31 +1,31 @@
-import { InputAdornment, TextField } from '@material-ui/core'
-import Choices from 'choices.js';
-import MaterialTable from 'material-table'
-import React, { useEffect, useState, useRef } from 'react'
-import { Col, Row, Button, Form, InputGroup } from 'react-bootstrap'
-import { useLocation, useNavigate } from 'react-router-dom'
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import AddSourceOfRepayment from '../../component/Modal/AddSourceOfRepayment'
-import TextEditerModal from '../../component/Modal/TextEditerModal'
-import CurrencyHedgeDetailsModal from '../../component/Modal/CurrencyHedgeDetailsModal'
-import { CurrencyOptions } from '../../helper/common'
-import { useSelector } from 'react-redux'
-import { addTransaction, editTransaction, transactionDataAction } from '../../redux/actions/transactionDataAction'
-import { useDispatch } from 'react-redux'
-import AuthStorage from '../../helper/AuthStorage'
-import STORAGEKEY from '../../config/APP/app.config'
-import { ADD_TRANSACTION, EDIT_TRANSACTION, GET_TRANSACTION_BY_ID } from '../../redux/types'
-import { toast } from 'react-hot-toast'
+import Choices from "choices.js";
+import MaterialTable from "material-table"
+import React, { useEffect, useState, useRef } from "react"
+import { Col, Row, Button, Form, InputGroup } from "react-bootstrap"
+import { useLocation, useNavigate } from "react-router-dom"
+import AddSourceOfRepayment from "../../component/Modal/AddSourceOfRepayment"
+import TextEditerModal from "../../component/Modal/TextEditerModal"
+import CurrencyHedgeDetailsModal from "../../component/Modal/CurrencyHedgeDetailsModal"
+import { CurrencyOptions } from "../../helper/common"
+import { useSelector } from "react-redux"
+import { addTransaction, editTransaction } from "../../redux/actions/transactionDataAction"
+import { useDispatch } from "react-redux"
+import AuthStorage from "../../helper/AuthStorage"
+import STORAGEKEY from "../../config/APP/app.config"
+import { ADD_TRANSACTION, EDIT_TRANSACTION, GET_TRANSACTION_BY_ID } from "../../redux/types"
+import { toast } from "react-hot-toast"
 import moment from "moment"
-import { productGetAction } from '../../redux/actions/productAction'
-import { companydataAction } from '../../redux/actions/companydataAction'
-import { BsPlus } from "react-icons/bs"
-
-import { repsOptions } from './Helpers/TermsOptions'
-// import dayjs from 'dayjs';
-// import customParseFormat from 'dayjs/plugin/customParseFormat';
-// import { DatePicker, Space } from 'antd';
-// import Item from 'antd/es/list/Item'
+import { productGetAction } from "../../redux/actions/productAction"
+import { companydataAction } from "../../redux/actions/companydataAction"
+import { repsOptions } from "./Helpers/TermsOptions"
+import { MultiSelectForm } from "./Helpers/MultiselectForm";
+import Select from "react-select";
+import { addCurrencyHedgeAtom, addSourceOfRepaymentAtom, currencyHedgeDetailsModalAtom, facilityAtom, securityDocumentsAtom, sourceOfRepaymentAtom, typeAtom } from "./Helpers/atoms";
+import { useAtom } from "jotai";
+// import dayjs from "dayjs";
+// import customParseFormat from "dayjs/plugin/customParseFormat";
+// import { DatePicker, Space } from "antd";
+// import Item from "antd/es/list/Item"
 // dayjs.extend(customParseFormat);
 
 
@@ -33,20 +33,20 @@ const Facility = ({ hendelCancel, hendelNext }) => {
 
     useEffect(() => {
         // Include Choices.js stylesheet
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css';
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = "https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css";
         document.head.appendChild(link);
 
         // Include Choices.js script
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js';
+        const script = document.createElement("script");
+        script.src = "https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js";
         script.async = true;
         document.body.appendChild(script);
 
         // Initialize Choices.js when the script is loaded
         script.onload = () => {
-            const selectElement = document.getElementById('choices-multiple-remove-button');
+            const selectElement = document.getElementById("choices-multiple-remove-button");
             if (selectElement) {
                 new Choices(selectElement, {
                     removeItemButton: true,
@@ -73,81 +73,19 @@ const Facility = ({ hendelCancel, hendelNext }) => {
     const id = queryParams.get("id")
     // console.log("transactionType======", transactionType)
 
-    const [facility, setFacility] = useState({
-        representations: [],
-        _id: "",
-        interestPeriod: "",
-        baseRate: "",
-        currency: "",
-        interestRate: "",
-        interestRateType: "",
-        interestPaymentDate: "",
-        rePaymentCurrency: "",
-        tenor: "",
-        managementFee: "",
-        currencyHedge: false,
-        workingCapital: "",
-        disbursementMechanism: "",
-        securityUndertaking: "",
-        controlAccounts: "",
-        documentation: "",
-        specifyDocumentation: "",
-        conditionsPrecedent: [],
-        conditionsSubsequent: [],
-        borrowerAffirmativeCovenants: [],
-        financialCovenants: [],
-        informationCovenants: [],
-        assignments: "",
-        taxationDuties: "",
-        expenses: "",
-        approvals: "",
-        governingLaw: "",
-        jurisdiction: "",
-        forceMajeure: "",
-        loanPurposeValidity: false,
-        cancellationFee: "",
-        loanPurposeReason: "",
+    const [facility, setFacility] = useAtom(facilityAtom)
 
-        drawdownFee: "",
-        commitmentFee: "",
-        lateInterestCharges: "",
-        prePayment: "",
-        type: "",
-        specifyFacilityType: "",
-        amount: "",
-        loanPurposJustification: "",
-        finalMaturity: "",
-        availabilityPeriod: "",
-        repayment: "",
-        transactionStructure: "",
-        permittedAccounts: "",
-        eventsOfDefault: [],
-        miscellaneousProvisions: "",
-        generalUndertakings: [],
-        margin: "",
-        agencyFee: "",
-        defaultInterest: "",
-        liborRate: "",
-        sofrRate: "",
-        otherRate: "",
-        admin: ''
-    })
-
-    const [currencyHedgeDetailsModal, setCurrencyHedgeDetailsModal] = useState(false)
-    const [addSourceOfRepayment, setAddSourceOfRepayment] = useState(false)
+    const [currencyHedgeDetailsModal, setCurrencyHedgeDetailsModal] = useAtom(currencyHedgeDetailsModalAtom)
+    const [addSourceOfRepayment, setAddSourceOfRepayment] = useAtom(addSourceOfRepaymentAtom)
     const [showTextEditor, setShowTextEditor] = useState(false)
-    const [type, setType] = useState('')
-    const [selectedName, setSelectedName] = useState('')
-    const [addCurrencyHedge, setAddCurrencyHedge] = useState([])
-    const [sourceOfRepayment, setSourceOfRepayment] = useState([])
-    const [securityDocuments, setSecurityDocuments] = useState([{
-        type: "",
-        name: "",
-        file: ""
-    }])
-    const [rowEditData, setRowEditData] = useState('')
+    const [type, setType] = useAtom(typeAtom)
+    const [selectedName, setSelectedName] = useState("")
+    const [addCurrencyHedge, setAddCurrencyHedge] = useAtom(addCurrencyHedgeAtom)
+    const [sourceOfRepayment, setSourceOfRepayment] = useAtom(sourceOfRepaymentAtom)
+    const [securityDocuments, setSecurityDocuments] = useAtom(securityDocumentsAtom)
+    const [rowEditData, setRowEditData] = useState("")
     const [error, setError] = useState()
-    const [editRowData, setEditRowData] = useState('')
+    const [editRowData, setEditRowData] = useState("")
     const [view, setView] = useState()
     const [loading, setLoading] = useState(false)
 
@@ -250,7 +188,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
     const counterpartyOptions = useSelector(state => state.entityData.entity)
 
     useEffect(() => {
-        console.log('transactionData===', transactionData)
+        console.log("transactionData===", transactionData)
         if (transactionData && transactionData.facility?.currencyHedgeDetails && counterpartyOptions?.data) {
             setAddCurrencyHedge(transactionData.facility?.currencyHedgeDetails.map((ele) => {
                 return {
@@ -262,16 +200,6 @@ const Facility = ({ hendelCancel, hendelNext }) => {
         }
 
     }, [transactionData])
-
-    // const Delete = (data) => {
-    //     let body = {
-    //         ...transactionData,
-    //         currencyHedgeDetails: transactionData.facility.currencyHedgeDetails.filter((ele, i) => i !== data.tableData.id)
-    //     }
-    //     dispatch(transactionDataAction(body))
-    // }
-
-
 
     const propsEditData = (e) => {
         let editData = sourceOfRepayment.map((item, i) => i === e.id ? e.value : item)
@@ -286,116 +214,145 @@ const Facility = ({ hendelCancel, hendelNext }) => {
     }
 
     const interestPeriodOptions = [
-        'Weekly',
-        'Monthly',
-        'Quarterly',
-        'Bi-annual',
-        'Annual',
-    ]
+        { value: "Weekly", label: "Weekly" },
+        { value: "Monthly", label: "Monthly" },
+        { value: "Quarterly", label: "Quarterly" },
+        { value: "Bi-annual", label: "Bi-annual" },
+        { value: "Annual", label: "Annual" },
+
+        // "Weekly",
+        // "Monthly",
+        // "Quarterly",
+        // "Bi-annual",
+        // "Annual",
+    ];
 
     const baseRateOptions = [
-        'LIBOR',
-        'SOFR',
-        'Other(Please Specify)'
-    ]
+        { value: "LIBOR", label: "LIBOR" },
+        { value: "SOFR", label: "SOFR" },
+        { value: "Other(Please Specify", label: "Other(Please Specify" },
+        // "LIBOR",
+        // "SOFR",
+        // "Other(Please Specify)",
+    ];
+
     const interestRateTypeOptions = [
-        'Fixed Rate',
-        'Variable Rate'
+        { value: "Fixed Rate", label: "Fixed Rate" },
+        { value: "Variable Rate", label: "Variable Rate" },
     ]
+    // ["Fixed Rate", "Variable Rate"];
+
     const facilityTypeOptions = [
-        'Trade Finance',
-        'Export Finance',
-        'Pre-Export Finance',
-        'Receiveables Finance',
-        'Lines of Credit',
-        'Note Purchase',
-        'Factoring',
-        'Post Shipment Finance',
-        'Term Loan',
-        `Others(please specify)`,
-    ]
+        { value: "Trade Finance", label: "Trade Finance" },
+        { value: "Export Finance", label: "Export Finance" },
+        { value: "Pre-Export Finance", label: "Pre-Export Finance" },
+        { value: "Receivables Finance", label: "Receivables Finance" },
+        { value: "Lines of Credit", label: "Lines of Credit" },
+        { value: "Note Purchase", label: "Note Purchase" },
+        { value: "Factoring", label: "Factoring" },
+        { value: "Post Shipment Finance", label: "Post Shipment Finance" },
+        { value: "Term Loan", label: "Term Loan" },
+        { value: "Term Loan", label: "Others (please specify)" },
+
+        // "Trade Finance",
+        // "Export Finance",
+        // "Pre-Export Finance",
+        // "Receivables Finance",
+        // "Lines of Credit",
+        // "Note Purchase",
+        // "Factoring",
+        // "Post Shipment Finance",
+        // "Term Loan",
+        // "Others (please specify)"
+    ];
+
     const governLawOptions = [
-        'French',
-        'English',
-        'Others'
-    ]
+        "French",
+        "English",
+        "Others"
+    ];
+
     const documentationOptions = [
-        'Facility Agreement',
-        'Loan Agreement',
-        'Others (Please specify)',
-    ]
+        { value: "Facility Agreement", label: "Facility Agreement" },
+        { value: "Loan Agreement", label: "Loan Agreement" },
+        { value: "Others (Please specify)", label: "Others (Please specify)" },
+
+        // "Facility Agreement",
+        // "Loan Agreement",
+        // "Others (Please specify)"
+    ];
+
 
 
 
     const precedentOptions = [
-        'Status',
-        'Binding obligations',
-        'non conflict with other obligations',
-        'no reduction of capital',
-        'iuiffyhggtions',
-        'No iuewfi2q2',
-        'No iuerguyrrr',
+        "Status",
+        "Binding obligations",
+        "non conflict with other obligations",
+        "no reduction of capital",
+        "iuiffyhggtions",
+        "No iuewfi2q2",
+        "No iuerguyrrr",
 
     ]
     const subsequentOptions = [
-        'Status',
-        'Binding obligations',
-        'non conflict with other obligations',
-        'no reduction of capital',
-        'iuiffyhggtions',
-        'No iuewfi2q2',
-        'No iuerguyrrr',
+        "Status",
+        "Binding obligations",
+        "non conflict with other obligations",
+        "no reduction of capital",
+        "iuiffyhggtions",
+        "No iuewfi2q2",
+        "No iuerguyrrr",
 
     ]
     const bacovOptions = [
-        'Status',
-        'Binding obligations',
-        'non conflict with other obligations',
-        'no reduction of capital',
-        'iuiffyhggtions',
-        'No iuewfi2q2',
-        'No iuerguyrrr',
+        "Status",
+        "Binding obligations",
+        "non conflict with other obligations",
+        "no reduction of capital",
+        "iuiffyhggtions",
+        "No iuewfi2q2",
+        "No iuerguyrrr",
 
     ]
     const fincovOptions = [
-        'Status',
-        'Binding obligations',
-        'non conflict with other obligations',
-        'no reduction of capital',
-        'iuiffyhggtions',
-        'No iuewfi2q2',
-        'No iuerguyrrr',
+        "Status",
+        "Binding obligations",
+        "non conflict with other obligations",
+        "no reduction of capital",
+        "iuiffyhggtions",
+        "No iuewfi2q2",
+        "No iuerguyrrr",
 
     ]
     const infcovOptions = [
-        'Status',
-        'Binding obligations',
-        'non conflict with other obligations',
-        'no reduction of capital',
-        'iuiffyhggtions',
-        'No iuewfi2q2',
-        'No iuerguyrrr',
+        "Status",
+        "Binding obligations",
+        "non conflict with other obligations",
+        "no reduction of capital",
+        "iuiffyhggtions",
+        "No iuewfi2q2",
+        "No iuerguyrrr",
 
     ]
     const genovertakingOptions = [
-        'Status',
-        'Binding obligations',
-        'non conflict with other obligations',
-        'no reduction of capital',
-        'iuiffyhggtions',
-        'No iuewfi2q2',
-        'No iuerguyrrr',
+        "Status",
+        "Binding obligations",
+        "non conflict with other obligations",
+        "no reduction of capital",
+        "iuiffyhggtions",
+        "No iuewfi2q2",
+        "No iuerguyrrr",
 
     ]
 
     let currencyHedgeOptions = [
-        { value: '', label: 'Select Option' },
+        { value: "", label: "Select Option" },
         { value: true, label: "Yes" },
         { value: false, label: "No" },
     ]
 
     let loanPurposeValidityOptions = [
-        { value: '', label: 'Is the loan purpose valid?' },
         { value: true, label: "Yes" },
         { value: false, label: "No" },
     ]
@@ -408,17 +365,17 @@ const Facility = ({ hendelCancel, hendelNext }) => {
     }
 
     useEffect(() => {
-        if (facility.currencyHedge === 'No') {
+        if (facility.currencyHedge === "No") {
             setAddCurrencyHedge([])
         }
     }, [facility.currencyHedge])
 
     useEffect(() => {
-        dispatch(productGetAction('all'))
+        dispatch(productGetAction("all"))
     }, [])
 
     // useEffect(() => {
-    //     console.log('securityDocuments.length===', securityDocuments)
+    //     console.log("securityDocuments.length===", securityDocuments)
     // }, [securityDocuments])
 
 
@@ -426,7 +383,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
     const handleChangeNumber = (e, name) => {
         let numberReg = /^[0-9\b]+$/;
         let numberPointReg = /\b((100)|[0-9]\d?)\b/
-        console.log('e.target.value', e.target.value)
+        console.log("e.target.value", e.target.value)
         if (name === "interestRate" || name === "managementFee" || name === "drawdownFee" || name === "commitmentFee" || name === "lateInterestCharges" || name === "prePayment" || name === "cancellationFee" || name === "agencyFee" || name === "advisoryFee" || name === "defaultInterest") {
             if (e.target.value === "" || numberPointReg.test(e.target.value)) {
                 if (e.target.value) {
@@ -437,61 +394,61 @@ const Facility = ({ hendelCancel, hendelNext }) => {
             }
         }
         else if (name === "tenor") {
-            if (e.target.value === "" || numberReg.test(e.target.value)) {
+            if (e.target.value === "" || numberPointReg.test(e.target.value)) {
                 setFacility({ ...facility, [name]: e.target.value })
             }
         }
         else if (name === "margin") {
-            if (e.target.value === "" || numberReg.test(e.target.value)) {
+            if (e.target.value === "" || numberPointReg.test(e.target.value)) {
                 setFacility({ ...facility, [name]: e.target.value })
             }
         }
         else if (name === "finalMaturity") {
-            if (e.target.value === "" || numberReg.test(e.target.value)) {
+            if (e.target.value === "" || numberPointReg.test(e.target.value)) {
                 setFacility({ ...facility, [name]: e.target.value })
             }
         }
         else if (name === "availabilityPeriod") {
-            if (e.target.value === "" || numberReg.test(e.target.value)) {
+            if (e.target.value === "" || numberPointReg.test(e.target.value)) {
                 setFacility({ ...facility, [name]: e.target.value })
             }
         }
         else if (name === "liborRate") {
-            if (e.target.value === "" || numberReg.test(e.target.value)) {
+            if (e.target.value === "" || numberPointReg.test(e.target.value)) {
                 setFacility({ ...facility, [name]: e.target.value })
             }
         }
         else if (name === "sofrRate") {
-            if (e.target.value === "" || numberReg.test(e.target.value)) {
+            if (e.target.value === "" || numberPointReg.test(e.target.value)) {
                 setFacility({ ...facility, [name]: e.target.value })
             }
         }
         else if (name === "otherRate") {
-            if (e.target.value === "" || numberReg.test(e.target.value)) {
+            if (e.target.value === "" || numberPointReg.test(e.target.value)) {
                 setFacility({ ...facility, [name]: e.target.value })
             }
         }
         else if (name === "defaultInterest") {
-            if (e.target.value === "" || numberReg.test(e.target.value)) {
+            if (e.target.value === "" || numberPointReg.test(e.target.value)) {
                 setFacility({ ...facility, [name]: e.target.value })
             }
         }
         else if (name === "advisoryFee") {
-            if (e.target.value === "" || numberReg.test(e.target.value)) {
+            if (e.target.value === "" || numberPointReg.test(e.target.value)) {
                 setFacility({ ...facility, [name]: e.target.value })
             }
         }
         else if (name === "agencyFee") {
-            if (e.target.value === "" || numberReg.test(e.target.value)) {
+            if (e.target.value === "" || numberPointReg.test(e.target.value)) {
                 setFacility({ ...facility, [name]: e.target.value })
             }
         }
         else if (name === "amount") {
-            // if (parseInt(transactionData?.details?.contractDetails?.value?.replace(/,/g, '')) >= parseInt(e.target.value)) {
-            if (e.target.value === '' || e.target.value) {
+            // if (parseInt(transactionData?.details?.contractDetails?.value?.replace(/,/g, "")) >= parseInt(e.target.value)) {
+            if (e.target.value === "" || e.target.value) {
                 setFacility({ ...facility, [name]: e.target.value })
             } else {
-                setFacility({ ...facility, [name]: '' })
+                setFacility({ ...facility, [name]: "" })
             }
         }
     }
@@ -502,278 +459,278 @@ const Facility = ({ hendelCancel, hendelNext }) => {
 
         if (!facility.interestRateType) {
             params = true
-            error.interestRateType = 'Please select an interest rate type!'
+            error.interestRateType = "Please select an interest rate type!"
         }
 
         if (facility.interestRateType === "Fixed Rate" && !facility.interestRate) {
             params = true
-            error.interestRate = 'Please enter interest rate!'
+            error.interestRate = "Please enter interest rate!"
         }
         if (facility.interestRateType === "Variable Rate" && !facility.baseRate) {
             params = true
-            error.baseRate = 'Please enter base rate!'
+            error.baseRate = "Please enter base rate!"
         }
         if (facility.interestRateType === "Variable Rate" && !facility.margin) {
             params = true
-            error.margin = 'please enter margin'
+            error.margin = "please enter margin"
         }
         if (facility.baseRate === "LIBOR" && !facility.liborRate) {
             params = true
-            error.liborRate = 'please enter liborRate'
+            error.liborRate = "please enter liborRate"
         }
         if (facility.baseRate === "SOFR" && !facility.sofrRate) {
             params = true
-            error.sofrRate = 'please enter Sofr Rate'
+            error.sofrRate = "please enter Sofr Rate"
         }
         if (facility.baseRate === "Other(Please Specify)" && !facility.otherRate) {
             params = true
-            error.otherRate = 'Please specify your rate'
+            error.otherRate = "Please specify your rate"
         }
 
         if (!facility.interestPeriod) {
             params = true
-            error.interestPeriod = 'Please enter interest period!'
+            error.interestPeriod = "Please enter interest period!"
         }
 
         if (!facility.interestPaymentDate) {
             params = true
-            error.interestPaymentDate = 'Please enter interest payment date!'
+            error.interestPaymentDate = "Please enter interest payment date!"
         }
 
         if (!facility.tenor) {
             params = true
-            error.tenor = 'Please enter tenor of each drawdown!'
+            error.tenor = "Please enter tenor of each drawdown!"
         }
 
-        if (!facility.managementFee) {
-            params = true
-            error.managementFee = 'Please enter annual management fee!'
-        }
+        // if (!facility.managementFee) {
+        //     params = true
+        //     error.managementFee = "Please enter annual management fee!"
+        // }
 
-        if (!facility.drawdownFee) {
-            params = true
-            error.drawdownFee = 'Please enter drawdown fee!'
-        }
+        // if (!facility.drawdownFee) {
+        //     params = true
+        //     error.drawdownFee = "Please enter drawdown fee!"
+        // }
 
-        if (!facility.commitmentFee) {
-            params = true
-            error.commitmentFee = 'Please enter commitment fee!'
-        }
+        // if (!facility.commitmentFee) {
+        //     params = true
+        //     error.commitmentFee = "Please enter commitment fee!"
+        // }
 
-        if (!facility.lateInterestCharges) {
-            params = true
-            error.lateInterestCharges = 'Please enter late interrest charges!'
-        }
+        // if (!facility.lateInterestCharges) {
+        //     params = true
+        //     error.lateInterestCharges = "Please enter late interrest charges!"
+        // }
 
-        if (!facility.prePayment) {
-            params = true
-            error.prePayment = 'Please enter prepayment!'
-        }
+        // if (!facility.prePayment) {
+        //     params = true
+        //     error.prePayment = "Please enter prepayment!"
+        // }
 
-        if (!facility.cancellationFee) {
-            params = true
-            error.cancellationFee = 'Please enter cancellation fee!'
-        }
+        // if (!facility.cancellationFee) {
+        //     params = true
+        //     error.cancellationFee = "Please enter cancellation fee!"
+        // }
 
         if (!facility.type) {
             params = true
-            error.type = 'Please enter type!'
+            error.type = "Please enter type!"
         }
         if (!facility.type === "specifyFacilityType" && !facility.specifyFacilityType) {
             params = true
-            error.specifyFacilityType = 'Please specify facility type!'
+            error.specifyFacilityType = "Please specify facility type!"
         }
 
         if (!facility.currency) {
             params = true
-            error.currency = 'Please enter currency!'
+            error.currency = "Please enter currency!"
         }
 
         if (!facility.amount) {
             params = true
-            error.amount = 'Please enter amount!'
+            error.amount = "Please enter amount!"
         }
 
         if (!facility.rePaymentCurrency) {
             params = true
-            error.rePaymentCurrency = 'Please enter repayment currency!'
+            error.rePaymentCurrency = "Please enter repayment currency!"
         }
 
         if (facility.currency !== facility.rePaymentCurrency && !facility.currencyHedge) {
             params = true
-            error.currencyHedge = 'Please enter contract currency hedge!'
+            error.currencyHedge = "Please enter contract currency hedge!"
         }
 
-        if (facility.loanPurposeValidity === '') {
+        if (facility.loanPurposeValidity === "") {
             params = true
-            error.loanPurposeValidity = 'Please enter loan purpose validity!'
+            error.loanPurposeValidity = "Please enter loan purpose validity!"
         }
-        if (facility.loanPurposeValidity === 'Yes' && !facility.loanPurposeReason) {
+        if (facility.loanPurposeValidity === "Yes" && !facility.loanPurposeReason) {
             params = true
-            error.loanPurposeReason = 'Please enter reason'
+            error.loanPurposeReason = "Please enter reason"
         }
 
         if (!facility.loanPurposJustification) {
             params = true
-            error.loanPurposJustification = 'Please enter loan purpose justification!'
+            error.loanPurposJustification = "Please enter loan purpose justification!"
         }
 
         // if (!facility.goods) {
         //     params = true
-        //     error.goods = 'Please enter goods!'
+        //     error.goods = "Please enter goods!"
         // }
 
         // if (!facility.workingCapital) {
         //     params = true
-        //     error.workingCapital = 'Please enter working capital!'
+        //     error.workingCapital = "Please enter working capital!"
         // }
 
         if (!facility.disbursementMechanism) {
             params = true
-            error.disbursementMechanism = 'Please enter disbursement mechanism!'
+            error.disbursementMechanism = "Please enter disbursement mechanism!"
         }
 
         if (!facility.securityUndertaking) {
             params = true
-            error.securityUndertaking = 'Please enter security undertaking!'
+            error.securityUndertaking = "Please enter security undertaking!"
         }
 
         if (!facility.controlAccounts) {
             params = true
-            error.controlAccounts = 'Please enter control accounts!'
+            error.controlAccounts = "Please enter control accounts!"
         }
 
         if (!facility.finalMaturity) {
             params = true
-            error.finalMaturity = 'Please enter final maturity!'
+            error.finalMaturity = "Please enter final maturity!"
         }
 
         if (!facility.documentation) {
             params = true
-            error.documentation = 'Please enter documentation!'
+            error.documentation = "Please enter documentation!"
         }
-        if (facility.documentation === 'Others (Please Specify)' && !facility.specifyDocumentation) {
+        if (facility.documentation === "Others (Please Specify)" && !facility.specifyDocumentation) {
             params = true
-            error.specifyDocumentation = 'Please specify documentation!'
+            error.specifyDocumentation = "Please specify documentation!"
         }
 
         if (!facility.conditionsPrecedent) {
             params = true
-            error.conditionsPrecedent = 'Please enter conditions precedent!'
+            error.conditionsPrecedent = "Please enter conditions precedent!"
         }
 
         if (!facility.conditionsSubsequent) {
             params = true
-            error.conditionsSubsequent = 'Please enter conditions subsequent!'
+            error.conditionsSubsequent = "Please enter conditions subsequent!"
         }
 
         if (!facility.borrowerAffirmativeCovenants) {
             params = true
-            error.borrowerAffirmativeCovenants = 'Please enter borrower affirmative covenants!'
+            error.borrowerAffirmativeCovenants = "Please enter borrower affirmative covenants!"
         }
 
         if (!facility.financialCovenants) {
             params = true
-            error.financialCovenants = 'Please enter financial covenants!'
+            error.financialCovenants = "Please enter financial covenants!"
         }
 
         if (!facility.informationCovenants) {
             params = true
-            error.informationCovenants = 'Please enter information covenants!'
+            error.informationCovenants = "Please enter information covenants!"
         }
 
         if (!facility.assignments) {
             params = true
-            error.assignments = 'Please enter assignments!'
+            error.assignments = "Please enter assignments!"
         }
 
         if (!facility.taxationDuties) {
             params = true
-            error.taxationDuties = 'Please enter taxation & duties!'
+            error.taxationDuties = "Please enter taxation & duties!"
         }
 
         if (!facility.expenses) {
             params = true
-            error.expenses = 'Please enter expenses!'
+            error.expenses = "Please enter expenses!"
         }
 
         if (!facility.approvals) {
             params = true
-            error.approvals = 'Please enter approvals!'
+            error.approvals = "Please enter approvals!"
         }
 
         if (!facility.governingLaw) {
             params = true
-            error.governingLaw = 'Please enter governing law!'
+            error.governingLaw = "Please enter governing law!"
         }
 
         if (!facility.jurisdiction) {
             params = true
-            error.jurisdiction = 'Please enter jurisdiction!'
+            error.jurisdiction = "Please enter jurisdiction!"
         }
 
         if (!facility.forceMajeure) {
             params = true
-            error.forceMajeure = 'Please enter force majeure!'
+            error.forceMajeure = "Please enter force majeure!"
         }
 
         // if (!securityDocuments.length) {
         //     params = true
-        //     error.securityDocuments = 'please select security documents'
+        //     error.securityDocuments = "please select security documents"
         // }
         if (!facility.availabilityPeriod) {
             params = true
-            error.availabilityPeriod = 'please enter availability period'
+            error.availabilityPeriod = "please enter availability period"
         }
 
         if (!facility.repayment) {
             params = true
-            error.repayment = 'please enter repayment'
+            error.repayment = "please enter repayment"
         }
 
         if (!facility.transactionStructure) {
             params = true
-            error.transactionStructure = 'please enter transaction structure'
+            error.transactionStructure = "please enter transaction structure"
         }
 
         if (!facility.permittedAccounts) {
             params = true
-            error.permittedAccounts = 'please enter permitted accounts'
+            error.permittedAccounts = "please enter permitted accounts"
         }
 
         if (!facility.representations) {
             params = true
-            error.representations = 'please enter representations'
+            error.representations = "please enter representations"
         }
 
         if (!facility.eventsOfDefault) {
             params = true
-            error.eventsOfDefault = 'please enter events of default'
+            error.eventsOfDefault = "please enter events of default"
         }
 
         if (!facility.miscellaneousProvisions) {
             params = true
-            error.miscellaneousProvisions = 'please enter miscellaneous provisions'
+            error.miscellaneousProvisions = "please enter miscellaneous provisions"
         }
 
         if (!facility.generalUndertakings) {
             params = true
-            error.generalUndertakings = 'please enter general undertakings'
+            error.generalUndertakings = "please enter general undertakings"
         }
 
-        if (!facility.agencyFee) {
-            params = true
-            error.agencyFee = 'please enter agency fee'
-        }
+        // if (!facility.agencyFee) {
+        //     params = true
+        //     error.agencyFee = "please enter agency fee"
+        // }
 
-        if (!facility.defaultInterest) {
-            params = true
-            error.defaultInterest = 'please enter default interest'
-        }
-        if (!facility.advisoryFee) {
-            params = true
-            error.advisoryFee = 'please enter Advisory Fee'
-        }
+        // if (!facility.defaultInterest) {
+        //     params = true
+        //     error.defaultInterest = "please enter default interest"
+        // }
+        // if (!facility.advisoryFee) {
+        //     params = true
+        //     error.advisoryFee = "please enter Advisory Fee"
+        // }
         setError(error)
         return params
 
@@ -784,10 +741,10 @@ const Facility = ({ hendelCancel, hendelNext }) => {
         if (data) {
             let value = data.replace(
                 /\D/g,
-                '',
+                "",
             ).replace(
                 /\B(?=(\d{3})+(?!\d))/g,
-                ',',
+                ",",
             );
             // let prefix = CurrencyOptions.find((ele) => ele === contractDetails?.currency)?.prefix
             // let suffix = CurrencyOptions.find((ele) => ele.label === contractDetails?.currency)?.suffix
@@ -799,7 +756,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
     }
 
     useEffect(() => {
-        console.log('error', error)
+        console.log("error", error)
     }, [error])
 
     const save = async () => {
@@ -824,7 +781,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                         }
                     })
                 }
-            } : '',
+            } : "",
 
             keyParties: {
                 keyParties: transactionData.keyParties?.keyParties?.map((ele) => {
@@ -875,10 +832,10 @@ const Facility = ({ hendelCancel, hendelNext }) => {
             userId: AuthStorage.getStorageData(STORAGEKEY.userId)
         }
 
-        let user = localStorage.getItem('userData') && JSON.parse(localStorage.getItem('userData'))
+        let user = localStorage.getItem("userData") && JSON.parse(localStorage.getItem("userData"))
         body.admin = user.admin
 
-        console.log('body final===', body)
+        console.log("body final===", body)
         // return false;
 
         setLoading(true)
@@ -902,7 +859,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
         if (validation()) {
             return
         }
-        //  alert('edit');
+        //  alert("edit");
         // console.log(transactionData.keyParties);
         // return;
         let body = {
@@ -917,7 +874,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                         }
                     })
                 }
-            } : '',
+            } : "",
             keyParties: {
                 keyParties: transactionData.keyParties?.keyParties?.map((ele) => {
                     return {
@@ -967,7 +924,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
             lenders: transactionData.lenders,
             userId: AuthStorage.getStorageData(STORAGEKEY.userId)
         }
-        console.log('body final===', body)
+        console.log("body final===", body)
         setLoading(true)
         await dispatch(editTransaction(id, body))
         setLoading(false)
@@ -992,8 +949,8 @@ const Facility = ({ hendelCancel, hendelNext }) => {
     }, [editTransactionData])
 
     const editModalData = (data, id) => {
-        console.log('id==', id)
-        console.log('data==', data)
+        console.log("id==", id)
+        console.log("data==", data)
         if (id !== undefined) {
             setAddCurrencyHedge(addCurrencyHedge.map((ele, i) => {
                 if (id === i) {
@@ -1008,13 +965,6 @@ const Facility = ({ hendelCancel, hendelNext }) => {
         }
     }
 
-    // const Delete = (data) => {
-    //     let body = {
-    //         ...transactionData,
-    //         licenses: transactionData.facility.currencyHedgeDetails.filter((ele, i) => i !== data.tableData.id)
-    //     }
-    //     dispatch(transactionDataAction(body))
-    // }
 
     const DeleteCurrencyhedgedetails = (rowData) => {
         let DeleteCurrencyhedge = addCurrencyHedge.filter((ele, i) => i !== rowData.tableData.id)
@@ -1026,210 +976,69 @@ const Facility = ({ hendelCancel, hendelNext }) => {
     }
 
 
-    // const [views, setViews] = useState(false);
-    const precedentTogref = useRef(null);
-    const subsequentTogref = useRef(null);
-    const repsTogref = useRef(null);
-    const bacTogref = useRef(null);
-    const fincovTogref = useRef(null);
-    const infocovTogref = useRef(null);
-    const undertakingsTogref = useRef(null);
-    const eventsTogref = useRef(null)
-
-    const [viewsPrecedent, setViewsPrecedent] = useState(false);
-    const [viewsSubsequent, setViewsSubsequent] = useState(false);
-    const [viewsReps, setViewsReps] = useState(false);
-    const [viewsBac, setViewsBac] = useState(false);
-    const [viewsFincov, setViewsFincov] = useState(false);
-    const [viewsInfo, setViewsInfo] = useState(false);
-    const [viewsUndertakings, setViewsUndertakings] = useState(false);
-    const [eventOfDefault, setEventOfDefault] = useState(false);
-
-    useEffect(() => {
-        // Add a check to ensure ref is not null before accessing its properties
-        precedentTogref.current && window.addEventListener('click', (e) => {
-            precedentTogref.current.contains && !precedentTogref.current.contains(e.target) && setViewsPrecedent(false);
-        }, true);
-
-        subsequentTogref.current && window.addEventListener('click', (e) => {
-            subsequentTogref.current.contains && !subsequentTogref.current.contains(e.target) && setViewsSubsequent(false);
-        }, true);
-
-        repsTogref.current && window.addEventListener('click', (e) => {
-            repsTogref.current.contains && !repsTogref.current.contains(e.target) && setViewsReps(false);
-        }, true);
-
-        bacTogref.current && window.addEventListener('click', (e) => {
-            bacTogref.current.contains && !bacTogref.current.contains(e.target) && setViewsBac(false);
-        }, true);
-
-        fincovTogref.current && window.addEventListener('click', (e) => {
-            fincovTogref.current.contains && !fincovTogref.current.contains(e.target) && setViewsFincov(false);
-        }, true);
-
-        infocovTogref.current && window.addEventListener('click', (e) => {
-            infocovTogref.current.contains && !infocovTogref.current.contains(e.target) && setViewsInfo(false);
-        }, true);
-
-        undertakingsTogref.current && window.addEventListener('click', (e) => {
-            undertakingsTogref.current.contains && !undertakingsTogref.current.contains(e.target) && setViewsUndertakings(false);
-        }, true);
-
-        eventsTogref.current && window.addEventListener('click', (e) => {
-            eventsTogref.current.contains && !eventsTogref.current.contains(e.target) && setEventOfDefault(false);
-        }, true);
-    }, []);
-
-
-    // const HandleSelection = (val) => {
-    //     const findData = facility.representations.find(ele => ele === val);
-    //     if (!findData) {
-    //         setFacility(prevFacility => ({
-    //             ...prevFacility,
-    //             representations: [...prevFacility.representations, val]
-    //         }));
-    //     } else {
-    //         setFacility(prevFacility => ({
-    //             ...prevFacility,
-    //             representations: prevFacility.representations.filter(ele => ele !== val)
-    //         }));
-    //     }
-    // }
-
-    // const RemoveContent = val => {
-    //     setFacility(prevFacility => ({
-    //         ...prevFacility,
-    //         representations: prevFacility.representations.filter(ele => ele !== val)
-    //     }));
-    //     setViews(false);
-    // }
-    const HandleSelection = (propertyName, value, togref) => {
-        setFacility((prevFacility) => ({
-            ...prevFacility,
-            [propertyName]: prevFacility[propertyName].includes(value)
-                ? prevFacility[propertyName].filter((ele) => ele !== value)
-                : [...prevFacility[propertyName], value],
-        }));
-
-        if (togref === 'conditionsPrecedent') {
-            setViewsPrecedent(true);
-        } else if (togref === 'representations') {
-            setViewsReps(true);
-        }
-        else if (togref === 'conditionsSubsequent') {
-            setViewsSubsequent(true);
-        }
-        else if (togref === 'borrowerAffirmativeCovenants') {
-            setViewsBac(true);
-        }
-        else if (togref === 'financialCovenants') {
-            setViewsFincov(true);
-        }
-        else if (togref === 'informationCovenants') {
-            setViewsInfo(true);
-        }
-        else if (togref === 'generalUndertakings') {
-            setViewsUndertakings(true);
-        }
-        else if (togref === 'eventsOfDefault') {
-            setEventOfDefault(true);
-        }
-    };
-
-    const RemoveContent = (propertyName, value, togref) => {
-        setFacility((prevFacility) => ({
-            ...prevFacility,
-            [propertyName]: prevFacility[propertyName].filter((ele) => ele !== value),
-        }));
-
-        if (togref === 'conditionsPrecedent') {
-            setViewsPrecedent(false);
-        } else if (togref === 'representations') {
-            setViewsReps(false);
-        } else if (togref === 'conditionsSubsequent') {
-            setViewsSubsequent(false);
-        } else if (togref === 'borrowerAffirmativeCovenants') {
-            setViewsBac(false);
-        } else if (togref === 'financialCovenants') {
-            setViewsFincov(false);
-        } else if (togref === 'informationCovenants') {
-            setViewsInfo(false);
-        } else if (togref === 'generalUndertakings') {
-            setViewsUndertakings(false);
-        } else if (togref === 'eventsOfDefault') {
-            setEventOfDefault(false)
-        }
-    };
-
     return (
         <>
 
-            <div className='add-edit-product p-0 mb-5'>
+            <div className="add-edit-product p-0 mb-5">
 
-                <div className='form'>
-                    <h4 className='fs-5 fw-bold mb-4 title-admin'>INTEREST</h4>
+                <div className="form">
+                    <h4 className="fs-5 fw-bold mb-4 title-admin">INTEREST</h4>
                     <Row>
                         <Form.Group as={Col} lg={3} controlId="formGridZip">
                             <Form.Label>Interest Rate Type</Form.Label>
-                            <Form.Select
-                                onChange={(event, newValue) => {
-                                    setFacility({ ...facility, interestRateType: event.target.value });
+                            <Select
+                                options={interestRateTypeOptions}
+                                onChange={(selectedOption) => {
+                                    setFacility({ ...facility, interestRateType: selectedOption ? selectedOption.value : "" });
                                 }}
-                                disabled={isView}
-                                value={facility.interestRateType}
-                                defaultValue="Choose...">
-                                <option>Choose...</option>
-                                {interestRateTypeOptions.map((item) => (
-                                    <option value={item}>{item}</option>
-                                ))}
-
-                            </Form.Select>
-                            {error && error?.interestRateType && <span style={{ color: 'red' }}>{error.interestRateType}</span>}
+                                isDisabled={isView}
+                                value={interestRateTypeOptions.find(option => option.value === facility.interestRateType)}
+                                placeholder="Choose..."
+                            />
+                            {error && error?.interestRateType && <span style={{ color: "red" }}>{error.interestRateType}</span>}
                         </Form.Group>
 
-                        {facility.interestRateType === 'Fixed Rate' && (
+                        {facility.interestRateType === "Fixed Rate" && (
                             <>
                                 <Form.Group as={Col} lg={3} controlId="formGridZip">
                                     <Form.Label>Interest Rate</Form.Label>
                                     <InputGroup>
                                         <Form.Control
-                                            name='interestRate'
+                                            name="interestRate"
                                             value={facility.interestRate}
-                                            onChange={(e) => handleChangeNumber(e, 'interestRate')} />
+                                            onChange={(e) => handleChangeNumber(e, "interestRate")} />
                                         <InputGroup.Text>%</InputGroup.Text>
                                     </InputGroup>
 
-                                    {error?.interestRate && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.interestRate}</span>)}
+                                    {/* {error?.interestRate && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.interestRate}</span>)} */}
                                 </Form.Group>
 
                             </>
                         )}
-                        {facility.interestRateType === 'Variable Rate' && (
+                        {facility.interestRateType === "Variable Rate" && (
                             <>
                                 <Form.Group as={Col} lg={3} controlId="formGridZip">
                                     <Form.Label>Base Rate</Form.Label>
-                                    <Form.Select
-                                        onChange={(event, newValue) => {
-                                            setFacility({ ...facility, baseRate: event.target.value });
+                                    <Select
+                                        options={baseRateOptions}
+                                        onChange={(selectedOption) => {
+                                            setFacility({ ...facility, baseRate: selectedOption ? selectedOption.value : "" });
                                         }}
-                                        value={facility.baseRate}
-                                        defaultValue="Choose...">
-                                        <option>Choose...</option>
-                                        {baseRateOptions.map((item) => (
-                                            <option value={item}>{item}</option>
-                                        ))}
+                                        isDisabled={isView}
+                                        value={baseRateOptions.find(option => option.value === facility.baseRate)}
+                                        placeholder="Choose..."
 
-                                    </Form.Select>
-                                    {error && error?.baseRate && <span style={{ color: 'red' }}>{error.baseRate}</span>}
+                                    />
+                                    {error && error?.baseRate && <span style={{ color: "red" }}>{error.baseRate}</span>}
                                 </Form.Group>
                                 {facility.baseRate === "LIBOR" && (
                                     <Form.Group as={Col} lg={3} controlId="formGridZip">
                                         <Form.Label>LIBOR Rate</Form.Label>
                                         <InputGroup>
                                             <Form.Control
-                                                name='liborRate'
+                                                name="liborRate"
                                                 value={facility.liborRate}
-                                                onChange={(e) => handleChangeNumber(e, 'liborRate')} />
+                                                onChange={(e) => handleChangeNumber(e, "liborRate")} />
                                             <InputGroup.Text>%</InputGroup.Text>
                                         </InputGroup>
 
@@ -1241,9 +1050,9 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                         <Form.Label>SOFR Rate</Form.Label>
                                         <InputGroup>
                                             <Form.Control
-                                                name='sofrRate'
+                                                name="sofrRate"
                                                 value={facility.sofrRate}
-                                                onChange={(e) => handleChangeNumber(e, 'sofrRate')} />
+                                                onChange={(e) => handleChangeNumber(e, "sofrRate")} />
                                             <InputGroup.Text>%</InputGroup.Text>
                                         </InputGroup>
 
@@ -1255,9 +1064,9 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                         <Form.Label>Specify Rate</Form.Label>
                                         <InputGroup>
                                             <Form.Control
-                                                name='otherRate'
+                                                name="otherRate"
                                                 value={facility.otherRate}
-                                                onChange={(e) => handleChangeNumber(e, 'otherRate')} />
+                                                onChange={(e) => handleChangeNumber(e, "otherRate")} />
                                             <InputGroup.Text>%</InputGroup.Text>
                                         </InputGroup>
 
@@ -1269,9 +1078,9 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                     <Form.Label>Margin</Form.Label>
                                     <InputGroup>
                                         <Form.Control
-                                            name='margin'
+                                            name="margin"
                                             value={facility.margin}
-                                            onChange={(e) => handleChangeNumber(e, 'margin')} />
+                                            onChange={(e) => handleChangeNumber(e, "margin")} />
                                         <InputGroup.Text>%</InputGroup.Text>
                                     </InputGroup>
 
@@ -1283,27 +1092,23 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                     </Row>
                 </div>
 
-                <div className='form'>
-                    <h4 className='fs-5 fw-bold mb-4 title-admin'>PRICING</h4>
+                <div className="form">
+                    <h4 className="fs-5 fw-bold mb-4 title-admin">PRICING</h4>
                     <div>
                         <Row>
 
                             <Form.Group as={Col} controlId="formGridZip">
                                 <Form.Label>Interest Period</Form.Label>
-                                <Form.Select
-                                    onChange={(e) => {
-                                        setFacility({ ...facility, interestPeriod: e.target.value });
+                                <Select
+                                    options={interestPeriodOptions}
+                                    onChange={(selectedOption) => {
+                                        setFacility({ ...facility, interestPeriod: selectedOption ? selectedOption.value : "" });
                                     }}
-                                    disabled={isView}
-                                    value={facility.interestPeriod}
-                                    defaultValue="Choose...">
-                                    <option>Choose...</option>
-                                    {interestPeriodOptions.map((item) => (
-                                        <option value={item}>{item}</option>
-                                    ))}
-
-                                </Form.Select>
-                                {error && error?.interestPeriod && <span style={{ color: 'red' }}>{error.interestPeriod}</span>}
+                                    isDisabled={isView}
+                                    value={interestPeriodOptions.find(option => option.value === facility.interestPeriod)}
+                                    placeholder="Choose..."
+                                />
+                                {error && error?.interestPeriod && <span style={{ color: "red" }}>{error.interestPeriod}</span>}
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridZip">
@@ -1317,17 +1122,19 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                     onChange={handleChange}
                                     required
                                 />
-                                {error && error?.contractDate && <span style={{ color: 'red' }}>{error.contractDate}</span>}
+                                {error && error?.contractDate && <span style={{ color: "red" }}>{error.contractDate}</span>}
                             </Form.Group>
+
+
 
 
                             <Form.Group as={Col} lg={3} controlId="formGridZip">
                                 <Form.Label>Tenor of Each Drawdown</Form.Label>
                                 <InputGroup>
                                     <Form.Control
-                                        name=' tenor'
+                                        name=" tenor"
                                         value={facility.tenor}
-                                        onChange={(e) => handleChangeNumber(e, 'tenor')} />
+                                        onChange={(e) => handleChangeNumber(e, "tenor")} />
                                     <InputGroup.Text>months</InputGroup.Text>
                                 </InputGroup>
 
@@ -1338,126 +1145,126 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                 <Form.Label>Annual Management Fee</Form.Label>
                                 <InputGroup>
                                     <Form.Control
-                                        name='managementFee'
+                                        name="managementFee"
                                         value={facility.managementFee}
-                                        onChange={(e) => handleChangeNumber(e, 'managementFee')}
+                                        onChange={(e) => handleChangeNumber(e, "managementFee")}
                                         disabled={isView} />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
 
-                                {error?.managementFee && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.managementFee}</span>)}
+                                {/* {error?.managementFee && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.managementFee}</span>)} */}
                             </Form.Group>
 
                         </Row>
-                        <Row className='mt-3'>
+                        <Row className="mt-3">
 
                             <Form.Group as={Col} lg={3} controlId="formGridZip">
                                 <Form.Label>Drawdown Fee</Form.Label>
                                 <InputGroup>
                                     <Form.Control
-                                        name='drawdownFee'
+                                        name="drawdownFee"
                                         value={facility.drawdownFee}
-                                        onChange={(e) => handleChangeNumber(e, 'drawdownFee')} />
+                                        onChange={(e) => handleChangeNumber(e, "drawdownFee")} />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
 
-                                {error?.drawdownFee && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.drawdownFee}</span>)}
+                                {/* {error?.drawdownFee && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.drawdownFee}</span>)} */}
                             </Form.Group>
 
                             <Form.Group as={Col} lg={3} controlId="formGridZip">
                                 <Form.Label>Commitment Fee</Form.Label>
                                 <InputGroup>
                                     <Form.Control
-                                        name='commitmentFee'
+                                        name="commitmentFee"
                                         value={facility.commitmentFee}
-                                        onChange={(e) => handleChangeNumber(e, 'commitmentFee')} />
+                                        onChange={(e) => handleChangeNumber(e, "commitmentFee")} />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
 
-                                {error?.commitmentFee && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.commitmentFee}</span>)}
+                                {/* {error?.commitmentFee && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.commitmentFee}</span>)} */}
                             </Form.Group>
 
                             <Form.Group as={Col} lg={3} controlId="formGridZip">
                                 <Form.Label>Late Interest Charges</Form.Label>
                                 <InputGroup>
                                     <Form.Control
-                                        name='lateInterestCharges'
+                                        name="lateInterestCharges"
                                         value={facility.lateInterestCharges}
-                                        onChange={(e) => handleChangeNumber(e, 'lateInterestCharges')} />
+                                        onChange={(e) => handleChangeNumber(e, "lateInterestCharges")} />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
 
-                                {error?.lateInterestCharges && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.lateInterestCharges}</span>)}
+                                {/* {error?.lateInterestCharges && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.lateInterestCharges}</span>)} */}
                             </Form.Group>
 
                             <Form.Group as={Col} lg={3} controlId="formGridZip">
                                 <Form.Label>Pre-Payment</Form.Label>
                                 <InputGroup>
                                     <Form.Control
-                                        name='prePayment'
+                                        name="prePayment"
                                         value={facility.prePayment}
-                                        onChange={(e) => handleChangeNumber(e, 'prePayment')} />
+                                        onChange={(e) => handleChangeNumber(e, "prePayment")} />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
 
-                                {error?.prePayment && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.prePayment}</span>)}
+                                {/* {error?.prePayment && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.prePayment}</span>)} */}
                             </Form.Group>
 
 
                         </Row>
 
-                        <Row className='mt-3'>
+                        <Row className="mt-3">
 
                             <Form.Group as={Col} lg={3} controlId="formGridZip">
                                 <Form.Label>Cancellation Fee</Form.Label>
                                 <InputGroup>
                                     <Form.Control
-                                        name='cancellationFee'
+                                        name="cancellationFee"
                                         value={facility.cancellationFee}
-                                        onChange={(e) => handleChangeNumber(e, 'cancellationFee')} />
+                                        onChange={(e) => handleChangeNumber(e, "cancellationFee")} />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
 
-                                {error?.cancellationFee && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.cancellationFee}</span>)}
+                                {/* {error?.cancellationFee && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.cancellationFee}</span>)} */}
                             </Form.Group>
 
                             <Form.Group as={Col} lg={3} controlId="formGridZip">
                                 <Form.Label>Agency Fee</Form.Label>
                                 <InputGroup>
                                     <Form.Control
-                                        name='agencyFee'
+                                        name="agencyFee"
                                         value={facility.agencyFee}
-                                        onChange={(e) => handleChangeNumber(e, 'agencyFee')} />
+                                        onChange={(e) => handleChangeNumber(e, "agencyFee")} />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
 
-                                {error?.agencyFee && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.agencyFee}</span>)}
+                                {/* {error?.agencyFee && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.agencyFee}</span>)} */}
                             </Form.Group>
 
                             <Form.Group as={Col} lg={3} controlId="formGridZip">
                                 <Form.Label>Advisory Fee</Form.Label>
                                 <InputGroup>
                                     <Form.Control
-                                        name='advisoryFee'
+                                        name="advisoryFee"
                                         value={facility.advisoryFee}
-                                        onChange={(e) => handleChangeNumber(e, 'advisoryFee')} />
+                                        onChange={(e) => handleChangeNumber(e, "advisoryFee")} />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
 
-                                {error?.advisoryFee && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.advisoryFee}</span>)}
+                                {/* {error?.advisoryFee && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.advisoryFee}</span>)} */}
                             </Form.Group>
 
                             <Form.Group as={Col} lg={3} controlId="formGridZip">
                                 <Form.Label>Default Interest</Form.Label>
                                 <InputGroup>
                                     <Form.Control
-                                        name='defaultInterest'
+                                        name="defaultInterest"
                                         value={facility.defaultInterest}
-                                        onChange={(e) => handleChangeNumber(e, 'defaultInterest')} />
+                                        onChange={(e) => handleChangeNumber(e, "defaultInterest")} />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
 
-                                {error?.defaultInterest && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.defaultInterest}</span>)}
+                                {/* {error?.defaultInterest && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.defaultInterest}</span>)} */}
                             </Form.Group>
 
 
@@ -1468,15 +1275,15 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                 </div>
 
                 <div>
-                    <div className='form' >
-                        <h4 className='fs-5 fw-bold mb-4'>Loan to Collateral Value</h4>
+                    <div className="form" >
+                        <h4 className="fs-5 fw-bold mb-4">Loan to Collateral Value</h4>
                         <Row>
                             <Form.Group as={Col} lg={3} controlId="formGridZip">
-                                <Form.Label>Default Interest</Form.Label>
+                                <Form.Label></Form.Label>
                                 <InputGroup>
                                     <Form.Control
-                                        name=''
-                                        value={((parseInt(facility.amount) / parseInt(transactionData?.details?.contractDetails?.value?.replace(/,/g, '')) || 0) * 100).toFixed(2)}
+                                        name=""
+                                        value={((parseInt(facility.amount) / parseInt(transactionData?.details?.contractDetails?.value?.replace(/,/g, "")) || 0) * 100).toFixed(2)}
                                         disabled={isView} />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
@@ -1485,38 +1292,31 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                     </div>
 
 
-                    <div className='form' >
-                        <h6 className='fs-5 fw-bold mb-4'>FACILITY DETAILS</h6>
-
-                        {/* <h2 className='mb-0' style={{ color: "#b95f89", fontSize: "22px" }}>Loan to collateral value is currently: {((parseInt(facility.amount) / parseInt(transactionData?.details?.contractDetails?.value?.replace(/,/g, ''))) * 100).toFixed(2)} %</h2>
-                    <div className='form' style={{ backgroundColor: "rgb(243, 243, 243)", border: "none" }}>
-                        <h2 className='mb-3'>Detail</h2> */}
+                    <div className="form" >
+                        <h6 className="fs-5 fw-bold mb-4">FACILITY DETAILS</h6>
                         <div>
                             <Row>
 
                                 <Form.Group as={Col} controlId="formGridZip">
                                     <Form.Label>Facility Type</Form.Label>
-                                    <Form.Select
-                                        onChange={(e) => {
-                                            setFacility({ ...facility, type: e.target.value });
+                                    <Select
+                                        options={facilityTypeOptions}
+                                        onChange={(selectedOption) => {
+                                            setFacility({ ...facility, type: selectedOption ? selectedOption.value : "" });
                                         }}
-                                        disabled={isView}
-                                        value={facility.type}
-                                        defaultValue="Choose...">
-                                        <option>Choose...</option>
-                                        {facilityTypeOptions.map((item) => (
-                                            <option value={item}>{item}</option>
-                                        ))}
+                                        isDisabled={isView}
+                                        value={facilityTypeOptions.find(option => option.value === facility.type)}
+                                        placeholder="Choose..."
 
-                                    </Form.Select>
-                                    {error && error?.type && <span style={{ color: 'red' }}>{error.type}</span>}
+                                    />
+                                    {error && error?.type && <span style={{ color: "red" }}>{error.type}</span>}
                                 </Form.Group>
 
                                 {facility.type === "Others(please specify)" && (
                                     <Form.Group as={Col} lg={3} controlId="formGridZip">
                                         <Form.Label>Specify Facility Type</Form.Label>
                                         <Form.Control
-                                            name='specifyFacilityType'
+                                            name="specifyFacilityType"
                                             value={facility.specifyFacilityType}
                                             onChange={handleChange} />
                                         {error?.specifyFacilityType && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.specifyFacilityType}</span>)}
@@ -1539,6 +1339,19 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                     </Form.Select>
                                     {error && error?.currency && <span style={{ color: 'red' }}>{error.currency}</span>}
                                 </Form.Group>
+                                {/* <Form.Group as={Col} controlId="formGridZip">
+                                    <Form.Label>Facility Currency</Form.Label>
+                                    <Select
+                                        options={CurrencyOptions}
+                                        onChange={(selectedOption) => {
+                                            setFacility({ ...facility, currency: selectedOption ? selectedOption.value : "" });
+                                        }}
+                                        isDisabled={isView}
+                                        value={CurrencyOptions.find(option => option.value === facility.currency)}
+                                        placeholder="Choose..."
+                                    />
+                                    {error && error?.currency && <span style={{ color: "red" }}>{error.currency}</span>}
+                                </Form.Group> */}
 
 
                                 <Form.Group as={Col} controlId="formGridZip">
@@ -1546,11 +1359,10 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                     <Form.Control
                                         name="amount"
                                         value={formateCurrencyValue(facility.amount)}
-                                        onChange={(e) => handleChangeNumber(e, 'amount')}
+                                        onChange={(e) => handleChangeNumber(e, "amount")}
                                         disabled={isView} />
                                     {error?.amount && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.amount}</span>)}
                                 </Form.Group>
-
                                 <Form.Group as={Col} controlId="formGridZip">
                                     <Form.Label>Repayment Currency</Form.Label>
                                     <Form.Select
@@ -1569,28 +1381,44 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                     {error && error?.rePaymentCurrency && <span style={{ color: 'red' }}>{error.rePaymentCurrency}</span>}
                                 </Form.Group>
 
+                                {/* <Form.Group as={Col} controlId="formGridZip">
+                                    <Form.Label>Repayment Currency</Form.Label>
+
+                                    <Select
+                                        options={CurrencyOptions}
+                                        onChange={(selectedOption) => {
+                                            setFacility({ ...facility, rePaymentCurrency: selectedOption ? selectedOption.value : "" });
+                                        }}
+                                        isDisabled={isView}
+                                        value={CurrencyOptions.find(option => option.value === facility.rePaymentCurrency)}
+                                        placeholder="Choose..."
+                                    />
+
+                                    {error && error?.rePaymentCurrency && <span style={{ color: "red" }}>{error.rePaymentCurrency}</span>}
+                                </Form.Group> */}
+
 
                             </Row>
 
                             {(facility.currency !== facility.rePaymentCurrency && facility.rePaymentCurrency) &&
-                                <Row className='mt-4'>
+                                <Row className="mt-4">
 
                                     <Form.Group as={Col} controlId="formGridZip">
                                         <Form.Label>Did you contract a currency Hedge?</Form.Label>
                                         <Form.Select
                                             onChange={(e) => {
-                                                const newValue = e.target.value === 'true'; // Convert to boolean
+                                                const newValue = e.target.value === "true"; // Convert to boolean
                                                 setFacility({ ...facility, currencyHedge: newValue });
                                             }}
                                             disabled={isView}
                                             value={facility.currencyHedge.toString()} // Convert to string
-                                            defaultValue={'Choose...'}>
+                                            defaultValue={"Choose..."}>
                                             <option>Choose...</option>
                                             {currencyHedgeOptions.map((item, i) => (
                                                 <option key={i} value={item.value}>{item.label}</option>
                                             ))}
                                         </Form.Select>
-                                        {error && error?.currencyHedge && <span style={{ color: 'red' }}>{error.currencyHedge}</span>}
+                                        {error && error?.currencyHedge && <span style={{ color: "red" }}>{error.currencyHedge}</span>}
                                     </Form.Group>
 
                                     {/* <Col>
@@ -1609,7 +1437,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                             value={facility.currencyHedge}
                                             disabled={isView}
                                         />
-                                         {error && error?.currencyHedge && <span style={{ color: 'red' }}>{error.currencyHedge}</span>}
+                                         {error && error?.currencyHedge && <span style={{ color: "red" }}>{error.currencyHedge}</span>}
                                     </Col> */}
 
                                 </Row>
@@ -1618,41 +1446,41 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                             {
                                 facility.currencyHedge && (facility.currency !== facility.rePaymentCurrency && facility.rePaymentCurrency) && (
                                     <>
-                                        <div className='product'>
-                                            <div className='mb-3 d-flex justify-content-between align-items-center'>
+                                        <div className="product">
+                                            <div className="mb-3 d-flex justify-content-between align-items-center">
                                                 <h6 className="fs-5 fw-bold title-admin">Currency Hedge Details</h6>
-                                                <Button onClick={() => { setCurrencyHedgeDetailsModal(true) }} class='btn d-inline-flex btn-md btn-light border-base mx-1 me-1'>
-                                                    <span class=' pe-2'><i class="bi bi-plus pe-1 "></i></span>
-                                                    <span className='fw-bold'>Add</span>
+                                                <Button onClick={() => { setCurrencyHedgeDetailsModal(true) }} class="btn d-inline-flex btn-md btn-light border-base mx-1 me-1">
+                                                    <span class=" pe-2"><i class="bi bi-plus pe-1 "></i></span>
+                                                    <span className="fw-bold">Add</span>
                                                 </Button>
                                             </div>
                                             <MaterialTable
                                                 title=""
                                                 columns={[
-                                                    { title: 'Name', field: 'hedgingMethod' },
-                                                    { title: 'Label', field: 'counterParty.label' },
+                                                    { title: "Name", field: "hedgingMethod" },
+                                                    { title: "Label", field: "counterParty.label" },
                                                 ]}
                                                 data={addCurrencyHedge.length ? addCurrencyHedge : []}
                                                 actions={isView ? [
                                                     {
-                                                        icon: 'preview',
-                                                        tooltip: 'View Currency hedge details',
+                                                        icon: "preview",
+                                                        tooltip: "View Currency hedge details",
                                                         onClick: (event, rowData) => { setCurrencyHedgeDetailsModal(true); setEditRowData(rowData) }
                                                     }
                                                 ] : [
                                                     {
-                                                        icon: 'edit',
-                                                        tooltip: 'Edit Currency hedge details',
+                                                        icon: "edit",
+                                                        tooltip: "Edit Currency hedge details",
                                                         onClick: (event, rowData) => { setCurrencyHedgeDetailsModal(true); setEditRowData(rowData) }
                                                     },
                                                     {
-                                                        icon: 'preview',
-                                                        tooltip: 'View Currency hedge details',
+                                                        icon: "preview",
+                                                        tooltip: "View Currency hedge details",
                                                         onClick: (event, rowData) => { setCurrencyHedgeDetailsModal(true); setEditRowData(rowData) }
                                                     },
                                                     {
-                                                        icon: 'delete',
-                                                        tooltip: 'Delete hedge details',
+                                                        icon: "delete",
+                                                        tooltip: "Delete hedge details",
                                                         onClick: (event, rowData) => { DeleteCurrencyhedgedetails(rowData) }
                                                     }
                                                 ]}
@@ -1671,42 +1499,46 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                     </div>
                 </div>
 
-                <div className='add-edit-product p-0'>
-                    <div className='form'>
-                        <h6 className='fs-5 fw-bold mb-4'>LOAN PURPOSE JUSTIFICATION</h6>
+                <div className="add-edit-product p-0">
+                    <div className="form">
+                        <h6 className="fs-5 fw-bold mb-4">LOAN PURPOSE JUSTIFICATION</h6>
                         <div>
                             <Row>
 
                                 <Form.Group as={Col} lg={facility.loanPurposeValidity ? 4 : 6} controlId="formGridZip">
                                     <Form.Label>Loan Purpose</Form.Label>
                                     <Form.Control
-                                        name='loanPurposJustification'
+                                        name="loanPurposJustification"
                                         value={facility.loanPurposJustification}
                                         onChange={handleChange}
                                         disabled={isView}
                                     />
-                                    {error && error?.loanPurposJustification && <span style={{ color: 'red' }}>{error.loanPurposJustification}</span>}
+                                    {error && error?.loanPurposJustification && <span style={{ color: "red" }}>{error.loanPurposJustification}</span>}
                                 </Form.Group>
 
 
 
-                                <Form.Group as={Col} lg={facility.loanPurposeValidity ? 4 : 6} controlId="formGridZip">
+                                <Form.Group as={Col} lg={facility?.loanPurposeValidity ? 4 : 6} controlId="formGridZip">
                                     <Form.Label>Loan Purpose Validity</Form.Label>
-                                    <Form.Select className='no-border'
+                                    <Form.Select
+                                        className="no-border"
                                         onChange={(e) => {
-                                            const newValue = e.target.value === 'true'; // Convert to boolean
+                                            const newValue = e.target.value === "true"; // Convert to boolean
                                             setFacility({ ...facility, loanPurposeValidity: newValue });
                                         }}
                                         disabled={isView}
-                                        value={facility.loanPurposeValidity.toString()} // Convert to string
-                                        defaultValue={'Choose...'}>
+                                        value={facility?.loanPurposeValidity === null ? "" : facility?.loanPurposeValidity?.toString()} // Ensure null is handled properly
+                                    >
+                                        <option value="" disabled>is the loan purpose valid?...</option>
                                         {loanPurposeValidityOptions.map((item, i) => (
-                                            <option key={i} value={item.value}>{item.label}</option>
+                                            <option key={i} value={item.value.toString()}>{item.label}</option> // Ensure value is converted to string
                                         ))}
                                     </Form.Select>
-                                    {error && error?.loanPurposeValidity && <span style={{ color: 'red' }}>{error.loanPurposeValidity}</span>}
+                                    {error?.loanPurposeValidity && <span style={{ color: "red" }}>{error.loanPurposeValidity}</span>}
                                 </Form.Group>
-                                {/* <Col lg={facility.loanPurposeValidity === 'Yes' ? 4 : 6}>
+
+
+                                {/* <Col lg={facility.loanPurposeValidity === "Yes" ? 4 : 6}>
                                 <Autocomplete
                                     options={loanPurposeValidityOptions}
                                     getOptionLabel={(option) => option}
@@ -1717,23 +1549,23 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                     )}
                                     onChange={(event, newValue) => {
                                         setFacility({ ...facility, loanPurposeValidity: newValue });
-                                        // setFacility({ ...facility, loanPurposeValidity: newValue === "No" ? navigate('/final-page') : "" });
+                                        // setFacility({ ...facility, loanPurposeValidity: newValue === "No" ? navigate("/final-page") : "" });
                                     }}
                                     disableClearable
                                     value={facility.loanPurposeValidity}
                                     disabled={isView}
                                 />
-                                {error && error?.loanPurposeValidity && <span style={{ color: 'red' }}>{error.loanPurposeValidity}</span>}
+                                {error && error?.loanPurposeValidity && <span style={{ color: "red" }}>{error.loanPurposeValidity}</span>}
                             </Col> */}
                                 {facility.loanPurposeValidity && (
                                     <Form.Group as={Col} lg={4} controlId="formGridZip">
                                         <Form.Label>Loan Purpose Reason</Form.Label>
                                         <Form.Control
                                             value={facility.loanPurposeReason}
-                                            name='loanPurposeReason'
+                                            name="loanPurposeReason"
                                             onChange={handleChange}
                                         />
-                                        {error && error?.loanPurposeReason && <span style={{ color: 'red' }}>{error.loanPurposeReason}</span>}
+                                        {error && error?.loanPurposeReason && <span style={{ color: "red" }}>{error.loanPurposeReason}</span>}
                                     </Form.Group>)}
 
                             </Row>
@@ -1741,54 +1573,54 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                     </div>
                 </div>
 
-                <div className='add-edit-product p-0'>
-                    <div className='form' style={{ backgroundColor: "rgb(243, 243, 243)", border: "none" }}>
+                <div className="add-edit-product p-0">
+                    <div className="form" style={{ backgroundColor: "rgb(243, 243, 243)", border: "none" }}>
 
 
 
-                        <div className='product p-0'>
-                            <div className='mb-5'>
-                                <div className='mb-3 d-flex justify-content-between align-items-center'>
+                        <div className="product p-0">
+                            <div className="mb-5">
+                                <div className="mb-3 d-flex justify-content-between align-items-center">
                                     <h6 className="fs-5 fw-bold">Source of Repayment</h6>
 
-                                    <Button onClick={() => { setAddSourceOfRepayment(true) }} class='btn d-inline-flex btn-md btn-light border-base mx-1 me-1'>
-                                        <span class=' pe-2'><i class="bi bi-plus pe-1 "></i></span>
-                                        <span className='fw-bold'>Add</span>
+                                    <Button onClick={() => { setAddSourceOfRepayment(true) }} class="btn d-inline-flex btn-md btn-light border-base mx-1 me-1">
+                                        <span class=" pe-2"><i class="bi bi-plus pe-1 "></i></span>
+                                        <span className="fw-bold">Add</span>
                                     </Button>
 
                                 </div>
                                 {sourceOfRepayment.length ? <MaterialTable
                                     title=""
                                     columns={[
-                                        { title: 'Name', field: 'type' },
-                                        // { title: 'Evidence', field: 'evidence' },
-                                        { title: 'Instrument', field: 'instrument' },
-                                        // { title: 'Type', field: 'type' },
+                                        { title: "Name", field: "type" },
+                                        // { title: "Evidence", field: "evidence" },
+                                        { title: "Instrument", field: "instrument" },
+                                        // { title: "Type", field: "type" },
                                     ]}
                                     // data={productGetData?.data}
                                     data={sourceOfRepayment.length ? sourceOfRepayment : []}
                                     actions={isView ? [
                                         {
-                                            icon: 'preview',
-                                            tooltip: 'View Source of Repayment',
+                                            icon: "preview",
+                                            tooltip: "View Source of Repayment",
                                             onClick: (event, rowData) => { setAddSourceOfRepayment(true); setRowEditData(rowData); setView(isView) }
                                             // onClick: (event, rowData) => navigate(`/edit-product?id=${rowData?._id}`, { state: { isView: true } })
                                         }
                                     ] : [
                                         {
-                                            icon: 'edit',
-                                            tooltip: 'Edit Source of Repayment',
+                                            icon: "edit",
+                                            tooltip: "Edit Source of Repayment",
                                             onClick: (event, rowData) => { setAddSourceOfRepayment(true); setRowEditData(rowData) }
                                         },
                                         {
-                                            icon: 'preview',
-                                            tooltip: 'View Source of Repayment',
+                                            icon: "preview",
+                                            tooltip: "View Source of Repayment",
                                             onClick: (event, rowData) => { setAddSourceOfRepayment(true); setRowEditData(rowData); setView(isView) }
                                             // onClick: (event, rowData) => navigate(`/edit-product?id=${rowData?._id}`, { state: { isView: true } })
                                         },
                                         {
-                                            icon: 'delete',
-                                            tooltip: 'Delete source of repayment',
+                                            icon: "delete",
+                                            tooltip: "Delete source of repayment",
                                             onClick: (event, rowData) => { DeleteSourceOfRepayment(rowData) }
                                         },
                                     ]}
@@ -1799,7 +1631,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                         pageSize: 10,
                                         search: false,
                                     }}
-                                /> : 'No data found'}
+                                /> : "No data found"}
                             </div>
                         </div>
                     </div>
@@ -1807,66 +1639,53 @@ const Facility = ({ hendelCancel, hendelNext }) => {
 
                 <hr />
 
-                <div className='form'>
-                    <div className=''>
-                        <h4 className='fw-bold mb-3'>Terms</h4>
+                <div className="form">
+                    <div className="">
+                        <h4 className="fw-bold mb-3">Terms</h4>
 
 
                         <div>
-                            {/* <div className='mb-3'> */}
-                            <Row className='mb-4'>
+                            {/* <div className="mb-3"> */}
+                            <Row className="mb-4">
                                 <Form.Group as={Col} controlId="formGridCity">
                                     <Form.Label>Disbursement Mechanism</Form.Label>
                                     <Form.Control
                                         value={facility.disbursementMechanism}
-                                        name='disbursementMechanism'
+                                        name="disbursementMechanism"
                                         onChange={handleChange}
                                         disabled={isView}
                                     />
-                                    {error && error?.disbursementMechanism && <span style={{ color: 'red' }}>{error.disbursementMechanism}</span>}
+                                    {error && error?.disbursementMechanism && <span style={{ color: "red" }}>{error.disbursementMechanism}</span>}
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridZip">
                                     <Form.Label>Security Undertaking</Form.Label>
                                     <Form.Control
                                         value={facility.securityUndertaking}
-                                        name='securityUndertaking'
+                                        name="securityUndertaking"
                                         onChange={handleChange}
                                     />
-                                    {error && error?.securityUndertaking && <span style={{ color: 'red' }}>{error.securityUndertaking}</span>}
+                                    {error && error?.securityUndertaking && <span style={{ color: "red" }}>{error.securityUndertaking}</span>}
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridZip">
                                     <Form.Label>Control Accounts</Form.Label>
                                     <Form.Control
                                         value={facility.controlAccounts}
-                                        name='controlAccounts'
+                                        name="controlAccounts"
                                         disabled={isView}
                                         onChange={handleChange}
                                     />
-                                    {error && error?.controlAccounts && <span style={{ color: 'red' }}>{error.controlAccounts}</span>}
+                                    {error && error?.controlAccounts && <span style={{ color: "red" }}>{error.controlAccounts}</span>}
                                 </Form.Group>
-
-                                {/* <Form.Group as={Col} controlId="formGridZip">
-                                    <Form.Label>Final Maturity</Form.Label>
-                                    <Form.Control
-                                        type="date"
-                                        name="finalMaturity"
-                                        placeholder="dd-mm-yyyy"
-                                        min={transactionData.details.contractDetails.contractDate ? new Date(transactionData.details.contractDetails.contractDate).toISOString().split("T")[0] : ""}
-                                        value={facility.finalMaturity}
-                                        onChange={handleChange}
-                                    />
-                                    {error && error?.finalMaturity && <span style={{ color: 'red' }}>{error.finalMaturity}</span>}
-                                </Form.Group> */}
 
                                 <Form.Group as={Col} lg={3} controlId="formGridZip">
                                     <Form.Label>Final Maturity</Form.Label>
                                     <InputGroup>
                                         <Form.Control
-                                            name='finalMaturity'
+                                            name="finalMaturity"
                                             value={facility.finalMaturity}
-                                            onChange={(e) => handleChangeNumber(e, 'finalMaturity')} />
+                                            onChange={(e) => handleChangeNumber(e, "finalMaturity")} />
                                         <InputGroup.Text>Months</InputGroup.Text>
                                     </InputGroup>
 
@@ -1874,268 +1693,134 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                 </Form.Group>
                             </Row>
                             {/* </div> */}
-                            <Row className='mb-4'>
-                                <Form.Group as={Col} lg={facility.documentation === 'Others (Please specify)' ? 3 : 4} controlId="formGridZip">
+                            <Row className="mb-4">
+                                <Form.Group as={Col} lg={facility.documentation === "Others (Please specify)" ? 3 : 4} controlId="formGridZip">
                                     <Form.Label>Documentation</Form.Label>
-                                    <Form.Select
-                                        onChange={(e, newValue) => {
-                                            setFacility({ ...facility, documentation: e.target.value });
+                                    <Select
+                                        options={documentationOptions}
+                                        onChange={(selectedOption) => {
+                                            setFacility({ ...facility, documentation: selectedOption ? selectedOption.value : "" });
                                         }}
-                                        value={facility.documentation}>
-                                        <option>Choose...</option>
-                                        {documentationOptions.map((item) => (
-                                            <option value={item}>{item}</option>
-                                        ))}
-
-                                    </Form.Select>
-                                    {error && error?.documentation && <span style={{ color: 'red' }}>{error.documentation}</span>}
+                                        isDisabled={isView}
+                                        value={documentationOptions.find(option => option.value === facility.documentation)}
+                                        placeholder="Choose..."
+                                    />
+                                    {error && error?.documentation && <span style={{ color: "red" }}>{error.documentation}</span>}
                                 </Form.Group>
 
-                                {facility.documentation === 'Others (Please specify)' && (
+                                {facility.documentation === "Others (Please specify)" && (
                                     <Form.Group as={Col} lg={3} controlId="formGridZip">
                                         <Form.Label>Specify Documentation</Form.Label>
                                         <Form.Control
                                             value={facility.specifyDocumentation}
-                                            name='specifyDocumentation'
+                                            name="specifyDocumentation"
                                             onChange={(e) =>
                                                 setFacility({ ...facility, specifyDocumentation: e.target.value })
                                             } />
                                         {error?.specifyDocumentation && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.specifyDocumentation}</span>)}
                                     </Form.Group>
                                 )}
-                                <Form.Group as={Col} lg={facility.documentation === 'Others (Please specify)' ? 3 : 4} controlId="formGridZip">
+                                <Form.Group as={Col} lg={facility.documentation === "Others (Please specify)" ? 3 : 4} controlId="formGridZip">
                                     <Form.Label>Taxation Duties</Form.Label>
                                     <Form.Control
                                         value={facility.taxationDuties}
-                                        name='taxationDuties'
+                                        name="taxationDuties"
                                         onChange={handleChange}
                                         disabled={isView} />
-                                    {error && error?.taxationDuties && <span style={{ color: 'red' }}>{error.taxationDuties}</span>}
+                                    {error && error?.taxationDuties && <span style={{ color: "red" }}>{error.taxationDuties}</span>}
                                 </Form.Group>
-                                <Form.Group as={Col} lg={facility.documentation === 'Others (Please specify)' ? 3 : 4} controlId="formGridZip">
+                                <Form.Group as={Col} lg={facility.documentation === "Others (Please specify)" ? 3 : 4} controlId="formGridZip">
                                     <Form.Label>Enforcement Courts</Form.Label>
                                     <Form.Control
                                         value={facility.jurisdiction}
-                                        name='jurisdiction'
+                                        name="jurisdiction"
                                         onChange={handleChange}
                                         disabled={isView} />
-                                    {error && error?.jurisdiction && <span style={{ color: 'red' }}>{error.jurisdiction}</span>}
-                                </Form.Group>
-                            </Row>
-                            <Row className='mb-4'>
-                                <Form.Group as={Col} controlId="formGridZip">
-                                    <Form.Label>Conditions Precedent</Form.Label>
-                                    <div style={StyleSheet.container}>
-                                        {facility.conditionsPrecedent && (
-                                            <div ref={precedentTogref} style={viewsPrecedent ? StyleSheet.overall : StyleSheet.closeView}>
-                                                {precedentOptions.map((item, i) => (
-                                                    <div onClick={() => HandleSelection('conditionsPrecedent', item, precedentTogref)} style={facility.conditionsPrecedent.includes(item) ? StyleSheet.datashown : StyleSheet.data} key={i}>
-                                                        {item}
-                                                    </div>
-                                                ))}
-                                                {facility.conditionsPrecedent.length === precedentOptions.length && (
-                                                    <div>No more options to select</div>
-                                                )}
-                                            </div>
-                                        )}
-
-                                        <div onClick={() => setViewsPrecedent(true)} style={StyleSheet.fieldPadding} className="border rounded-2 border-1 h-fit-content">
-                                            {facility.conditionsPrecedent.length > 0 ? (
-                                                <div style={StyleSheet.showRoom}>
-                                                    {facility.conditionsPrecedent.map((item, i) => (
-                                                        <div style={StyleSheet.roomItem} key={i}>
-                                                            {item}
-                                                            <div onClick={() => RemoveContent('conditionsPrecedent', item)} style={StyleSheet.cancelButton}>
-                                                                <span style={{ color: "#6b7070" }} className='me-1'>|</span>  X
-                                                            </div>{' '}
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            ) : (
-                                                <span>--Select Multiple Options--</span>
-                                            )}
-                                        </div>
-                                    </div>
-                                    {error && error?.conditionsPrecedent && <span style={{ color: 'red' }}>{error.conditionsPrecedent}</span>}
-                                </Form.Group>
-
-                                <Form.Group as={Col} controlId="formGridZip">
-                                    <Form.Label>Conditions Subsequent</Form.Label>
-                                    <div style={StyleSheet.container}>
-                                        <div ref={subsequentTogref} style={viewsSubsequent ? StyleSheet.overall : StyleSheet.closeView}>
-                                            {subsequentOptions.map((item, i) => (
-                                                <div onClick={() => HandleSelection('conditionsSubsequent', item, subsequentTogref)} style={facility.conditionsSubsequent.includes(item) ? StyleSheet.datashown : StyleSheet.data} key={i}>
-                                                    {item}
-                                                </div>
-                                            ))}
-                                            {facility.conditionsSubsequent.length === subsequentOptions.length && (
-                                                <div>No more options to select</div>
-                                            )}
-                                        </div>
-                                        <div onClick={() => setViewsSubsequent(true)} style={StyleSheet.fieldPadding} className="border rounded-2 border-1 h-fit-content">
-                                            {facility.conditionsSubsequent.length > 0 ? (
-                                                <div style={StyleSheet.showRoom}>
-                                                    {facility.conditionsSubsequent.map((item, i) => (
-                                                        <div style={StyleSheet.roomItem} key={i}>
-                                                            {item}
-                                                            <div onClick={() => RemoveContent('conditionsSubsequent', item)} style={StyleSheet.cancelButton}>
-                                                                <span style={{ color: "#6b7070" }} className='me-1'>|</span>  X
-                                                            </div>{' '}
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            ) : (
-                                                <span>--Select Multiple Options--</span>
-                                            )}
-                                        </div>
-                                    </div>
-                                    {error && error?.conditionsSubsequent && <span style={{ color: 'red' }}>{error.conditionsSubsequent}</span>}
-                                </Form.Group>
-
-                                <Form.Group as={Col} controlId="formGridZip">
-                                    <Form.Label>Borrower Affirmative Covenants</Form.Label>
-                                    <div style={StyleSheet.container}>
-                                        <div ref={bacTogref} style={viewsBac ? StyleSheet.overall : StyleSheet.closeView}>
-                                            {bacovOptions.map((item, i) => (
-                                                <div onClick={() => HandleSelection('borrowerAffirmativeCovenants', item, bacTogref)} style={facility.borrowerAffirmativeCovenants.includes(item) ? StyleSheet.datashown : StyleSheet.data} key={i}>
-                                                    {item}
-                                                </div>
-                                            ))}
-                                            {facility.borrowerAffirmativeCovenants.length === bacovOptions.length && (
-                                                <div>No more options to select</div>
-                                            )}
-                                        </div>
-                                        <div onClick={() => setViewsBac(true)} style={StyleSheet.fieldPadding} className="border rounded-2 border-1 h-fit-content">
-                                            {facility.borrowerAffirmativeCovenants.length > 0 ? (
-                                                <div style={StyleSheet.showRoom}>
-                                                    {facility.borrowerAffirmativeCovenants.map((item, i) => (
-                                                        <div style={StyleSheet.roomItem} key={i}>
-                                                            {item}
-                                                            <div onClick={() => RemoveContent('borrowerAffirmativeCovenants', item)} style={StyleSheet.cancelButton}>
-                                                                <span style={{ color: "#6b7070" }} className='me-1'>|</span>  X
-                                                            </div>{' '}
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            ) : (
-                                                <span>--Select Multiple Options--</span>
-                                            )}
-                                        </div>
-                                    </div>
-                                    {error && error?.borrowerAffirmativeCovenants && <span style={{ color: 'red' }}>{error.borrowerAffirmativeCovenants}</span>}
+                                    {error && error?.jurisdiction && <span style={{ color: "red" }}>{error.jurisdiction}</span>}
                                 </Form.Group>
                             </Row>
 
-                            <Row className='mb-4'>
-                                <Form.Group as={Col} controlId="formGridZip">
-                                    <Form.Label>Financial Covenants</Form.Label>
-                                    <div style={StyleSheet.container}>
-                                        <div ref={fincovTogref} style={viewsFincov ? StyleSheet.overall : StyleSheet.closeView}>
-                                            {fincovOptions.map((item, i) => (
-                                                <div onClick={() => HandleSelection('financialCovenants', item, fincovTogref)} style={facility.financialCovenants.includes(item) ? StyleSheet.datashown : StyleSheet.data} key={i}>
-                                                    {item}
-                                                </div>
-                                            ))}
-                                            {facility.financialCovenants.length === fincovOptions.length && (
-                                                <div>No more options to select</div>
-                                            )}
-                                        </div>
-                                        <div onClick={() => setViewsFincov(true)} style={StyleSheet.fieldPadding} className="border rounded-2 border-1 h-fit-content">
-                                            {facility.financialCovenants.length > 0 ? (
-                                                <div style={StyleSheet.showRoom}>
-                                                    {facility.financialCovenants.map((item, i) => (
-                                                        <div style={StyleSheet.roomItem} key={i}>
-                                                            {item}
-                                                            <div onClick={() => RemoveContent('financialCovenants', item)} style={StyleSheet.cancelButton}>
-                                                                <span style={{ color: "#6b7070" }} className='me-1'>|</span>  X
-                                                            </div>{' '}
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            ) : (
-                                                <span>--Select Multiple Options--</span>
-                                            )}
-                                        </div>
-                                    </div>
-                                    {error && error?.financialCovenants && <span style={{ color: 'red' }}>{error.financialCovenants}</span>}
-                                </Form.Group>
-
-                                <Form.Group as={Col} controlId="formGridZip">
-                                    <Form.Label>Information Covenants</Form.Label><div style={StyleSheet.container}>
-                                        <div ref={infocovTogref} style={viewsInfo ? StyleSheet.overall : StyleSheet.closeView}>
-                                            {infcovOptions.map((item, i) => (
-                                                <div onClick={() => HandleSelection('informationCovenants', item, infocovTogref)} style={facility.informationCovenants.includes(item) ? StyleSheet.datashown : StyleSheet.data} key={i}>
-                                                    {item}
-                                                </div>
-                                            ))}
-                                            {facility.informationCovenants.length === infcovOptions.length && (
-                                                <div>No more options to select</div>
-                                            )}
-                                        </div>
-                                        <div onClick={() => setViewsInfo(true)} style={StyleSheet.fieldPadding} className="border rounded-2 border-1 h-fit-content">
-                                            {facility.informationCovenants.length > 0 ? (
-                                                <div style={StyleSheet.showRoom}>
-                                                    {facility.informationCovenants.map((item, i) => (
-                                                        <div style={StyleSheet.roomItem} key={i}>
-                                                            {item}
-                                                            <div onClick={() => RemoveContent('informationCovenants', item)} style={StyleSheet.cancelButton}>
-                                                                <span style={{ color: "#6b7070" }} className='me-1'>|</span>  X
-                                                            </div>{' '}
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            ) : (
-                                                <span>--Select Multiple Options--</span>
-                                            )}
-                                        </div>
-                                    </div>
-                                    {error && error?.informationCovenants && <span style={{ color: 'red' }}>{error.informationCovenants}</span>}
-                                </Form.Group>
-
-                                <Form.Group as={Col} controlId="formGridZip">
-                                    <Form.Label>General Undertakings</Form.Label>
-                                    <div style={StyleSheet.container}>
-                                        <div ref={undertakingsTogref} style={viewsUndertakings ? StyleSheet.overall : StyleSheet.closeView}>
-                                            {genovertakingOptions.map((item, i) => (
-                                                <div onClick={() => HandleSelection('generalUndertakings', item, undertakingsTogref)} style={facility.generalUndertakings.includes(item) ? StyleSheet.datashown : StyleSheet.data} key={i}>
-                                                    {item}
-                                                </div>
-                                            ))}
-                                            {facility.generalUndertakings.length === genovertakingOptions.length && (
-                                                <div>No more options to select</div>
-                                            )}
-                                        </div>
-                                        <div onClick={() => setViewsUndertakings(true)} style={StyleSheet.fieldPadding} className="border rounded-2 border-1 h-fit-content">
-                                            {facility.generalUndertakings.length > 0 ? (
-                                                <div style={StyleSheet.showRoom}>
-                                                    {facility.generalUndertakings.map((item, i) => (
-                                                        <div style={StyleSheet.roomItem} key={i}>
-                                                            {item}
-                                                            <div onClick={() => RemoveContent('generalUndertakings', item)} style={StyleSheet.cancelButton}>
-                                                                <span style={{ color: "#6b7070" }} className='me-1'>|</span>  X
-                                                            </div>{' '}
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            ) : (
-                                                <span>--Select Multiple Options--</span>
-                                            )}
-                                        </div>
-                                    </div>
-                                    {error && error?.generalUndertakings && <span style={{ color: 'red' }}>{error.generalUndertakings}</span>}
-                                </Form.Group>
-
+                            <Row className="mb-4">
+                                <MultiSelectForm
+                                    facility={facility}
+                                    setFacility={setFacility}
+                                    error={error}
+                                    options={precedentOptions}
+                                    propertyName="conditionsPrecedent"
+                                    label="Conditions Precedent"
+                                />
+                                <MultiSelectForm
+                                    facility={facility}
+                                    setFacility={setFacility}
+                                    error={error}
+                                    options={subsequentOptions}
+                                    propertyName="conditionsSubsequent"
+                                    label="Conditions Subsequent"
+                                />
+                                <MultiSelectForm
+                                    facility={facility}
+                                    setFacility={setFacility}
+                                    error={error}
+                                    options={bacovOptions}
+                                    propertyName="borrowerAffirmativeCovenants"
+                                    label="Borrower Affirmative Covenants"
+                                />
 
                             </Row>
+                            <Row className="mb-4">
+                                <MultiSelectForm
+                                    facility={facility}
+                                    setFacility={setFacility}
+                                    error={error}
+                                    options={fincovOptions}
+                                    propertyName="financialCovenants"
+                                    label="Financial Covenants"
+                                />
+                                <MultiSelectForm
+                                    facility={facility}
+                                    setFacility={setFacility}
+                                    error={error}
+                                    options={infcovOptions}
+                                    propertyName="informationCovenants"
+                                    label="Information Covenants"
+                                />
+                                <MultiSelectForm
+                                    facility={facility}
+                                    setFacility={setFacility}
+                                    error={error}
+                                    options={genovertakingOptions}
+                                    propertyName="generalUndertakings"
+                                    label="General Undertakings"
+                                />
+                            </Row>
+                            <Row className="mb-4">
+                                <MultiSelectForm
+                                    facility={facility}
+                                    setFacility={setFacility}
+                                    error={error}
+                                    options={repsOptions}
+                                    propertyName="representations"
+                                    label="Representations"
+                                />
 
-                            <Row className='mb-4'>
+                                <MultiSelectForm
+                                    facility={facility}
+                                    setFacility={setFacility}
+                                    error={error}
+                                    options={repsOptions}
+                                    propertyName="eventsOfDefault"
+                                    label="Events of Default"
+                                />
+                            </Row>
+
+                            <Row className="mb-4">
                                 <Form.Group as={Col} lg={6} controlId="exampleForm.ControlTextarea1">
                                     <Form.Label>Cost and Expenses</Form.Label>
                                     <Form.Control as="textarea" rows={2}
                                         value={facility.expenses}
-                                        name='expenses'
+                                        name="expenses"
                                         onChange={handleChange} />
-                                    {error && error?.expenses && <span style={{ color: 'red' }}>{error.expenses}</span>}
+                                    {error && error?.expenses && <span style={{ color: "red" }}>{error.expenses}</span>}
                                 </Form.Group>
 
 
@@ -2144,63 +1829,63 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                     <Form.Label>Approvals</Form.Label>
                                     <Form.Control as="textarea" rows={2}
                                         value={facility.approvals}
-                                        name='approvals'
+                                        name="approvals"
                                         onChange={handleChange}
                                         disabled={isView} />
-                                    {error && error?.approvals && <span style={{ color: 'red' }}>{error.approvals}</span>}
+                                    {error && error?.approvals && <span style={{ color: "red" }}>{error.approvals}</span>}
                                 </Form.Group>
 
 
                             </Row>
-                            <Row className='mb-4'>
+                            <Row className="mb-4">
 
                                 <Form.Group as={Col} controlId="formGridZip">
                                     <Form.Label>Availability Period</Form.Label>
                                     <InputGroup>
                                         <Form.Control
-                                            name='availabilityPeriod'
+                                            name="availabilityPeriod"
                                             value={facility.availabilityPeriod}
-                                            onChange={(e) => handleChangeNumber(e, 'availabilityPeriod')} />
+                                            onChange={(e) => handleChangeNumber(e, "availabilityPeriod")} />
                                         <InputGroup.Text>Months</InputGroup.Text>
                                     </InputGroup>
 
-                                    {error && error?.availabilityPeriod && <span style={{ color: 'red' }}>{error.availabilityPeriod}</span>}
+                                    {error && error?.availabilityPeriod && <span style={{ color: "red" }}>{error.availabilityPeriod}</span>}
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridZip">
                                     <Form.Label>Repayment</Form.Label>
                                     <Form.Control
                                         value={facility.repayment}
-                                        name='repayment'
+                                        name="repayment"
                                         onChange={handleChange}
                                         disabled={isView} />
-                                    {error && error?.repayment && <span style={{ color: 'red' }}>{error.repayment}</span>}
+                                    {error && error?.repayment && <span style={{ color: "red" }}>{error.repayment}</span>}
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridZip">
                                     <Form.Label>Transaction Structure</Form.Label>
                                     <Form.Control
                                         value={facility.transactionStructure}
-                                        name='transactionStructure'
+                                        name="transactionStructure"
                                         onChange={handleChange}
                                         disabled={isView} />
-                                    {error && error?.transactionStructure && <span style={{ color: 'red' }}>{error.transactionStructure}</span>}
+                                    {error && error?.transactionStructure && <span style={{ color: "red" }}>{error.transactionStructure}</span>}
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridZip">
                                     <Form.Label>Permitted Accounts</Form.Label>
                                     <Form.Control
                                         value={facility.permittedAccounts}
-                                        name='permittedAccounts'
+                                        name="permittedAccounts"
                                         onChange={handleChange}
                                         disabled={isView} />
-                                    {error && error?.permittedAccounts && <span style={{ color: 'red' }}>{error.permittedAccounts}</span>}
+                                    {error && error?.permittedAccounts && <span style={{ color: "red" }}>{error.permittedAccounts}</span>}
                                 </Form.Group>
 
                             </Row>
 
 
-                            <Row className='mb-4'>
+                            <Row className="mb-4">
                                 <Form.Group as={Col} lg={3} controlId="formGridZip">
                                     <Form.Label>Governing Law</Form.Label>
                                     <Form.Select
@@ -2210,41 +1895,41 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                         disabled={isView}
                                         value={facility.governingLaw}>
                                         <option>Choose...</option>
-                                        {governLawOptions.map((item) => (
-                                            <option value={item}>{item}</option>
+                                        {governLawOptions.map((item, i) => (
+                                            <option key={i} value={item}>{item}</option>
                                         ))}
 
                                     </Form.Select>
-                                    {error && error?.governingLaw && <span style={{ color: 'red' }}>{error.governingLaw}</span>}
+                                    {error && error?.governingLaw && <span style={{ color: "red" }}>{error.governingLaw}</span>}
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="formGridZip">
                                     <Form.Label>Assignments</Form.Label>
                                     <Form.Control
                                         value={facility.assignments}
-                                        name='assignments'
+                                        name="assignments"
                                         onChange={handleChange}
                                         disabled={isView} />
-                                    {error && error?.assignments && <span style={{ color: 'red' }}>{error.assignments}</span>}
+                                    {error && error?.assignments && <span style={{ color: "red" }}>{error.assignments}</span>}
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridZip">
                                     <Form.Label>Miscellaneous Provisions</Form.Label>
                                     <Form.Control
                                         value={facility.miscellaneousProvisions}
-                                        name='miscellaneousProvisions'
+                                        name="miscellaneousProvisions"
                                         onChange={handleChange}
                                         disabled={isView} />
-                                    {error && error?.miscellaneousProvisions && <span style={{ color: 'red' }}>{error.miscellaneousProvisions}</span>}
+                                    {error && error?.miscellaneousProvisions && <span style={{ color: "red" }}>{error.miscellaneousProvisions}</span>}
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridZip">
                                     <Form.Label>Force Majeure</Form.Label>
                                     <Form.Control
                                         value={facility.forceMajeure}
-                                        name='forceMajeure'
+                                        name="forceMajeure"
                                         onChange={handleChange}
                                         disabled={isView} />
-                                    {error && error?.forceMajeure && <span style={{ color: 'red' }}>{error.forceMajeure}</span>}
+                                    {error && error?.forceMajeure && <span style={{ color: "red" }}>{error.forceMajeure}</span>}
                                 </Form.Group>
 
                                 {/* <Form.Group as={Col} controlId="formFileMultiple">
@@ -2266,83 +1951,24 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                         name="roleName"
                                         multiple
                                     />
-                                    {error?.securityDocuments && <span style={{ color: 'red' }}>{error?.securityDocuments}</span>}
+                                    {error?.securityDocuments && <span style={{ color: "red" }}>{error?.securityDocuments}</span>}
                                 </Form.Group> */}
 
                             </Row>
 
-                            <Row className='mb-5'>
-                                <Form.Group className="col-md-6">
-                                    <Form.Label>Representations</Form.Label>
-                                    <div style={StyleSheet.container}>
-                                        <div ref={repsTogref} style={viewsReps ? StyleSheet.overall : StyleSheet.closeView}>
-                                            {repsOptions.map((item, i) => (
-                                                <div onClick={() => HandleSelection('representations', item, repsTogref)} style={facility.representations.includes(item) ? StyleSheet.datashown : StyleSheet.data} key={i}>
-                                                    {item}
-                                                </div>
-                                            ))}
-                                            {facility.representations.length === repsOptions.length && <div>No more options to select</div>}
-                                        </div>
-                                        <div onClick={() => setViewsReps(true)} style={StyleSheet.fieldPadding} className="border rounded-2 border-1 h-fit-content">
-                                            {facility.representations.length > 0 ? (
-                                                <div style={StyleSheet.showRoom}>
-                                                    {facility.representations.map((item, i) => (
-                                                        <div style={StyleSheet.roomItem} key={i}>
-                                                            {item}
-                                                            <div onClick={() => RemoveContent('representations', item)} style={StyleSheet.cancelButton}>
-                                                                <span style={{ color: "#6b7070" }} className='me-1'>|</span>  X
-                                                            </div>{' '}
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            ) : (<span>--Select Multiple Options--</span>
-                                            )}
-                                        </div>
-                                    </div>
-                                    {error && error?.representations && <span style={{ color: 'red' }}>{error.representations}</span>}
-                                </Form.Group>
 
 
-                                <Form.Group className="col-md-6">
-                                    <Form.Label>Events Of Default</Form.Label>
-                                    <div style={StyleSheet.container}>
-                                        <div ref={eventsTogref} style={eventOfDefault ? StyleSheet.overall : StyleSheet.closeView}>
-                                            {repsOptions.map((item, i) => (
-                                                <div onClick={() => HandleSelection('eventsOfDefault', item, eventsTogref)} style={facility.eventsOfDefault.includes(item) ? StyleSheet.datashown : StyleSheet.data} key={i}>
-                                                    {item}
-                                                </div>
-                                            ))}
-                                            {facility.eventsOfDefault.length === repsOptions.length && <div>No more options to select</div>}
-                                        </div>
-                                        <div onClick={() => setEventOfDefault(true)} style={StyleSheet.fieldPadding} className="border rounded-2 border-1 h-fit-content">
-                                            {facility.eventsOfDefault.length > 0 ? (
-                                                <div style={StyleSheet.showRoom}>
-                                                    {facility.eventsOfDefault.map((item, i) => (
-                                                        <div style={StyleSheet.roomItem} key={i}>
-                                                            {item}
-                                                            <div onClick={() => RemoveContent('eventsOfDefault', item)} style={StyleSheet.cancelButton}>
-                                                                <span style={{ color: "#6b7070" }} className='me-1'>|</span>  X
-                                                            </div>{' '}
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            ) : (<span>--Select Multiple Options--</span>
-                                            )}
-                                        </div>
-                                    </div>
-                                    {error && error?.eventsOfDefault && <span style={{ color: 'red' }}>{error.eventsOfDefault}</span>}
-                                </Form.Group>
-                            </Row>
+
                         </div>
                     </div>
                 </div>
-                <div className='footer_'>
+                <div className="footer_">
                     <button onClick={() => { hendelCancel() }} className="footer_cancel_btn">cancel</button>
-                    <button onClick={() => { navigate('/final-page') }} className={`footer_next_btn ${isView ? 'd-block' : 'd-none'}`}>Exit</button>
-                    <button onClick={() => { id ? edit() : save() }} className={`footer_next_btn ${isView && 'd-none'}`}>
+                    <button onClick={() => { navigate("/final-page") }} className={`footer_next_btn ${isView ? "d-block" : "d-none"}`}>Exit</button>
+                    <button onClick={() => { id ? edit() : save() }} className={`footer_next_btn ${isView && "d-none"}`}>
                         {!loading ? <>{id ? "Close" : "Save"}</> : null}
                         {loading && <div class="d-flex justify-content-center">
-                            <strong className='me-2'>Saving...</strong>
+                            <strong className="me-2">Saving...</strong>
                             <div className="spinner-border spinner-border-sm mt-1" role="status">
                                 <span class="visually-hidden">Loading...</span>
                             </div>
@@ -2350,7 +1976,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                     </button>
                 </div>
             </div >
-            {addSourceOfRepayment && <AddSourceOfRepayment show={addSourceOfRepayment} onHide={() => { setAddSourceOfRepayment(false); setRowEditData('') }} getModalData={(e) => setSourceOfRepayment([...sourceOfRepayment, e])} data={rowEditData} getEditData={(e) => propsEditData(e)} isView={view} />
+            {addSourceOfRepayment && <AddSourceOfRepayment show={addSourceOfRepayment} onHide={() => { setAddSourceOfRepayment(false); setRowEditData("") }} getModalData={(e) => setSourceOfRepayment([...sourceOfRepayment, e])} data={rowEditData} getEditData={(e) => propsEditData(e)} isView={view} />
             }
             {/* {showTextEditor && <TextEditerModal show={showTextEditor} onHide={() => setShowTextEditor(false)} commentDone={(e) => hadleChangeModal(e)} type={type} inputName={selectedName} data={facility[selectedName]} />} */}
             {currencyHedgeDetailsModal && <CurrencyHedgeDetailsModal show={currencyHedgeDetailsModal} onHide={() => { setCurrencyHedgeDetailsModal(false); setEditRowData("") }} getModalData={(e, id) => editModalData(e, id)} editRowData={editRowData} />}
@@ -2363,63 +1989,63 @@ export default Facility
 const StyleSheet = {
     container: {
     },
-    closeView: { display: 'none' },
+    closeView: { display: "none" },
     overall: {
-        width: '95%',
-        margin: '0 auto',
-        height: '30rem',
-        backgroundColor: '#fff',
-        position: 'absolute',
-        border: '1px solid lightgrey',
-        top: '5rem',
+        width: "95%",
+        margin: "0 auto",
+        height: "30rem",
+        backgroundColor: "#fff",
+        position: "absolute",
+        border: "1px solid lightgrey",
+        top: "5rem",
         left: 0,
         right: 0,
-        overflowY: 'auto',
-        display: 'block',
-        zIndex: '3',
+        overflowY: "auto",
+        display: "block",
+        zIndex: "3",
     },
     data: {
-        padding: '0.5rem',
-        fontSize: '0.8rem',
-        cursor: 'pointer',
+        padding: "0.5rem",
+        fontSize: "0.8rem",
+        cursor: "pointer",
     },
     datashown: {
-        padding: '0.3rem',
-        borderBottom: '1px solid lightgrey',
-        cursor: 'pointer',
-        backgroundColor: 'lightgrey',
-        color: 'white',
+        padding: "0.3rem",
+        borderBottom: "1px solid lightgrey",
+        cursor: "pointer",
+        backgroundColor: "lightgrey",
+        color: "white",
     },
     input: {
-        width: '100%',
-        border: '1px solid lightgrey',
-        padding: '1rem'
+        width: "100%",
+        border: "1px solid lightgrey",
+        padding: "1rem"
     },
     showRoom: {
-        display: 'flex',
-        flexWrap: 'wrap',
+        display: "flex",
+        flexWrap: "wrap",
         gap: 7,
     },
     roomItem: {
-        padding: '0.2rem 0.3rem',
-        border: '1px solid lightgrey',
-        borderRadius: '999px',
-        display: 'flex',
-        alignItems: 'center',
+        padding: "0.2rem 0.3rem",
+        border: "1px solid lightgrey",
+        borderRadius: "999px",
+        display: "flex",
+        alignItems: "center",
         gap: 6,
-        fontSize: '0.7rem',
-        backgroundColor: '#00BCD4',
-        color: 'white'
+        fontSize: "0.7rem",
+        backgroundColor: "#00BCD4",
+        color: "white"
     },
     cancelButton: {
-        borderRadius: '999px',
-        // fontSize: '0.8rem',
-        backgroundColor: '#00BCD4',
-        color: '#dae4e5',
-        padding: '0.01rem 0.5rem',
-        cursor: 'pointer'
+        borderRadius: "999px",
+        // fontSize: "0.8rem",
+        backgroundColor: "#00BCD4",
+        color: "#dae4e5",
+        padding: "0.01rem 0.5rem",
+        cursor: "pointer"
     },
     fieldPadding: {
-        padding: '6px'
+        padding: "6px"
     }
 }

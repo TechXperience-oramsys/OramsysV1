@@ -4,9 +4,12 @@ import WarehouseEditModal from '../../../../component/Modal/WarehouseEditModal'
 import { useSelector, useDispatch } from 'react-redux'
 import { companydataAction } from '../../../../redux/actions/companydataAction'
 import { useLocation } from 'react-router-dom'
-import {Col, Row} from "react-bootstrap"
-import {TextField} from "@material-ui/core"
+import { Col, Form, Row } from "react-bootstrap"
+import { TextField } from "@material-ui/core"
 import Autocomplete from "@material-ui/lab/Autocomplete"
+import { OptionalSpan } from '../../../transactions/Helpers/OptionalTags'
+import { Button, Space, Table } from 'antd'
+import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'
 
 const Warehouse = ({ handleNext, handleBack }) => {
 
@@ -40,13 +43,12 @@ const Warehouse = ({ handleNext, handleBack }) => {
     const Delete = (data) => {
         let body = {
             ...companyData,
-            warehouses: companyData.warehouses.filter((e, i) => i !== data.tableData.id)
+            warehouses: companyData.warehouses.filter((e, i) => i !== data.key)
         }
         dispatch(companydataAction(body))
     }
 
     let options = [
-        { label: "Select option", value: "" },
         { label: "Yes", value: true },
         { label: "No", value: false },
     ]
@@ -59,108 +61,134 @@ const Warehouse = ({ handleNext, handleBack }) => {
         dispatch(companydataAction(body))
     }
 
+
+    const columns = [
+        {
+            title: 'Nature',
+            dataIndex: 'nature',
+            key: 'nature',
+            sorter: true,
+            filterMultiple: true,
+        },
+        {
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+            sorter: true,
+            filterMultiple: true,
+        },
+        {
+            title: 'Type',
+            dataIndex: 'type',
+            key: 'type',
+            sorter: true,
+            filterMultiple: true,
+        },
+        {
+            title: 'City',
+            dataIndex: 'city',
+            key: 'city',
+            sorter: true,
+            filterMultiple: true,
+        },
+        {
+            title: 'Country',
+            dataIndex: 'country',
+            key: 'country',
+            sorter: true,
+            filterMultiple: true,
+        },
+        {
+            title: 'Governing Law',
+            dataIndex: 'governingLaw',
+            key: 'governingLaw',
+            sorter: true,
+            filterMultiple: true,
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            align: 'center',
+            render: (_, record) => (
+                <Space size="middle">
+                    {!isView && (
+                        <>
+                            <Button
+                                icon={<EditOutlined />}
+                                onClick={() => {
+                                    setEditModal(true);
+                                    setEditData(record.key);
+                                    setMode("Edit");
+                                }}
+                            />
+                            <Button
+                                icon={<DeleteOutlined />}
+                                onClick={() => Delete(record)}
+                            />
+                        </>
+                    )}
+                    <Button
+                        icon={<EyeOutlined />}
+                        onClick={() => {
+                            setEditModal(true);
+                            setMode("View");
+                            setEditData(record.key)
+                        }}
+                    />
+                </Space>
+            ),
+        },
+    ];
+
+
     return (
         <>
             <div className='add-edit-product'>
 
                 <div className='product'>
                     <div className='mb-3 d-flex justify-content-between align-items-center'>
-                        <h2 className='m-0'>Warehouse</h2>
-                        {companyData.isWarehouse && <button className={`add_btn me-3 ${isView ? 'd-none' : 'd-block'}`} onClick={() => {
-                            setEditModal(true);
-                            setMode("Add")
-                        }}><img src='../../assets/img/about/plus.png' className='me-2' alt=''/>Add</button>
-                        }                    </div>
+                        <h4 className='fw-bold fs-5 mb-3 title-admin'>WAREHOUSE</h4>
+                        {companyData.isWarehouse &&
+                            <button className='btn btn-primary btn-md mb-3' onClick={() => { setEditModal(true); setMode("Add") }}>
+                                Add Warehouse
+                            </button>
+                        }
+                    </div>
                     <div className='drop-down-container'>
                         <div className='form'>
                             <Row>
-                                <Col lg={3}>
-                                    <Autocomplete
-                                        label='Do you want to add warehouses?'
-                                        id='disable-clearable'
-                                        onChange={(e, newVal) => {
-                                            handleOption(newVal?.value)
+                                <Form.Group as={Col} controlId="formGridZip">
+                                    <Form.Label>Do you want to add a Warehouse? <OptionalSpan /></Form.Label>
+                                    <Form.Select
+                                        className='no-border'
+                                        onChange={(e) => {
+                                            const selectedValue = e.target.value === "true" ? true : e.target.value === "false" ? false : "";
+                                            handleOption(selectedValue);
                                         }}
-                                        getOptionLabel={(option) => option.label || ""}
-                                        options={options}
-                                        value={
-                                            ((options.length > 0 &&
-                                                    companyData.isWarehouse === true) ||
-                                                companyData.isWarehouse === false) ?
-                                                options.find(
-                                                    (ele) => ele.value === companyData.isWarehouse
-                                                ) : options = ''
-                                        }
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                label='Do you want to add warehouses?'
-                                                variant='standard'
-                                            />
-                                        )}
-                                    />
-                                </Col>
+                                        disabled={isView}
+                                        value={companyData.isWarehouse !== null && companyData.isWarehouse !== undefined ? companyData.isWarehouse.toString() : ""}
+                                    >
+                                        <option value="" disabled>Choose...</option>
+                                        {options.map((item, i) => (
+                                            <option key={i} value={item.value.toString()}>{item.label}</option>
+                                        ))}
+                                    </Form.Select>
+                                </Form.Group>
 
                             </Row>
                         </div>
                     </div>
 
-                    {companyData.isWarehouse && <MaterialTable
-                        title=""
-                        columns={[
-                            {title: 'Nature', field: 'nature'},
-                            {title: 'Name', field: 'name'},
-                            {title: 'Type', field: 'type'},
-                            {title: 'City', field: 'city'},
-                            {title: 'Country', field: 'country'},
-                            {title: 'Governing law', field: 'governingLaw'},
-                        ]}
-                        data={warehouse}
-                        actions={isView ? [
-                            {
-                                icon: 'preview',
-                                tooltip: 'View Warehouse',
-                                onClick: (e, data) => {
-                                    setEditModal(true);
-                                    setMode("View");
-                                    setEditData(data.tableData.id)
-                                }
-                            },
-                        ] : [
-                            {
-                                icon: 'edit',
-                                tooltip: 'Edit Warehouse',
-                                onClick: (e, data) => {
-                                    setEditModal(true);
-                                    setMode("Edit");
-                                    setEditData(data.tableData.id)
-                                }
-                            },
-                            {
-                                icon: 'preview',
-                                tooltip: 'View Warehouse',
-                                onClick: (e, data) => {
-                                    setEditModal(true);
-                                    setMode("View");
-                                    setEditData(data.tableData.id)
-                                }
-                            },
-                            {
-                                icon: 'delete',
-                                tooltip: 'Delete Warehouse',
-                                onClick: (e, data) => {
-                                    Delete(data)
-                                }
-                            }
-                        ]}
-                        options={{
-                            filtering: true,
-                            actionsColumnIndex: -1,
-                            sorting: true,
-                            pageSize: 10,
-                            search: false,
-                        }}
-                    />}
+                    {companyData.isWarehouse && (
+                        <Table
+                            columns={columns}
+                            dataSource={warehouse.map((item, index) => ({ ...item, key: index }))}
+                            pagination={{ pageSize: 10 }}
+                            loading={false}  // Change to true if you want to show a loading spinner
+                            rowKey="key"
+                            bordered
+                        />
+                    )}
                 </div>
                 <div className='footer_'>
                     <button onClick={() => { handleBack() }} className="footer_cancel_btn">Back</button>

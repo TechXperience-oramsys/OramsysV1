@@ -4,7 +4,8 @@ import { Row, Col, Form, InputGroup } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { companydataAction } from '../../../../redux/actions/companydataAction';
-import { OptionalSpan, RequiredSpan } from '../../../transactions/Helpers/OptionalTags';
+import { OptionalSpan } from '../../../transactions/Helpers/OptionalTags';
+
 
 const Financials = ({ handleNext, handleBack }) => {
 
@@ -71,50 +72,50 @@ const Financials = ({ handleNext, handleBack }) => {
             Biling: {},
             Shipping: {},
         };
-        if (!financials.netProfitMargin) {
-            error.netProfitMargin = "Please enter net profit margin!"
-            flag = true
-        }
-        if (!financials.ROE) {
-            error.ROE = "Please enter roe!"
-            flag = true
-        }
-        if (!financials.ROA) {
-            error.ROA = "Please enter roa!"
-            flag = true
-        }
-        if (!financials.operatingCashFlow) {
-            error.operatingCashFlow = "Please enter operating cash flow!"
-            flag = true
-        }
-        if (!financials.debtServiceCoverageRatio) {
-            error.debtServiceCoverageRatio = "Please enter debt service coverage ratio!"
-            flag = true
-        }
-        if (!financials.interestCoverageRatio) {
-            error.interestCoverageRatio = "Please enter interest coverage ratio!"
-            flag = true
-        }
-        if (!financials.netGearingRatio) {
-            error.netGearingRatio = "Please enter net gearing ratio!"
-            flag = true
-        }
-        if (!financials.totalDebtToTotalCapital) {
-            error.totalDebtToTotalCapital = "Please enter total debt to total capital!"
-            flag = true
-        }
-        if (!financials.currentRatio) {
-            error.currentRatio = "Please enter current ratio!"
-            flag = true
-        }
-        if (!financials.quickRatio) {
-            error.quickRatio = "Please enter quick ratio!"
-            flag = true
-        }
-        if (!financials.cashFlowBeforeFinancingSales) {
-            error.cashFlowBeforeFinancingSales = "Please enter cash flow before financing sales!"
-            flag = true
-        }
+        // if (!financials.netProfitMargin) {
+        //     error.netProfitMargin = "Please enter net profit margin!"
+        //     flag = true
+        // }
+        // if (!financials.ROE) {
+        //     error.ROE = "Please enter roe!"
+        //     flag = true
+        // }
+        // if (!financials.ROA) {
+        //     error.ROA = "Please enter roa!"
+        //     flag = true
+        // }
+        // if (!financials.operatingCashFlow) {
+        //     error.operatingCashFlow = "Please enter operating cash flow!"
+        //     flag = true
+        // }
+        // if (!financials.debtServiceCoverageRatio) {
+        //     error.debtServiceCoverageRatio = "Please enter debt service coverage ratio!"
+        //     flag = true
+        // }
+        // if (!financials.interestCoverageRatio) {
+        //     error.interestCoverageRatio = "Please enter interest coverage ratio!"
+        //     flag = true
+        // }
+        // if (!financials.netGearingRatio) {
+        //     error.netGearingRatio = "Please enter net gearing ratio!"
+        //     flag = true
+        // }
+        // if (!financials.totalDebtToTotalCapital) {
+        //     error.totalDebtToTotalCapital = "Please enter total debt to total capital!"
+        //     flag = true
+        // }
+        // if (!financials.currentRatio) {
+        //     error.currentRatio = "Please enter current ratio!"
+        //     flag = true
+        // }
+        // if (!financials.quickRatio) {
+        //     error.quickRatio = "Please enter quick ratio!"
+        //     flag = true
+        // }
+        // if (!financials.cashFlowBeforeFinancingSales) {
+        //     error.cashFlowBeforeFinancingSales = "Please enter cash flow before financing sales!"
+        //     flag = true
+        // }
         setFormErrors(error);
         return flag
     }
@@ -139,7 +140,7 @@ const Financials = ({ handleNext, handleBack }) => {
                     <div>
                         <Row className='mt-4'>
                             <Form.Group as={Col} lg={3} controlId="formGridZip">
-                                <Form.Label>Net Profit Margin</Form.Label>
+                                <Form.Label>Net Profit Margin <OptionalSpan /></Form.Label>
                                 <InputGroup>
                                     <Form.Control
                                         name='netProfitMargin'
@@ -153,7 +154,7 @@ const Financials = ({ handleNext, handleBack }) => {
                             </Form.Group>
 
                             <Form.Group as={Col} lg={3} controlId="formGridZip">
-                                <Form.Label>ROE</Form.Label>
+                                <Form.Label>ROE <OptionalSpan /></Form.Label>
                                 <InputGroup>
                                     <Form.Control
                                         value={financials.ROE}
@@ -165,7 +166,7 @@ const Financials = ({ handleNext, handleBack }) => {
                             </Form.Group>
 
                             <Form.Group as={Col} lg={3} controlId="formGridZip">
-                                <Form.Label>ROA</Form.Label>
+                                <Form.Label>ROA <OptionalSpan /></Form.Label>
                                 <InputGroup>
                                     <Form.Control
                                         value={financials.ROA}
@@ -177,7 +178,7 @@ const Financials = ({ handleNext, handleBack }) => {
                             </Form.Group>
 
                             <Form.Group as={Col} lg={3} controlId="formGridZip">
-                                <Form.Label>Operating cash flow</Form.Label>
+                                <Form.Label>Operating cash flow <OptionalSpan /></Form.Label>
                                 <InputGroup>
                                     <Form.Control
                                         value={financials.operatingCashFlow}
@@ -191,7 +192,7 @@ const Financials = ({ handleNext, handleBack }) => {
 
                         <Row className="mt-4" class>
                             <Form.Group as={Col} lg={3} controlId="formGridZip">
-                                <Form.Label>Debt service coverage ratio</Form.Label>
+                                <Form.Label>Debt service coverage ratio <OptionalSpan /></Form.Label>
                                 <InputGroup>
                                     <Form.Control
                                         value={financials.debtServiceCoverageRatio}
@@ -204,7 +205,7 @@ const Financials = ({ handleNext, handleBack }) => {
                             </Form.Group>
 
                             <Form.Group as={Col} lg={3} controlId="formGridZip">
-                                <Form.Label>Interest coverage ratio</Form.Label>
+                                <Form.Label>Interest coverage ratio <OptionalSpan /></Form.Label>
                                 <InputGroup>
                                     <Form.Control
                                         value={financials.interestCoverageRatio}
@@ -216,7 +217,7 @@ const Financials = ({ handleNext, handleBack }) => {
                             </Form.Group>
 
                             <Form.Group as={Col} lg={3} controlId="formGridZip">
-                                <Form.Label>Net gearing ratio</Form.Label>
+                                <Form.Label>Net gearing ratio <OptionalSpan /></Form.Label>
                                 <InputGroup>
                                     <Form.Control
                                         value={financials.netGearingRatio}
@@ -228,7 +229,7 @@ const Financials = ({ handleNext, handleBack }) => {
                             </Form.Group>
 
                             <Form.Group as={Col} lg={3} controlId="formGridZip">
-                                <Form.Label>Total debt to total capital</Form.Label>
+                                <Form.Label>Total debt to total capital <OptionalSpan /></Form.Label>
                                 <InputGroup>
                                     <Form.Control
                                         value={financials.totalDebtToTotalCapital}
@@ -242,11 +243,11 @@ const Financials = ({ handleNext, handleBack }) => {
 
                         <Row className='mt-4'>
                             <Form.Group as={Col} lg={4} controlId="formGridZip">
-                                <Form.Label>Current ratio</Form.Label>
+                                <Form.Label>Current ratio <OptionalSpan /></Form.Label>
                                 <InputGroup>
                                     <Form.Control
-                                       value={financials.currentRatio}
-                                       onChange={(e) => handleChange(e, "currentRatio")}
+                                        value={financials.currentRatio}
+                                        onChange={(e) => handleChange(e, "currentRatio")}
                                     />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
@@ -254,11 +255,11 @@ const Financials = ({ handleNext, handleBack }) => {
                             </Form.Group>
 
                             <Form.Group as={Col} lg={4} controlId="formGridZip">
-                                <Form.Label>Quick ratio</Form.Label>
+                                <Form.Label>Quick ratio <OptionalSpan /></Form.Label>
                                 <InputGroup>
                                     <Form.Control
-                                       value={financials.quickRatio}
-                                       onChange={(e) => handleChange(e, "quickRatio")}
+                                        value={financials.quickRatio}
+                                        onChange={(e) => handleChange(e, "quickRatio")}
                                     />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
@@ -266,11 +267,11 @@ const Financials = ({ handleNext, handleBack }) => {
                             </Form.Group>
 
                             <Form.Group as={Col} lg={4} controlId="formGridZip">
-                                <Form.Label>Cash flow before financing sales</Form.Label>
+                                <Form.Label>Cash flow before financing sales <OptionalSpan /></Form.Label>
                                 <InputGroup>
                                     <Form.Control
-                                       value={financials.cashFlowBeforeFinancingSales}
-                                       onChange={(e) => handleChange(e, "cashFlowBeforeFinancingSales")}
+                                        value={financials.cashFlowBeforeFinancingSales}
+                                        onChange={(e) => handleChange(e, "cashFlowBeforeFinancingSales")}
                                     />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>

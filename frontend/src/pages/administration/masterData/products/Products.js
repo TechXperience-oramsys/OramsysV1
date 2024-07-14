@@ -100,7 +100,7 @@ const Products = () => {
       render: (text, record) => (
         <Dropdown overlay={(
           <Menu>
-            <Menu.Item onClick={() => { navigate({ pathname: '/edit-product', search: `?id=${record?._id}` })}}>
+            <Menu.Item onClick={() => { navigate({ pathname: '/edit-product', search: `?id=${record?._id}` }) }}>
               <EditOutlined /> Edit
             </Menu.Item>
             <Menu.Item onClick={() => navigate(`/edit-product?id=${record?._id}`, { state: { isView: true } })}>
@@ -174,8 +174,8 @@ const Products = () => {
       <div className='product'>
         <div class='container-fluid'>
           <div id='dash' class='mb-npx'>
-            <header class='bg-surface-primary border-bottom pt-6'>
-              <div class='row align-items-center mb-3'>
+            <header class='bg-surface-primary pt-6'>
+              <div class='row align-items-center text-white mb-3 product' style={{ backgroundImage: "linear-gradient(to right, #111827, #121b2f, #131f37, #142240, #152548)" }}>
                 <div class='col-sm-6 col-12 mb-4 mb-sm-0'>
                   <h1 class='h2 mb-0 fw-bold fs-4 ls-tight'>Product</h1>
                 </div>

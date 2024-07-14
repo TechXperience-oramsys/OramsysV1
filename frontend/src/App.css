@@ -2,11 +2,12 @@
 
 /* Bootstrap Icons */
 @import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css");
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet");
 
 
 *, h1, h2, h3, h4, h5, h6 {
-    font-family: "Poppins", sans-serif;
+    font-family: "Figtree", sans-serif;
 
 }
 
@@ -235,7 +236,7 @@
     color: #000;
     font-size: 18px;
     font-weight: 700;
-    font-family: "Poppins", sans-serif;
+    font-family: "Figtree", sans-serif;
 }
 
 .topbar-right2 ul .header-right-button .header-btn {
@@ -601,13 +602,13 @@ nav.template-main-menu>ul>li>a {
     display: block;
     color: #000000;
     text-transform: uppercase;
-    font-family: "Poppins", sans-serif;
+    font-family: "Figtree", sans-serif;
     position: relative;
 }
 
 nav.template-main-menu>ul>li>a:after {
     content: "\f107";
-    font-family: "Font Awesome 5 Free";
+    font-family: "Figtree";
     font-weight: 600;
     color: #646464;
     position: absolute;
@@ -629,7 +630,7 @@ nav.template-main-menu2>ul>li>a {
     display: block;
     color: #000000;
     text-transform: uppercase;
-    font-family: "Poppins", sans-serif;
+    font-family: "Figtree", sans-serif;
     position: relative;
 }
 
@@ -705,7 +706,7 @@ nav.template-main-menu>ul>li ul.dropdown-menu-col-1 li a {
 
 nav.template-main-menu>ul>li ul.dropdown-menu-col-1 li a:before {
     content: "\f30b";
-    font-family: "Font Awesome 5 Free";
+    font-family: "Figtree";
     font-weight: 600;
     font-size: 15px;
     color: #da251e;
@@ -1027,7 +1028,7 @@ nav.template-main-menu>ul>li:hover .template-mega-menu {
     font-size: 18px;
     font-weight: 700;
     margin-top: -7px;
-    font-family: "Poppins", sans-serif;
+    font-family: "Figtree", sans-serif;
 }
 
 @media only screen and (max-width: 1199px) {
@@ -1352,7 +1353,7 @@ nav.template-main-menu>ul>li:hover .template-mega-menu {
     color: #000;
     font-size: 18px;
     font-weight: 700;
-    font-family: "Poppins", sans-serif;
+    font-family: "Figtree", sans-serif;
 }
 
 .topbar-right2 ul .header-right-button .header-btn {
@@ -2795,7 +2796,7 @@ ul {
     max-width: 624px;
     font-weight: 600;
     color: rgb(161, 195, 195);
-    font-family: "Poppins", sans-serif;
+    font-family: "Figtree", sans-serif;
 }
 
 .add-edit-product .form {

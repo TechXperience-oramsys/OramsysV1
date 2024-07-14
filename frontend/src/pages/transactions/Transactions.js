@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
 import { getRiskAssessment } from "../../redux/actions/riskAssessmentAction"
 import ExcelModal from "../../component/Modal/ExcelModal"
-import { ApiGet} from "../../helper/API/ApiData"
+import { ApiGet } from "../../helper/API/ApiData"
 import { GET_TRANSACTION_BY_ID } from "../../redux/types"
 import { CiSearch } from "react-icons/ci";
 import Paginate from './Pagination'
@@ -27,7 +27,7 @@ const Transactions = () => {
   const [transaction2, setTransaction2] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [postsPerPage] = useState(10)
-  const [ setSearch] = useState('')
+  const [setSearch] = useState('')
 
   const getAlltransactionData = useSelector(
     (state) => state.transactionData.getAllTransaction
@@ -35,6 +35,7 @@ const Transactions = () => {
   const riskAssessment = useSelector(
     (state) => state.riskAssessmentData.getRiskAssessment
   )
+
 
   useEffect(() => {
     let id = AuthStorage.getStorageData(STORAGEKEY.roles) !== "superAdmin"
@@ -171,27 +172,27 @@ const Transactions = () => {
 
   const checkSearch = (e) => {
     const filtered = transaction2.filter((item) => {
-        // Check if item.borrower_Applicant and item.lenders are strings
-        if (typeof item.borrower_Applicant !== 'string' || typeof item.lenders !== 'string') {
-            return false;
-        }
-        
-        // Check if item.details.productDetails.name is an object and contains the property 'name'
-        if (typeof item.details.productDetails.name === 'object' && item.details.productDetails.name !== null && 'name' in item.details.productDetails.name) {
-            // Convert item.details.productDetails.name to lowercase if it's a string
-            const productName = item.details.productDetails.name.name.toLowerCase();
-            // Check if productName includes the search value
-            return productName.includes(e.target.value.toLowerCase());
-        }
-        
+      // Check if item.borrower_Applicant and item.lenders are strings
+      if (typeof item.borrower_Applicant !== 'string' || typeof item.lenders !== 'string') {
         return false;
+      }
+
+      // Check if item.details.productDetails.name is an object and contains the property 'name'
+      if (typeof item.details.productDetails.name === 'object' && item.details.productDetails.name !== null && 'name' in item.details.productDetails.name) {
+        // Convert item.details.productDetails.name to lowercase if it's a string
+        const productName = item.details.productDetails.name.name.toLowerCase();
+        // Check if productName includes the search value
+        return productName.includes(e.target.value.toLowerCase());
+      }
+
+      return false;
     });
-    
+
     setTransaction(filtered);
-};
+  };
 
 
-const handleItemClick = (type) => {
+  const handleItemClick = (type) => {
     navigate('/edit-transactions', { state: [{ type }] });
   };
 
@@ -229,6 +230,24 @@ const handleItemClick = (type) => {
       render: (value) => formateCurrencyValue(value),
       sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
+    // {
+    //   title: 'Created by',
+    //   dataIndex: 'createdBy',
+    //   key: 'lenders',
+    //   render: (record) => {
+
+    //   }
+    // },
+    // {
+    //   title: 'Product',
+    //   key: 'product',
+    //   sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+    //   render: (text, record) => {
+    //     const productName = record.details.productDetails.name?.name;
+    //     const otherProduct = record.details.productDetails.otherProduct;
+    //     return productName || otherProduct;
+    //   }
+    // },
     {
       title: 'Product',
       dataIndex: ['details', 'productDetails', 'name', 'name'],
@@ -240,14 +259,19 @@ const handleItemClick = (type) => {
       dataIndex: 'termSheet',
       key: 'termSheet',
       render: (termSheet, record) => (
-        <span class='cursor-pointer'>
-          <p onClick={() => { termSheet === "Not Signed" && setShowExcelModal(true); setSendId(record._id) }}>
+        <div className={`${termSheet === "Not Signed" ? 'bg-red-100' : 'bg-green-100'} text-center cursor-pointer`}>
+          <p onClick={() => {
+            if (termSheet === "Not Signed") {
+              setShowExcelModal(true);
+              setSendId(record._id);
+            }
+          }}>
             {termSheet}
             {termSheet === "Signed" ? (
               <AntButton onClick={() => { downloadTermSheet(record._id) }}><DownloadOutlined /></AntButton>
-            ) : (<></>)}
+            ) : null}
           </p>
-        </span>
+        </div>
       )
     },
     {
@@ -303,10 +327,10 @@ const handleItemClick = (type) => {
 
       <div class='mx-5 d-flex flex-column flex-lg-row h-lg-full'>
         <div id='dash' class='h-screen flex-grow-1'>
-          <header class='bg-surface-primary border-bottom pt-6'>
+          <header class='bg-surface-primary pt-6'>
             <div class='container-fluid'>
               <div id='dash' class='mb-npx'>
-                <div class='row align-items-center mb-3'>
+                <div class='row text-white align-items-center mb-3 product' style={{ backgroundImage: "linear-gradient(to right, #111827, #121b2f, #131f37, #142240, #152548)" }}>
                   <div class='col-sm-6 col-12 mb-4 mb-sm-0'>
 
                     <h1 class='h2 mb-0 fw-bold fs-4 ls-tight'>Transaction</h1>
@@ -316,15 +340,13 @@ const handleItemClick = (type) => {
                     <div class='mx-n1 me-5 d-flex align-items-center justify-content-end gap-2'>
 
                       {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" ? (
-                         <AntDropdown overlay={menu} trigger={['click']}>
-                        
-                         <AntButton class='btn d-inline-flex btn-md btn-light border-base mx-1 py-2 me-3' id="dropdown-autoclose-outside">
-                           <span class=' pe-2'>
-                             <i class="bi bi-plus"></i>
-                           </span>
-                           <span className='fw-bold'>Create Transaction</span>
-                         </AntButton>
-                       </AntDropdown>
+                        <AntDropdown overlay={menu} trigger={['click']}>
+
+                          <AntButton class='btn d-inline-flex btn-md btn-light mx-1 py-2 me-3' id="dropdown-autoclose-outside">
+
+                            <span className='fw-bold'>Create Transaction</span>
+                          </AntButton>
+                        </AntDropdown>
                       ) : (
                         <></>
                       )}
@@ -354,7 +376,7 @@ const handleItemClick = (type) => {
                   <div class="mb-2 d-flex justify-content-start align-items-center">
 
                     <div class="position-relative">
-                    <span class="position-absolute search"><CiSearch size={25} /></span>
+                      <span class="position-absolute search"><CiSearch size={25} /></span>
                       <input type="text" id='search' onKeyUp={e => checkSearch(e)} onChange={(e) => setSearch(e.target.value)} className="form-control w-100 ps-5 fw-light border-none" placeholder="Search transaction..." />
                     </div>
 
@@ -376,10 +398,10 @@ const handleItemClick = (type) => {
                   </div>
                   <div class=" border-0 mb-0">
 
-                      <span class="text-muted text-sm">
-                        <Paginate postsPerPage={postsPerPage} totalPosts={getAlltransactionData?.data?.length} paginate={paginate} prevPagefunc={() => setCurrentPage(prev => prev - 1)} nextPagefunc={() => setCurrentPage(prev => prev + 1)} currentPage={currentPage} currentTrans={currentTrans} />
-                      </span>
-                    </div>
+                    <span class="text-muted text-sm">
+                      <Paginate postsPerPage={postsPerPage} totalPosts={getAlltransactionData?.data?.length} paginate={paginate} prevPagefunc={() => setCurrentPage(prev => prev - 1)} nextPagefunc={() => setCurrentPage(prev => prev + 1)} currentPage={currentPage} currentTrans={currentTrans} />
+                    </span>
+                  </div>
 
                 </div>
 

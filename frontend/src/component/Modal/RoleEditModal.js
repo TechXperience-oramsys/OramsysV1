@@ -148,7 +148,7 @@ const RoleEditModal = ({ onHide, show, mode, editData }) => {
                                     </Col>
                                     <Col lg={6} className="mb-4">
                                         <TextField
-                                            label="Justification"
+                                            label="Summary"
                                             variant="standard"
                                             color="warning"
                                             name='justification'

@@ -10,10 +10,10 @@ import axios from 'axios';
 import { ApiPost, BaseURL } from '../../../../helper/API/ApiData';
 import { portsAction } from '../../../../redux/actions/portsAction';
 import { toast } from 'react-hot-toast'
-import Paginate from './portsPagination';
 import { MdEdit } from 'react-icons/md';
 // import { Tooltip } from 'react-tooltip';
 import { FcSearch } from 'react-icons/fc';
+import { Spin, Table } from 'antd';
 
 
 
@@ -62,6 +62,42 @@ const Ports = ({ showSidebar, setSidebar }) => {
 
   const navigate = useNavigate()
 
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      render: (text) => <p className="fw-normal m-2">{text}</p>,
+    },
+    {
+      title: 'Nature',
+      dataIndex: 'country',
+      key: 'country',
+      render: (text) => <p className="fw-normal m-2">{text}</p>,
+    },
+    {
+      title: 'Flag',
+      dataIndex: 'refcode',
+      key: 'refcode',
+      render: (text) => <p className="fw-normal m-2">{text}</p>,
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (_, record) => (
+        <MdEdit
+          onClick={() => {
+            setShow(true);
+            setPortForEdit(PortData?.data?.find(item => item._id === record._id));
+          }}
+          className='cursor-pointer'
+          size={18}
+        />
+      ),
+      align: 'right',
+    },
+  ];
+
   return (
     <>
       {/* <div className='authheader_main'>
@@ -80,8 +116,8 @@ const Ports = ({ showSidebar, setSidebar }) => {
       <div className='product'>
         <div class='container-fluid'>
           <div id='dash' class='mb-npx'>
-            <header class='bg-surface-primary border-bottom pt-6'>
-              <div class='row align-items-center mb-3'>
+            <header class='bg-surface-primary  pt-6'>
+              <div class='row align-items-center mb-3 text-white product' style={{ backgroundImage: "linear-gradient(to right, #111827, #121b2f, #131f37, #142240, #152548)" }}>
                 <div class='col-sm-6 col-12 mb-4 mb-sm-0'>
                   <h1 class='h2 mb-0 fw-bold fs-4 ls-tight'>Ports</h1>
                 </div>
@@ -104,74 +140,37 @@ const Ports = ({ showSidebar, setSidebar }) => {
         <div className='container mx-auto'>
           <div class='row g-6 mb-4'></div>
           <div className='table-responsive'>
-            <table class="table align-middle mb-0 bg-white border-light border-5">
-              <thead class="bg-light">
-                <tr className=''>
-                  <th className='fw-bold'>Name</th>
-                  <th className='fw-bold'>Nature</th>
-                  <th className='fw-bold'>Flag</th>
-                  <th className='fw-bold text-end'>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-
-                {getPorts?.length > 0 && getPorts?.map((data, index) => (
-                  <tr key={index} className='text-center'>
-                    <td>
-                      <div class="d-flex align-items-center">
-
-                        <div class="align-items-center">
-                          <p class="fw-normal m-2">{data.name}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <div class="align-items-center">
-                          <p class="fw-normal m-2">{data.country}</p>
-                        </div>
-                      </div>
-                    </td>
-
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <div class="align-items-center">
-                          <p class="fw-normal m-2">{data.refcode}</p>
-                        </div>
-                      </div>
-                    </td>
-
-                    <td>
-                      <div class="d-flex justify-content-end m-2">
-                        <div class="align-items-center">
-                          <MdEdit onClick={() => {
-                            setShow(true); setPortForEdit(PortData?.data?.find(item => item._id === data._id))
-                          }}
-                            // data-tooltip-id='edit-id'
-                            // data-tooltip-content='Edit Product'
-                            className='cursor-pointer'
-                            size={18} />
-                          {/* <Tooltip id='edit-id' place='top' effect='solid' /> */}
-                        </div>
-                      </div>
-                    </td>
-
-                  </tr>
-                ))}
-
-              </tbody>
-            </table>
-            {!getPorts && <div class="d-flex justify-content-center mx-auto container py-5 my-5 m-5">
-              <div class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
+            <Table
+              columns={columns}
+              dataSource={getPorts}
+              pagination={{
+                pageSize: postsPerPage,
+                total: ports?.data?.length,
+                onChange: paginate
+              }}
+              rowKey="_id"
+              loading={!getPorts && { indicator: <Spin /> }}
+            />
+            {/* {!getPorts && (
+              <div className="d-flex justify-content-center mx-auto container py-5 my-5 m-5">
+                <Spin />
               </div>
-            </div>}
-            {PortData?.length < 1 && <div className='text-center mx-auto container py-5 my-5 m-5'> No records were found</div>}
-            <div class="card-footer border-0 py-2 mb-5">
-
-              <span class="text-muted text-sm">
-                <Paginate postsPerPage={postsPerPage} totalPosts={ports?.data?.length} paginate={paginate} prevPagefunc={() => setCurrentPage(prev => prev - 1)} nextPagefunc={() => setCurrentPage(prev => prev + 1)} currentPage={currentPage} getPorts={getPorts} /> </span>
-            </div>
+            )}
+            {getPorts?.length < 1 && (
+              <div className='text-center mx-auto container py-5 my-5 m-5'>
+                No records were found
+              </div>
+            )} */}
+            {/* <div className="card-footer border-0 py-2 mb-5">
+              <Pagination
+                current={currentPage}
+                pageSize={pageSize}
+                total={PortData?.data?.length}
+                onChange={handlePageChange}
+                showSizeChanger
+                onShowSizeChange={handlePageChange}
+              />
+            </div> */}
           </div>
         </div>
 

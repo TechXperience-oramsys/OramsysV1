@@ -10,6 +10,8 @@ import { toast } from 'react-hot-toast'
 import { useLocation, useNavigate } from 'react-router-dom';
 import ReactHtmlParser from 'react-html-parser';
 import { entitiesRoleAction } from '../../../../redux/actions/entitiesRoleAction';
+import { Button, Space, Table } from 'antd';
+import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
 
 const Roles = ({ hendelNext, handleBack }) => {
 
@@ -143,19 +145,72 @@ const Roles = ({ hendelNext, handleBack }) => {
         }
     }, [editEntityData])
 
+    const columns = [
+        {
+            title: 'Role',
+            dataIndex: 'roles',
+            key: 'roles',
+            sorter: true,
+            filterMultiple: true,
+        },
+        {
+            title: 'Experience',
+            dataIndex: 'justification',
+            key: 'justification',
+            sorter: true,
+            filterMultiple: true,
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            align: 'center',
+            render: (_, record) => (
+                <Space size="middle">
+                    {!isView && (
+                        <>
+                            <Button
+                                icon={<EditOutlined />}
+                                onClick={() => {
+                                    setEditModal(true);
+                                    setEditData(record.key);
+                                    setMode("Edit");
+                                }}
+                            />
+                            <Button
+                                icon={<DeleteOutlined />}
+                                onClick={() => Delete(record)}
+                            />
+                        </>
+                    )}
+                    <Button
+                        icon={<EyeOutlined />}
+                        onClick={() => {
+                            setEditModal(true);
+                            setMode("View");
+                            setEditData(record.key)
+                        }}
+                    />
+                </Space>
+            ),
+        },
+    ];
+
     return (
         <>
             <div className='add-edit-product'>
                 <div className='product'>
                     <div className='mb-3 d-flex justify-content-between align-items-center'>
-                        <h2 className='m-0'>Roles</h2>
-                        <button className={`add_btn me-3 ${isView ? 'd-none' : 'd-block'}`} onClick={() => { setEditModal(true); setMode("Add") }}> <img src='../../assets/img/about/plus.png' className='me-2' alt='' />Add</button>
+                        <h4 className='fw-bold fs-5 mb-3 title-admin'>ROLES</h4>
+
+                        <button className='btn btn-primary btn-md mb-3' onClick={() => { setEditModal(true); setMode("Add") }}>
+                            Add Roles
+                        </button>
                     </div>
-                    <MaterialTable
+                    {/* <MaterialTable
                         title=""
                         columns={[
                             { title: 'Role', field: 'roles' },
-                            { title: 'Justification', field: 'justification', render: rowData => <>{ReactHtmlParser(rowData.justification)}</> },
+                            { title: 'Justification', field: 'justification' },
                         ]}
                         data={roles}
                         actions={isView ? [
@@ -193,7 +248,17 @@ const Roles = ({ hendelNext, handleBack }) => {
                             pageSize: 10,
                             search: false,
                         }}
+                    /> */}
+
+                    <Table
+                        columns={columns}
+                        dataSource={roles?.map((item, index) => ({ ...item, key: index }))}
+                        pagination={{ pageSize: 10 }}
+                        loading={false}  // Change to true if you want to show a loading spinner
+                        rowKey="key"
+                        bordered
                     />
+
                 </div>
 
 

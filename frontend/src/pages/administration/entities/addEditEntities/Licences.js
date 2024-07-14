@@ -10,6 +10,8 @@ import { Row, Col, Form } from "react-bootstrap"
 import { useLocation } from 'react-router-dom'
 import { Table, Button, Space } from 'antd';
 import { EditOutlined, EyeOutlined, DeleteOutlined } from '@ant-design/icons';
+import { OptionalSpan } from '../../../transactions/Helpers/OptionalTags'
+
 
 const Licences = ({ handleNext, handleBack }) => {
 
@@ -42,7 +44,7 @@ const Licences = ({ handleNext, handleBack }) => {
     const Delete = (data) => {
         let body = {
             ...companyData,
-            licenses: companyData.licenses.filter((ele, i) => i !== data.tableData.id)
+            licenses: companyData.licenses.filter((ele, i) => i !== data.key)
         }
         dispatch(companydataAction(body))
     }
@@ -106,6 +108,7 @@ const Licences = ({ handleNext, handleBack }) => {
         {
             title: 'Action',
             key: 'action',
+            align: 'center',
             render: (_, record) => (
                 <Space size="middle">
                     {!isView && (
@@ -158,7 +161,7 @@ const Licences = ({ handleNext, handleBack }) => {
                         <div className='form'>
                             <Row>
                                 <Form.Group as={Col} controlId="formGridZip">
-                                    <Form.Label>Do you want to add a licenses?</Form.Label>
+                                    <Form.Label>Do you want to add a license? <OptionalSpan /></Form.Label>
                                     <Form.Select
                                         className='no-border'
                                         onChange={(e) => {
@@ -198,7 +201,7 @@ const Licences = ({ handleNext, handleBack }) => {
                 </div>
             </div>
 
-            
+
             {
                 editModal && <LicencesEditModal show={editModal} onHide={() => { setEditModal(false); setEditData(''); setMode('') }} mode={mode} editData={editData} />
             }

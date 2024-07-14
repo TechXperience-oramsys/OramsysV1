@@ -14,6 +14,11 @@ import moment from "moment"
 import { airPortsAction, portsAction } from "../../redux/actions/portsAction"
 import LoadingSpinner from "../../component/LoadingSpinner";
 import { ApiGet, ApiPost } from '../../helper/API/ApiData';
+import Select from 'react-select';
+import { useAtom } from 'jotai';
+import { productDetailsAtom, contractDetailsAtom, borrowerApplicantAtom, lendersAtom, shippingOptionsAtom, transShipmentAtom, pricingDetailsAtom, shippingCompanyAtom, hedgingPartyAtom, hedgingStatusAtom, warehouseStatusAtom, productNameAtom, countriesAtom, counterPartyOptionAtom, borrowerOptionAtom, lenderOptionAtom, wareHouseIdAtom, errorAtom, editIdAtom, selectedProductAtom, portsOptionsAtom, originCountryAtom, shippingCompanyOptionAtom } from '../transactions/Helpers/atoms';
+import AuthStorage from "../../helper/AuthStorage"
+import STORAGEKEY from "../../config/APP/app.config"
 
 
 const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalCounterParty, signalShippingCompany, signalWarehouseCompany, signalWarehouseStatus, signalContract, signalBorrower, signalLender, transaction_id, signalPricingHedgingStatus }) => {
@@ -21,70 +26,25 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     let numberReg = /^[0-9\b]+$/;
     const [isLoading, setIsLoading] = useState(true);
 
-    const [productDetails, setProductDetails] = useState({
-        nature: "",
-        type: "",
-        commodityType: "",
-        commoditySubType: "",
-        name: "",
-        quantity: "",
-        metric: "",
-        unit: "",
-        quality: "",
-    })
+    const [lenders, setLenders] = useAtom(lendersAtom)
 
-    const [contractDetails, setContractDetails] = useState({
-        currency: "",
-        value: "",
-        contractDate: "",
-        expiryDate: "",
-        conditionsOfContract: "",
-        descriptionOfContract: "",
-    })
+    const [borrower_Applicant, setBorrower_Applicant] = useAtom(borrowerApplicantAtom)
 
-    const [shippingOptions, setShippingOptions] = useState({
-        countryOfOrigin: "",
-        portOfOrigin: "",
-        airbaseOfOrigin: "",
-        shipmentDate: "",
-        shipmentMode: "",
-        shipmentTerms: "",
-        shippedWeights: "",
-        destinationCountry: "",
-        destinationPort: "",
-        destinationAirbase: "",
-        shipmentFrequency: "",
-        warehouseRequired: false,
-        warehouses: [],
-        shippingCompany: "",
-    })
+    const [productDetails, setProductDetails] = useAtom(productDetailsAtom);
 
-    const [transShipmentOptions, setTransShipmentOptions] = useState({
-        tranShipmentRequired: false,
-        street: "",
-        city: "",
-        country: "",
-        transShipmentQuantity: "",
-        transShipmentDate: "",
-    })
+    const [contractDetails, setContractDetails] = useAtom(contractDetailsAtom);
 
-    const [pricingDetails, setPricingDetails] = useState({
-        pricingType: "",
-        pricingAmount: "",
-        pricingUnit: "",
-        previousDayClosingAmount: "",
-        pricingFormula: "",
-        pricingHedgingStatus: false,
-        pricingHedgingMethod: "",
-        pricingCounterParty: "",
-    })
+    const [shippingOptions, setShippingOptions] = useAtom(shippingOptionsAtom)
+
+    const [transShipmentOptions, setTransShipmentOptions] = useAtom(transShipmentAtom)
+
+    const [pricingDetails, setPricingDetails] = useAtom(pricingDetailsAtom)
 
     const [loading, setLoading] = useState(false)
-    const [shipping_company, setShippingCompany] = useState("")
-    const [hedging_party, setHedgingParty] = useState("")
-    const [hedging_status, setHedgingStatus] = useState(false)
-    const [warehouse_status, setWarehouseStatus] = useState(false)
-    const [lenders, setLenders] = useState("")
+    const [shipping_company, setShippingCompany] = useAtom(shippingCompanyAtom)
+    const [hedging_party, setHedgingParty] = useAtom(hedgingPartyAtom)
+    const [hedging_status, setHedgingStatus] = useAtom(hedgingStatusAtom)
+    const [warehouse_status, setWarehouseStatus] = useAtom(warehouseStatusAtom)
 
     const [addWarehouseModal, setAddWarehouseModal] = useState(false)
     const [addInsuranceModal, setAddInsuranceModal] = useState(false)
@@ -92,29 +52,30 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     const productType = location?.state[1]?.type
     const isView = location.state[2]?.isView
     const dispatch = useDispatch()
-    const [productName, setProductName] = useState([])
+    const [productName, setProductName] = useAtom(productNameAtom)
     const [showTextEditModal, setShowTextEditModal] = useState(false)
     const [type, setType] = useState("")
     const [selectedName, setSelectedName] = useState("")
-    const [countries, setcountries] = useState([])
+    const [countries, setcountries] = useAtom(countriesAtom)
     const [sendModalData, setSendModalData] = useState("")
-    const [counterPartyOption, setCounterPartyOption] = useState([])
-    const [shippingCompanyOption, setShippingCompanyOption] = useState([])
-    const [borrowerOption, setBorrowerOption] = useState([])
-    const [lenderOption, setLenderOption] = useState([])
-    const [wareHouseId, setWareHouseId] = useState("")
-    const [error, setError] = useState({})
-    const [selectedProduct, setSelectedProduct] = useState("")
-    const [editId, setEditId] = useState("")
-    const [portsOptions, setPortsOptions] = useState([])
-    const [originCountry, setOriginCountry] = useState([])
-    const [borrower_Applicant, setBorrower_Applicant] = useState("")
+    const [counterPartyOption, setCounterPartyOption] = useAtom(counterPartyOptionAtom)
+    const [shippingCompanyOption, setShippingCompanyOption] = useAtom(shippingCompanyOptionAtom)
+    const [borrowerOption, setBorrowerOption] = useAtom(borrowerOptionAtom)
+    const [lenderOption, setLenderOption] = useAtom(lenderOptionAtom)
+    const [wareHouseId, setWareHouseId] = useAtom(wareHouseIdAtom)
+    const [error, setError] = useAtom(errorAtom)
+    const [selectedProduct, setSelectedProduct] = useAtom(selectedProductAtom)
+    const [editId, setEditId] = useAtom(editIdAtom)
+    const [portsOptions, setPortsOptions] = useAtom(portsOptionsAtom)
+    const [originCountry, setOriginCountry] = useAtom(originCountryAtom)
     // const [airPort, setAirPort] = useState([])
 
     const productData = useSelector((state) => state.product.product)
     const country = useSelector((state) => state.countryData.country)
     const entityData = useSelector((state) => state.entityData.entity)
-    console.log('Country DATA data', country)
+    const loginData = useSelector((state) => state.login.login)
+    console.log('LOGIN DATA', loginData)
+    console.log('ENTITY DATA', entityData)
     // const getTransactionByIdData = useSelector(
     //     (state) => state.transactionData.getTransactionById
     // )
@@ -218,7 +179,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     useEffect(() => {
 
         console.log('active on change', activeOnChange);
-        
+
     }, [activeOnChange])
 
     useEffect(() => {
@@ -226,8 +187,8 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         if (entityData && entityData.data) {
             console.log('Entity DATA', entityData)
 
-            entityData.data.map((ele) => {
-                ele.roles.map(roleDetail => {
+            entityData.data.forEach((ele) => {
+                ele.roles.forEach(roleDetail => {
                     if (roleDetail.roleId?.roleName == "Hedge Counterparty") {
                         var temp = {
                             label: ele?.details?.name,
@@ -251,12 +212,12 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         let shipDetails = []
         if (entityData && entityData.data) {
 
-            entityData.data.map((ele) => {
-                ele.roles.map(roleDetail => {
+            entityData.data.forEach((ele) => {
+                ele.roles.forEach(roleDetail => {
                     if (roleDetail.roleId?.roleName == "Shipping Company") {
                         var temp = {
                             label: ele?.details?.name,
-                            value: ele._id
+                            value: ele._id,
                         }
                         shipDetails.push(temp)
                     } else {
@@ -264,6 +225,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                             label: ele?.details?.givenName,
                             value: ele._id
                         }
+                        // shipDetails.push(temp)
                     }
                 })
             })
@@ -276,8 +238,8 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         let getBuyer = []
         if (entityData && entityData.data) {
 
-            entityData.data.map((ele) => {
-                ele.roles.map(roleDetail => {
+            entityData.data.forEach((ele) => {
+                ele.roles.forEach(roleDetail => {
                     if (roleDetail.roleId?.roleName == "Buyer" || roleDetail.roleId?.roleName == "Seller") {
                         var temp1 = {
                             label: ele?.details?.name,
@@ -297,30 +259,109 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         console.log("TAG BORROWER", borrowerOption, borrower_Applicant)
     }, [entityData])
 
-    useEffect(() => {
-        let bankRole = []
-        if (entityData && entityData.data) {
+    // useEffect(() => {
+    //     let bankRole = []
+    //     if (entityData && entityData.data) {
 
-            entityData.data.map((ele) => {
-                ele.roles.map(roleDetail => {
-                    if (roleDetail.roleId?.roleName == "Bank") {
-                        var temp = {
-                            label: ele?.details?.name,
-                            value: ele._id
-                        }
-                        bankRole.push(temp)
+    //         entityData.data.map((ele) => {
+    //             ele.roles.map(role => {
+    //                 if (role.roleId?.roleName == "Bank") {
+    //                     var temp = {
+    //                         label: ele?.details?.name,
+    //                         value: ele._id
+    //                     }
+    //                     bankRole.push(temp)
+    //                 } else {
+    //                     var temp = {
+    //                         label: ele?.details?.givenName,
+    //                         value: ele._id
+    //                     }
+    //                 }
+    //             })
+    //         })
+    //     }
+    //     setLenderOption(bankRole)
+    //     console.log("TAG LENDER", lenderOption)
+    // }, [entityData])
+    JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData))
+    // useEffect(() => {
+    //     let bankRole = [];
+
+    //     if (entityData && entityData.data) {
+    //         entityData.data.forEach((ele) => {
+    //             ele.roles.forEach((roleDetail) => {
+    //                 // Check if loginData.data.admin matches entityData.data.details.entityId
+    //                 if (loginData?.data?.admin === ele?.details?.entityId) {
+    //                     // If there's a match, set lenderOption to the entityData.data.details.name
+    //                     setLenderOption([{ label: ele?.details?.name, value: ele._id }]);
+    //                 } else {
+    //                     if (roleDetail.roleId?.roleName === "Bank") {
+    //                         var temp = {
+    //                             label: ele?.details?.name,
+    //                             value: ele._id
+    //                         };
+    //                         bankRole.push(temp);
+    //                     } else {
+    //                         var temp = {
+    //                             label: ele?.details?.givenName,
+    //                             value: ele._id
+    //                         };
+    //                         bankRole.push(temp);
+    //                     }
+    //                 }
+    //             });
+    //         });
+
+    //         // Only set lenderOption if there's no match found and bankRole is populated
+    //         if (!loginData?.data.admin || !entityData.data.some(ele => loginData.data.admin === ele?.details?.entityId)) {
+    //             setLenderOption(bankRole);
+    //         }
+    //     }
+
+    //     console.log("TAG LENDER", lenderOption);
+    // }, [entityData, loginData]);
+
+    useEffect(() => {
+        let bankRole = [];
+        let lendersArray = [];
+        const storedLoginData = JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData));
+        const adminId = storedLoginData?.admin;
+
+        if (entityData && entityData.data) {
+            entityData.data.forEach((ele) => {
+                ele.roles.forEach((roleDetail) => {
+                    // Check if adminId matches entityData.data.details.entityId
+                    if (adminId === ele?.details?.entityId) {
+                        // If there's a match, set lenderOption to the entityData.data.details.name
+                        setLenders(ele?.details?.name);
                     } else {
-                        var temp = {
-                            label: ele?.details?.givenName,
-                            value: ele._id
+                        if (roleDetail.roleId?.roleName === "Bank") {
+                            var temp = {
+                                label: ele?.details?.name,
+                                value: ele._id
+                            };
+                            bankRole.push(temp);
+                        } else {
+                            var temp = {
+                                label: ele?.details?.givenName,
+                                value: ele._id
+                            };
+                            bankRole.push(temp);
                         }
                     }
-                })
-            })
+                });
+            });
+
+            // Only set lenderOption if there's no match found and bankRole is populated
+            if (!adminId || !entityData.data.some(ele => adminId === ele?.details?.entityId)) {
+                setLenderOption(bankRole);
+            }
+
+
         }
-        setLenderOption(bankRole)
-        console.log("TAG LENDER", lenderOption)
-    }, [entityData])
+
+        console.log("TAG LENDER", lenderOption);
+    }, [entityData]);
 
 
 
@@ -449,7 +490,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                             shippingCompany: getTransactionByIdData.data?.details?.shippingOptions
                                 ?.shippingCompany?._id,
                             warehouses:
-                                getTransactionByIdData.data?.details?.shippingOptions?.warehouses.map(
+                                getTransactionByIdData.data?.details?.shippingOptions?.warehouses?.forEach(
                                     (item) => {
                                         return {
                                             warehouse: {
@@ -544,16 +585,17 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     }, [])
 
     useEffect(() => {
-        transactionDetail(transaction_id);
-
-    }, [transaction_id])
+        if (transaction_id) {
+            transactionDetail(transaction_id);
+        }
+    }, [transaction_id]);
 
 
     useEffect(() => {
 
         if (productDetails.commoditySubType != undefined) {
             let product = []
-            productData.data.map((item) => {
+            productData.data.forEach((item) => {
                 console.log('item', item);
                 console.log('productDetails', productDetails);
                 // if (item.commodity_sub_type == productDetails.commoditySubType) {
@@ -581,9 +623,16 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         { value: false, label: "No" },
     ]
 
-    const productTypesOption = ["Commodity"]
+    const productTypesOption = ["Commodity"];
+    //     { value: 'Commodity', label: 'Commodity' },
+    //     { value: 'Other', label: 'Other' },
+    // ]
 
-    const commodityTypeOption = ["Hard", "Energy", "Soft"]
+    const commodityTypeOption = ["Hard", "Energy", "Soft"];
+    //     { value: 'Hard', label: 'Hard' },
+    //     { value: 'Energy', label: 'Energy' },
+    //     { value: 'Soft', label: 'Soft' },
+    // ]
 
     const commoditySubTypeOption =
         productDetails.commodityType === "Hard"
@@ -596,17 +645,24 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
 
     const metricOptions = ["Tonnes", "KG", "Barrels", "Carat", "Bales", "Gallons"]
 
-    const productQualityOption = ["Exchange traded", "Non Exchange traded"]
+    const productQualityOption = [
+        { value: "Exchange traded", label: "Exchange traded" },
+        { value: "Non Exchange traded", label: "Non Exchange traded" },
+    ]
 
     const shipmentModeOptions = ["AIR", "LAND", "SEA"]
+    //     { value: "AIR", label: "AIR" },
+    //     { value: "LAND", label: "LAND" },
+    //     { value: "SEA", label: "SEA" },
+    // ]
 
     const portOfOriginOptions = ["Mumbai", "Chennai", "Kolkata", "Cochin"]
 
     const shipmentTermsOptions = [
-        "Free on Board  (FOB)",
-        "Cost Insurance and Freight (CIF)",
-        "Cost and Freight (CFR)",
-        "Free Alongside Ship (FAS)",
+        { value: "Free on Board  (FOB)", label: "Free on Board  (FOB)" },
+        { value: "Cost Insurance and Freight (CIF)", label: "Cost Insurance and Freight (CIF)" },
+        { value: "Cost and Freight (CFR)", label: "Cost and Freight (CFR)" },
+        { value: "Free Alongside Ship (FAS)", label: "Free Alongside Ship (FAS)" },
     ]
 
     const shipmentFrequencyOptions = [
@@ -718,29 +774,30 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
             flag = true
             error.borrower_Applicant = "Please enter borrower applicant name!"
         }
-        if (!lenders) {
-            flag = true
-            error.lenders = "Please enter lenders!"
-        }
+        // if (!lenders) {
+        //     flag = true
+        //     error.lenders = "Please enter lenders!"
+        // }
         if (!productDetails.name) {
             flag = true
             error.name = "Please enter product name!"
         }
 
-        if (!productDetails.type) {
-            flag = true
-            error.type = "Please enter type!"
-        }
+        // if (!productDetails.type) {
+        //     flag = true
+        //     error.type = "Please enter type!"
+        // }
 
-        if (!productDetails.commodityType) {
-            flag = true
-            error.commodityType = "Please enter commodity type!"
-        }
 
-        if (!productDetails.commoditySubType) {
-            flag = true
-            error.commoditySubType = "Please enter commodity sub type!"
-        }
+        // if (productDetails.type === "Commodity" && !productDetails.commodityType) {
+        //     flag = true
+        //     error.commodityType = "Please enter commodity type!"
+        // }
+
+        // if (!productDetails.commoditySubType) {
+        //     flag = true
+        //     error.commoditySubType = "Please enter commodity sub type!"
+        // }
 
         if (!productDetails.quantity) {
             flag = true
@@ -958,19 +1015,19 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         if (id !== undefined) {
             setShippingOptions({
                 ...shippingOptions,
-                warehouses: shippingOptions.warehouses.map((ele, i) => {
+                warehouses: shippingOptions.warehouses?.map((ele, i) => {
                     if (i === id) {
                         return data
                     } else {
                         return ele
                     }
-                }),
+                }) ?? [],
             })
             setWareHouseId("")
         } else {
             setShippingOptions({
                 ...shippingOptions,
-                warehouses: [...shippingOptions.warehouses, data],
+                warehouses: [...(shippingOptions.warehouses ?? []), data],
             })
         }
     }
@@ -1063,6 +1120,12 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     };
     const dateFormat = 'DD/MM/YYYY'
 
+    const productOptions = productName.map(item => ({
+        value: item._id,
+        label: item.name,
+        unit: item.unit
+    }));
+
     return (
         <>
             {isLoading && productDetails.length > 0 ? <LoadingSpinner /> :
@@ -1082,18 +1145,34 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                         value={borrower_Applicant}
                                     >
                                         <option value="" disabled selected>Choose...</option>
-                                        {borrowerOption.map((item) => (
-                                            <option key={item.label} value={item.label}>{item.label}</option>
+                                        {borrowerOption.map((item, i) => (
+                                            <option key={i} value={item.label}>{item.label}</option>
                                         ))}
                                     </Form.Select>
                                     {error?.borrower_Applicant && (
                                         <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.borrower_Applicant}</span>
                                     )}
                                 </Form.Group>
+                                {/* <Form.Group as={Col} controlId="formGridZip">
+                                    <Form.Label>Borrower/Applicant</Form.Label>
+                                    <Select
+                                        className='no-border'
+                                        onChange={(selectedOption) => {
+                                            setBorrower_Applicant(selectedOption ? selectedOption.value : '');
+                                        }}
+                                        isDisabled={isView}
+                                        value={borrowerOption.find(option => option.value === borrower_Applicant)}
+                                        options={borrowerOption}
+                                        placeholder="Choose..."
+                                    />
+                                    {error?.borrower_Applicant && (
+                                        <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.borrower_Applicant}</span>
+                                    )}
+                                </Form.Group> */}
 
 
 
-                                <Form.Group as={Col} controlId="formGridZip">
+                                {/* <Form.Group as={Col} controlId="formGridZip">
                                     <Form.Label>Lender</Form.Label>
                                     <Form.Select className='no-border'
                                         onChange={(e, newVal) => {
@@ -1110,13 +1189,21 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                     </Form.Select>
                                     {error?.lenders && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.lenders}</span>
                                     )}
+                                </Form.Group> */}
+
+                                <Form.Group as={Col} controlId="formGridZip">
+                                    <Form.Label>Lender</Form.Label>
+                                    <Form.Control className='no-border mb-3'
+                                        name='lender'
+                                        value={lenders}
+                                        disabled={true} />
                                 </Form.Group>
 
                             </Row>
 
                         </div>
                     </div>
-                    
+
                     <div className='m-3' />
                     <div className='add-edit-product'>
                         <div className='form'>
@@ -1131,32 +1218,54 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             disabled={true} />
                                     </Form.Group>
 
+                                    {/* <Form.Group as={Col} controlId="formGridZip">
+                                        <Form.Label>Product Type</Form.Label>
+
+                                        <Select
+                                            options={productTypesOption}
+                                            onChange={(selectedOption) => {
+                                                setProductDetails({ ...productDetails, type: selectedOption ? selectedOption.value : '' });
+                                            }}
+                                            isDisabled={isView}
+                                            value={productTypesOption.find(option => option.value === productDetails.type)}
+                                            placeholder="Choose..."
+
+                                        />
+
+                                        {error && error?.type && <span style={{ color: 'red' }}>{error.type}</span>}
+                                    </Form.Group> */}
                                     <Form.Group as={Col} controlId="formGridZip">
                                         <Form.Label>Product Type</Form.Label>
-                                        <Form.Select className='no-border'
+                                        <Form.Select
+                                            className='no-border'
                                             onChange={(e, newVal) =>
                                                 setProductDetails({ ...productDetails, type: e.target.value })
                                             }
-                                            disabled={isView}
-                                            value={
-                                                productTypesOption &&
-                                                productDetails?.type &&
-                                                productTypesOption.find(
-                                                    (ele) => ele === productDetails.type
-                                                )
-                                            }
+                                            value={productDetails.type || "Commodity"}
+                                            disabled={true}
                                         >
                                             <option value="" disabled selected>Choose...</option>
-                                            {productTypesOption.map((item) => (
-                                                <option value={item}>{item}</option>
+                                            {productTypesOption.map((item, i) => (
+                                                <option key={i} value={item}>{item}</option>
                                             ))}
                                         </Form.Select>
                                         {error && error?.type && <span style={{ color: 'red' }}>{error.type}</span>}
                                     </Form.Group>
 
 
+
                                     <Form.Group as={Col} controlId="formGridZip">
                                         <Form.Label>Commodity Type</Form.Label>
+                                        {/* <Select
+                                            options={commodityTypeOption}
+                                            onChange={(selectedOption) => {
+                                                setProductDetails({ ...productDetails, commodityType: selectedOption ? selectedOption.value : '' });
+                                            }}
+                                            isDisabled={isView}
+                                            value={commodityTypeOption.find(option => option.value === productDetails.commodityType)}
+                                            placeholder="Choose..."
+
+                                        /> */}
                                         <Form.Select className='no-border'
                                             onChange={(e, newVal) => {
                                                 handleCommodityTypeChange(e.target.value, newVal);
@@ -1165,14 +1274,14 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             value={productDetails.commodityType}>
 
                                             <option value="" disabled selected>Choose...</option>
-                                            {commodityTypeOption.map((item) => (
-                                                <option value={item}>{item}</option>
+                                            {commodityTypeOption.map((item, i) => (
+                                                <option key={i} value={item}>{item}</option>
                                             ))}
                                         </Form.Select>
                                         {error && error?.commodityType && <span style={{ color: 'red' }}>{error.commodityType}</span>}
                                     </Form.Group>
 
-                                    <Form.Group as={Col} controlId="formGridZip">
+                                    {/* <Form.Group as={Col} controlId="formGridZip">
                                         <Form.Label>Commodity Sub-Type</Form.Label>
                                         <Form.Select className='no-border'
                                             onChange={(e, newVal) =>
@@ -1186,12 +1295,36 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             ))}
                                         </Form.Select>
                                         {error && error?.commoditySubType && <span style={{ color: 'red' }}>{error.commoditySubType}</span>}
+                                    </Form.Group> */}
+
+                                    <Form.Group as={Col} controlId="formGridZip">
+                                        <Form.Label>Commodity Sub-Type</Form.Label>
+                                        <Form.Control className='no-border mb-3'
+                                            name='commoditySubtype'
+                                            value={commoditySubTypeOption}
+                                            disabled={true} />
                                     </Form.Group>
 
 
                                 </Row>
 
                                 <Row>
+                                    {/* <Form.Group as={Col} controlId="formGridZip">
+                                        <Form.Label>Product Name</Form.Label>
+                                        <Select
+                                            className="no-border"
+                                            onChange={(selectedOption) => {
+                                                setProductDetails({ ...productDetails, name: selectedOption ? selectedOption.value : '' });
+                                                setSelectedProduct(selectedOption ? selectedOption.unit : '');
+                                            }}
+                                            isDisabled={isView}
+                                            value={productOptions.find(option => option.value === productDetails.name)}
+                                            options={productOptions}
+                                            placeholder="Choose..."
+                                        />
+                                        {error && error.name && <span style={{ color: 'red' }}>{error.name}</span>}
+                                    </Form.Group> */}
+
                                     <Form.Group as={Col} controlId="formGridZip">
                                         <Form.Label>Product Name</Form.Label>
                                         <Form.Select className='no-border'
@@ -1202,8 +1335,8 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             disabled={isView}
                                             value={productDetails.name}>
                                             <option value="" disabled selected>Choose...</option>
-                                            {productName.map((item) => (
-                                                <option value={item._id}>{item.name}</option>
+                                            {productName.map((item, i) => (
+                                                <option key={i} value={item._id}>{item.name}</option>
                                             ))}
                                         </Form.Select>
                                         {error && error?.name && <span style={{ color: 'red' }}>{error.name}</span>}
@@ -1219,16 +1352,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                 handleChnage(e, "quantity", "productDetails")
                                             }
                                             disabled={isView} />
-                                        {error?.quantity && (
-                                            <span
-                                                style={{
-                                                    color: "#da251e",
-                                                    width: "100%",
-                                                    textAlign: "start",
-                                                }}
-                                            >
-                                                {error?.quantity}
-                                            </span>
+                                        {error?.quantity && (<span style={{ color: "#da251e", width: "100%", textAlign: "start", }}>{error?.quantity}</span>
                                         )}
                                     </Form.Group>
 
@@ -1253,7 +1377,17 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
 
                                     <Form.Group as={Col} controlId="formGridZip">
                                         <Form.Label>Product Quality</Form.Label>
-                                        <Form.Select className='no-border'
+                                        <Select
+                                            options={productQualityOption}
+                                            onChange={(selectedOption) => {
+                                                setProductDetails({ ...productDetails, quality: selectedOption ? selectedOption.value : '' });
+                                            }}
+                                            isDisabled={isView}
+                                            value={productQualityOption.find(option => option.value === productDetails.quality)}
+                                            placeholder="Choose..."
+
+                                        />
+                                        {/* <Form.Select className='no-border'
                                             onChange={(e, newVal) => {
                                                 setProductDetails({ ...productDetails, quality: e.target.value })
                                             }}
@@ -1264,7 +1398,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                 <option value={item}>{item}</option>
                                             ))}
 
-                                        </Form.Select>
+                                        </Form.Select> */}
                                         {error && error?.quality && <span style={{ color: 'red' }}>{error.quality}</span>}
                                     </Form.Group>
 
@@ -1281,6 +1415,19 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                             <h4 className='fw-bold mb-3 title-admin fs-5'>CONTRACT DETAILS</h4>
                             <div>
                                 <Row>
+                                    {/* <Form.Group as={Col} controlId="formGridZip">
+                                        <Form.Label>Contract Currency</Form.Label>
+                                        <Select
+                                            options={CurrencyOptions}
+                                            onChange={(selectedOption) => {
+                                                setContractDetails({ ...contractDetails, currency: selectedOption ? selectedOption.value : '' });
+                                            }}
+                                            isDisabled={isView}
+                                            value={CurrencyOptions.find(option => option.value === contractDetails.currency)}
+                                            placeholder="Choose..."
+                                        />
+                                        {error && error?.currency && <span style={{ color: 'red' }}>{error.currency}</span>}
+                                    </Form.Group> */}
                                     <Form.Group as={Col} controlId="formGridZip">
                                         <Form.Label>Contract Currency</Form.Label>
                                         <Form.Select className='no-border'
@@ -1291,13 +1438,14 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             disabled={isView}
                                             defaultValue="Choose...">
                                             <option value="" disabled selected>Choose...</option>
-                                            {CurrencyOptions.map((item) => (
-                                                <option value={item.label}>{item.label}</option>
+                                            {CurrencyOptions.map((item, i) => (
+                                                <option key={i} value={item.label}>{item.label}</option>
                                             ))}
 
                                         </Form.Select>
                                         {error && error?.currency && <span style={{ color: 'red' }}>{error.currency}</span>}
                                     </Form.Group>
+
 
                                     <Form.Group as={Col} controlId="formGridZip">
                                         <Form.Label>Contract Value</Form.Label>
@@ -1319,6 +1467,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             value={contractDetails?.contractDate}
                                             onChange={(e) => setContractDetails({ ...contractDetails, contractDate: e.target.value })}
                                             required
+                                            disabled={isView}
                                         />
                                         {error && error?.contractDate && <span style={{ color: 'red' }}>{error.contractDate}</span>}
                                     </Form.Group>
@@ -1335,6 +1484,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             value={contractDetails.expiryDate}
                                             onChange={(e) => setContractDetails({ ...contractDetails, expiryDate: e.target.value })}
                                             required
+                                            disabled={isView}
                                         />
                                         {error && error?.expiryDate && <span style={{ color: 'red' }}>{error.expiryDate}</span>}
                                     </Form.Group>
@@ -1376,6 +1526,18 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                 <Row>
                                     <Form.Group as={Col} controlId="formGridZip">
                                         <Form.Label>Shipping Company</Form.Label>
+
+                                        {/* <Select
+                                            options={shippingCompanyOption}
+                                            onChange={(selectedOption) => {
+                                                setShippingOptions({ ...shippingOptions, shippingCompany: selectedOption ? selectedOption.value : '' });
+                                                setShippingCompany(selectedOption)
+                                            }}
+                                            isDisabled={isView}
+                                            value={shippingCompanyOption.find(option => option.value === shippingOptions.shippingCompany)}
+                                            placeholder="Choose..."
+
+                                        /> */}
                                         <Form.Select className='no-border'
                                             onChange={(e, newVal) => {
                                                 setShippingOptions({ ...shippingOptions, shippingCompany: e.target.value });
@@ -1385,8 +1547,8 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             disabled={isView}
                                             value={shippingOptions.shippingCompany}>
                                             <option value="" disabled selected>Choose...</option>
-                                            {shippingCompanyOption.map((item) => (
-                                                <option key={item} value={item.value}>{item.label}</option>
+                                            {shippingCompanyOption.map((item, i) => (
+                                                <option key={i} value={item.value}>{item.label}</option>
                                             ))}
 
                                         </Form.Select>
@@ -1395,21 +1557,30 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
 
                                     <Form.Group as={Col} controlId="formGridZip">
                                         <Form.Label>Shipment Mode</Form.Label>
+                                        {/* <Select
+                                            options={shipmentModeOptions}
+                                            onChange={(selectedOption) => {
+                                                setShippingOptions({ ...shippingOptions, shipmentMode: selectedOption ? selectedOption.value : '' });
+                                            }}
+                                            isDisabled={isView}
+                                            value={shipmentModeOptions.find(option => option.value === shippingOptions.shipmentMode)}
+                                            placeholder="Choose..."
+
+                                        /> */}
                                         <Form.Select className='no-border'
                                             onChange={(e, newVal) => setShippingOptions({ ...shippingOptions, shipmentMode: e.target.value })}
                                             disabled={isView}
-                                            disableClearable
                                             value={shippingOptions.shipmentMode}>
                                             <option value="" disabled selected>Choose...</option>
-                                            {shipmentModeOptions.map((item) => (
-                                                <option value={item}>{item}</option>
+                                            {shipmentModeOptions.map((item, i) => (
+                                                <option key={i} value={item}>{item}</option>
                                             ))}
 
                                         </Form.Select>
                                         {error && error?.shipmentMode && <span style={{ color: 'red' }}>{error.shipmentMode}</span>}
                                     </Form.Group>
 
-                                    <Form.Group as={Col} controlId="formGridZip">
+                                    {/* <Form.Group as={Col} controlId="formGridZip">
                                         <Form.Label>Country of Origin</Form.Label>
                                         <Form.Select className='no-border'
                                             onChange={(e) => {
@@ -1432,14 +1603,72 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             ))}
                                         </Form.Select>
                                         {error && error?.countryOfOrigin && <span style={{ color: 'red' }}>{error.countryOfOrigin}</span>}
-                                    </Form.Group>
+                                    </Form.Group> */}
 
+                                    {/* <Form.Group as={Col} controlId="formGridZip">
+                                        <Form.Label>Country of Origin</Form.Label>
+                                        <Select
+                                            className="no-border"
+                                            options={countryOptions}
+                                            onChange={handleCountryChange}
+                                            isDisabled={isView}
+                                            value={countryOptions.find(option => option.value === shippingOptions.countryOfOrigin)}
+                                            placeholder="Choose..."
+                                        />
+                                        {error && error.countryOfOrigin && <span style={{ color: 'red' }}>{error.countryOfOrigin}</span>}
+                                    </Form.Group> */}
+                                    <Form.Group as={Col} controlId="formGridZip">
+                                        <Form.Label>Country of Origin</Form.Label>
+                                        <Select
+                                            className='no-border'
+                                            onChange={(selectedOption) => {
+                                                const selectedValue = selectedOption ? selectedOption.value : '';
+                                                setShippingOptions({ ...shippingOptions, countryOfOrigin: selectedValue });
+
+                                                if (selectedValue) {
+                                                    const selectedCountry = countries.find(country => country._id === selectedValue);
+                                                    if (selectedCountry) {
+                                                        setPorts(selectedCountry.name);
+                                                    }
+                                                }
+                                            }}
+                                            options={countries.map(country => ({ value: country._id, label: country.name }))}
+                                            isDisabled={isView} // Replace with your condition for disabling
+                                            value={countries.map(country => ({
+                                                value: country._id, label: country.name
+                                            })).find(option => option.value === shippingOptions?.countryOfOrigin)}
+                                            placeholder="Choose..."
+                                        />
+                                        {error && error.countryOfOrigin && <span style={{ color: 'red' }}>{error.countryOfOrigin}</span>}
+                                    </Form.Group>
 
                                 </Row>
 
 
                                 <Row className="mt-4">
 
+                                    {/* <Form.Group as={Col} controlId="formGridZip">
+                                        <Form.Label>Port of Origin</Form.Label>
+                                        <Select
+                                            className='no-border'
+                                            onChange={(selectedOption) => {
+                                                const mode = shippingOptions.shipmentMode;
+                                                if (mode === "SEA") {
+                                                    setShippingOptions({ ...shippingOptions, portOfOrigin: selectedOption.value });
+                                                } else if (mode === "AIR") {
+                                                    setShippingOptions({ ...shippingOptions, airbaseOfOrigin: selectedOption.value });
+                                                }
+                                            }}
+                                            isDisabled={isView}
+                                            value={options.find(option =>
+                                                (shippingOptions.shipmentMode === "SEA" && option.value === shippingOptions.portOfOrigin) ||
+                                                (shippingOptions.shipmentMode === "AIR" && option.value === shippingOptions.airbaseOfOrigin)
+                                            )}
+                                            placeholder="Choose..."
+                                            options={originCountry.map((item) => ({ value: item._id, label: item.name }))}
+                                        />
+                                        {error?.portOfOrigin && <span style={{ color: 'red' }}>{error.portOfOrigin}</span>}
+                                    </Form.Group> */}
                                     <Form.Group as={Col} controlId="formGridZip">
                                         <Form.Label>Port of Origin</Form.Label>
                                         <Form.Select className='no-border'
@@ -1457,12 +1686,13 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                 (shippingOptions.shipmentMode === "AIR" && shippingOptions.airbaseOfOrigin)
                                             }>
                                             <option value="" disabled selected>Choose...</option>
-                                            {originCountry.map((item) => (
-                                                <option value={item._id}>{item.name}</option>
+                                            {originCountry.map((item, i) => (
+                                                <option key={i} value={item._id}>{item.name}</option>
                                             ))}
                                         </Form.Select>
                                         {error && error?.portOfOrigin && <span style={{ color: 'red' }}>{error.portOfOrigin}</span>}
                                     </Form.Group>
+
 
                                     <Form.Group as={Col} controlId="formGridZip">
                                         <Form.Label>Shipment  Date</Form.Label>
@@ -1476,22 +1706,23 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             onChange={(e) =>
                                                 setShippingOptions({ ...shippingOptions, shipmentDate: e.target.value })}
                                             required
+                                            disabled={isView}
                                         />
                                         {error && error?.shipmentDate && <span style={{ color: 'red' }}>{error.shipmentDate}</span>}
                                     </Form.Group>
 
                                     <Form.Group as={Col} controlId="formGridZip">
                                         <Form.Label>Shipment Terms</Form.Label>
-                                        <Form.Select className='no-border'
-                                            onChange={(e, newVal) => setShippingOptions({ ...shippingOptions, shipmentTerms: e.target.value })}
-                                            disabled={isView}
-                                            value={shippingOptions.shipmentTerms}>
-                                            <option value="" disabled selected>Choose...</option>
-                                            {shipmentTermsOptions.map((item) => (
-                                                <option value={item}>{item}</option>
-                                            ))}
+                                        <Select
+                                            options={shipmentTermsOptions}
+                                            onChange={(selectedOption) => {
+                                                setShippingOptions({ ...shippingOptions, shipmentTerms: selectedOption ? selectedOption.value : '' });
+                                            }}
+                                            isDisabled={isView}
+                                            value={shipmentTermsOptions.find(option => option.value === shippingOptions.shipmentTerms)}
+                                            placeholder="Choose..."
 
-                                        </Form.Select>
+                                        />
                                         {error && error?.shipmentTerms && <span style={{ color: 'red' }}>{error.shipmentTerms}</span>}
                                     </Form.Group>
 
@@ -1507,7 +1738,9 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                 value={formateCurrencyValue(shippingOptions.shippedWeights)}
                                                 onChange={(e) =>
                                                     handleChnage(e, "shippedWeights", "shippingOptions")
-                                                } />
+                                                }
+                                                disabled={isView}
+                                            />
                                             <InputGroup.Text className="bg-primary text-white">
                                                 {productDetails.metric}
                                             </InputGroup.Text>
@@ -1515,19 +1748,19 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                         {error && error?.shippedWeights && <span style={{ color: 'red' }}>{error.shippedWeights}</span>}
                                     </Form.Group>
 
-                                    <Form.Group as={Col} controlId="formGridZip">
+                                    {/* <Form.Group as={Col} controlId="formGridZip">
                                         <Form.Label>Destination country</Form.Label>
                                         <Form.Select className='no-border'
                                             onChange={(e, newVal) => {
                                                 const selectedValue = e.target.value;
                                                 setShippingOptions({ ...shippingOptions, destinationCountry: selectedValue, })
 
-                                                if(selectedValue) {
+                                                if (selectedValue) {
                                                     const selectCountry = countries.find(country => country._id === selectedValue)
-                                                    if(selectCountry) {
+                                                    if (selectCountry) {
                                                         setPorts(selectCountry.name)
                                                     }
-                                                }  
+                                                }
                                             }}
                                             disabled={isView}
                                             value={shippingOptions.destinationCountry}>
@@ -1537,6 +1770,31 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             ))}
                                         </Form.Select>
                                         {error && error?.destinationCountry && <span style={{ color: 'red' }}>{error.destinationCountry}</span>}
+                                    </Form.Group> */}
+
+                                    <Form.Group as={Col} controlId="formGridZip">
+                                        <Form.Label>Country of Origin</Form.Label>
+                                        <Select
+                                            className='no-border'
+                                            onChange={(selectedOption) => {
+                                                const selectedValue = selectedOption ? selectedOption.value : '';
+                                                setShippingOptions({ ...shippingOptions, destinationCountry: selectedValue });
+
+                                                if (selectedValue) {
+                                                    const selectedCountry = countries.find(country => country._id === selectedValue);
+                                                    if (selectedCountry) {
+                                                        setPorts(selectedCountry.name);
+                                                    }
+                                                }
+                                            }}
+                                            options={countries.map(country => ({ value: country._id, label: country.name }))}
+                                            isDisabled={isView} // Replace with your condition for disabling
+                                            value={countries.map(country => ({
+                                                value: country._id, label: country.name
+                                            })).find(option => option.value === shippingOptions.destinationCountry)}
+                                            placeholder="Choose..."
+                                        />
+                                        {error && error.destinationCountry && <span style={{ color: 'red' }}>{error.destinationCountry}</span>}
                                     </Form.Group>
 
                                     <Form.Group as={Col} controlId="formGridZip">
@@ -1562,8 +1820,8 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                 (shippingOptions.shipmentMode === "AIR" && shippingOptions.destinationAirbase)
                                             }>
                                             <option value="" disabled selected>Choose...</option>
-                                            {portsOptions.map((item) => (
-                                                <option value={item._id}>{item.name}</option>
+                                            {portsOptions.map((item, i) => (
+                                                <option key={i} value={item._id}>{item.name}</option>
                                             ))}
                                         </Form.Select>
                                         {error && error?.destinationPort && <span style={{ color: 'red' }}>{error.destinationPort}</span>}
@@ -1579,11 +1837,11 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             onChange={(e, newVal) =>
                                                 setShippingOptions({ ...shippingOptions, shipmentFrequency: e.target.value })}
                                             disabled={isView}
-                                            disableClearable
+
                                             value={shippingOptions.shipmentFrequency}>
                                             <option value="" disabled selected>Choose...</option>
-                                            {shipmentFrequencyOptions.map((item) => (
-                                                <option value={item}>{item}</option>
+                                            {shipmentFrequencyOptions.map((item, i) => (
+                                                <option key={i} value={item}>{item}</option>
                                             ))}
 
                                         </Form.Select>
@@ -1691,8 +1949,8 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             disabled={isView}
                                             value={transShipmentOptions.tranShipmentRequired.toString()}>
                                             <option value="" disabled selected>Choose...</option>
-                                            {options.map((item) => (
-                                                <option key={item} value={item.value}>{item.label}</option>
+                                            {options.map((item, i) => (
+                                                <option key={i} value={item.value}>{item.label}</option>
                                             ))}
 
                                         </Form.Select>
@@ -1704,7 +1962,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                     <>
                                         <Row className='mt-4'>
                                             <Form.Group as={Col} controlId="formGridZip">
-                                                <Form.Label>Street</Form.Label>
+                                                <Form.Label>House/Building Number</Form.Label>
                                                 <Form.Control className='no-border'
                                                     value={transShipmentOptions.street}
                                                     name='street'
@@ -1735,8 +1993,8 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                     disabled={isView}
                                                     value={transShipmentOptions.country}>
                                                     <option value="" disabled selected>Choose...</option>
-                                                    {countries.map((item) => (
-                                                        <option value={item._id}>{item.name}</option>
+                                                    {countries.map((item, i) => (
+                                                        <option key={i} value={item._id}>{item.name}</option>
                                                     ))}
                                                 </Form.Select>
                                                 {error && error?.country && <span style={{ color: 'red' }}>{error.country}</span>}
@@ -1789,7 +2047,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                             </div>
                         </div>
                     </div>
-                   
+
                     <div className='add-edit-product pt-1 pb-5'>
                         <div className='p-2 mb-3 pb-4 form' style={{ backgroundColor: "rgb(243, 243, 243)", border: "none" }}>
                             <h4 className='mb-3 fs-5 fw-bold title-admin'>PRICING DETAILS</h4>
@@ -1805,8 +2063,8 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             disabled={isView}
                                             value={pricingDetails.pricingType}>
                                             <option value="" disabled selected>Choose...</option>
-                                            {pricingTypeOption.map((item) => (
-                                                <option value={item}>{item}</option>
+                                            {pricingTypeOption.map((item, i) => (
+                                                <option key={i} value={item}>{item}</option>
                                             ))}
 
                                         </Form.Select>
@@ -1868,11 +2126,10 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                         setPricingDetails({ ...pricingDetails, pricingFormula: e.target.value })
                                                     }
                                                     disabled={isView}
-                                                    disableClearable
                                                     value={pricingDetails.pricingFormula}>
                                                     <option value="" disabled selected>Choose...</option>
-                                                    {pricingFormulaOption.map((item) => (
-                                                        <option value={item}>{item}</option>
+                                                    {pricingFormulaOption.map((item, i) => (
+                                                        <option key={i} value={item}>{item}</option>
                                                     ))}
 
                                                 </Form.Select>
@@ -1892,8 +2149,8 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
 
                                                     value={pricingDetails.pricingHedgingStatus.toString()}>
                                                     <option value="" disabled selected>Choose...</option>
-                                                    {warehouseRequiredOptions.map((item) => (
-                                                        <option key={item} value={item.value}>{item.label}</option>
+                                                    {warehouseRequiredOptions.map((item, i) => (
+                                                        <option key={i} value={item.value}>{item.label}</option>
                                                     ))}
 
                                                 </Form.Select>
@@ -1909,11 +2166,10 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                             <Form.Select className='no-border'
                                                                 onChange={(e, newVal) => setPricingDetails({ ...pricingDetails, pricingHedgingMethod: e.target.value })}
                                                                 disabled={isView}
-                                                                disableClearable
                                                                 value={pricingDetails.pricingHedgingMethod}>
                                                                 <option value="" disabled selected>Choose...</option>
-                                                                {hedgingMethodOption.map((item) => (
-                                                                    <option value={item}>{item}</option>
+                                                                {hedgingMethodOption.map((item, i) => (
+                                                                    <option key={i} value={item}>{item}</option>
                                                                 ))}
 
                                                             </Form.Select>
@@ -1928,11 +2184,10 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                                     setHedgingParty(e.target.value)
                                                                 }}
                                                                 disabled={isView}
-                                                                disableClearable
                                                                 value={pricingDetails.pricingCounterParty}>
                                                                 <option value="" disabled selected>Choose...</option>
-                                                                {counterPartyOption.map((item) => (
-                                                                    <option value={item.value}>{item.label}</option>
+                                                                {counterPartyOption.map((item, i) => (
+                                                                    <option key={i} value={item.value}>{item.label}</option>
                                                                 ))}
 
                                                             </Form.Select>
@@ -1943,13 +2198,12 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                             <Autocomplete
                                                                 label='Counter party'
                                                                 id='disable-clearable'
-                                                                onChange={(e, newVal) => { 
+                                                                onChange={(e, newVal) => {
                                                                     setPricingDetails({ ...pricingDetails, pricingCounterParty: newVal.value });
                                                                     setHedgingParty(newVal.label)
                                                                 }}
                                                                 getOptionLabel={(option) => option.label || ""}
                                                                 options={counterPartyOption}
-                                                                disableClearable
                                                                 renderInput={(params) => (
                                                                     <TextField
                                                                         {...params}

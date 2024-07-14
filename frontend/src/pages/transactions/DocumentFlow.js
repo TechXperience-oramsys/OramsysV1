@@ -5,16 +5,14 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useDispatch, useSelector } from 'react-redux';
 import { transactionDataAction } from '../../redux/actions/transactionDataAction';
 import { useLocation } from 'react-router-dom';
+import { useAtom } from 'jotai';
+import { documentFlowAtom } from './Helpers/atoms';
 
 const DocumentFlow = ({ hendelCancel, hendelNext }) => {
 
     const dispatch = useDispatch()
 
-    const [documentFlow, setdocumentFlow] = useState({
-        _id: "",
-        documentRemittance: "",
-        details: ""
-    })
+    const [documentFlow, setdocumentFlow] = useAtom(documentFlowAtom)
     const [error, setError] = useState({})
     const location = useLocation()
     const isView = location?.state[2]?.isView
@@ -115,14 +113,14 @@ const DocumentFlow = ({ hendelCancel, hendelNext }) => {
                         {
                             documentFlow.documentRemittance === "Approved electronic method" &&
                             <Form.Group as={Col} lg={6} controlId="formGridZip">
-                            <Form.Label>Details</Form.Label>
-                            <Form.Control
-                                 value={documentFlow.details}
-                                 name="details"
-                                 disabled={isView}
-                                 onChange={(e) => setdocumentFlow({ ...documentFlow, details: e.target.value })} />
-                             {error?.details && (<span style={{color: "#da251e", width: "100%", textAlign: "start"}}>{error?.details}</span>)}
-                        </Form.Group>
+                                <Form.Label>Details</Form.Label>
+                                <Form.Control
+                                    value={documentFlow.details}
+                                    name="details"
+                                    disabled={isView}
+                                    onChange={(e) => setdocumentFlow({ ...documentFlow, details: e.target.value })} />
+                                {error?.details && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.details}</span>)}
+                            </Form.Group>
 
                             // <Col lg={6}>
                             //     <TextField
@@ -140,15 +138,15 @@ const DocumentFlow = ({ hendelCancel, hendelNext }) => {
                         {
                             documentFlow.documentRemittance === "Other" &&
                             <Form.Group as={Col} lg={6} controlId="formGridZip">
-                            <Form.Label>Details</Form.Label>
-                            <Form.Control
-                                value={documentFlow.details}
-                                name="details"
-                                disabled={isView}
-                                onChange={(e) => setdocumentFlow({ ...documentFlow, details: e.target.value })} />
-                             {error?.details && (<span style={{color: "#da251e", width: "100%", textAlign: "start"}}>{error?.details}</span>)}
-                        </Form.Group>
-                           
+                                <Form.Label>Details</Form.Label>
+                                <Form.Control
+                                    value={documentFlow.details}
+                                    name="details"
+                                    disabled={isView}
+                                    onChange={(e) => setdocumentFlow({ ...documentFlow, details: e.target.value })} />
+                                {error?.details && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.details}</span>)}
+                            </Form.Group>
+
                         }
                     </Row>
                 </div>

@@ -5,9 +5,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { companydataAction } from '../../../../redux/actions/companydataAction';
 import { ratingAgenciesAction } from '../../../../redux/actions/ratingAgenciesAction';
 import { useLocation } from 'react-router-dom';
-import {Col, Row} from "react-bootstrap"
-import {TextField} from "@material-ui/core"
+import { Col, Form, Row } from "react-bootstrap"
+import { TextField } from "@material-ui/core"
 import Autocomplete from "@material-ui/lab/Autocomplete"
+import { Button, Space, Table } from 'antd';
+import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
+import { OptionalSpan } from '../../../transactions/Helpers/OptionalTags'
+import moment from 'moment';
 
 const Ratings = ({ handleNext, handleBack }) => {
 
@@ -19,7 +23,6 @@ const Ratings = ({ handleNext, handleBack }) => {
     const location = useLocation()
     const isView = location.state[1]?.isView
     let options = [
-        { label: "Select option", value: "" },
         { label: "Yes", value: true },
         { label: "No", value: false },
     ]
@@ -37,8 +40,8 @@ const Ratings = ({ handleNext, handleBack }) => {
                 return {
                     agency: agencyData.data.find((item) => item._id === ele.agency)?.name,
                     rating: agencyData.data.find((item) => item._id === ele.agency)?.ratingSchema?.find((elem) => elem._id === ele.rating)?.grade,
-                    dateOfRating: ele.dateOfRating,
-                    expiryDate: ele.expiryDate,
+                    dateOfRating: moment(ele.dateOfRating).format("YYYY-MM-DD"),
+                    expiryDate: moment(ele.expiryDate).format("YYYY-MM-DD"),
                 }
             }))
         }
@@ -47,9 +50,9 @@ const Ratings = ({ handleNext, handleBack }) => {
     const Delete = (data) => {
         let body = {
             ...companyData,
-            ratings: companyData.ratings.filter((e, i) => i !== data.tableData.id)
-        }
-        dispatch(companydataAction(body))
+            ratings: companyData.ratings.filter((e, i) => i !== data.key)
+        };
+        dispatch(companydataAction(body));
     }
 
     const handleOption = (value) => {
@@ -60,104 +63,120 @@ const Ratings = ({ handleNext, handleBack }) => {
         dispatch(companydataAction(body))
     }
 
+    const columns = [
+        {
+            title: 'Agency',
+            dataIndex: 'agency',
+            key: 'agency',
+            sorter: true,
+            filterMultiple: true,
+        },
+        {
+            title: 'Rating',
+            dataIndex: 'rating',
+            key: 'rating',
+            sorter: true,
+            filterMultiple: true,
+        },
+        {
+            title: 'Date Of Rating',
+            dataIndex: 'dateOfRating',
+            key: 'dateOfRating',
+            sorter: true,
+            filterMultiple: true,
+        },
+        {
+            title: 'Expiry Date',
+            dataIndex: 'expiryDate',
+            key: 'expiryDate',
+            sorter: true,
+            filterMultiple: true,
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            align: 'center',
+            render: (_, record) => (
+                <Space size="middle">
+                    {!isView && (
+                        <>
+                            <Button
+                                icon={<EditOutlined />}
+                                onClick={() => {
+                                    setEditModal(true);
+                                    setEditData(record?.key);
+                                    setMode("Edit");
+                                }}
+                            />
+                            <Button
+                                icon={<DeleteOutlined />}
+                                onClick={() => Delete(record)}
+                            />
+                        </>
+                    )}
+                    <Button
+                        icon={<EyeOutlined />}
+                        onClick={() => {
+                            setEditModal(true);
+                            setMode("View");
+                            setEditData(record.key)
+                        }}
+                    />
+                </Space>
+            ),
+        },
+    ];
+
     return (
         <>
             <div className='add-edit-product'>
                 <div className='product'>
                     <div className='mb-3 d-flex justify-content-between align-items-center'>
-                        <h2 className='m-0'>Ratings</h2>
-                        {companyData.isRatings && <button className={`add_btn me-3 ${isView ? 'd-none' : 'd-block'}`} onClick={() => {
-                            setEditModal(true);
-                            setMode("Add")
-                        }}><img src='../../assets/img/about/plus.png' className='me-2'/>Add</button>}
+                        <h4 className='fw-bold fs-5 mb-3 title-admin'>RATINGS</h4>
+
+                        {companyData.isRatings &&
+                            <button className='btn btn-primary btn-md mb-3' onClick={() => {
+                                setEditModal(true); setMode("Add")
+                            }}>
+                                Add Rating
+                            </button>
+                        }
                     </div>
                     <div className='drop-down-container'>
                         <div className='form'>
                             <Row>
-                                <Col lg={3}>
-                                    <Autocomplete
-                                        label='Do you want to add ratings?'
-                                        id='disable-clearable'
-                                        onChange={(e, newVal) => {
-                                            handleOption(newVal?.value)
+                                <Form.Group as={Col} controlId="formGridZip">
+                                    <Form.Label>Do you want to add rating? <OptionalSpan /> </Form.Label>
+                                    <Form.Select
+                                        className='no-border'
+                                        onChange={(e) => {
+                                            const selectedValue = e.target.value === "true" ? true : e.target.value === "false" ? false : "";
+                                            handleOption(selectedValue);
                                         }}
-                                        getOptionLabel={(option) => option.label || ""}
-                                        options={options}
-                                        value={
-                                            ((options.length > 0 &&
-                                                    companyData.isRatings === true) ||
-                                                companyData.isRatings === false) ?
-                                                options.find(
-                                                    (ele) => ele.value === companyData.isRatings
-                                                ) : options = ''
-                                        }
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                label='Do you want to add ratings?'
-                                                variant='standard'
-                                            />
-                                        )}
-                                    />
-                                </Col>
+                                        disabled={isView}
+                                        value={companyData.isRatings !== null && companyData.isRatings !== undefined ? companyData.isRatings.toString() : ""}
+                                    >
+                                        <option value="" disabled>Choose...</option>
+                                        {options.map((item, i) => (
+                                            <option key={i} value={item.value.toString()}>{item.label}</option>
+                                        ))}
+                                    </Form.Select>
+                                </Form.Group>
 
                             </Row>
                         </div>
                     </div>
-                    {companyData.isRatings && <MaterialTable
-                        title=""
-                        columns={[
-                            {title: 'Agency', field: 'agency'},
-                            {title: 'Rating', field: 'rating'},
-                            {title: 'Date of rating', field: 'dateOfRating', type: "date"},
-                            {title: 'Expiry date', field: 'expiryDate', type: "date"},
-                        ]}
-                        data={rating}
-                        actions={isView ? [
-                            {
-                                icon: 'preview',
-                                tooltip: 'View Rating',
-                                onClick: (e, data) => {
-                                    setEditModal(true);
-                                    setMode("View");
-                                    setEditData(data.tableData.id)
-                                }
-                            },
-                        ] : [
-                            {
-                                icon: 'edit',
-                                tooltip: 'Edit Rating',
-                                onClick: (e, data) => {
-                                    setEditModal(true);
-                                    setMode("Edit");
-                                    setEditData(data.tableData.id)
-                                }
-                            },
-                            {
-                                icon: 'preview',
-                                tooltip: 'View Rating',
-                                onClick: (e, data) => {
-                                    setEditModal(true);
-                                    setMode("View");
-                                    setEditData(data.tableData.id)
-                                }
-                            },
-                            {
-                                icon: 'delete',
-                                tooltip: 'Delete Rating',
-                                onClick: (e, data) => {
-                                    Delete(data)
-                                }
-                            }
-                        ]}
-                        options={{
-                            filtering: true,
-                            actionsColumnIndex: -1,
-                            sorting: true,
-                            pageSize: 10,
-                            search: false,
-                        }}
-                    />}
+
+                    {companyData.isRatings && (
+                        <Table
+                            columns={columns}
+                            dataSource={rating?.map((item, index) => ({ ...item, key: index }))}
+                            pagination={{ pageSize: 10 }}
+                            loading={false}  // Change to true if you want to show a loading spinner
+                            rowKey="key"
+                            bordered
+                        />
+                    )}
                 </div>
                 <div className='footer_'>
                     <button onClick={() => { handleBack() }} className="footer_cancel_btn">Back</button>

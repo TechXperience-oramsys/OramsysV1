@@ -1,6 +1,6 @@
 import { TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Form } from 'react-bootstrap';
+import { Row, Col, Form, DropdownButton, InputGroup, Dropdown } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { countrieAction } from '../../../../redux/actions/countrieAction';
 import { useDispatch } from 'react-redux';
@@ -10,6 +10,8 @@ import { companydataAction } from '../../../../redux/actions/companydataAction';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { OptionalSpan, RequiredSpan } from '../../../transactions/Helpers/OptionalTags';
 import moment from 'moment';
+import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
+import Select from 'react-select';
 
 const Details = ({ handleNext, entityType }) => {
 
@@ -21,11 +23,17 @@ const Details = ({ handleNext, entityType }) => {
     const isView = location.state[1]?.isView
 
     let numberReg = /^[0-9\b]+$/;
-    let nigReg = /^[1-10]\d{0,10}$/
+    let nigReg = /^[0-9]+$/
     let emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     let faxReg = /^\+?[0-9]{6,}$/;
     let telephoneReg = /^[+]?(\d{1,2})?[\s.-]?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
+    // const [billingCountryCode, setBillingCountryCode] = useState('+234');
+    // const [shippingCountryCode, setShippingCountryCode] = useState('+234');
 
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
     const [common, setCommon] = useState({
         email: '',
         password: '',
@@ -52,6 +60,7 @@ const Details = ({ handleNext, entityType }) => {
         postcode: '',
         state: '',
         city: '',
+        billingCountryCode: '',
         country: '',
         mobile: '',
         telephone: '',
@@ -66,6 +75,7 @@ const Details = ({ handleNext, entityType }) => {
         addressLine2: '',
         addressLine3: '',
         postcode: '',
+        shippingCountryCode: '',
         state: '',
         city: '',
         country: '',
@@ -79,6 +89,7 @@ const Details = ({ handleNext, entityType }) => {
     const [formErrors, setFormErrors] = useState()
 
     const companyData = useSelector((state) => state.companydata.companydata)
+    const entityData = useSelector(state => state.entityData.entity)
     const country = useSelector((state) => state.countryData.country)
     const sectorData = useSelector((state) => state.sectorData.sector)
 
@@ -112,6 +123,7 @@ const Details = ({ handleNext, entityType }) => {
                 addressLine1: tempBilingData?.addressLine1,
                 addressLine2: tempBilingData?.addressLine2,
                 addressLine3: tempBilingData?.addressLine3,
+                billingCountryCode: tempBilingData?.billingCountryCode,
                 postcode: tempBilingData?.postcode,
                 state: tempBilingData?.state,
                 city: tempBilingData?.city,
@@ -131,6 +143,7 @@ const Details = ({ handleNext, entityType }) => {
                 addressLine3: tempShipingData?.addressLine3,
                 postcode: tempShipingData?.postcode,
                 state: tempShipingData?.state,
+                shippingCountryCode: entityData?.data?.addresses?.forEach(address => address.shippingCountryCode) ,
                 city: tempShipingData?.city,
                 country: tempShipingData?.country,
                 mobile: tempShipingData?.mobile,
@@ -138,6 +151,7 @@ const Details = ({ handleNext, entityType }) => {
                 fax: tempShipingData?.fax,
                 email: tempShipingData?.email,
             })
+            console.log('country code', companyData)
         }
     }, [companyData])
 
@@ -164,7 +178,7 @@ const Details = ({ handleNext, entityType }) => {
             }
         }
         else if (type === 'biling') {
-            if (name === "flatNumber" || name === "addressLine1" || name === "addressLine2" || name === "addressLine3" || name === "state" || name === "city" || name === "country" || name === "email") {
+            if (name === "flatNumber" || name === "addressLine1" || name === "addressLine2" || name === "addressLine3" || name === "billingCountryCode" || name === "state" || name === "city" || name === "country" || name === "email") {
                 setBilingAddress({ ...bilingAddress, [name]: e.target.value })
             } else if (name === "fax" || name === "postcode") {
                 if (e.target.value === '' || numberReg.test(e.target.value)) {
@@ -177,7 +191,7 @@ const Details = ({ handleNext, entityType }) => {
             }
         }
         else if (type === 'shipping') {
-            if (name === "flatNumber" || name === "addressLine1" || name === "addressLine2" || name === "addressLine3" || name === "state" || name === "city" || name === "country" || name === "email") {
+            if (name === "flatNumber" || name === "addressLine1" || name === "addressLine2" || name === "shippingCountryCode" || name === "addressLine3" || name === "state" || name === "city" || name === "country" || name === "email") {
                 setShippingAddress({ ...shippingAddress, [name]: e.target.value })
             } else if (name === "postcode" || name === "fax") {
                 if (e.target.value === '' || numberReg.test(e.target.value)) {
@@ -186,7 +200,7 @@ const Details = ({ handleNext, entityType }) => {
             }
             else if (name === "mobile" || name === "telephone") {
                 if (e.target.value === '' || nigReg.test(e.target.value)) {
-                    setBilingAddress({ ...bilingAddress, [name]: e.target.value })
+                    setShippingAddress({ ...shippingAddress, [name]: e.target.value })
                 }
             }
         }
@@ -246,7 +260,7 @@ const Details = ({ handleNext, entityType }) => {
         //     error.mainActivity = "Please enter mainActivity!"
         //     flag = true
         // }
-        
+
         console.log('Company data', companyData.addresses, error)
         console.log('Company data', bilingAddress.type)
 
@@ -399,16 +413,51 @@ const Details = ({ handleNext, entityType }) => {
         handleNext()
     }
     // const [checked, setChecked] = useState(false);
-    const entityData = useSelector(state => state.entityData.entity)
 
-    console.log('SHOW DATA', entityData?.data[0])
+    const countryCodes = [
+        { name: 'Nigeria', code: '+234' },
+        { name: 'United States', code: '+1' },
+        { name: 'United Kingdom', code: '+44' },
+        { name: 'Canada', code: '+1' },
+        { name: 'Australia', code: '+61' },
+        { name: 'India', code: '+91' },
+        { name: 'Germany', code: '+49' },
+        { name: 'France', code: '+33' },
+        { name: 'Italy', code: '+39' },
+        { name: 'Spain', code: '+34' },
+        { name: 'China', code: '+86' },
+        { name: 'Japan', code: '+81' },
+        { name: 'South Korea', code: '+82' },
+        { name: 'Brazil', code: '+55' },
+        { name: 'Mexico', code: '+52' },
+        { name: 'Russia', code: '+7' },
+        { name: 'South Africa', code: '+27' },
+        { name: 'Egypt', code: '+20' },
+        { name: 'Turkey', code: '+90' },
+        { name: 'Argentina', code: '+54' }
+    ];
+
+    const handleCountryCodeChange = (countryCode, type) => {
+        if (type === 'biling') {
+            setBilingAddress((prevState) => ({
+                ...prevState,
+                billingCountryCode: countryCode,
+            }));
+        } else if (type === 'shipping') {
+            setShippingAddress((prevState) => ({
+                ...prevState,
+                shippingCountryCode: countryCode,
+            }));
+        }
+    };
+
 
 
     return (
         <>
             <div className='add-edit-product'>
                 <div className='form'>
-                    <h4 className='fw-bold fs-5 mb-3 title-admin'>ENTITY DETAILS</h4>
+                    <h4 className='fw-bold fs-5 mb-3 title-admin'>Details</h4>
                     <div>
                         <Row>
                             <Form.Group as={Col} controlId="formGridZip">
@@ -423,6 +472,24 @@ const Details = ({ handleNext, entityType }) => {
 
                             <Form.Group as={Col} controlId="formGridZip">
                                 <Form.Label>Country <RequiredSpan /></Form.Label>
+                                <Select
+                                    className='no-border'
+                                    onChange={(selectedOption) => {
+                                        const selectedValue = selectedOption ? selectedOption.value : '';
+                                        setDetails({ ...details, country: selectedValue });
+                                    }}
+                                    options={countryData.map(country => ({ value: country._id, label: country.name }))}
+                                    isDisabled={isView} // Replace with your condition for disabling
+                                    value={countryData.map(country => ({
+                                        value: country._id, label: country.name
+                                    })).find(option => option.value === details?.country)}
+                                    placeholder="Choose..."
+                                />
+                                {formErrors && formErrors.country && <span style={{ color: 'red' }}>{formErrors.country}</span>}
+                            </Form.Group>
+
+                            {/* <Form.Group as={Col} controlId="formGridZip">
+                                <Form.Label>Country <RequiredSpan /></Form.Label>
                                 <Form.Select className='no-border'
                                     onChange={(e, newVal) => setDetails({ ...details, country: e.target.value })}
                                     disabled={isView}
@@ -433,7 +500,7 @@ const Details = ({ handleNext, entityType }) => {
                                     ))}
                                 </Form.Select>
                                 {formErrors && formErrors?.country && <span style={{ color: 'red' }}>{formErrors.country}</span>}
-                            </Form.Group>
+                            </Form.Group> */}
 
                             <Form.Group as={Col} controlId="formGridZip">
                                 <Form.Label>Registration Number <RequiredSpan /></Form.Label>
@@ -458,15 +525,19 @@ const Details = ({ handleNext, entityType }) => {
                                 {formErrors && formErrors?.email && <span style={{ color: 'red' }}>{formErrors.email}</span>}
                             </Form.Group>
 
-                            <Form.Group as={Col} controlId="formGridZip">
+                            <Form.Group className='position-relative' as={Col} controlId="formGridZip">
                                 <Form.Label>Password <RequiredSpan /></Form.Label>
                                 <Form.Control className='no-border'
-                                    type="password"
+                                    type={passwordVisible ? 'text' : 'password'}
                                     value={common.password}
                                     name='password'
                                     onChange={(e) => setCommon({ ...common, password: e.target.value })}
                                     disabled={isView}
                                 />
+                                <span className="position-absolute end-0 top-50 text-lg translate-middle-y me-3 cursor-pointer"
+                                    onClick={togglePasswordVisibility}>
+                                    {passwordVisible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                                </span>
                                 {formErrors && formErrors?.password && <span style={{ color: 'red' }}>{formErrors.password}</span>}
                             </Form.Group>
 
@@ -559,11 +630,11 @@ const Details = ({ handleNext, entityType }) => {
 
             <div className='add-edit-product'>
                 <div className='form'>
-                    <h4 className='fw-bold fs-5 mb-3 title-admin'>Billing Address</h4>
+                    <h4 className='fw-bold fs-5 mb-3 title-admin'>Registered Address</h4>
                     <div>
                         <Row>
                             <Form.Group as={Col} controlId="formGridZip">
-                                <Form.Label>House/Flat Number <RequiredSpan /></Form.Label>
+                                <Form.Label>House/Building Number <RequiredSpan /></Form.Label>
                                 <Form.Control className='no-border'
                                     value={bilingAddress?.flatNumber}
                                     onChange={(e) => handleChange(e, 'flatNumber', 'biling')}
@@ -636,27 +707,55 @@ const Details = ({ handleNext, entityType }) => {
 
                             <Form.Group as={Col} controlId="formGridZip">
                                 <Form.Label>Country <RequiredSpan /></Form.Label>
-                                <Form.Select className='no-border'
-                                    onChange={(e, newVal) => setBilingAddress({ ...bilingAddress, country: e.target.value })}
-                                    disabled={isView}
-                                    value={bilingAddress.country}>
-                                    <option value="" disabled selected>Choose...</option>
-                                    {countryData?.map((item) => (
-                                        <option value={item._id}>{item.name}</option>
-                                    ))}
-                                </Form.Select>
+                                <Select
+                                    className='no-border'
+                                    onChange={(selectedOption) => {
+                                        const selectedValue = selectedOption ? selectedOption.value : '';
+                                        setBilingAddress({ ...bilingAddress, country: selectedValue });
+                                    }}
+                                    options={countryData.map(country => ({ value: country._id, label: country.name }))}
+                                    isDisabled={isView} // Replace with your condition for disabling
+                                    value={countryData.map(country => ({
+                                        value: country._id, label: country.name
+                                    })).find(option => option.value === bilingAddress.country)}
+                                    placeholder="Choose..."
+                                />
                                 {formErrors && formErrors.Biling?.country && <span style={{ color: 'red' }}>{formErrors.Biling.country}</span>}
                             </Form.Group>
                         </Row>
 
                         <Row className='mt-4'>
-                            <Form.Group as={Col} controlId="formGridZip">
+                            {/* <Form.Group as={Col} controlId="formGridZip">
                                 <Form.Label>Phone 1 <RequiredSpan /></Form.Label>
                                 <Form.Control className='no-border'
                                     value={bilingAddress.mobile}
                                     onChange={(e) => handleChange(e, 'mobile', 'biling')}
                                     disabled={isView}
                                 />
+                                {formErrors && formErrors.Biling?.mobile && <span style={{ color: 'red' }}>{formErrors.Biling.mobile}</span>}
+                            </Form.Group> */}
+
+                            <Form.Group as={Col} controlId="formGridZip">
+                                <Form.Label>Phone 1 <RequiredSpan /></Form.Label>
+                                <InputGroup>
+                                    <DropdownButton variant="outline-secondary" title={bilingAddress.billingCountryCode} id="input-group-dropdown-1">
+                                        {countryCodes.map((country, i) => (
+                                            <Dropdown.Item key={i} onClick={() =>
+                                                setBilingAddress((prevState) => ({
+                                                    ...prevState,
+                                                    billingCountryCode: country.code
+                                                }))}>
+                                                {country.name} ({country.code})
+                                            </Dropdown.Item>
+                                        ))}
+                                    </DropdownButton>
+                                    <Form.Control
+                                        value={bilingAddress.mobile}
+                                        onChange={(e) => handleChange(e, 'mobile', 'biling')}
+                                        disabled={isView}
+                                        placeholder="Enter phone number"
+                                    />
+                                </InputGroup>
                                 {formErrors && formErrors.Biling?.mobile && <span style={{ color: 'red' }}>{formErrors.Biling.mobile}</span>}
                             </Form.Group>
 
@@ -696,13 +795,13 @@ const Details = ({ handleNext, entityType }) => {
 
             <div className='add-edit-product'>
                 <div className='form'>
-                    <h4 className='fw-bold fs-5 mb-3 title-admin'>Shipping address</h4>
-                    <button className='btn btn-primary btn-md mb-3' onClick={() => setShippingAddress({ ...bilingAddress, type: "Shipping" })}>Use Billing Address
+                    <h4 className='fw-bold fs-5 mb-3 title-admin'>Operating Address</h4>
+                    <button className='btn btn-primary btn-md mb-3' onClick={() => setShippingAddress({ ...bilingAddress, type: "Shipping" })}>Use Registered Address
                     </button>
                     <div>
                         <Row>
                             <Form.Group as={Col} controlId="formGridZip">
-                                <Form.Label>House/Flat Number <RequiredSpan /></Form.Label>
+                                <Form.Label>House/Building Number <RequiredSpan /></Form.Label>
                                 <Form.Control className='no-border'
                                     value={shippingAddress?.flatNumber}
                                     onChange={(e) => handleChange(e, 'flatNumber', 'shipping')}
@@ -773,29 +872,59 @@ const Details = ({ handleNext, entityType }) => {
                                 {formErrors && formErrors.Shipping?.city && <span style={{ color: 'red' }}>{formErrors.Shipping.city}</span>}
                             </Form.Group>
 
+
                             <Form.Group as={Col} controlId="formGridZip">
                                 <Form.Label>Country <RequiredSpan /></Form.Label>
-                                <Form.Select className='no-border'
-                                    onChange={(e, newVal) => setShippingAddress({ ...shippingAddress, country: e.target.value })}
-                                    disabled={isView}
-                                    value={shippingAddress.country}>
-                                    <option value="" disabled selected>Choose...</option>
-                                    {countryData?.map((item) => (
-                                        <option value={item._id}>{item.name}</option>
-                                    ))}
-                                </Form.Select>
+                                <Select
+                                    className='no-border'
+                                    onChange={(selectedOption) => {
+                                        const selectedValue = selectedOption ? selectedOption.value : '';
+                                        setShippingAddress({ ...shippingAddress, country: selectedValue });
+                                    }}
+                                    options={countryData.map(country => ({ value: country._id, label: country.name }))}
+                                    isDisabled={isView} // Replace with your condition for disabling
+                                    value={countryData.map(country => ({
+                                        value: country._id, label: country.name
+                                    })).find(option => option.value === shippingAddress.country)}
+                                    placeholder="Choose..."
+                                />
                                 {formErrors && formErrors.Shipping?.country && <span style={{ color: 'red' }}>{formErrors.Shipping.country}</span>}
                             </Form.Group>
                         </Row>
 
                         <Row className='mt-4'>
-                            <Form.Group as={Col} controlId="formGridZip">
+                            {/* <Form.Group as={Col} controlId="formGridZip">
                                 <Form.Label>Phone 1 <RequiredSpan /></Form.Label>
                                 <Form.Control className='no-border'
                                     value={shippingAddress.mobile}
                                     onChange={(e) => handleChange(e, 'mobile', 'shipping')}
                                     disabled={isView}
                                 />
+                                {formErrors && formErrors.Shipping?.mobile && <span style={{ color: 'red' }}>{formErrors.Shipping.mobile}</span>}
+                            </Form.Group> */}
+
+                            <Form.Group as={Col} controlId="formGridZip">
+                                <Form.Label>Phone 1 <RequiredSpan /></Form.Label>
+                                <InputGroup>
+                                    <DropdownButton variant="outline-secondary" title={shippingAddress.shippingCountryCode} id="input-group-dropdown-2">
+                                        {countryCodes.map((country, i) => (
+                                            <Dropdown.Item key={i} onClick={() => setShippingAddress((prevState) => ({
+                                                ...prevState,
+                                                shippingCountryCode: country.code
+                                            }))
+                                            }>
+                                                {country.name} ({country.code})
+                                            </Dropdown.Item>
+                                        ))}
+                                    </DropdownButton>
+                                    <Form.Control
+                                        // className=''
+                                        value={shippingAddress.mobile}
+                                        onChange={(e) => handleChange(e, 'mobile', 'shipping')}
+                                        disabled={isView}
+                                        placeholder="Enter phone number"
+                                    />
+                                </InputGroup>
                                 {formErrors && formErrors.Shipping?.mobile && <span style={{ color: 'red' }}>{formErrors.Shipping.mobile}</span>}
                             </Form.Group>
 
@@ -820,7 +949,7 @@ const Details = ({ handleNext, entityType }) => {
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridZip">
-                                <Form.Label>Shipping Address Email <RequiredSpan /></Form.Label>
+                                <Form.Label>Operating Address Email <RequiredSpan /></Form.Label>
                                 <Form.Control className='no-border'
                                     value={shippingAddress.email}
                                     onChange={(e) => handleChange(e, 'email', 'shipping')}

@@ -1,6 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet");
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  font-family: -apple-system, BlinkMacSystemFont, "Figtree", "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -11,7 +13,7 @@ body::-webkit-scrollbar {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Figtree",
     monospace;
 }
 #dash::-webkit-scrollbar {
@@ -779,7 +781,7 @@ h4,
 h5,
 h6 {
   font-weight: 400;
-  font-family: "Barlow", sans-serif;
+  font-family: "Figtree", sans-serif;
   margin: 0 0 20px 0;
   color: #000000;
 }
@@ -15824,11 +15826,12 @@ div#wrapper.open > .offcanvas-mask {
   /* padding: 25px; */
   /* background: #082979; */
   /* height: 100vh; */
-  background: #111827;
+  background: #ffffff;
   border-right: 1px solid #f1f1f1;
   display: block;
   position: none;
   height: 100vh;
+  margin: 0px 20px;
   overflow-y: auto;
   overflow-x: hidden;
   /* position: fixed;
@@ -15844,6 +15847,41 @@ div#wrapper.open > .offcanvas-mask {
   background: lightgrey;
 }
 
+ .custom-input, .custom-button {
+    height: 40px; /* Adjust height */
+    width: 40px;  /* Adjust width */
+    border: none;
+    outline: none;
+    border-radius: 0; /* Make it square */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .custom-input {
+    padding-left: 5px; /* Add some padding if needed */
+  }
+
+  .custom-button {
+    background-color: transparent; /* Make button flat */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .custom-button span {
+    display: none; /* Hide text inside the button */
+  }
+
+  .custom-input::placeholder {
+    font-weight: lighter;
+  }
+
+  .custom-input:focus, .custom-button:focus {
+    box-shadow: none;
+  }
+
 /* .sidebar_responsive {
   position: unset;
   display: block;
@@ -15854,7 +15892,7 @@ div#wrapper.open > .offcanvas-mask {
   box-sizing: border-box;
   /* max-width: 100%; */
   /* background-image: linear-gradient(to right bottom, #f14d4c, #f25756, #f26160, #f26a6a, #f17373); */
-  background: l#111827;
+  background: #ffffff;
   /* background-color: #F1F1F1; */
   min-width: 0px;
   min-height: 0px;
@@ -15869,13 +15907,13 @@ div#wrapper.open > .offcanvas-mask {
 }
 
 .profile-content .user_img {
-  height: 100px;
-  width: 100px;
+  height: 60px;
+  width: 60px;
   margin: 20px auto;
 }
 
 .profile-name h1 {
-  color: #ffffff;
+  color: #000;
   /* font-family: Lato; */
   font-size: 16px;
   font-weight: bold;

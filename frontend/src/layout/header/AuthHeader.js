@@ -7,6 +7,7 @@ import LogoutModal from '../../component/Modal/LogoutModal'
 import AuthStorage from '../../helper/AuthStorage'
 import STORAGEKEY from '../../config/APP/app.config'
 import { MenuOutlined } from '@ant-design/icons';
+import { Badge } from 'antd';
 
 
 const AuthHeader = ({ showSidebar, setSidebar }) => {
@@ -53,7 +54,7 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
           </div>
         </div>
       </div> */}
-      <div className='open-sidebar d-flex align-items-center' style={{ backgroundColor: "#f1f1f1", padding: "15px" }}>
+      <div className='open-sidebar d-flex align-items-center' style={{ padding: "15px" }}>
         <div className="d-flex align-items-center">
           {/* <img src='./assets/img/my-img/barmanu.svg' alt='' width="30px"  /> */}
           <MenuOutlined className='fs-5' onClick={() => setSidebar(!showSidebar)} />
@@ -61,16 +62,13 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
         </div>
         <div className="d-flex align-items-center me-5 ms-auto">
           <div className='me-2'>
-            {/* <IoSettingsOutline className='me-1' size={15} /> */}
-            <span className='badge badge-lg text-heading badge-dot py-auto'>
-              <i className='bg-success '></i> 
-              <span className='font-normal h6 text-muted'>{userData?.name}</span>
-            </span>
+            <Badge className="font-semibold" size={30} status="success" text={userData?.name} />
+
           </div>
 
           <div className='ms-2 mx-auto'>
 
-            <Link onClick={() => setshowModal(true)} className="nav-link" href="#">
+            <Link onClick={() => setshowModal(true)} className="nav-link">
               <HiOutlineLogout className='me-1' size={15} />
               <span>Logout</span>
               {/* <HiOutlineLogout className='text-white' size={22} /><span className='ps-3 fw-semibold text-danger'>Logout</span> */}

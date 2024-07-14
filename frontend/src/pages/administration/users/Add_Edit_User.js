@@ -1,6 +1,6 @@
 import { TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Form } from 'react-bootstrap';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
@@ -11,6 +11,7 @@ import { toast } from 'react-hot-toast'
 import { REGISTER, USER_GET_BY_ID, USER_UPDATE } from '../../../redux/types';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { registerAction } from '../../../redux/actions/registerAction';
+import { RequiredSpan } from '../../transactions/Helpers/OptionalTags';
 
 const Add_Edit_User = () => {
     const searchParams = new URLSearchParams(window.location.search)
@@ -173,136 +174,80 @@ const Add_Edit_User = () => {
     return (
         <>
             <div className='add-edit-product'>
-                <h1 className=''>User</h1>
-                <div className='form'>
-                    <h2 className='mb-3'>Details</h2>
-                    <div>
-                        <Row className='mt-4'>
-                            <Col xxl={3} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                                <TextField
-                                    label="Name"
-                                    variant="standard"
-                                    color="warning"
-                                    name='name'
-                                    value={state.name}
-                                    onChange={handleChange}
-                                    disabled={isView}
-                                />
-                                {error?.name && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.name}</span>}
-                            </Col>
-                            <Col xxl={3} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                                <TextField
-                                    label="Email"
-                                    variant="standard"
-                                    color="warning"
-                                    name='email'
-                                    value={state.email}
-                                    onChange={handleChange}
-                                    disabled={isView}
-                                />
-                                {error && error?.email && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error.email}</span>}
-                            </Col>
-                            <Col xxl={3} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                                {/* <FormControl className="">
-                                    <InputLabel htmlFor="age-native-simple">Department</InputLabel>
-                                    <Select
-                                        native
-                                        focused
-                                        value={state.department}
-                                        onChange={handleChange}
-                                        inputProps={{
-                                            name: 'department',
-                                        }}
-                                    >
-                                        <option className='d-none' aria-label="None" value="" />
-                                        <option value={'Credit'}>Credit</option>
-                                        <option value={'Operations'}>Operations</option>
-                                        <option value={'Compliance'}>Compliance</option>
-                                        <option value={'Information Technology'}>Information Technology</option>
-                                        <option value={'Finance'}>Finance</option>
-                                        <option value={'Credit Remediation'}>Credit Remediation</option>
-                                        <option value={'Senior Management'}>Senior Management</option>
-                                    </Select>
-                                </FormControl> */}
-                                {/* <Autocomplete
-                                    label="Department"
-                                    onChange={q => setText(q)}
-                                    selectOnBlur
-                                    requireMatch
-                                    getOptions={getOptions}
-                                    query={text}
-                                /> */}
+                <div className='form mt-5'>
 
-                                <Autocomplete
-                                    options={departmentOption}
-                                    getOptionLabel={(option) => option}
-                                    id="disable-clearable"
-                                    label="Department"
-                                    renderInput={(params) => (
-                                        <TextField {...params} label="Department" variant="standard" />
-                                    )}
-                                    onChange={(event, newValue) => {
-                                        setState({ ...state, department: newValue });
-                                    }}
-                                    value={state.department}
-                                    disabled={isView}
-                                    disableClearable
-                                />
-                                {error?.department && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.department}</span>}
-                            </Col>
-                            <Col xxl={3} xl={4} lg={6} md={4} sm={6} className='mb-3'>
-                                {/* <FormControl className="">
-                                    <InputLabel htmlFor="age-native-simple">Profile</InputLabel>
-                                    <Select
-                                        native
-                                        focused
-                                        value={state.profile}
-                                        onChange={handleChange}
-                                        inputProps={{
-                                            name: 'profile',
-                                            // id: 'age-native-simple',
-                                        }}
-                                    >
-                                        <option className='d-none' aria-label="None" value="" />
-                                        <option value={'User'}>User</option>
-                                        <option value={'Admin'}>Admin</option>
-                                        <option value={'Tester'}>Tester</option>
-                                    </Select>
-                                </FormControl> */}
-                                {/* <Autocomplete
-                                    label="Profile"
-                                    onChange={q => setText(q)}
-                                    selectOnBlur
-                                    requireMatch
-                                    getOptions={getOptions}
-                                    query={text}
-                                /> */}
+                    <h4 className='fw-bold fs-5 mb-3 title-admin'>ADD USER</h4>
 
-                                <Autocomplete
-                                    options={profileOption}
-                                    getOptionLabel={(option) => option}
-                                    id="disable-clearable"
-                                    label="Profile"
-                                    renderInput={(params) => (
-                                        <TextField {...params} label="Profile" variant="standard" />
-                                    )}
-                                    onChange={(event, newValue) => {
-                                        setState({ ...state, profile: newValue });
-                                    }}
-                                    value={state.profile}
-                                    disableClearable
-                                    disabled={isView}
-                                />
-                                {error?.profile && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.profile}</span>}
-                            </Col>
-                        </Row>
-                    </div>
+                    <Row>
+                        <Form.Group as={Col} controlId="formGridZip">
+                            <Form.Label>Name <RequiredSpan /></Form.Label>
+                            <Form.Control className=''
+                                value={state.name}
+                                onChange={(e) => {
+                                    setState({ ...state, name: e.target.value });
+                                }}
+                                disabled={isView}
+                            />
+                            {error?.name && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.name}</span>}
+                        </Form.Group>
+
+                        <Form.Group as={Col} controlId="formGridZip">
+                            <Form.Label>Email <RequiredSpan /></Form.Label>
+                            <Form.Control className=''
+                                value={state.email}
+                                onChange={(e) => {
+                                    setState({ ...state, email: e.target.value });
+                                }}
+                                disabled={isView}
+                            />
+                            {error?.email && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.email}</span>}
+                        </Form.Group>
+
+                        <Form.Group as={Col} controlId="formGridZip">
+                            <Form.Label>Department <RequiredSpan /></Form.Label>
+                            <Form.Select className=''
+                                onChange={(e, newVal) => setState({ ...state, department: e.target.value })}
+                                disabled={isView}
+                                disableClearable
+                                value={state.department}
+                            >
+                                <option value="" disabled selected>Choose...</option>
+                                {departmentOption.map((item) => (
+                                    <option value={item}>{item}</option>
+                                ))}
+
+                            </Form.Select>
+                            {error?.department && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.department}</span>}
+                        </Form.Group>
+
+                        <Form.Group as={Col} controlId="formGridZip">
+                            <Form.Label>Profile <RequiredSpan /></Form.Label>
+                            <Form.Select className=''
+                                onChange={(e, newVal) => setState({ ...state, profile: e.target.value })}
+                                disabled={isView}
+                                disableClearable
+                                value={state.profile}
+                            >
+                                <option value="" disabled selected>Choose...</option>
+                                {profileOption.map((item) => (
+                                    <option value={item}>{item}</option>
+                                ))}
+
+                            </Form.Select>
+                            {error?.profile && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.profile}</span>}
+                        </Form.Group>
+                    </Row>
+
                 </div>
+
                 <div className='footer_'>
                     <button onClick={() => navigate('/users')} className="footer_cancel_btn">cancel</button>
                     <button onClick={() => { !id ? addUser() : editUser() }} className={`footer_next_btn ${isView ? 'd-none' : 'd-block'}`}>Save</button>
                 </div>
             </div>
+
+
+
         </>
     )
 }

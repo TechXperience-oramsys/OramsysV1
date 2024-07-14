@@ -8,12 +8,16 @@ import { Link } from "react-router-dom"
 import LogoutModal from '../../component/Modal/LogoutModal';
 import { BsAirplane } from 'react-icons/bs';
 import { GrClose, GrFlagFill, GrUserAdmin } from 'react-icons/gr';
-import { FaBoxOpen, FaThList, } from 'react-icons/fa';
+import { FaBoxOpen, FaThList, FaUserCircle, } from 'react-icons/fa';
 import { HiOutlineLogout, HiOutlineUsers } from "react-icons/hi";
 import { GiCargoShip } from "react-icons/gi";
 import { ImOffice } from "react-icons/im";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { FcHome, FcLock, FcInvite, FcCollaboration, FcWorkflow, FcViewDetails, FcPositiveDynamic } from "react-icons/fc";
+import { FaMoneyBillTransfer, FaRegCircleUser, FaUsersLine } from "react-icons/fa6";
+import { GoDotFill } from "react-icons/go";
+import { CiUser } from "react-icons/ci";
+
 import Fade from 'react-reveal/Fade';
 
 
@@ -24,11 +28,17 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
   const [showItem, setShowItem] = useState('')
   const [showSubItem, setShowSubItem] = useState('')
   const [userData, setUserData] = useState('')
+  const [activeItem, setActiveItem] = useState('Dashboard');
+
   const ShowSubItem = (item) => {
     const { text, path } = item
+    setActiveItem(text);
+
     if (text === "Administration") {
       if (text !== showItem) {
         setShowItem(text)
+        setActiveItem(text);
+
       } else {
         setShowItem('')
       }
@@ -36,6 +46,8 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
       if (text === "Master Data") {
         if (text !== showSubItem) {
           setShowSubItem(text)
+          setActiveItem(text);
+
         } else {
           setShowSubItem('')
         }
@@ -58,39 +70,35 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
       text: 'Administration',
       path: "",
       subItem: [
+
         {
-          img: FcCollaboration,
-          text: 'Entities',
-          path: "entities"
-        },
-        {
-          img: FcWorkflow,
+          img: GoDotFill,
           text: 'Entities Role',
           path: "entities-role"
         },
         {
-          img: FcViewDetails,
+          img: GoDotFill,
           size: 25,
           text: 'Master Data',
           path: "",
           subData: [
             {
-              img: GrFlagFill,
+              img: GoDotFill,
               text: 'Countries',
               path: "countries",
             },
             {
-              img: GiCargoShip,
+              img: GoDotFill,
               text: 'Ports',
               path: "ports",
             },
             {
-              img: BsAirplane,
+              img: GoDotFill,
               text: 'Airports',
               path: "airports",
             },
             {
-              img: ImOffice,
+              img: GoDotFill,
               text: 'Rating Agencies',
               path: "rating-agencies",
             },
@@ -98,6 +106,11 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
         },
 
       ]
+    },
+    {
+      img: FaUsersLine,
+      text: 'Entities',
+      path: "entities"
     },
     {
       img: FaBoxOpen,
@@ -110,7 +123,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
       path: "users"
     },
     {
-      img: FcPositiveDynamic,
+      img: FaMoneyBillTransfer,
       text: 'Transactions',
       path: "transactions"
     },
@@ -150,7 +163,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           path: "users"
         },
         {
-          img: FcPositiveDynamic,
+          img: FaMoneyBillTransfer,
           text: 'Transactions',
           path: "transactions"
         },
@@ -166,7 +179,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
     },
 
     {
-      img: FcPositiveDynamic,
+      img: FaMoneyBillTransfer,
       text: 'Transactions',
       path: "transactions"
     },
@@ -198,7 +211,6 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
   // }, [])
 
 
-
   return (
     <>
 
@@ -209,37 +221,44 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           <GrClose size={30} className="close_sidebar" onClick={() => setSidebar(!showSidebar)} />
           <div className='profile-content pe-5'>
             <img alt="" src='../../../assets/img/logo.png' className='align-items-center m-2 mx-auto mt-3 profile-img' />
-            <img alt="" src='../../../assets/img/wired.gif' className='user_img' />
+            <FaUserCircle className='user_img' />
             <div className='profile-name text-center'>
               <h1>{userData?.name}</h1>
-              {/* <img alt="" src='../../../assets/img/about/logout.png' onClick={(e) => Logout(e)} className='mt-2' style={{ cursor: "pointer" }} /> */}
             </div>
           </div>
+
+          {/* <div className='d-flex  gap-4 m-3'>
+            <div className='fs-4 justify-content-start '> <CiUser size={30} /></div>
+
+
+            <div className='text-center justify-content-end my-auto'><h5>{userData?.name}</h5></div>
+          </div> */}
 
           <div className='sidebar-nav'>
             <Navbar>
               <div style={{ 'width': "100%", 'zIndex': '11111' }} className='navbar-light'>
                 {
                   navbarData.map((item, i) => (
-                    <div key={i} className={`${item.text === "Jobs" ? "d-block navbar-body" : 'navbar-body'} text-white`}>
-                      <div className='d-flex align-items-center ps-3 gap-3 mx-2 my-4'>
-                        <item.img size={20} />
-                        <Nav.Link className=' p-0' onClick={() => ShowSubItem({ text: item.text, path: item.path })}>{item.text} {item.text === "Administration" ? <img alt="" src='../../../../../assets/img/about/down-filled-triangular-arrow.png' className={`${showItem === "Administration" ? 'img-roted' : 'img-roted_unset'}`} /> : ""}</Nav.Link>
+                    <div key={i} className={`${item.text === "Jobs" ? "d-block navbar-body" : 'navbar-body'}`}>
+                      <div className={`d-flex align-items-center ps-3 gap-3 mx-2 my-4 ${activeItem === item.text ? 'active text-dark py-2 text-decoration-none rounded bg-indigo-100' : ''}`}>
+                        <item.img size={25} />
+                        <Nav.Link className={`p-0 font-bold text-md ${activeItem === item.text ? 'active' : ''}`} onClick={() => ShowSubItem({ text: item.text, path: item.path })}>{item.text} {item.text === "Administration" ? <img alt="" src='../../../../../assets/img/about/down-filled-triangular-arrow.png' className={`${showItem === "Administration" ? 'img-roted' : 'img-roted_unset'}`} /> : ""}</Nav.Link>
                       </div>
                       {
                         showItem === item.text && "subItem" in item &&
                         item.subItem?.map((subItem, i) => {
                           return <>
-                            <div key={i} className='d-flex align-items-center gap-3 mx-4 my-4 ps-2'>
-                              <subItem.img size={20} />
-                              <Nav.Link className=' p-0 ' onClick={() => ShowSubItem({ text: subItem.text, path: subItem.path })}>{subItem.text} {subItem.text === 'Master Data' ? <img alt="" src='../../../../../assets/img/about/down-filled-triangular-arrow.png' className={`${showSubItem === "Master Data" ? 'img-roted' : 'img-roted_unset'}`} /> : ""}</Nav.Link>
+                            <div key={i} className={`d-flex align-items-center gap-3 mx-4 my-4 ps-2 ${activeItem === subItem.text ? 'active text-dark py-2 rounded bg-indigo-100' : ''}`}>
+                              <subItem.img size={15} />
+                              {/* <div className='fs-1 font-bold'>.</div> */}
+                              <Nav.Link className={`p-0 font-light `} onClick={() => ShowSubItem({ text: subItem.text, path: subItem.path })}>{subItem.text} {subItem.text === 'Master Data' ? <img alt="" src='../../../../../assets/img/about/down-filled-triangular-arrow.png' className={`${showSubItem === "Master Data" ? 'img-roted' : 'img-roted_unset'}`} /> : ""}</Nav.Link>
                             </div>
                             {
                               showSubItem === subItem.text && "subData" in subItem &&
                               subItem.subData?.map((subSubItem, i) => (
-                                <div key={i} className='d-flex align-items-center gap-3 my-4 mx-4 ps-3'>
+                                <div key={i} className={`d-flex align-items-center gap-3 my-4 mx-4 ps-3 ${activeItem === subSubItem.text ? 'active text-dark py-2 rounded bg-indigo-100' : ''}`}>
                                   <subSubItem.img size={16} />
-                                  <NavLink className='text-white text-decoration-none' to={subSubItem.path} style={{ display: "block" }}>{subSubItem.text}</NavLink>
+                                  <NavLink className={`text-dark font-light text-decoration-none`} to={subSubItem.path} style={{ display: "block" }}>{subSubItem.text}</NavLink>
                                 </div>
                               ))
                             }
@@ -249,19 +268,16 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
                     </div>
                   ))
                 }
-                {/* <!-- Divider --> */}
-                <hr className="navbar-divider my-2 opacity-20" />
-                {/* <!-- Navigation --> */}
+
                 <div className="d-flex flex-column mx-3 ps-2 gap-3  my-4">
                   <div className="p-3">
                     {/* <Link className="nav-link">
                       <i className="bi bi-person-square"></i> <span className='ps-5'>Account</span>
                     </Link> */}
                   </div>
-                  <hr width='100%' className="my-2 text-white opacity-10" />
                   <div className="">
                     <Link onClick={() => setshowModal(true)} className="nav-link" href="#">
-                      <HiOutlineLogout className='text-white' size={22} /><span className='ps-3 fw-semibold text-danger'>Logout</span>
+                      <HiOutlineLogout className='text-dark' size={25} /><span className='ps-3 fw-semibold'>Logout</span>
                     </Link>
                   </div>
                 </div>

@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RATINGAGENCIES, RATINGAGENCIES_GET_BY_ID, RATINGAGENCY_UPDATE } from '../../../../redux/types';
 import { toast } from 'react-hot-toast'
 import { ratingAgencyAddAction, ratingAgencyGetByIdAction, ratingAgencyUpdateAction } from '../../../../redux/actions/ratingAgenciesAction';
+import { Table, Button } from 'antd';
+import { EyeOutlined, EditOutlined } from '@ant-design/icons';
 
 const Ratingschemes = ({ hendelCancel, hendelNext, detailData }) => {
 
@@ -72,9 +74,9 @@ const Ratingschemes = ({ hendelCancel, hendelNext, detailData }) => {
     setRatingAgencyData(ratingAgencyAdd)
   }, [ratingAgencyAdd])
 
-  useEffect(() => {
-    console.log('dataGetById', dataGetById.data?.ratingSchema)
-  }, [dataGetById])
+  // useEffect(() => {
+  //   console.log('dataGetById', dataGetById.data?.ratingSchema)
+  // }, [dataGetById])
 
   useEffect(() => {
     return (() => {
@@ -169,47 +171,72 @@ const Ratingschemes = ({ hendelCancel, hendelNext, detailData }) => {
     }
   }
 
+  const columns = [
+    {
+      title: 'Grade',
+      dataIndex: 'grade',
+      key: 'grade',
+      align: 'center',
+      sorter: (a, b) => a.grade.localeCompare(b.grade),
+    },
+    {
+      title: 'Value',
+      dataIndex: 'value',
+      key: 'value',
+      align: 'center',
+      sorter: (a, b) => a.value - b.value,
+    },
+    {
+      title: 'Acceptable',
+      dataIndex: 'acceptable',
+      key: 'acceptable',
+      align: 'center',
+      sorter: (a, b) => a.acceptable - b.acceptable,
+      render: (acceptable) => (acceptable ? 'True' : 'False'),
+    },
+    {
+      title: 'Comments',
+      dataIndex: 'comments',
+      key: 'comments',
+      align: 'center',
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      align: 'center',
+      render: (text, record) => (
+        <div >
+          <Button icon={<EyeOutlined />} onClick={() => { setEditModal(true); setSelect(record); setIsView(true); }} style={{ marginRight: 8 }}> View </Button>
+          {!view && (
+            <Button icon={<EditOutlined />} onClick={() => { setEditModal(true); setSelect(record); }}> Edit </Button>
+          )}
+        </div>
+      ),
+    },
+  ];
+
   return (
     <div className='add-edit-product'>
       <div className='product p-0'>
+
         <div className='mb-3 d-flex justify-content-between align-items-center'>
+          <h4 className='fw-bold fs-5 mb-3 title-admin'>Rating Schemes</h4>
+          <button className={`btn btn-primary btn-md mb-3 ${view ? 'd-none' : 'd-block'}`} onClick={() => setEditModal(true)}>
+            Add Rating Scheme
+          </button>
+        </div>
+
+        {/* <div className='mb-3 d-flex justify-content-between align-items-center'>
           <h5 className="title-color">Rating schemes</h5>
           <button className={`add_btn me-3 ${view ? 'd-none' : 'd-block'}`} onClick={() => setEditModal(true)}> <img src='../../assets/img/about/plus.png' className='me-2' alt='' />Add</button>
-        </div>
-        <MaterialTable
-          title=""
-          columns={[
-            { title: 'Grade', field: 'grade' },
-            { title: 'Value', field: 'value' },
-            { title: 'Acceptable', field: 'acceptable' },
-            { title: 'Comments', field: 'comments' },
-          ]}
-          data={schemData}
-          actions={view ? [
-            {
-              icon: 'preview',
-              tooltip: 'View Rating Schemes',
-              onClick: (event, rowData) => { setEditModal(true); setSelect(rowData); setIsView(true) }
-            }
-          ] : [
-            {
-              icon: 'edit',
-              tooltip: 'Edit Rating Schemes',
-              onClick: (event, rowData) => { setEditModal(true); setSelect(rowData) }
-            },
-            {
-              icon: 'preview',
-              tooltip: 'View Rating Schemes',
-              onClick: (event, rowData) => { setEditModal(true); setSelect(rowData); setIsView(true) }
-            }
-          ]}
-          options={{
-            filtering: true,
-            actionsColumnIndex: -1,
-            sorting: true,
-            pageSize: 10,
-            search: false,
-          }}
+        </div> */}
+        <Table
+          title={() => ''}
+          columns={columns}
+          dataSource={schemData}
+          rowKey="id"
+          pagination={{ pageSize: 10 }}
+          bordered
         />
       </div>
       <div className='footer_'>

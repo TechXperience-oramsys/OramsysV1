@@ -23,6 +23,7 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
   const [licence, setLicence] = useState({
     _id: '',
     type: '',
+    otherLiscenceType: '',
     number: '',
     authority: '',
     country: '',
@@ -35,6 +36,7 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
     "Bank",
     "Import",
     "Export",
+    "Other"
   ];
 
   const [country, setCountry] = useState([])
@@ -53,6 +55,7 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
       setLicence({
         _id: temp?._id,
         type: temp?.type,
+        otherLiscenceType: temp?.otherLiscenceType,
         number: temp?.number,
         authority: temp?.authority,
         country: temp?.country,
@@ -83,7 +86,7 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
   const handleChange = (e, name) => {
     if (name === 'type' || name === 'country') {
       setLicence({ ...licence, [name]: e })
-    } else if (name === 'number' || name === 'authority' || name === 'dateOfRating' || name === 'expiryDate') {
+    } else if (name === 'number' || name === 'otherLiscenceType' || name === 'authority' || name === 'dateOfRating' || name === 'expiryDate') {
       setLicence({ ...licence, [name]: e.target.value })
     }
   }
@@ -94,6 +97,10 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
     if (!licence.type) {
       error.type = "Please select type!"
       flag = true
+    }
+    if (!licence.type === "Other" && !licence.otherLiscenceType) {
+      flag = true
+      error.otherLiscenceType = "Please enter other license type"
     }
     if (!licence.number) {
       error.number = "Please enter number!"
@@ -127,10 +134,28 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
     if (validation()) {
       return;
     }
+    let licenceId = {}
+    if (licence._id === "") {
+      licenceId = {}
+    } else {
+      licenceId = { _id: licence._id }
+    }
+    const licenseToStore = {
+      ...licenceId,
+      type: licence.type,
+      otherLiscenceType: licence.otherLiscenceType,
+      number: licence.number,
+      authority: licence.authority,
+      country: licence.country,
+      dateOfRating: licence.dateOfRating,
+      expiryDate: licence.expiryDate,
+      evidence: licence.evidence
+    }
     const body = {
       ...companyData,
-      licenses: companyData.licenses ? [...companyData.licenses, licence] : [licence]
+      licenses: companyData.licenses ? [...companyData.licenses, licenseToStore] : [licenseToStore]
     }
+    // return console.log('body', body, licenseToStore)
     dispatch(companydataAction(body))
     onHide()
   }
@@ -170,9 +195,9 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
             <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
               <div className='form'>
                 <Row>
-                  <Col lg={3} className="mb-4">
+                  <Col lg={licence.type === 'Other' ? 3 : 4} className="mb-4">
                     <Autocomplete
-                      label="Type"
+                      label="License Type"
                       id="disable-clearable"
                       onChange={(e, newVal) => handleChange(newVal, 'type')}
                       getOptionLabel={(option) => option}
@@ -186,7 +211,21 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
                     />
                     {formErrors && formErrors?.type && <span style={{ color: 'red' }}>{formErrors.type}</span>}
                   </Col>
-                  <Col lg={3} className="mb-4">
+                  {licence && licence.type === "Other" && (
+                    <Col lg={licence.type === 'Other' ? 3 : 4} className="mb-4">
+                      <TextField
+                        label="Other License Type"
+                        variant="standard"
+                        color="warning"
+                        name='otherProduct'
+                        value={licence.otherLiscenceType}
+                        onChange={(e) => handleChange(e, 'otherLiscenceType')}
+                        disabled={mode === "View"}
+                      />
+                      {formErrors && formErrors?.otherLiscenceType && <span style={{ color: 'red' }}>{formErrors.otherLiscenceType}</span>}
+                    </Col>
+                  )}
+                  <Col lg={licence.type === 'Other' ? 3 : 4} className="mb-4">
                     <TextField
                       label="Number"
                       variant="standard"
@@ -198,7 +237,7 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
                     />
                     {formErrors && formErrors?.number && <span style={{ color: 'red' }}>{formErrors.number}</span>}
                   </Col>
-                  <Col lg={3} className="mb-4">
+                  <Col lg={licence.type === 'Other' ? 3 : 4} className="mb-4">
                     <TextField
                       label="Authority"
                       variant="standard"
@@ -210,7 +249,10 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
                     />
                     {formErrors && formErrors?.authority && <span style={{ color: 'red' }}>{formErrors.authority}</span>}
                   </Col>
-                  <Col lg={3} className="mb-4">
+                </Row>
+
+                <Row>
+                  <Col lg={4} className="mb-4">
                     <Autocomplete
                       label="Country"
                       id="disable-clearable"
@@ -226,7 +268,7 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
                     />
                     {formErrors && formErrors?.country && <span style={{ color: 'red' }}>{formErrors.country}</span>}
                   </Col>
-                  <Col xxl={6} xl={4} lg={6} md={4} sm={6} className='mb-4'>
+                  <Col lg={4} sm={6} className='mb-4'>
                     <form className="" noValidate>
                       <TextField
                         id="date"
@@ -242,7 +284,7 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
                     </form>
                     {formErrors && formErrors?.dateOfRating && <span style={{ color: 'red' }}>{formErrors.dateOfRating}</span>}
                   </Col>
-                  <Col xxl={6} xl={4} lg={6} md={4} sm={6} className='mb-4'>
+                  <Col lg={4} sm={6} className='mb-4'>
                     <form className="" noValidate>
                       <TextField
                         id="date"
