@@ -16,15 +16,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20.12.1'
-
-      - name: Install dependencies
-        working-directory: frontend
-        run: npm install --force
-
-      - name: Build application
-        working-directory: frontend
-        run: CI=false npm run build
+          node-version: '16'
 
       - name: Install SSH client
         run: |
