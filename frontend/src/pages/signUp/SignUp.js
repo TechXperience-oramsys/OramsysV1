@@ -128,7 +128,7 @@ const SignUp = () => {
 
                     </div>
                     <div class="col-md-6">
-                        <img src={svgIcon} style={{ height: '480x' }} alt="Image" className='img-slide img-responsive' />
+                        <img src={svgIcon} style={{ height: '480x' }} alt="hei" className='img-slide img-responsive' />
                     </div>
 
                 </div>
