@@ -214,6 +214,21 @@ const Dashboard = () => {
                   <div className='col-sm-6 col-12 mb-4 mb-sm-0'>
                     {/* <!-- Title --> */}
                     <h1 className='h2 mb-0 fw-bold fs-4 ls-tight'>Dashboard</h1>
+
+                    {/* <ul class="nav nav-pills mt-4 ">
+                      <li class="nav-item ">
+                        <a class="nav-link active" aria-current="page" href="#">Active</a>
+                      </li>
+                      <li class="nav-item ">
+                        <a class="nav-link" href="#">Link</a>
+                      </li>
+                      <li class="nav-item ">
+                        <a class="nav-link" href="#">Link</a>
+                      </li>
+                      <li class="nav-item ">
+                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                      </li>
+                    </ul> */}
                   </div>
                   {/* <!-- Actions --> */}
                   <div className='col-sm-6 col-12 text-sm-end'>
@@ -224,6 +239,7 @@ const Dashboard = () => {
                       </Link>
 
                     </div> */}
+
                   </div>
                 </div>
               </div>
