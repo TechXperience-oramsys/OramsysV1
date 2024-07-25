@@ -1,6 +1,4 @@
-
-
+/.env
 /node_modules
 /node_modules_old
 package-lock.json
-/files
