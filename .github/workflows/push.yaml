@@ -28,12 +28,6 @@ jobs:
           echo "SSH_USER=${{ secrets.SSH_USER }}"
           echo "SSH_HOST=${{ secrets.SSH_HOST }}"
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build application
-        run: NODE_OPTIONS=--max-old-space-size=8096 npm run build
-
       - name: Deploy to EC2
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
