@@ -202,13 +202,15 @@ const Transactions = () => {
       dataIndex: 'createdAt',
       key: 'createdAt',
       sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
-      render: (createdAt) => new Date(createdAt).toLocaleDateString("en-US", DATE_OPTIONS)
+      render: (createdAt) => new Date(createdAt).toLocaleDateString("en-US", DATE_OPTIONS),
+      className: 'hide-on-md',
     },
     {
       title: 'Transaction Number',
       dataIndex: '_id',
       key: '_id',
       sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+      className: 'hide-on-md',
     },
     {
       title: 'Borrower',
@@ -258,6 +260,7 @@ const Transactions = () => {
       title: 'Termsheet',
       dataIndex: 'termSheet',
       key: 'termSheet',
+      className: 'hide-on-md',
       render: (termSheet, record) => (
         <div className={`${termSheet === "Not Signed" ? 'bg-red-100' : 'bg-green-100'} text-center cursor-pointer`}>
           <p onClick={() => {
@@ -382,7 +385,7 @@ const Transactions = () => {
 
 
                   </div>
-                  <div className="mt-10 table-responsive form">
+                  <div className="mt-10 table-responsive form custom-table-background">
                     <Table
                       columns={columns}
                       dataSource={currentTrans}

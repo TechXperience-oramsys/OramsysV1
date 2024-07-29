@@ -31,4 +31,49 @@ export const repsOptions = [
     "[no immunity from suit, execution, attachment or other legal process;]",
     "[private and commercial acts;]",
     "no adverse consequences"
-  ];
+];
+  
+export const genovertakingOptions = [
+  "authorisations",
+  "compliance with laws",
+  "environmental compliance",
+  "environmental claims",
+  "taxation",
+  "sanctions",
+  "anti-bribery and corruption",
+  "restriction on merger",
+  "no change of business",
+  "restriction on acquisitions",
+  "restriction on joint ventures",
+  "holding companies",
+  "preservation of assets",
+  "pari passu ranking",
+  "negative pledge",
+  "restriction on disposals",
+  "arm's length basis",
+  "restriction on loans or credit",
+  "restriction on guarantees or indemnities",
+  "restriction on dividends and share redemption"
+];
+
+export const eventsOfDefaultOptions = [
+  "any financial covenant not satisfied",
+  "failure to comply with Permitted Account Undertakings",
+  "misrepresentation",
+  "cross default, subject to an agreed minimum amount",
+  "insolvency",
+  "insolvency proceedings",
+  "creditors' process",
+  "failure to comply with court judgment or arbitral award",
+  "ownership of Obligors",
+  "audit qualification",
+  "expropriation/governmental intervention",
+  "repudiation and rescission of agreements",
+  "litigation",
+  "cessation of business",
+  "unlawfulness and invalidity",
+  "convertibility / transferability",
+  "moratorium",
+  "political and economic risk",
+  "material adverse change"
+];

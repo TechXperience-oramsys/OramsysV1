@@ -1,6 +1,6 @@
 import { TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Form, DropdownButton, InputGroup, Dropdown } from 'react-bootstrap';
+import { Row, Col, Form, DropdownButton, InputGroup, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { countrieAction } from '../../../../redux/actions/countrieAction';
 import { useDispatch } from 'react-redux';
@@ -143,7 +143,7 @@ const Details = ({ handleNext, entityType }) => {
                 addressLine3: tempShipingData?.addressLine3,
                 postcode: tempShipingData?.postcode,
                 state: tempShipingData?.state,
-                shippingCountryCode: entityData?.data?.addresses?.forEach(address => address.shippingCountryCode) ,
+                shippingCountryCode: entityData?.data?.addresses?.forEach(address => address.shippingCountryCode),
                 city: tempShipingData?.city,
                 country: tempShipingData?.country,
                 mobile: tempShipingData?.mobile,
@@ -461,8 +461,14 @@ const Details = ({ handleNext, entityType }) => {
                     <div>
                         <Row>
                             <Form.Group as={Col} controlId="formGridZip">
-                                <Form.Label>Corporation Name <RequiredSpan /></Form.Label>
-                                <Form.Control className='no-border'
+                                <div >
+                                    <Form.Label className="mb-0">
+                                        Corporation Name <RequiredSpan />
+                                    </Form.Label>
+                                    
+                                </div>
+                                <Form.Control
+                                    className="no-border"
                                     value={details.name}
                                     onChange={(e) => handleChange(e, 'name', 'details')}
                                     disabled={isView}
@@ -503,7 +509,18 @@ const Details = ({ handleNext, entityType }) => {
                             </Form.Group> */}
 
                             <Form.Group as={Col} controlId="formGridZip">
+                                <div className="d-flex justify-content-between align-items-center">
                                 <Form.Label>Registration Number <RequiredSpan /></Form.Label>
+
+                                <OverlayTrigger
+                                        placement="top"
+                                        overlay={<Tooltip id="tooltip-top">This field requires your corporation registration number</Tooltip>}
+                                    >
+                                        <span className="ml-2">
+                                            <i className="bi bi-info-circle" style={{ cursor: 'pointer' }}></i>
+                                        </span>
+                                    </OverlayTrigger>
+                                </div>
                                 <Form.Control className='no-border'
                                     value={details.registrationNumber}
                                     onChange={(e) => handleChange(e, 'registrationNumber', 'details')}

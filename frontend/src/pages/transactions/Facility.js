@@ -17,7 +17,7 @@ import { toast } from "react-hot-toast"
 import moment from "moment"
 import { productGetAction } from "../../redux/actions/productAction"
 import { companydataAction } from "../../redux/actions/companydataAction"
-import { repsOptions } from "./Helpers/TermsOptions"
+import { eventsOfDefaultOptions, genovertakingOptions, repsOptions } from "./Helpers/TermsOptions"
 import { MultiSelectForm } from "./Helpers/MultiselectForm";
 import Select from "react-select";
 import { addCurrencyHedgeAtom, addSourceOfRepaymentAtom, currencyHedgeDetailsModalAtom, facilityAtom, securityDocumentsAtom, sourceOfRepaymentAtom, typeAtom } from "./Helpers/atoms";
@@ -335,16 +335,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
         "No iuerguyrrr",
 
     ]
-    const genovertakingOptions = [
-        "Status",
-        "Binding obligations",
-        "non conflict with other obligations",
-        "no reduction of capital",
-        "iuiffyhggtions",
-        "No iuewfi2q2",
-        "No iuerguyrrr",
-
-    ]
+   
 
     let currencyHedgeOptions = [
         { value: "", label: "Select Option" },
@@ -1807,7 +1798,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                     facility={facility}
                                     setFacility={setFacility}
                                     error={error}
-                                    options={repsOptions}
+                                    options={eventsOfDefaultOptions}
                                     propertyName="eventsOfDefault"
                                     label="Events of Default"
                                 />

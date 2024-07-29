@@ -1,34 +1,52 @@
-import React, { useState, useEffect } from 'react'
-import { Navbar, Nav } from 'react-bootstrap'
-import { NavLink, useNavigate } from 'react-router-dom';
-import STORAGEKEY from '../../config/APP/app.config';
-// import { useDispatch } from 'react-redux';
-import AuthStorage from '../../helper/AuthStorage';
-import { Link } from "react-router-dom"
-import LogoutModal from '../../component/Modal/LogoutModal';
-import { BsAirplane } from 'react-icons/bs';
-import { GrClose, GrFlagFill, GrUserAdmin } from 'react-icons/gr';
-import { FaBoxOpen, FaThList, FaUserCircle, } from 'react-icons/fa';
-import { HiOutlineLogout, HiOutlineUsers } from "react-icons/hi";
-import { GiCargoShip } from "react-icons/gi";
-import { ImOffice } from "react-icons/im";
-import { MdAdminPanelSettings } from "react-icons/md";
-import { FcHome, FcLock, FcInvite, FcCollaboration, FcWorkflow, FcViewDetails, FcPositiveDynamic } from "react-icons/fc";
-import { FaMoneyBillTransfer, FaRegCircleUser, FaUsersLine } from "react-icons/fa6";
-import { GoDotFill } from "react-icons/go";
-import { CiUser } from "react-icons/ci";
+import React, { useState, useEffect } from 'react';
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UserOutlined,
+  VideoCameraOutlined,
+  UploadOutlined,
+  DashboardOutlined,
+  SettingOutlined,
+  LogoutOutlined,
+  TeamOutlined,
+  ContainerOutlined,
+  FileTextOutlined,
+  AppstoreOutlined,
+  TableOutlined,
+  FileDoneOutlined
+} from '@ant-design/icons';
+import { Button, Layout, Menu, theme } from 'antd';
 
+import { Navbar, Nav } from 'react-bootstrap'
+import { NavLink, useNavigate, Link } from 'react-router-dom';
+import STORAGEKEY from '../../config/APP/app.config';
+import AuthStorage from '../../helper/AuthStorage';
+import LogoutModal from '../../component/Modal/LogoutModal';
 import Fade from 'react-reveal/Fade';
 
+import { GrClose, GrUserAdmin } from 'react-icons/gr';
+import { FaBoxOpen, FaThList, FaUserCircle, } from 'react-icons/fa';
+import { HiOutlineLogout, HiOutlineUsers } from "react-icons/hi";
+import { MdAdminPanelSettings } from "react-icons/md";
+import { FcCollaboration } from "react-icons/fc";
+import { FaMoneyBillTransfer, FaUsersLine } from "react-icons/fa6";
+import { GoDotFill } from "react-icons/go";
+
+const { Header, Sider, Content } = Layout;
 
 const Sidebar = ({ showSidebar, setSidebar }) => {
 
   const navigate = useNavigate();
+  const [collapsed, setCollapsed] = useState(false);
   const [showModal, setshowModal] = useState(false)
   const [showItem, setShowItem] = useState('')
   const [showSubItem, setShowSubItem] = useState('')
   const [userData, setUserData] = useState('')
   const [activeItem, setActiveItem] = useState('Dashboard');
+
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
 
   const ShowSubItem = (item) => {
     const { text, path } = item
@@ -61,129 +79,129 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
 
   const navbarDataForSuperAdmin = [
     {
-      img: FaThList,
-      text: 'Dashboard',
-      path: "dashboard"
+      key: '1',
+      icon: <AppstoreOutlined />,
+      label: 'Dashboard',
+      path: 'dashboard'
     },
     {
-      img: MdAdminPanelSettings,
-      text: 'Administration',
-      path: "",
-      subItem: [
-
+      key: '2',
+      icon: <MdAdminPanelSettings />,
+      label: 'Administration',
+      children: [
         {
-          img: GoDotFill,
-          text: 'Entities Role',
-          path: "entities-role"
+          key: '2-1',
+          icon: <AppstoreOutlined />,
+          label: 'Entities Role',
+          path: 'entities-role'
         },
         {
-          img: GoDotFill,
-          size: 25,
-          text: 'Master Data',
-          path: "",
-          subData: [
+          key: '2-2',
+          icon: <TableOutlined />,
+          label: 'Master Data',
+          children: [
             {
-              img: GoDotFill,
-              text: 'Countries',
-              path: "countries",
+              key: '2-2-1',
+              icon: <FileTextOutlined />,
+              label: 'Countries',
+              path: 'countries'
             },
             {
-              img: GoDotFill,
-              text: 'Ports',
-              path: "ports",
+              key: '2-2-2',
+              icon: <FileTextOutlined />,
+              label: 'Ports',
+              path: 'ports'
             },
             {
-              img: GoDotFill,
-              text: 'Airports',
-              path: "airports",
+              key: '2-2-3',
+              icon: <FileTextOutlined />,
+              label: 'Airports',
+              path: 'airports'
             },
             {
-              img: GoDotFill,
-              text: 'Rating Agencies',
-              path: "rating-agencies",
-            },
+              key: '2-2-4',
+              icon: <FileTextOutlined />,
+              label: 'Rating Agencies',
+              path: 'rating-agencies'
+            }
           ]
-        },
-
+        }
       ]
     },
     {
-      img: FaUsersLine,
-      text: 'Entities',
-      path: "entities"
+      key: '3',
+      icon: <FaUsersLine />,
+      label: 'Entities',
+      path: 'entities'
     },
     {
-      img: FaBoxOpen,
-      text: 'Products',
-      path: "products",
+      key: '4',
+      icon: <FaBoxOpen />,
+      label: 'Products',
+      path: 'products'
     },
     {
-      img: HiOutlineUsers,
-      text: 'Users',
-      path: "users"
+      key: '5',
+      icon: <HiOutlineUsers />,
+      label: 'Users',
+      path: 'users'
     },
     {
-      img: FaMoneyBillTransfer,
-      text: 'Transactions',
-      path: "transactions"
-    },
-
-  ]
+      key: '6',
+      icon: <FaMoneyBillTransfer />,
+      label: 'Transactions',
+      path: 'transactions'
+    }
+  ];
 
   const navbarDataForAdmin = [
     {
-      img: GrUserAdmin,
-      text: 'Administration',
-      path: "",
-      subItem: [
-
-        // {
-        //   img: FcWorkflow,
-        //   text: 'Entities Role',
-        //   path: "entities-role"
-        // },
+      key: '1',
+      icon: <GrUserAdmin />,
+      label: 'Administration',
+      children: [
         {
-          img: FaThList,
-          text: 'Dashboard',
-          path: "dashboard"
-        },
-        // {
-        //   img: FcPositiveDynamic,
-        //   text: 'Staff Transactions',
-        //   path: "transactions"
-        // },
-        {
-          img: FcCollaboration,
-          text: 'Profile',
-          path: "entities"
+          key: '1-1',
+          icon: <AppstoreOutlined />,
+          label: 'Dashboard',
+          path: 'dashboard',
         },
         {
-          img: HiOutlineUsers,
-          text: 'Users',
-          path: "users"
+          key: '1-2',
+          icon: <FaUsersLine />,
+          label: 'Profile',
+          path: 'entities',
         },
         {
-          img: FaMoneyBillTransfer,
-          text: 'Transactions',
-          path: "transactions"
+          key: '1-3',
+          icon: <HiOutlineUsers />,
+          label: 'Users',
+          path: 'users',
         },
-      ]
-    }
-  ]
+        {
+          key: '1-4',
+          icon: <FaMoneyBillTransfer />,
+          label: 'Transactions',
+          path: 'transactions',
+        },
+      ],
+    },
+  ];
 
   const navbarDataForUser = [
     {
-      img: FaThList,
-      text: 'Dashboard',
-      path: "dashboard"
+      key: '1',
+      icon: <AppstoreOutlined />,
+      label: 'Dashboard',
+      path: 'dashboard',
     },
-
     {
-      img: FaMoneyBillTransfer,
-      text: 'Transactions',
-      path: "transactions"
+      key: '2',
+      icon: <FaMoneyBillTransfer />,
+      label: 'Transactions',
+      path: 'transactions',
     },
-  ]
+  ];
 
   if (AuthStorage.getStorageData(STORAGEKEY.roles) === "user") {
     navbarData = navbarDataForUser
@@ -209,14 +227,93 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
   // useEffect(() => {
   //   setUserData(JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)))
   // }, [])
-
+  const handleMenuClick = (item) => {
+    setActiveItem(item.key);
+    const clickedItem = navbarData
+      .flatMap(item => item.children ? [item, ...item.children.flatMap(subItem => subItem.children ? [subItem, ...subItem.children] : subItem)] : item)
+      .find(navItem => navItem.key === item.key);
+  
+    if (clickedItem && clickedItem.path) {
+      navigate(`/${clickedItem.path}`);
+    }
+  };
 
   return (
     <>
+      <Layout>
+        <Sider trigger={null} collapsible collapsed={collapsed} width={210} >
+          <div className="demo-logo-vertical" />
+          <div className={`d-flex ${collapsed ? 'justify-content-center' : 'justify-content-between'} text-white align-items-center p-3`}>
+            <div className={`d-flex align-items-center ${collapsed ? 'justify-content-center w-100' : ''}`}>
+              <FaUserCircle size={30} />
+              {!collapsed && <span className='ms-2'>{userData?.name}</span>}
+            </div>
+            {!collapsed && (
+              <div className="">
+                <Link onClick={() => setshowModal(true)} className="nav-link" href="#">
+                  <HiOutlineLogout size={20} />
+                </Link>
+              </div>
+
+            )}
+          </div>
+          <Menu
+            className='fs-6 mt-10'
+            theme="dark"
+            mode="inline"
+            defaultSelectedKeys={['1']}
+            selectedKeys={[activeItem]}
+            items={navbarData.map((item) => ({
+              key: item.key,
+              icon: item.icon,
+              label: item.label,
+              children: item.children?.map((subItem) => ({
+                key: subItem.key,
+                icon: subItem.icon,
+                label: subItem.label,
+                path: subItem.path,
+                children: subItem.children?.map((subSubItem) => ({
+                  key: subSubItem.key,
+                  icon: subSubItem.icon,
+                  label: subSubItem.label,
+                  path: subSubItem.path
+                }))
+              }))
+            }))}
+            onClick={handleMenuClick}
+          />
+        </Sider>
+
+        <Layout>
+          <Header style={{ padding: 0, background: colorBgContainer, outline: 'none' }}>
+            <Button
+              type="text"
+              icon={collapsed ? <MenuUnfoldOutlined style={{ fontSize: 25 }} /> : <MenuFoldOutlined style={{ fontSize: 20 }} />}
+              onClick={() => setCollapsed(!collapsed)}
+              style={{
+                fontSize: '16px',
+                width: 64,
+                height: 64,
+              }}
+            />
+          </Header>
+          <Content
+            style={{
+              margin: '24px 16px',
+              padding: 24,
+              minHeight: 280,
+              background: colorBgContainer,
+              borderRadius: borderRadiusLG,
+            }}
+          >
+
+          </Content>
+        </Layout>
+      </Layout>
 
 
       {/* <!-- Vertical Navbar --> */}
-      <Fade left>
+      {/* <Fade left>
         <div className={`${showSidebar ? ' sidebar-main' : 'sidebar-main '}`}>
           <GrClose size={30} className="close_sidebar" onClick={() => setSidebar(!showSidebar)} />
           <div className='profile-content pe-5'>
@@ -226,13 +323,6 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
               <h1>{userData?.name}</h1>
             </div>
           </div>
-
-          {/* <div className='d-flex  gap-4 m-3'>
-            <div className='fs-4 justify-content-start '> <CiUser size={30} /></div>
-
-
-            <div className='text-center justify-content-end my-auto'><h5>{userData?.name}</h5></div>
-          </div> */}
 
           <div className='sidebar-nav'>
             <Navbar>
@@ -250,7 +340,6 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
                           return <>
                             <div key={i} className={`d-flex align-items-center gap-3 mx-4 my-4 ps-2 ${activeItem === subItem.text ? 'active text-dark py-2 rounded bg-indigo-100' : ''}`}>
                               <subItem.img size={15} />
-                              {/* <div className='fs-1 font-bold'>.</div> */}
                               <Nav.Link className={`p-0 font-light `} onClick={() => ShowSubItem({ text: subItem.text, path: subItem.path })}>{subItem.text} {subItem.text === 'Master Data' ? <img alt="" src='../../../../../assets/img/about/down-filled-triangular-arrow.png' className={`${showSubItem === "Master Data" ? 'img-roted' : 'img-roted_unset'}`} /> : ""}</Nav.Link>
                             </div>
                             {
@@ -271,9 +360,6 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
 
                 <div className="d-flex flex-column mx-3 ps-2 gap-3  my-4">
                   <div className="p-3">
-                    {/* <Link className="nav-link">
-                      <i className="bi bi-person-square"></i> <span className='ps-5'>Account</span>
-                    </Link> */}
                   </div>
                   <div className="">
                     <Link onClick={() => setshowModal(true)} className="nav-link" href="#">
@@ -289,7 +375,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
 
 
         <div className="sidebar_responsive"></div>
-      </Fade>
+      </Fade> */}
       {showModal && <LogoutModal show={showModal} onHide={() => setshowModal(false)} />}
     </>
   )

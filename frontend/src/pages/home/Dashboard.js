@@ -17,6 +17,9 @@ import { ratingAgenciesAction } from "../../redux/actions/ratingAgenciesAction"
 import { ApiGet, ApiGet2 } from "../../helper/API/ApiData"
 import Slide from 'react-reveal/Slide';
 import { BankOutlined, StockOutlined } from '@ant-design/icons'
+import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { Menu } from 'antd';
+import ChartComponent from "./Analytics"
 
 const Dashboard = () => {
   const token = AuthStorage.getToken()
@@ -64,7 +67,7 @@ const Dashboard = () => {
       name: "rating",
     },
     {
-      title: "Total Sales",
+      title: "Total Revenue",
       img: "sales",
       icon: StockOutlined,
       color: "bg-teal-500",
@@ -202,6 +205,361 @@ const Dashboard = () => {
   }
   console.log('getArr', getAlltransactionData)
 
+  const items = [
+    {
+      label: 'Home',
+      key: 'home',
+      icon: <MailOutlined />,
+    },
+    {
+      label: 'Analytics',
+      key: 'analytics',
+      icon: <AppstoreOutlined />,
+    },
+    {
+      label: 'Financials',
+      key: 'finanancials',
+      icon: <AppstoreOutlined />,
+    },
+    {
+      label: 'Data',
+      key: 'alipay',
+      icon: <AppstoreOutlined />,
+    },
+  ];
+
+  const [current, setCurrent] = useState('home');
+  const onClick = (e) => {
+    console.log('click ', e);
+    setCurrent(e.key);
+  };
+
+  const renderContent = () => {
+    switch (current) {
+      case 'home':
+        return <div>
+          <div className='container-fluid'>
+            <div className='row g-6 mb-6'>
+
+
+              <Slide down>
+                {AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin" &&
+                  cards.map((card, i) => (
+                    <div className='col-xl-4 mb-3 col-sm-6 col-12' key={i}>
+                      <div className='card shadow border-0'>
+                        <div className='card-body'>
+                          <div className='row'>
+                            <div className='col'>
+                              <span className='h6 font-semibold fw-2 text-muted text-md d-block mb-2'>
+                                {card.title}
+                              </span>
+                              <span className='h3 font-bold mb-0'>
+                                {getCount(card.name)}
+                              </span>
+                            </div>
+                            <div className='col-auto'>
+                              <div className={`icon icon-shape rounded-circle`}>
+                                <card.icon size={30} />
+                              </div>
+                            </div>
+                          </div>
+                          <div className='mt-2 mb-0 text-sm'>
+                            {card.status === "Completed" ? (
+                              <>
+                                {" "}
+                                <span className='badge badge-pill bg-soft-success text-success me-2'>
+                                  {signedCount.length}
+                                </span>
+                                <span className='text-nowrap text-xs text-muted'>
+                                  Completed
+                                </span>
+                                <span className='badge mx-2 badge-pill bg-danger text-success-white me-2'>
+                                  {notSignedCount.length}
+                                </span>
+                                <span className='text-nowrap text-xs text-muted'>
+                                  In Progress...
+                                </span>
+                              </>
+                            ) : (
+                              <>
+                                <span className='badge badge-pill bg-soft-success text-success me-2'>
+                                  <i className='bi bi-arrow-up me-1'></i>13%
+                                </span>
+                                <span className='text-nowrap text-xs text-muted'>
+                                  {card.title === "Available Products" ? (
+                                    <Link className='text-decoration-none' to='/products'>
+                                      View Products{" "} <i className='bi bi-arrow-right me-1'></i>
+                                    </Link>
+                                  ) : card.title === "Registered Users" ? (
+                                    <Link className='text-decoration-none' to='/users'>
+                                      View Users{" "} <i className='bi bi-arrow-right me-1'></i>
+                                    </Link>
+                                  ) : card.title === "Entities" ? (
+                                    <Link className='text-decoration-none' to='/entities'>
+                                      View Entities{" "} <i className='bi bi-arrow-right me-1'></i>
+                                    </Link>
+                                  ) : (
+                                    ""
+                                  )}
+                                </span>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                }
+              </Slide>
+
+
+              {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" &&
+                <div className='col-6 mb-3 col-sm-6 col-12'>
+                  <div className='card shadow border-0'>
+                    <div className='card-body'>
+                      <div className='row'>
+                        <div className='col'>
+                          <span className='h6 font-semibold text-muted text-sm d-block mb-2'>
+                            Transactions
+                          </span>
+                          <span className='h3 font-bold mb-0'>
+                            {signedCount.length}
+                          </span>
+                        </div>
+                        <div className='col-auto'>
+                          <div
+                            className={`icon icon-shape bg-success text-white text-lg rounded-circle`}
+                          >
+                            <GrTransaction size={56} />
+                          </div>
+                        </div>
+                      </div>
+                      <div className='mt-2 mb-0 text-sm'>
+                        <>
+                          {" "}
+                          <span className='badge badge-pill bg-soft-success text-success me-2'>
+                            {signedCount.length}
+                          </span>
+                          <span className='text-nowrap text-xs text-muted'>
+                            Completed
+                          </span>
+                        </>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+
+              {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" &&
+                <>
+                  <div className='col-6 mb-3 col-sm-6 col-12'>
+                    <div className='card shadow border-0'>
+                      <div className='card-body'>
+                        <div className='row'>
+                          <div className='col'>
+                            <span className='h6 font-semibold text-muted text-sm d-block mb-2'>
+                              Transactions in Progress
+                            </span>
+                            <span className='h3 font-bold mb-0'>
+                              {notSignedCount.length}
+                            </span>
+                          </div>
+                          <div className='col-auto'>
+                            <div
+                              className={`icon icon-shape bg-primary text-white text-lg rounded-circle`}
+                            >
+                              <IoTimerOutline size={56} />
+                            </div>
+                          </div>
+                        </div>
+                        <div className='mt-2 mb-0 text-sm'>
+                          <>
+                            {" "}
+                            <span className='badge badge-pill bg-soft-gray text-success me-2'>
+                              {notSignedCount.length}
+                            </span>
+                            <span className='text-nowrap text-xs text-muted'>
+                              In progress...
+                            </span>
+                          </>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              }
+              {AuthStorage.getStorageData(STORAGEKEY.roles) === "admin" &&
+                <div className='col-6 mb-3 col-sm-6 col-12'>
+                  <div className='card shadow border-0'>
+                    <div className='card-body'>
+                      <div className='row'>
+                        <div className='col'>
+                          <span className='h6 font-semibold text-muted text-sm d-block mb-2'>
+                            Transactions
+                          </span>
+                          <span className='h3 font-bold mb-0'>
+                            {signedCount.length}
+                          </span>
+                        </div>
+                        <div className='col-auto'>
+                          <div
+                            className={`icon icon-shape bg-success text-white text-lg rounded-circle`}
+                          >
+                            <GrTransaction size={56} />
+                          </div>
+                        </div>
+                      </div>
+                      <div className='mt-2 mb-0 text-sm'>
+                        <>
+                          {" "}
+                          <span className='badge badge-pill bg-soft-success text-success me-2'>
+                            {signedCount.length}
+                          </span>
+                          <span className='text-nowrap text-xs text-muted'>
+                            Completed
+                          </span>
+                        </>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              }
+
+              {AuthStorage.getStorageData(STORAGEKEY.roles) === "admin" &&
+                <>
+                  <div className='col-6 mb-3 col-sm-6 col-12'>
+                    <div className='card shadow border-0'>
+                      <div className='card-body'>
+                        <div className='row'>
+
+                          <div className='col'>
+                            <span className='h6 font-semibold text-muted text-sm d-block mb-2'>
+                              Transactions in Progress
+                            </span>
+                            <span className='h3 font-bold mb-0'>
+                              {notSignedCount.length}
+                            </span>
+                          </div>
+
+                          <div className='col-auto'>
+                            <div
+                              className={`icon icon-shape bg-primary text-white text-lg rounded-circle`}
+                            >
+                              <IoTimerOutline size={56} />
+                            </div>
+                          </div>
+                        </div>
+                        <div className='mt-2 mb-0 text-sm'>
+                          <>
+                            {" "}
+                            <span className='badge badge-pill bg-soft-gray text-success me-2'>
+                              {notSignedCount.length}
+                            </span>
+                            <span className='text-nowrap text-xs text-muted'>
+                              In progress...
+                            </span>
+                          </>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              }
+            </div>
+
+
+
+            <Slide up>
+              <div className='card shadow border-0 mb-7'>
+                <div className='card-header'>
+
+                  <div className="input-group w-50 ">
+                    {/* <input type="text" id='search' onChange={(e) => setSearch(e.target.value)} placeholder="Search transaction..." className="form-control" /> */}
+                    {/* <button type="button" className="btn btn-primary btn-lg">
+                <FaSearch />
+              </button> */}
+                    <h4>Transactions</h4>
+                  </div>
+                  <div className='table-responsive text-center'>
+                    <table className='table table-bordered border-light caption-top border-2 table-hover table-nowrap'>
+                      <thead className='thead-light '>
+                        <tr>
+                          <th scope='col'>Date Created</th>
+                          <th scope='col'>Borrower</th>
+                          <th scope='col'>Lender</th>
+                          <th scope='col'>Value</th>
+                          <th scope='col'>Status</th>
+                          <th scope='col'>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {!getAlltransactionData ? <div className='text-center'> No records were found</div> : getAlltransactionData &&
+                          getAlltransactionData?.data?.filter((item) => {
+                            return search.toLowerCase() === '' ? item : item.borrower_Applicant.toLowerCase().includes(search)
+                          }).map((data, i) => (
+                            <tr key={i} >
+                              <td>
+                                {new Date(data.createdAt).toLocaleDateString("en-US", DATE_OPTIONS)}
+                              </td>
+                              <td>
+                                {/* <img alt='...' src='https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80' className='avatar avatar-sm rounded-circle me-2' /> */}
+                                <Link className='text-decoration-none text-heading font-semibold' to='/'>
+                                  {data.borrower_Applicant}
+                                </Link>
+                              </td>
+
+                              <td>
+                                {/* <img alt='...' src='https://preview.webpixels.io/web/img/other/logos/logo-1.png' className='avatar avatar-xs rounded-circle me-2' /> */}
+                                <Link className='text-decoration-none  text-heading font-semibold' to='/'>
+                                  {data.lenders}
+                                </Link>
+                              </td>
+                              <td>
+                                {formateCurrencyValue(data?.details?.contractDetails?.value)}
+                              </td>
+                              <td className={` ${data.termSheet === "Not Signed" ? 'bg-red-100' : 'bg-green-200'}`}>
+                                {data.termSheet === "Signed" ? (
+                                  <span className='badge badge-lg text-heading badge-dot'>
+                                    <i className='bg-success'></i>Signed
+                                  </span>
+                                ) : (
+                                  <span className='badge badge-lg text-heading badge-dot'>
+                                    <i className='bg-danger'></i>Not Signed
+                                  </span>
+                                )}
+                              </td>
+                              <td className='text-end text-center'>
+                                <Link to='#' onClick={() => {
+                                  data.termSheet === 'Not Signed' ? downloadTermSheet(data._id, 'view') : ViewRiskAssessment()
+                                }} className='btn btn-sm btn-neutral'>
+                                  View Termsheet
+                                </Link>
+
+                              </td>
+                            </tr>
+                          ))}
+
+                      </tbody>
+                    </table>
+                    {getAlltransactionData?.data?.length < 1 && <div className='text-center mx-auto container py-5 my-5 m-5'> No records were found</div>}
+
+                  </div>
+
+                </div>
+              </div>
+            </Slide>
+          </div></div>;
+      case 'analytics':
+        return <div><ChartComponent /></div>;
+      case 'financials':
+        return <div>Financials Content</div>;
+      case 'data':
+        return <div>Data Content</div>;
+      default:
+        return <div>Select an option</div>;
+    }
+  };
+
   return (
     <>
       <div className='mx-5 d-flex flex-column flex-lg-row h-lg-full'>
@@ -215,30 +573,17 @@ const Dashboard = () => {
                     {/* <!-- Title --> */}
                     <h1 className='h2 mb-0 fw-bold fs-4 ls-tight'>Dashboard</h1>
 
-                    {/* <ul class="nav nav-pills mt-4 ">
-                      <li class="nav-item ">
-                        <a class="nav-link active" aria-current="page" href="#">Active</a>
-                      </li>
-                      <li class="nav-item ">
-                        <a class="nav-link" href="#">Link</a>
-                      </li>
-                      <li class="nav-item ">
-                        <a class="nav-link" href="#">Link</a>
-                      </li>
-                      <li class="nav-item ">
-                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                      </li>
-                    </ul> */}
+                    <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
                   </div>
                   {/* <!-- Actions --> */}
                   <div className='col-sm-6 col-12 text-sm-end'>
-                    {/* <div className='mx-n1'>
+                    <div className='mx-n1'>
                       <Link to='/transactions' className='btn btn-primary rounded d-inline-flex btn-md border-base mx-1'>
                         <span className=' pe-2'><i className='bi bi-pencil'></i></span>
                         <span>Transactions</span>
                       </Link>
 
-                    </div> */}
+                    </div>
 
                   </div>
                 </div>
@@ -247,315 +592,7 @@ const Dashboard = () => {
           </header>
           {/* <!-- Main --> */}
           <main className='py-6'>
-            <div className='container-fluid'>
-              <div className='row g-6 mb-6'>
-                <Slide down>
-                  {AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin" &&
-                    cards.map((card, i) => (
-                      <div className='col-xl-4 mb-3 col-sm-6 col-12' key={i}>
-                        <div className='card shadow border-0'>
-                          <div className='card-body'>
-                            <div className='row'>
-                              <div className='col'>
-                                <span className='h6 font-semibold fw-2 text-muted text-md d-block mb-2'>
-                                  {card.title}
-                                </span>
-                                <span className='h3 font-bold mb-0'>
-                                  {getCount(card.name)}
-                                </span>
-                              </div>
-                              <div className='col-auto'>
-                                <div className={`icon icon-shape rounded-circle`}>
-                                  <card.icon size={30} />
-                                </div>
-                              </div>
-                            </div>
-                            <div className='mt-2 mb-0 text-sm'>
-                              {card.status === "Completed" ? (
-                                <>
-                                  {" "}
-                                  <span className='badge badge-pill bg-soft-success text-success me-2'>
-                                    {signedCount.length}
-                                  </span>
-                                  <span className='text-nowrap text-xs text-muted'>
-                                    Completed
-                                  </span>
-                                  <span className='badge mx-2 badge-pill bg-danger text-success-white me-2'>
-                                    {notSignedCount.length}
-                                  </span>
-                                  <span className='text-nowrap text-xs text-muted'>
-                                    In Progress...
-                                  </span>
-                                </>
-                              ) : (
-                                <>
-                                  <span className='badge badge-pill bg-soft-success text-success me-2'>
-                                    <i className='bi bi-arrow-up me-1'></i>13%
-                                  </span>
-                                  <span className='text-nowrap text-xs text-muted'>
-                                    {card.title === "Available Products" ? (
-                                      <Link className='text-decoration-none' to='/products'>
-                                        View Products{" "} <i className='bi bi-arrow-right me-1'></i>
-                                      </Link>
-                                    ) : card.title === "Registered Users" ? (
-                                      <Link className='text-decoration-none' to='/users'>
-                                        View Users{" "} <i className='bi bi-arrow-right me-1'></i>
-                                      </Link>
-                                    ) : card.title === "Entities" ? (
-                                      <Link className='text-decoration-none' to='/entities'>
-                                        View Entities{" "} <i className='bi bi-arrow-right me-1'></i>
-                                      </Link>
-                                    ) : (
-                                      ""
-                                    )}
-                                  </span>
-                                </>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))
-                  }
-                </Slide>
-
-
-                {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" &&
-                  <div className='col-6 mb-3 col-sm-6 col-12'>
-                    <div className='card shadow border-0'>
-                      <div className='card-body'>
-                        <div className='row'>
-                          <div className='col'>
-                            <span className='h6 font-semibold text-muted text-sm d-block mb-2'>
-                              Transactions
-                            </span>
-                            <span className='h3 font-bold mb-0'>
-                              {signedCount.length}
-                            </span>
-                          </div>
-                          <div className='col-auto'>
-                            <div
-                              className={`icon icon-shape bg-success text-white text-lg rounded-circle`}
-                            >
-                              <GrTransaction size={56} />
-                            </div>
-                          </div>
-                        </div>
-                        <div className='mt-2 mb-0 text-sm'>
-                          <>
-                            {" "}
-                            <span className='badge badge-pill bg-soft-success text-success me-2'>
-                              {signedCount.length}
-                            </span>
-                            <span className='text-nowrap text-xs text-muted'>
-                              Completed
-                            </span>
-                          </>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                }
-
-                {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" &&
-                  <>
-                    <div className='col-6 mb-3 col-sm-6 col-12'>
-                      <div className='card shadow border-0'>
-                        <div className='card-body'>
-                          <div className='row'>
-                            <div className='col'>
-                              <span className='h6 font-semibold text-muted text-sm d-block mb-2'>
-                                Transactions in Progress
-                              </span>
-                              <span className='h3 font-bold mb-0'>
-                                {notSignedCount.length}
-                              </span>
-                            </div>
-                            <div className='col-auto'>
-                              <div
-                                className={`icon icon-shape bg-primary text-white text-lg rounded-circle`}
-                              >
-                                <IoTimerOutline size={56} />
-                              </div>
-                            </div>
-                          </div>
-                          <div className='mt-2 mb-0 text-sm'>
-                            <>
-                              {" "}
-                              <span className='badge badge-pill bg-soft-gray text-success me-2'>
-                                {notSignedCount.length}
-                              </span>
-                              <span className='text-nowrap text-xs text-muted'>
-                                In progress...
-                              </span>
-                            </>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                }
-                {AuthStorage.getStorageData(STORAGEKEY.roles) === "admin" &&
-                  <div className='col-6 mb-3 col-sm-6 col-12'>
-                    <div className='card shadow border-0'>
-                      <div className='card-body'>
-                        <div className='row'>
-                          <div className='col'>
-                            <span className='h6 font-semibold text-muted text-sm d-block mb-2'>
-                              Transactions
-                            </span>
-                            <span className='h3 font-bold mb-0'>
-                              {signedCount.length}
-                            </span>
-                          </div>
-                          <div className='col-auto'>
-                            <div
-                              className={`icon icon-shape bg-success text-white text-lg rounded-circle`}
-                            >
-                              <GrTransaction size={56} />
-                            </div>
-                          </div>
-                        </div>
-                        <div className='mt-2 mb-0 text-sm'>
-                          <>
-                            {" "}
-                            <span className='badge badge-pill bg-soft-success text-success me-2'>
-                              {signedCount.length}
-                            </span>
-                            <span className='text-nowrap text-xs text-muted'>
-                              Completed
-                            </span>
-                          </>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                }
-
-                {AuthStorage.getStorageData(STORAGEKEY.roles) === "admin" &&
-                  <>
-                    <div className='col-6 mb-3 col-sm-6 col-12'>
-                      <div className='card shadow border-0'>
-                        <div className='card-body'>
-                          <div className='row'>
-
-                            <div className='col'>
-                              <span className='h6 font-semibold text-muted text-sm d-block mb-2'>
-                                Transactions in Progress
-                              </span>
-                              <span className='h3 font-bold mb-0'>
-                                {notSignedCount.length}
-                              </span>
-                            </div>
-
-                            <div className='col-auto'>
-                              <div
-                                className={`icon icon-shape bg-primary text-white text-lg rounded-circle`}
-                              >
-                                <IoTimerOutline size={56} />
-                              </div>
-                            </div>
-                          </div>
-                          <div className='mt-2 mb-0 text-sm'>
-                            <>
-                              {" "}
-                              <span className='badge badge-pill bg-soft-gray text-success me-2'>
-                                {notSignedCount.length}
-                              </span>
-                              <span className='text-nowrap text-xs text-muted'>
-                                In progress...
-                              </span>
-                            </>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                }
-              </div>
-
-
-
-              <Slide up>
-                <div className='card shadow border-0 mb-7'>
-                  <div className='card-header'>
-
-                    <div className="input-group w-50 ">
-                      {/* <input type="text" id='search' onChange={(e) => setSearch(e.target.value)} placeholder="Search transaction..." className="form-control" /> */}
-                      {/* <button type="button" className="btn btn-primary btn-lg">
-                      <FaSearch />
-                    </button> */}
-                      <h4>Transactions</h4>
-                    </div>
-                    <div className='table-responsive text-center'>
-                      <table className='table table-bordered border-light caption-top border-2 table-hover table-nowrap'>
-                        <thead className='thead-light '>
-                          <tr>
-                            <th scope='col'>Date Created</th>
-                            <th scope='col'>Borrower</th>
-                            <th scope='col'>Lender</th>
-                            <th scope='col'>Value</th>
-                            <th scope='col'>Status</th>
-                            <th scope='col'>Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {!getAlltransactionData ? <div className='text-center'> No records were found</div> : getAlltransactionData &&
-                            getAlltransactionData?.data?.filter((item) => {
-                              return search.toLowerCase() === '' ? item : item.borrower_Applicant.toLowerCase().includes(search)
-                            }).map((data, i) => (
-                              <tr key={i} >
-                                <td>
-                                  {new Date(data.createdAt).toLocaleDateString("en-US", DATE_OPTIONS)}
-                                </td>
-                                <td>
-                                  {/* <img alt='...' src='https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80' className='avatar avatar-sm rounded-circle me-2' /> */}
-                                  <Link className='text-decoration-none text-heading font-semibold' to='/'>
-                                    {data.borrower_Applicant}
-                                  </Link>
-                                </td>
-
-                                <td>
-                                  {/* <img alt='...' src='https://preview.webpixels.io/web/img/other/logos/logo-1.png' className='avatar avatar-xs rounded-circle me-2' /> */}
-                                  <Link className='text-decoration-none  text-heading font-semibold' to='/'>
-                                    {data.lenders}
-                                  </Link>
-                                </td>
-                                <td>
-                                  {formateCurrencyValue(data?.details?.contractDetails?.value)}
-                                </td>
-                                <td className={` ${data.termSheet === "Not Signed" ? 'bg-red-100' : 'bg-green-200'}`}>
-                                  {data.termSheet === "Signed" ? (
-                                    <span className='badge badge-lg text-heading badge-dot'>
-                                      <i className='bg-success'></i>Signed
-                                    </span>
-                                  ) : (
-                                    <span className='badge badge-lg text-heading badge-dot'>
-                                      <i className='bg-danger'></i>Not Signed
-                                    </span>
-                                  )}
-                                </td>
-                                <td className='text-end text-center'>
-                                  <Link to='#' onClick={() => {
-                                    data.termSheet === 'Not Signed' ? downloadTermSheet(data._id, 'view') : ViewRiskAssessment()
-                                  }} className='btn btn-sm btn-neutral'>
-                                    View Termsheet
-                                  </Link>
-
-                                </td>
-                              </tr>
-                            ))}
-
-                        </tbody>
-                      </table>
-                      {getAlltransactionData?.data?.length < 1 && <div className='text-center mx-auto container py-5 my-5 m-5'> No records were found</div>}
-
-                    </div>
-
-                  </div>
-                </div>
-              </Slide>
-            </div>
+            {renderContent()}
             {/* <div className="container mt-5">
                 <h2>My Graph</h2>
                 <Bar data={data} />

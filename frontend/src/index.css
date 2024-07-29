@@ -16447,3 +16447,11 @@ div#wrapper.open > .offcanvas-mask {
   border-top: none !important;
   border-right: none !important;
 }
+@media (max-width: 1177px) {
+  .hide-on-md {
+    display: none;
+  }
+}
+.custom-table-background {
+  background-color: #FAFAFA;
+}

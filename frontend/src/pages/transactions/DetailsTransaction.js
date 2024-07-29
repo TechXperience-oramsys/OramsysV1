@@ -1015,19 +1015,19 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         if (id !== undefined) {
             setShippingOptions({
                 ...shippingOptions,
-                warehouses: shippingOptions.warehouses?.map((ele, i) => {
+                warehouses: shippingOptions.warehouses.map((ele, i) => {
                     if (i === id) {
                         return data
                     } else {
                         return ele
                     }
-                }) ?? [],
+                }),
             })
             setWareHouseId("")
         } else {
             setShippingOptions({
                 ...shippingOptions,
-                warehouses: [...(shippingOptions.warehouses ?? []), data],
+                warehouses: [...shippingOptions.warehouses, data],
             })
         }
     }
