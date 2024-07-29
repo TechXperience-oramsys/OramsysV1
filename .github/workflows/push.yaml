@@ -32,7 +32,7 @@ jobs:
         run: npm install
 
       - name: Build application
-        run: npm run build
+        run: NODE_OPTIONS=--max-old-space-size=8096 npm run build
 
       - name: Deploy to EC2
         env:
