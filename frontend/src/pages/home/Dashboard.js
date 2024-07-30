@@ -20,6 +20,7 @@ import { BankOutlined, StockOutlined } from '@ant-design/icons'
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import ChartComponent from "./Analytics"
+import Financials from "./Financials"
 
 const Dashboard = () => {
   const token = AuthStorage.getToken()
@@ -218,7 +219,7 @@ const Dashboard = () => {
     },
     {
       label: 'Financials',
-      key: 'finanancials',
+      key: 'financials',
       icon: <AppstoreOutlined />,
     },
     {
@@ -474,10 +475,7 @@ const Dashboard = () => {
                 <div className='card-header'>
 
                   <div className="input-group w-50 ">
-                    {/* <input type="text" id='search' onChange={(e) => setSearch(e.target.value)} placeholder="Search transaction..." className="form-control" /> */}
-                    {/* <button type="button" className="btn btn-primary btn-lg">
-                <FaSearch />
-              </button> */}
+                    
                     <h4>Transactions</h4>
                   </div>
                   <div className='table-responsive text-center'>
@@ -552,7 +550,7 @@ const Dashboard = () => {
       case 'analytics':
         return <div><ChartComponent /></div>;
       case 'financials':
-        return <div>Financials Content</div>;
+        return <div><Financials /></div>;
       case 'data':
         return <div>Data Content</div>;
       default:

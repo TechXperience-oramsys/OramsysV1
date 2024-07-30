@@ -1,37 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  DashboardOutlined,
-  SettingOutlined,
-  LogoutOutlined,
-  TeamOutlined,
-  ContainerOutlined,
-  FileTextOutlined,
-  AppstoreOutlined,
-  TableOutlined,
-  FileDoneOutlined
-} from '@ant-design/icons';
+import { MenuFoldOutlined, MenuUnfoldOutlined, FileTextOutlined, AppstoreOutlined, TableOutlined } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
-
-import { Navbar, Nav } from 'react-bootstrap'
-import { NavLink, useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import STORAGEKEY from '../../config/APP/app.config';
 import AuthStorage from '../../helper/AuthStorage';
 import LogoutModal from '../../component/Modal/LogoutModal';
-import Fade from 'react-reveal/Fade';
-
-import { GrClose, GrUserAdmin } from 'react-icons/gr';
+import { GrUserAdmin } from 'react-icons/gr';
 import { FaBoxOpen, FaThList, FaUserCircle, } from 'react-icons/fa';
 import { HiOutlineLogout, HiOutlineUsers } from "react-icons/hi";
 import { MdAdminPanelSettings } from "react-icons/md";
-import { FcCollaboration } from "react-icons/fc";
 import { FaMoneyBillTransfer, FaUsersLine } from "react-icons/fa6";
-import { GoDotFill } from "react-icons/go";
-
+import Fade from 'react-reveal/Fade';
 const { Header, Sider, Content } = Layout;
 
 const Sidebar = ({ showSidebar, setSidebar }) => {
@@ -80,46 +59,41 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
   const navbarDataForSuperAdmin = [
     {
       key: '1',
-      icon: <AppstoreOutlined />,
+      icon: <AppstoreOutlined size={20} />,
       label: 'Dashboard',
       path: 'dashboard'
     },
     {
       key: '2',
-      icon: <MdAdminPanelSettings />,
+      icon: <MdAdminPanelSettings size={20} />,
       label: 'Administration',
       children: [
+     
         {
           key: '2-1',
-          icon: <AppstoreOutlined />,
-          label: 'Entities Role',
-          path: 'entities-role'
-        },
-        {
-          key: '2-2',
           icon: <TableOutlined />,
           label: 'Master Data',
           children: [
             {
-              key: '2-2-1',
+              key: '2-1-1',
               icon: <FileTextOutlined />,
               label: 'Countries',
               path: 'countries'
             },
             {
-              key: '2-2-2',
+              key: '2-1-2',
               icon: <FileTextOutlined />,
               label: 'Ports',
               path: 'ports'
             },
             {
-              key: '2-2-3',
+              key: '2-1-3',
               icon: <FileTextOutlined />,
               label: 'Airports',
               path: 'airports'
             },
             {
-              key: '2-2-4',
+              key: '2-1-4',
               icon: <FileTextOutlined />,
               label: 'Rating Agencies',
               path: 'rating-agencies'
@@ -130,24 +104,30 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
     },
     {
       key: '3',
-      icon: <FaUsersLine />,
+      icon: <AppstoreOutlined />,
+      label: 'Entities Role',
+      path: 'entities-role'
+    },
+    {
+      key: '4',
+      icon: <FaUsersLine size={20} />,
       label: 'Entities',
       path: 'entities'
     },
     {
-      key: '4',
+      key: '5',
       icon: <FaBoxOpen />,
       label: 'Products',
       path: 'products'
     },
     {
-      key: '5',
+      key: '6',
       icon: <HiOutlineUsers />,
       label: 'Users',
       path: 'users'
     },
     {
-      key: '6',
+      key: '7',
       icon: <FaMoneyBillTransfer />,
       label: 'Transactions',
       path: 'transactions'
@@ -241,9 +221,9 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
   return (
     <>
       <Layout>
-        <Sider trigger={null} collapsible collapsed={collapsed} width={210} >
+        <Sider trigger={null} theme='light' collapsible collapsed={collapsed} width={210} >
           <div className="demo-logo-vertical" />
-          <div className={`d-flex ${collapsed ? 'justify-content-center' : 'justify-content-between'} text-white align-items-center p-3`}>
+          <div className={`d-flex ${collapsed ? 'justify-content-center' : 'justify-content-between'} align-items-center p-3`}>
             <div className={`d-flex align-items-center ${collapsed ? 'justify-content-center w-100' : ''}`}>
               <FaUserCircle size={30} />
               {!collapsed && <span className='ms-2'>{userData?.name}</span>}
@@ -259,7 +239,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           </div>
           <Menu
             className='fs-6 mt-10'
-            theme="dark"
+            theme="light"
             mode="inline"
             defaultSelectedKeys={['1']}
             selectedKeys={[activeItem]}
@@ -302,7 +282,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
               margin: '24px 16px',
               padding: 24,
               minHeight: 280,
-              background: colorBgContainer,
+              background: 'colorBgContainer',
               borderRadius: borderRadiusLG,
             }}
           >

@@ -102,7 +102,7 @@ const Details = ({ handleNext, entityType }) => {
         if (companyData && id) {
             setCommon({
                 email: companyData.email,
-                password: companyData.password,
+                // password: companyData.password,
                 type: companyData.type
             })
             setDetails({
@@ -220,14 +220,14 @@ const Details = ({ handleNext, entityType }) => {
             error.email = "Please enter valid email!"
             flag = true
         }
-        if (!common.password) {
-            error.password = "Please enter password!"
-            flag = true
-        }
-        else if (common.password.length < 8) {
-            error.password = "Please enter minimun 8 character password!"
-            flag = true
-        }
+        // if (!common.password) {
+        //     error.password = "Please enter password!"
+        //     flag = true
+        // }
+        // else if (common.password.length < 8) {
+        //     error.password = "Please enter minimun 8 character password!"
+        //     flag = true
+        // }
         if (!details.name) {
             error.name = "Please enter name!"
             flag = true
@@ -280,10 +280,10 @@ const Details = ({ handleNext, entityType }) => {
         //     error[bilingAddress.type].addressLine3 = "Please enter addressLine3!"
         //     flag = true
         // }
-        if (!bilingAddress.postcode) {
-            error.Biling.postcode = "Please enter postcode!"
-            flag = true
-        }
+        // if (!bilingAddress.postcode) {
+        //     error.Biling.postcode = "Please enter postcode!"
+        //     flag = true
+        // }
         if (!bilingAddress.state) {
             error.Biling.state = "Please enter state!"
             flag = true
@@ -344,10 +344,10 @@ const Details = ({ handleNext, entityType }) => {
         //     error.Shipping.addressLine3 = "Please enter addressLine3!"
         //     flag = true
         // }
-        if (!shippingAddress.postcode) {
-            error.Shipping.postcode = "Please enter postcode!"
-            flag = true
-        }
+        // if (!shippingAddress.postcode) {
+        //     error.Shipping.postcode = "Please enter postcode!"
+        //     flag = true
+        // }
         if (!shippingAddress.state) {
             error.Shipping.state = "Please enter state!"
             flag = true
@@ -403,7 +403,7 @@ const Details = ({ handleNext, entityType }) => {
         let body = {
             ...companyData,
             email: common.email,
-            password: common.password,
+            // password: common.password,
             type: entityType,
             detail: details,
             addresses: [bilingAddress, shippingAddress],
@@ -465,7 +465,7 @@ const Details = ({ handleNext, entityType }) => {
                                     <Form.Label className="mb-0">
                                         Corporation Name <RequiredSpan />
                                     </Form.Label>
-                                    
+
                                 </div>
                                 <Form.Control
                                     className="no-border"
@@ -474,6 +474,17 @@ const Details = ({ handleNext, entityType }) => {
                                     disabled={isView}
                                 />
                                 {formErrors && formErrors?.name && <span style={{ color: 'red' }}>{formErrors.name}</span>}
+                            </Form.Group>
+
+                            <Form.Group as={Col} controlId="formGridZip">
+                                <Form.Label>Email <RequiredSpan /></Form.Label>
+                                <Form.Control className='no-border'
+                                    value={common.email}
+                                    name='email'
+                                    onChange={(e) => setCommon({ ...common, email: e.target.value })}
+                                    disabled={isView}
+                                />
+                                {formErrors && formErrors?.email && <span style={{ color: 'red' }}>{formErrors.email}</span>}
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridZip">
@@ -507,12 +518,15 @@ const Details = ({ handleNext, entityType }) => {
                                 </Form.Select>
                                 {formErrors && formErrors?.country && <span style={{ color: 'red' }}>{formErrors.country}</span>}
                             </Form.Group> */}
+                        </Row>
+
+                        <Row className='mt-4'>
 
                             <Form.Group as={Col} controlId="formGridZip">
                                 <div className="d-flex justify-content-between align-items-center">
-                                <Form.Label>Registration Number <RequiredSpan /></Form.Label>
+                                    <Form.Label>Registration Number <RequiredSpan /></Form.Label>
 
-                                <OverlayTrigger
+                                    <OverlayTrigger
                                         placement="top"
                                         overlay={<Tooltip id="tooltip-top">This field requires your corporation registration number</Tooltip>}
                                     >
@@ -528,21 +542,8 @@ const Details = ({ handleNext, entityType }) => {
                                 />
                                 {formErrors && formErrors?.registrationNumber && <span style={{ color: 'red' }}>{formErrors.registrationNumber}</span>}
                             </Form.Group>
-                        </Row>
 
-                        <Row className='mt-4'>
-                            <Form.Group as={Col} controlId="formGridZip">
-                                <Form.Label>Email <RequiredSpan /></Form.Label>
-                                <Form.Control className='no-border'
-                                    value={common.email}
-                                    name='email'
-                                    onChange={(e) => setCommon({ ...common, email: e.target.value })}
-                                    disabled={isView}
-                                />
-                                {formErrors && formErrors?.email && <span style={{ color: 'red' }}>{formErrors.email}</span>}
-                            </Form.Group>
-
-                            <Form.Group className='position-relative' as={Col} controlId="formGridZip">
+                            {/* <Form.Group className='position-relative' as={Col} controlId="formGridZip">
                                 <Form.Label>Password <RequiredSpan /></Form.Label>
                                 <Form.Control className='no-border'
                                     type={passwordVisible ? 'text' : 'password'}
@@ -556,7 +557,7 @@ const Details = ({ handleNext, entityType }) => {
                                     {passwordVisible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
                                 </span>
                                 {formErrors && formErrors?.password && <span style={{ color: 'red' }}>{formErrors.password}</span>}
-                            </Form.Group>
+                            </Form.Group> */}
 
                             <Form.Group as={Col} controlId="formGridZip">
                                 <Form.Label>Date of incorporation <RequiredSpan /></Form.Label>
@@ -693,13 +694,13 @@ const Details = ({ handleNext, entityType }) => {
 
                         <Row className='mt-4'>
                             <Form.Group as={Col} controlId="formGridZip">
-                                <Form.Label>Postcode{" "} <RequiredSpan /></Form.Label>
+                                <Form.Label>Postcode{" "} <OptionalSpan /></Form.Label>
                                 <Form.Control className='no-border'
                                     value={bilingAddress.postcode}
                                     onChange={(e) => handleChange(e, 'postcode', 'biling')}
                                     disabled={isView}
                                 />
-                                {formErrors && formErrors.Biling?.postcode && <span style={{ color: 'red' }}>{formErrors.Biling.postcode}</span>}
+                                {/* {formErrors && formErrors.Biling?.postcode && <span style={{ color: 'red' }}>{formErrors.Biling.postcode}</span>} */}
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridZip">
@@ -860,13 +861,13 @@ const Details = ({ handleNext, entityType }) => {
 
                         <Row className='mt-4'>
                             <Form.Group as={Col} controlId="formGridZip">
-                                <Form.Label>Postcode{" "} <RequiredSpan /></Form.Label>
+                                <Form.Label>Postcode{" "} <OptionalSpan /></Form.Label>
                                 <Form.Control className='no-border'
                                     value={shippingAddress.postcode}
                                     onChange={(e) => handleChange(e, 'postcode', 'shipping')}
                                     disabled={isView}
                                 />
-                                {formErrors && formErrors.Shipping?.postcode && <span style={{ color: 'red' }}>{formErrors.Shipping.postcode}</span>}
+                                {/* {formErrors && formErrors.Shipping?.postcode && <span style={{ color: 'red' }}>{formErrors.Shipping.postcode}</span>} */}
                             </Form.Group>
 
                             <Form.Group as={Col} controlId="formGridZip">
