@@ -72,7 +72,7 @@ const Financials = () => {
                 </Col>
             </Row>
             <Table
-                dataSource={spendingData}
+                dataSource={spendingData} 
                 columns={columns}
                 pagination={false}
                 title={() => 'Financial Summary 2024'}
@@ -82,7 +82,7 @@ const Financials = () => {
                         <strong>Total Income: </strong>${summaryData.totalIncome.toFixed(2)} <br />
                         <strong>Total Savings: </strong>${summaryData.totalSavings.toFixed(2)}
                     </div>
-                )}
+                )} 
             />
 
         </div>
