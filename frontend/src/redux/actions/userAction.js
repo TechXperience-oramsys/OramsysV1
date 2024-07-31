@@ -1,4 +1,3 @@
-import React from 'react'
 import { ApiGet, ApiPost } from '../../helper/API/ApiData'
 import { GET_USER_DATA, GET_USER_DATA_ERROR, GET_USER_DATA_LOADING, IS_LOADING, USER_GET_BY_ID, USER_GET_BY_ID_ERROR, USER_UPDATE, USER_UPDATE_ERROR } from '../types'
 
@@ -112,7 +111,7 @@ export const userUpdateAction = (userUpdate, id) => async (dispatch) => {
             type: GET_USER_DATA_LOADING,
             payload: true
         })
-     
+
         await ApiPost(`user/edit/${id}`, userUpdate)
             .then((res) => {
                 dispatch({

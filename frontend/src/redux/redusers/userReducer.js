@@ -1,4 +1,3 @@
-import React from 'react'
 import { GET_USER_DATA, GET_USER_DATA_ERROR, GET_USER_DATA_LOADING, USER_GET_BY_ID, USER_GET_BY_ID_ERROR, USER_UPDATE, USER_UPDATE_ERROR } from '../types';
 
 

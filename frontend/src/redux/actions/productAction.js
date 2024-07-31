@@ -1,6 +1,6 @@
 import React from 'react'
 import { ApiGet, ApiPost } from '../../helper/API/ApiData'
-import { IS_LOADING, PRODUCT, PRODUCTADD, PRODUCTADD_ERROR, PRODUCTADD_LOADING, PRODUCT_ERROR, PRODUCT_GET_BY_ID, PRODUCT_GET_BY_ID_ERROR, PRODUCT_LOADING, PRODUCT_UPDATE, PRODUCT_UPDATE_ERROR, PRODUCT_UPDATE__ERROR, PRODUCT_UPDATE__LOADING } from '../types'
+import { IS_LOADING, PRODUCT, PRODUCTADD, PRODUCTADD_ERROR, PRODUCTADD_LOADING, PRODUCT_ERROR, PRODUCT_GET_BY_ID, PRODUCT_GET_BY_ID_ERROR, PRODUCT_LOADING, PRODUCT_UPDATE, PRODUCT_UPDATE_ERROR } from '../types'
 
 export const productGetAction = (search) => async (dispatch) => {
     try {
@@ -146,7 +146,7 @@ export const productGetByIdAction = (id) => async (dispatch) => {
     }
 }
 
-export const productUpdateAction = (productUpdate,id) => async (dispatch) => {
+export const productUpdateAction = (productUpdate, id) => async (dispatch) => {
     try {
         dispatch({
             type: IS_LOADING,

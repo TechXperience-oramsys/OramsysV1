@@ -5,7 +5,6 @@ import { Security } from "@okta/okta-react";
 import { Toaster } from 'react-hot-toast';
 import { useEffect, useState } from "react";
 
-const OKTA_DOMAIN = "dev-09386955";
 const CLIENT_ID = "0oa5hrixzgbpayfmA5d7";
 const CALLBACK_PATH = "http://localhost:3000/callback";
 const ISSUER = "https://dev-09386955.okta.com/oauth2/default";
@@ -38,7 +37,6 @@ const Routes = () => {
     return currentPath;
   };
 
-  const path = useFindPath();
 
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {
     navigate(toRelativeUrl(originalUri || "/", window.location.origin));

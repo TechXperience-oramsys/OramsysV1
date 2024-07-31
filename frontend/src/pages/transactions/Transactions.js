@@ -385,7 +385,7 @@ const Transactions = () => {
 
 
                   </div>
-                  <div className="mt-10 table-responsive form custom-table-background">
+                  <div className="mt-10 table-responsive form ">
                     <Table
                       columns={columns}
                       dataSource={currentTrans}

@@ -1,4 +1,3 @@
-import React from 'react'
 import { ADD_RISK_ASSESSMENT, ADD_RISK_ASSESSMENT_ERROR, GET_RISK_ASSESSMENT, GET_RISK_ASSESSMENT_ERROR, RISK_ASSESSMENT_DATA } from '../types';
 
 const initialState = {

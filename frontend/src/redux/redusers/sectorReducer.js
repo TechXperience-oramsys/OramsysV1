@@ -1,4 +1,4 @@
-import { REGISTER, REGISTER_ERROR, REGISTER_LOADING, SECTOR, SECTOR_ERROR, SECTOR_LOADING, } from "../types";
+import { SECTOR, SECTOR_ERROR, SECTOR_LOADING, } from "../types";
 
 const initialState = {
     sectorLoading: false,

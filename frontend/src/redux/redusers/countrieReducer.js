@@ -1,4 +1,4 @@
-import { COUNTRIES, COUNTRIES_ERROR, COUNTRIES_LOADING, REGISTER, REGISTER_ERROR, REGISTER_LOADING, } from "../types";
+import { COUNTRIES, COUNTRIES_ERROR, COUNTRIES_LOADING } from "../types";
 
 const initialState = {
     countryLoading: false,

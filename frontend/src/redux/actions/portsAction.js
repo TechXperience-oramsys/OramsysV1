@@ -1,4 +1,3 @@
-import React from 'react'
 import { ApiGet } from '../../helper/API/ApiData'
 import { AIR_PORT, AIR_PORT_ERROR, AIR_PORT_LOADING, IS_LOADING, PORT, PORT_ERROR, PORT_LOADING } from '../types'
 

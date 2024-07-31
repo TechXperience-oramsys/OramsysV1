@@ -1,5 +1,4 @@
-import React from 'react'
-import {ApiDelete, ApiGet, ApiPost} from '../../helper/API/ApiData'
+import { ApiDelete, ApiGet, ApiPost } from '../../helper/API/ApiData'
 import {
     ENTITYROLE,
     ENTITYROLE_ADD,
@@ -110,7 +109,7 @@ export const entityRoleAddAction = (entityRoleAdd) => async (dispatch) => {
     }
 }
 
-export const entityRoleUpdateAction = (entityRoleUpdate,id) => async (dispatch) => {
+export const entityRoleUpdateAction = (entityRoleUpdate, id) => async (dispatch) => {
     try {
         dispatch({
             type: IS_LOADING,

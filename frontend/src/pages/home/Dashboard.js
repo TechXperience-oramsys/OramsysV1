@@ -3,6 +3,7 @@ import { BsBox, BsFillPeopleFill } from "react-icons/bs"
 import { IoTimerOutline } from "react-icons/io5"
 import { FcBusinessman } from "react-icons/fc"
 import { GrTransaction } from "react-icons/gr"
+import { FaMoneyCheckAlt } from "react-icons/fa";
 import { Link } from "react-router-dom"
 import { useSelector } from "react-redux"
 import AuthStorage from "../../helper/AuthStorage"
@@ -16,9 +17,9 @@ import { userGetAction } from "../../redux/actions/userAction"
 import { ratingAgenciesAction } from "../../redux/actions/ratingAgenciesAction"
 import { ApiGet, ApiGet2 } from "../../helper/API/ApiData"
 import Slide from 'react-reveal/Slide';
-import { BankOutlined, StockOutlined } from '@ant-design/icons'
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
-import { Menu } from 'antd';
+import { BankOutlined, SearchOutlined, StockOutlined } from '@ant-design/icons'
+import { AppstoreOutlined, MailOutlined, SettingOutlined, RiseOutlined } from '@ant-design/icons';
+import { Input, Menu } from 'antd';
 import ChartComponent from "./Analytics"
 import Financials from "./Financials"
 
@@ -208,19 +209,19 @@ const Dashboard = () => {
 
   const items = [
     {
-      label: 'Home',
-      key: 'home',
+      label: 'Overview',
+      key: 'overview',
       icon: <MailOutlined />,
     },
     {
       label: 'Analytics',
       key: 'analytics',
-      icon: <AppstoreOutlined />,
+      icon: <RiseOutlined />,
     },
     {
       label: 'Financials',
       key: 'financials',
-      icon: <AppstoreOutlined />,
+      icon: <FaMoneyCheckAlt />,
     },
     {
       label: 'Data',
@@ -229,7 +230,7 @@ const Dashboard = () => {
     },
   ];
 
-  const [current, setCurrent] = useState('home');
+  const [current, setCurrent] = useState('overview');
   const onClick = (e) => {
     console.log('click ', e);
     setCurrent(e.key);
@@ -237,7 +238,7 @@ const Dashboard = () => {
 
   const renderContent = () => {
     switch (current) {
-      case 'home':
+      case 'overview':
         return <div>
           <div className='container-fluid'>
             <div className='row g-6 mb-6'>
@@ -475,7 +476,7 @@ const Dashboard = () => {
                 <div className='card-header'>
 
                   <div className="input-group w-50 ">
-                    
+
                     <h4>Transactions</h4>
                   </div>
                   <div className='table-responsive text-center'>
@@ -576,10 +577,17 @@ const Dashboard = () => {
                   {/* <!-- Actions --> */}
                   <div className='col-sm-6 col-12 text-sm-end'>
                     <div className='mx-n1'>
-                      <Link to='/transactions' className='btn btn-primary rounded d-inline-flex btn-md border-base mx-1'>
+                      {/* <Link to='/transactions' className='btn btn-primary rounded d-inline-flex btn-md border-base mx-1'>
                         <span className=' pe-2'><i className='bi bi-pencil'></i></span>
                         <span>Transactions</span>
-                      </Link>
+                      </Link> */}
+                      <Input
+                        placeholder="Search "
+                        prefix={<SearchOutlined />}
+                        // value={searchTerm}
+                        // onChange={(e) => setSearchTerm(e.target.value)}
+                        style={{ width: 300 }}
+                    />
 
                     </div>
 
