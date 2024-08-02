@@ -223,7 +223,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
       <Layout>
         <Sider trigger={null} theme='light' collapsible collapsed={collapsed} width={210} >
           <div className="demo-logo-vertical" />
-          <div className={`d-flex ${collapsed ? 'justify-content-center' : 'justify-content-between'} align-items-center p-3 border bg-gray-200`}>
+          <div className={`d-flex ${collapsed ? 'justify-content-center' : 'justify-content-between'} align-items-center p-3`} style={{ backgroundColor: '#F0F0F0' }}>
             <div className={`d-flex align-items-center ${collapsed ? 'justify-content-center w-100' : ''}`}>
               <FaUserCircle size={30} />
               {!collapsed && <span className='ms-2'>{userData?.name}</span>}

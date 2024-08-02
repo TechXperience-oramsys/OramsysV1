@@ -201,7 +201,6 @@ const Transactions = () => {
       title: 'Date',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
       render: (createdAt) => new Date(createdAt).toLocaleDateString("en-US", DATE_OPTIONS),
       className: 'hide-on-md',
     },
@@ -209,20 +208,17 @@ const Transactions = () => {
       title: 'Transaction Number',
       dataIndex: '_id',
       key: '_id',
-      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
       className: 'hide-on-md',
     },
     {
       title: 'Borrower',
       dataIndex: 'borrower_Applicant',
       key: 'borrower_Applicant',
-      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: 'Lender',
       dataIndex: 'lenders',
       key: 'lenders',
-      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: 'Contract Value',
@@ -230,7 +226,6 @@ const Transactions = () => {
       key: 'contractValue',
       align: 'center',
       render: (value) => formateCurrencyValue(value),
-      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     // {
     //   title: 'Created by',
@@ -254,7 +249,6 @@ const Transactions = () => {
       title: 'Product',
       dataIndex: ['details', 'productDetails', 'name', 'name'],
       key: 'product',
-      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: 'Termsheet',

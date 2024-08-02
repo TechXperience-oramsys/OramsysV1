@@ -1083,6 +1083,9 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         hendelNext()
     }
 
+    const save = () => {
+        
+    }
     const handleCommoditySubtypeChange = (e, newVal) => {
         // let product = [];
         // productData.data.forEach((item) => {
