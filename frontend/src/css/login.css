@@ -91,7 +91,7 @@ h2 {
   background-color: #00A9EF;
   height: 3px;
   width: 80px;
-  margin: 10px 0 0;
+  /* margin: 10px 0 0; */
   display: block;
   clear: both;
 }
@@ -100,7 +100,7 @@ h2 {
   background-color: #00A9EF;
   height: 3px;
   width: 180px;
-  margin: 10px 0 0;
+  /* margin: 10px 0 0; */
   display: block;
   clear: both;
 }

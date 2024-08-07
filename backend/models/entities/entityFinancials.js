@@ -4,18 +4,18 @@ const mongoose = require('mongoose')
 var Schema = mongoose.Schema
 
 var Schema = new Schema({
-    entityId: { type: String, required: true },
-    netProfitMargin: { type: Number, required: true },
-    ROE: { type: Number, required: true },
-    ROA: { type: Number, required: true },
-    operatingCashFlow: { type: Number, required: true },
-    debtServiceCoverageRatio: { type: Number, required: true },
-    interestCoverageRatio: { type: Number, required: true },
-    netGearingRatio: { type: Number, required: true },
-    totalDebtToTotalCapital: { type: Number, required: true },
-    currentRatio: { type: Number, required: true },
-    quickRatio: { type: Number, required: true },
-    cashFlowBeforeFinancingSales: { type: Number, required: true },
+    entityId: { type: String, required: false },
+    netProfitMargin: { type: Number, required: false },
+    ROE: { type: Number, required: false },
+    ROA: { type: Number, required: false },
+    operatingCashFlow: { type: Number, required: false },
+    debtServiceCoverageRatio: { type: Number, required: false },
+    interestCoverageRatio: { type: Number, required: false },
+    netGearingRatio: { type: Number, required: false },
+    totalDebtToTotalCapital: { type: Number, required: false },
+    currentRatio: { type: Number, required: false },
+    quickRatio: { type: Number, required: false },
+    cashFlowBeforeFinancingSales: { type: Number, required: false },
     isDeleted: { type: Boolean, required: true, default: false },
 }, {
     timestamps: true

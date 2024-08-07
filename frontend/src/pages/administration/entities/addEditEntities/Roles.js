@@ -52,7 +52,7 @@ const Roles = ({ hendelNext, handleBack }) => {
     const Delete = (data) => {
         let body = {
             ...companyData,
-            roles: companyData?.roles?.filter((e, i) => i !== data?.tableData.id)
+            roles: companyData?.roles?.filter((e, i) => i !== data.key)
         }
         dispatch(companydataAction(body))
     }
@@ -62,7 +62,7 @@ const Roles = ({ hendelNext, handleBack }) => {
         delete companyData.financial._id
         const body = {
             email: companyData.email,
-            password: companyData.password,
+            // password: companyData.password,
             type: companyData.type,
             detail: companyData.detail,
             addresses: companyData.addresses.map((ele) => {
@@ -106,7 +106,7 @@ const Roles = ({ hendelNext, handleBack }) => {
     const edit = async () => {
         const body = {
             email: companyData?.email,
-            password: companyData?.password,
+            // password: companyData?.password,
             type: companyData?.type,
             detail: companyData?.detail,
             addresses: companyData?.addresses,
@@ -122,8 +122,6 @@ const Roles = ({ hendelNext, handleBack }) => {
         setLoading(true)
         await dispatch(editEntityAction(id, body))
         setLoading(false)
-        navigate('/entities')
-
     }
 
     useEffect(() => {

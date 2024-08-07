@@ -22,6 +22,7 @@ import { MultiSelectForm } from "./Helpers/MultiselectForm";
 import Select from "react-select";
 import { addCurrencyHedgeAtom, addSourceOfRepaymentAtom, currencyHedgeDetailsModalAtom, facilityAtom, securityDocumentsAtom, sourceOfRepaymentAtom, typeAtom } from "./Helpers/atoms";
 import { useAtom } from "jotai";
+import { OptionalSpan } from "./Helpers/OptionalTags";
 // import dayjs from "dayjs";
 // import customParseFormat from "dayjs/plugin/customParseFormat";
 // import { DatePicker, Space } from "antd";
@@ -252,7 +253,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
         { value: "Factoring", label: "Factoring" },
         { value: "Post Shipment Finance", label: "Post Shipment Finance" },
         { value: "Term Loan", label: "Term Loan" },
-        { value: "Term Loan", label: "Others (please specify)" },
+        { value: "Others (please specify)", label: "Others (please specify)" },
 
         // "Trade Finance",
         // "Export Finance",
@@ -335,7 +336,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
         "No iuerguyrrr",
 
     ]
-   
+
 
     let currencyHedgeOptions = [
         { value: "", label: "Select Option" },
@@ -576,20 +577,20 @@ const Facility = ({ hendelCancel, hendelNext }) => {
         //     error.workingCapital = "Please enter working capital!"
         // }
 
-        if (!facility.disbursementMechanism) {
-            params = true
-            error.disbursementMechanism = "Please enter disbursement mechanism!"
-        }
+        // if (!facility.disbursementMechanism) {
+        //     params = true
+        //     error.disbursementMechanism = "Please enter disbursement mechanism!"
+        // }
 
-        if (!facility.securityUndertaking) {
-            params = true
-            error.securityUndertaking = "Please enter security undertaking!"
-        }
+        // if (!facility.securityUndertaking) {
+        //     params = true
+        //     error.securityUndertaking = "Please enter security undertaking!"
+        // }
 
-        if (!facility.controlAccounts) {
-            params = true
-            error.controlAccounts = "Please enter control accounts!"
-        }
+        // if (!facility.controlAccounts) {
+        //     params = true
+        //     error.controlAccounts = "Please enter control accounts!"
+        // }
 
         if (!facility.finalMaturity) {
             params = true
@@ -630,40 +631,40 @@ const Facility = ({ hendelCancel, hendelNext }) => {
             error.informationCovenants = "Please enter information covenants!"
         }
 
-        if (!facility.assignments) {
-            params = true
-            error.assignments = "Please enter assignments!"
-        }
+        // if (!facility.assignments) {
+        //     params = true
+        //     error.assignments = "Please enter assignments!"
+        // }
 
-        if (!facility.taxationDuties) {
-            params = true
-            error.taxationDuties = "Please enter taxation & duties!"
-        }
+        // if (!facility.taxationDuties) {
+        //     params = true
+        //     error.taxationDuties = "Please enter taxation & duties!"
+        // }
 
-        if (!facility.expenses) {
-            params = true
-            error.expenses = "Please enter expenses!"
-        }
+        // if (!facility.expenses) {
+        //     params = true
+        //     error.expenses = "Please enter expenses!"
+        // }
 
-        if (!facility.approvals) {
-            params = true
-            error.approvals = "Please enter approvals!"
-        }
+        // if (!facility.approvals) {
+        //     params = true
+        //     error.approvals = "Please enter approvals!"
+        // }
 
         if (!facility.governingLaw) {
             params = true
             error.governingLaw = "Please enter governing law!"
         }
 
-        if (!facility.jurisdiction) {
-            params = true
-            error.jurisdiction = "Please enter jurisdiction!"
-        }
+        // if (!facility.jurisdiction) {
+        //     params = true
+        //     error.jurisdiction = "Please enter jurisdiction!"
+        // }
 
-        if (!facility.forceMajeure) {
-            params = true
-            error.forceMajeure = "Please enter force majeure!"
-        }
+        // if (!facility.forceMajeure) {
+        //     params = true
+        //     error.forceMajeure = "Please enter force majeure!"
+        // }
 
         // if (!securityDocuments.length) {
         //     params = true
@@ -674,20 +675,20 @@ const Facility = ({ hendelCancel, hendelNext }) => {
             error.availabilityPeriod = "please enter availability period"
         }
 
-        if (!facility.repayment) {
-            params = true
-            error.repayment = "please enter repayment"
-        }
+        // if (!facility.repayment) {
+        //     params = true
+        //     error.repayment = "please enter repayment"
+        // }
 
-        if (!facility.transactionStructure) {
-            params = true
-            error.transactionStructure = "please enter transaction structure"
-        }
+        // if (!facility.transactionStructure) {
+        //     params = true
+        //     error.transactionStructure = "please enter transaction structure"
+        // }
 
-        if (!facility.permittedAccounts) {
-            params = true
-            error.permittedAccounts = "please enter permitted accounts"
-        }
+        // if (!facility.permittedAccounts) {
+        //     params = true
+        //     error.permittedAccounts = "please enter permitted accounts"
+        // }
 
         if (!facility.representations) {
             params = true
@@ -699,10 +700,10 @@ const Facility = ({ hendelCancel, hendelNext }) => {
             error.eventsOfDefault = "please enter events of default"
         }
 
-        if (!facility.miscellaneousProvisions) {
-            params = true
-            error.miscellaneousProvisions = "please enter miscellaneous provisions"
-        }
+        // if (!facility.miscellaneousProvisions) {
+        //     params = true
+        //     error.miscellaneousProvisions = "please enter miscellaneous provisions"
+        // }
 
         if (!facility.generalUndertakings) {
             params = true
@@ -1639,35 +1640,35 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                             {/* <div className="mb-3"> */}
                             <Row className="mb-4">
                                 <Form.Group as={Col} controlId="formGridCity">
-                                    <Form.Label>Disbursement Mechanism</Form.Label>
+                                    <Form.Label>Disbursement Mechanism <OptionalSpan /></Form.Label>
                                     <Form.Control
                                         value={facility.disbursementMechanism}
                                         name="disbursementMechanism"
                                         onChange={handleChange}
                                         disabled={isView}
                                     />
-                                    {error && error?.disbursementMechanism && <span style={{ color: "red" }}>{error.disbursementMechanism}</span>}
+                                    {/* {error && error?.disbursementMechanism && <span style={{ color: "red" }}>{error.disbursementMechanism}</span>} */}
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridZip">
-                                    <Form.Label>Security Undertaking</Form.Label>
+                                    <Form.Label>Security Undertaking <OptionalSpan /></Form.Label>
                                     <Form.Control
                                         value={facility.securityUndertaking}
                                         name="securityUndertaking"
                                         onChange={handleChange}
                                     />
-                                    {error && error?.securityUndertaking && <span style={{ color: "red" }}>{error.securityUndertaking}</span>}
+                                    {/* {error && error?.securityUndertaking && <span style={{ color: "red" }}>{error.securityUndertaking}</span>} */}
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridZip">
-                                    <Form.Label>Control Accounts</Form.Label>
+                                    <Form.Label>Control Accounts <OptionalSpan /></Form.Label>
                                     <Form.Control
                                         value={facility.controlAccounts}
                                         name="controlAccounts"
                                         disabled={isView}
                                         onChange={handleChange}
                                     />
-                                    {error && error?.controlAccounts && <span style={{ color: "red" }}>{error.controlAccounts}</span>}
+                                    {/* {error && error?.controlAccounts && <span style={{ color: "red" }}>{error.controlAccounts}</span>} */}
                                 </Form.Group>
 
                                 <Form.Group as={Col} lg={3} controlId="formGridZip">
@@ -1677,7 +1678,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                             name="finalMaturity"
                                             value={facility.finalMaturity}
                                             onChange={(e) => handleChangeNumber(e, "finalMaturity")} />
-                                        <InputGroup.Text>Months</InputGroup.Text>
+                                        <InputGroup.Text>Days</InputGroup.Text>
                                     </InputGroup>
 
                                     {error?.finalMaturity && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.finalMaturity}</span>)}
@@ -1712,13 +1713,13 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                     </Form.Group>
                                 )}
                                 <Form.Group as={Col} lg={facility.documentation === "Others (Please specify)" ? 3 : 4} controlId="formGridZip">
-                                    <Form.Label>Taxation Duties</Form.Label>
+                                    <Form.Label>Taxation Duties <OptionalSpan /></Form.Label>
                                     <Form.Control
                                         value={facility.taxationDuties}
                                         name="taxationDuties"
                                         onChange={handleChange}
                                         disabled={isView} />
-                                    {error && error?.taxationDuties && <span style={{ color: "red" }}>{error.taxationDuties}</span>}
+                                    {/* {error && error?.taxationDuties && <span style={{ color: "red" }}>{error.taxationDuties}</span>} */}
                                 </Form.Group>
                                 <Form.Group as={Col} lg={facility.documentation === "Others (Please specify)" ? 3 : 4} controlId="formGridZip">
                                     <Form.Label>Enforcement Courts</Form.Label>
@@ -1806,24 +1807,24 @@ const Facility = ({ hendelCancel, hendelNext }) => {
 
                             <Row className="mb-4">
                                 <Form.Group as={Col} lg={6} controlId="exampleForm.ControlTextarea1">
-                                    <Form.Label>Cost and Expenses</Form.Label>
+                                    <Form.Label>Cost and Expenses <OptionalSpan /></Form.Label>
                                     <Form.Control as="textarea" rows={2}
                                         value={facility.expenses}
                                         name="expenses"
                                         onChange={handleChange} />
-                                    {error && error?.expenses && <span style={{ color: "red" }}>{error.expenses}</span>}
+                                    {/* {error && error?.expenses && <span style={{ color: "red" }}>{error.expenses}</span>} */}
                                 </Form.Group>
 
 
 
                                 <Form.Group as={Col} lg={6} controlId="formGridZip">
-                                    <Form.Label>Approvals</Form.Label>
+                                    <Form.Label>Approvals <OptionalSpan /></Form.Label>
                                     <Form.Control as="textarea" rows={2}
                                         value={facility.approvals}
                                         name="approvals"
                                         onChange={handleChange}
                                         disabled={isView} />
-                                    {error && error?.approvals && <span style={{ color: "red" }}>{error.approvals}</span>}
+                                    {/* {error && error?.approvals && <span style={{ color: "red" }}>{error.approvals}</span>} */}
                                 </Form.Group>
 
 
@@ -1844,33 +1845,33 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridZip">
-                                    <Form.Label>Repayment</Form.Label>
+                                    <Form.Label>Repayment <OptionalSpan /></Form.Label>
                                     <Form.Control
                                         value={facility.repayment}
                                         name="repayment"
                                         onChange={handleChange}
                                         disabled={isView} />
-                                    {error && error?.repayment && <span style={{ color: "red" }}>{error.repayment}</span>}
+                                    {/* {error && error?.repayment && <span style={{ color: "red" }}>{error.repayment}</span>} */}
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridZip">
-                                    <Form.Label>Transaction Structure</Form.Label>
+                                    <Form.Label>Transaction Structure <OptionalSpan /></Form.Label>
                                     <Form.Control
                                         value={facility.transactionStructure}
                                         name="transactionStructure"
                                         onChange={handleChange}
                                         disabled={isView} />
-                                    {error && error?.transactionStructure && <span style={{ color: "red" }}>{error.transactionStructure}</span>}
+                                    {/* {error && error?.transactionStructure && <span style={{ color: "red" }}>{error.transactionStructure}</span>} */}
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridZip">
-                                    <Form.Label>Permitted Accounts</Form.Label>
+                                    <Form.Label>Permitted Accounts <OptionalSpan /></Form.Label>
                                     <Form.Control
                                         value={facility.permittedAccounts}
                                         name="permittedAccounts"
                                         onChange={handleChange}
                                         disabled={isView} />
-                                    {error && error?.permittedAccounts && <span style={{ color: "red" }}>{error.permittedAccounts}</span>}
+                                    {/* {error && error?.permittedAccounts && <span style={{ color: "red" }}>{error.permittedAccounts}</span>} */}
                                 </Form.Group>
 
                             </Row>
@@ -1894,33 +1895,33 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                                     {error && error?.governingLaw && <span style={{ color: "red" }}>{error.governingLaw}</span>}
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="formGridZip">
-                                    <Form.Label>Assignments</Form.Label>
+                                    <Form.Label>Assignments <OptionalSpan /></Form.Label>
                                     <Form.Control
                                         value={facility.assignments}
                                         name="assignments"
                                         onChange={handleChange}
                                         disabled={isView} />
-                                    {error && error?.assignments && <span style={{ color: "red" }}>{error.assignments}</span>}
+                                    {/* {error && error?.assignments && <span style={{ color: "red" }}>{error.assignments}</span>} */}
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridZip">
-                                    <Form.Label>Miscellaneous Provisions</Form.Label>
+                                    <Form.Label>Miscellaneous Provisions <OptionalSpan /></Form.Label>
                                     <Form.Control
                                         value={facility.miscellaneousProvisions}
                                         name="miscellaneousProvisions"
                                         onChange={handleChange}
                                         disabled={isView} />
-                                    {error && error?.miscellaneousProvisions && <span style={{ color: "red" }}>{error.miscellaneousProvisions}</span>}
+                                    {/* {error && error?.miscellaneousProvisions && <span style={{ color: "red" }}>{error.miscellaneousProvisions}</span>} */}
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridZip">
-                                    <Form.Label>Force Majeure</Form.Label>
+                                    <Form.Label>Force Majeure <OptionalSpan /></Form.Label>
                                     <Form.Control
                                         value={facility.forceMajeure}
                                         name="forceMajeure"
                                         onChange={handleChange}
                                         disabled={isView} />
-                                    {error && error?.forceMajeure && <span style={{ color: "red" }}>{error.forceMajeure}</span>}
+                                    {/* {error && error?.forceMajeure && <span style={{ color: "red" }}>{error.forceMajeure}</span>} */}
                                 </Form.Group>
 
                                 {/* <Form.Group as={Col} controlId="formFileMultiple">
@@ -1954,7 +1955,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                     </div>
                 </div>
                 <div className="footer_">
-                    <button onClick={() => { hendelCancel() }} className="footer_cancel_btn">cancel</button>
+                    <button onClick={() => { hendelCancel() }} className="footer_cancel_btn">Back</button>
                     <button onClick={() => { navigate("/final-page") }} className={`footer_next_btn ${isView ? "d-block" : "d-none"}`}>Exit</button>
                     <button onClick={() => { id ? edit() : save() }} className={`footer_next_btn ${isView && "d-none"}`}>
                         {!loading ? <>{id ? "Close" : "Save"}</> : null}

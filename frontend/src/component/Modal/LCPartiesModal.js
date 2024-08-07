@@ -160,7 +160,7 @@ const LCPartiesModal = ({ show, onHide, addParties, data }) => {
                                                     setLcParties({ ...lcParties, issuingBank: { value: newValue._id, label: newValue.details?.name } });
                                                 }}
                                                 disableClearable
-                                                value={(applicant.length && lcParties?.issuingBank?.value) && applicant.find(item => item._id === lcParties.applicant.value)}
+                                                value={(applicant.length && lcParties?.issuingBank?.value) && applicant.find(item => item._id === lcParties.issuingBank.value)}
                                             />
                                         </Col>
                                         <Col lg={3}>
@@ -176,7 +176,7 @@ const LCPartiesModal = ({ show, onHide, addParties, data }) => {
                                                     setLcParties({ ...lcParties, beneficiary: { value: newValue._id, label: newValue.details?.name } });
                                                 }}
                                                 disableClearable
-                                                value={(applicant.length && lcParties?.beneficiary?.value) && applicant.find(item => item._id === lcParties.applicant.value)}
+                                                value={(applicant.length && lcParties?.beneficiary?.value) && applicant.find(item => item._id === lcParties.beneficiary.value)}
                                             />
                                         </Col>
                                         <Col lg={3}>
@@ -192,7 +192,7 @@ const LCPartiesModal = ({ show, onHide, addParties, data }) => {
                                                     setLcParties({ ...lcParties, advisingBank: { value: newValue._id, label: newValue.details?.name } });
                                                 }}
                                                 disableClearable
-                                                value={(applicant.length && lcParties?.advisingBank?.value) && applicant.find(item => item._id === lcParties.applicant.value)}
+                                                value={(applicant.length && lcParties?.advisingBank?.value) && applicant.find(item => item._id === lcParties.advisingBank.value)}
                                             />
                                         </Col>
 
@@ -211,7 +211,7 @@ const LCPartiesModal = ({ show, onHide, addParties, data }) => {
                                                     setLcParties({ ...lcParties, conformingBank: { value: newValue._id, label: newValue.details?.name } });
                                                 }}
                                                 disableClearable
-                                                value={(applicant.length && lcParties?.conformingBank?.value) && applicant.find(item => item._id === lcParties.applicant.value)}
+                                                value={(applicant.length && lcParties?.conformingBank?.value) && applicant.find(item => item._id === lcParties.conformingBank.value)}
                                             />
                                         </Col>
                                         <Col lg={3}>
@@ -227,7 +227,7 @@ const LCPartiesModal = ({ show, onHide, addParties, data }) => {
                                                     setLcParties({ ...lcParties, negotiatingBank: { value: newValue._id, label: newValue.details?.name } });
                                                 }}
                                                 disableClearable
-                                                value={(applicant.length && lcParties?.negotiatingBank?.value) && applicant.find(item => item._id === lcParties.applicant.value)}
+                                                value={(applicant.length && lcParties?.negotiatingBank?.value) && applicant.find(item => item._id === lcParties.negotiatingBank.value)}
                                             />
                                         </Col>
                                         <Col lg={3}>
@@ -243,7 +243,7 @@ const LCPartiesModal = ({ show, onHide, addParties, data }) => {
                                                     setLcParties({ ...lcParties, secondBeneficiary: { value: newValue._id, label: newValue.details?.name } });
                                                 }}
                                                 disableClearable
-                                                value={(applicant.length && lcParties?.secondBeneficiary?.value) && applicant.find(item => item._id === lcParties.applicant.value)}
+                                                value={(applicant.length && lcParties?.secondBeneficiary?.value) && applicant.find(item => item._id === lcParties.secondBeneficiary.value)}
                                             />
                                         </Col>
                                         <Col lg={3}>
@@ -259,7 +259,7 @@ const LCPartiesModal = ({ show, onHide, addParties, data }) => {
                                                     setLcParties({ ...lcParties, reimbursingBank: { value: newValue._id, label: newValue.details?.name } });
                                                 }}
                                                 disableClearable
-                                                value={(applicant.length && lcParties?.reimbursingBank?.value) && applicant.find(item => item._id === lcParties.applicant.value)}
+                                                value={(applicant.length && lcParties?.reimbursingBank?.value) && applicant.find(item => item._id === lcParties.reimbursingBank.value)}
                                             />
                                         </Col>
                                     </Row>

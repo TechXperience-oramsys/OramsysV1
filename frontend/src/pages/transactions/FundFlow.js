@@ -93,7 +93,7 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                     issuingBank: { value: ele?.issuingBank?._id, label: ele?.issuingBank?.details?.name },
                     beneficiary: { value: ele?.beneficiary?._id, label: ele?.beneficiary?.details?.name },
                     advisingBank: { value: ele?.advisingBank?._id, label: ele?.advisingBank?.details?.name },
-                    confirmingBank: { value: ele?.confirmingBank?._id, label: ele?.confirmingBank?.details?.name },
+                    conformingBank: { value: ele?.conformingBank?._id, label: ele?.conformingBank?.details?.name },
                     negotiatingBank: { value: ele?.negotiatingBank?._id, label: ele?.negotiatingBank?.details?.name },
                     secondBeneficiary: { value: ele?.secondBeneficiary?._id, label: ele?.secondBeneficiary?.details?.name },
                     reimbursingBank: { value: ele?.reimbursingBank?._id, label: ele?.reimbursingBank?.details?.name },
@@ -399,7 +399,7 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                                                     { title: 'Label', field: 'issuingBank.label' },
                                                     { title: 'Courtries', field: 'beneficiary.label' },
                                                     { title: 'advisingBank', field: 'advisingBank.label' },
-                                                    { title: 'conformingBank', field: 'confirmingBank.label' },
+                                                    { title: 'conformingBank', field: 'conformingBank.label' },
                                                     { title: 'negotiatingBank', field: 'negotiatingBank.label' },
                                                     { title: 'reimbursingBank', field: 'reimbursingBank.label' },
                                                     { title: 'secondBeneficiary', field: 'secondBeneficiary.label' },
@@ -740,7 +740,7 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                     </>
                 }
                 <div className='footer_'>
-                    <button onClick={() => { hendelCancel() }} className="footer_cancel_btn">cancel</button>
+                    <button onClick={() => { hendelCancel() }} className="footer_cancel_btn">Back</button>
                     <button onClick={() => { next() }} className='footer_next_btn'> Next</button>
                 </div>
             </div>

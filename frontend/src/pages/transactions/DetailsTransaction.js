@@ -618,7 +618,6 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     }
 
     let options = [
-        { value: '', label: 'Select Option' },
         { value: true, label: "Yes" },
         { value: false, label: "No" },
     ]
@@ -695,7 +694,6 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     ]
 
     let warehouseRequiredOptions = [
-        { value: '', label: 'Select Option' },
         { value: true, label: "Yes" },
         { value: false, label: "No" },
     ]
@@ -1012,6 +1010,10 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     }
 
     const warehouseData = (data, id) => {
+        console.log("Initial warehouses:", shippingOptions.warehouses);
+        if (!Array.isArray(shippingOptions.warehouses)) {
+            shippingOptions.warehouses = [];
+        }
         if (id !== undefined) {
             setShippingOptions({
                 ...shippingOptions,
@@ -1030,6 +1032,9 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                 warehouses: [...shippingOptions.warehouses, data],
             })
         }
+            // Debugging to check the updated state of warehouses
+    console.log("Updated warehouses:", shippingOptions.warehouses);
+
     }
 
 
@@ -1084,7 +1089,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     }
 
     const save = () => {
-        
+
     }
     const handleCommoditySubtypeChange = (e, newVal) => {
         // let product = [];
@@ -1853,7 +1858,19 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
 
                                     <Form.Group as={Col} controlId="formGridZip">
                                         <Form.Label>Warehouse required?</Form.Label>
-                                        <Form.Select className='no-border'
+                                        <Select
+                                            options={warehouseRequiredOptions}
+                                            onChange={(selectedOption) => {
+                                                setShippingOptions({ ...shippingOptions, warehouseRequired: selectedOption ? selectedOption.value : '' });
+                                                setWarehouseStatus(selectedOption);
+                                            }}
+                                            isDisabled={isView}
+                                            value={warehouseRequiredOptions.find(option => option.value === shippingOptions.warehouseRequired)}
+                                            placeholder="Choose..."
+
+                                        />
+
+                                        {/* <Form.Select className='no-border'
                                             onChange={(e) => {
                                                 const newValue = e.target.value === 'true'; // Convert to boolean
                                                 setShippingOptions({ ...shippingOptions, warehouseRequired: newValue });
@@ -1865,7 +1882,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             {warehouseRequiredOptions.map((item, i) => (
                                                 <option key={i} value={item.value}>{item.label}</option>
                                             ))}
-                                        </Form.Select>
+                                        </Form.Select> */}
                                         {error && error?.warehouseRequired && <span style={{ color: 'red' }}>{error.warehouseRequired}</span>}
                                     </Form.Group>
 
@@ -1881,6 +1898,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                         </div>
                                         <div>
                                             {shippingOptions.warehouses?.length > 0 ? (
+                                                
                                                 <MaterialTable
                                                     title=''
                                                     columns={[
@@ -2249,36 +2267,17 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                             </div>
                         </div>
                     </div>
-                    {addWarehouseModal && (
-                        <AddWareHouseModal
-                            show={addWarehouseModal}
-                            onHide={() => {
-                                setAddWarehouseModal(false)
-                                setWareHouseId("")
-                            }}
-                            wareHouseData={(e, id) => warehouseData(e, id)}
-                            wareHouseId={wareHouseId}
-                        />
+                    {addWarehouseModal && ( <AddWareHouseModal
+                        show={addWarehouseModal} onHide={() => { setAddWarehouseModal(false);  setWareHouseId("") }} wareHouseData={(e, id) => warehouseData(e, id)} wareHouseId={wareHouseId} />
                     )}
                     {/* {addWarehouseModal && <AddWareHouseModal show={addWarehouseModal} onHide={() => setAddWarehouseModal(false)} wareHouseData={(data) => setShippingOptions({ ...shippingOptions, warehouses: [...shippingOptions.warehouses, data] })} wareHouseId={wareHouseId} />} */}
                     {addInsuranceModal && (
-                        <AddInsuranceModal
-                            show={addInsuranceModal}
-                            onHide={() => setAddInsuranceModal(false)}
-                        />
+                        <AddInsuranceModal show={addInsuranceModal} onHide={() => setAddInsuranceModal(false)} />
                     )}
                     {/* {showTextEditModal && <TextEditerModal show={showTextEditModal} onHide={() => setShowTextEditModal(false)} commentDone={(e) => hadleChangeModal(e)} data={sendModalData} type={type} inputName={selectedName} />} */}
                     <div className='footer_'>
-                        <button
-                            onClick={() => navigate("/transactions")}
-                            className='footer_cancel_btn'
-                        >
-                            cancel
-                        </button>
-                        <button onClick={() => next()} className='footer_next_btn'>
-                            {" "}
-                            Next
-                        </button>
+                        <button onClick={() => navigate("/transactions")} className='footer_cancel_btn'> Back </button>
+                        <button onClick={() => next()} className='footer_next_btn'> {" "} Next</button>
                     </div>
                 </>
             }

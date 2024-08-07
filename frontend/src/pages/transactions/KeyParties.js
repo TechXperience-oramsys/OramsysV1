@@ -10,6 +10,7 @@ import { transactionDataAction } from '../../redux/actions/transactionDataAction
 import { entityGetAction } from '../../redux/actions/entityAction'
 import { tableDataAtom, rowEditDataAtom, relatedPartyDetailsAtom, keyPartiesAtom, relationAtom, partiesDataAtom, buyersAtom, namesAtom, apiFetchedAtom } from '../transactions/Helpers/atoms'
 import { useAtom } from 'jotai'
+import { OptionalSpan } from './Helpers/OptionalTags'
 
 const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingCompany, getCounterParty, pricingHedgingStatus, getWarehouseCompany, warehouseStatus, getLender, getBorrower }) => {
     const dispatch = useDispatch()
@@ -73,10 +74,10 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
             setShippingComp(getTransactionByIdData.data?.details?.shippingOptions?.shippingCompany?.details?.name);
 
 
-            if (getTransactionByIdData.data.keyParties?.[0]?.relatedParties) {
-                setkeyParties(getTransactionByIdData.data.keyParties[0].relatedParties);
-                setEditMode(true);
-            }
+            // if (getTransactionByIdData.data.keyParties?.[0]?.relatedParties) {
+            //     setkeyParties(getTransactionByIdData.data.keyParties[0].relatedParties);
+            //     setEditMode(true);
+            // }
         }
     }, [getTransactionByIdData]);
 
@@ -89,11 +90,11 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
         }
     }, [getTransactionByIdData])
 
-    useEffect(() => {
-        if (relatedPartyDetails) {
-            console.log('RELATEDPARTIES useeffect 2', relatedPartyDetails);
-        }
-    }, [relatedPartyDetails]);
+    // useEffect(() => {
+    //     if (relatedPartyDetails) {
+    //         console.log('RELATEDPARTIES useeffect 2', relatedPartyDetails);
+    //     }
+    // }, [relatedPartyDetails]);
 
     let temp = keyParties;
 
@@ -147,7 +148,8 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
             reader.readAsDataURL(file);
             reader.onload = () => {
                 const updatedKeyParties = [...keyParties];
-                updatedKeyParties[index].upload_evidence = { type: 'img', name: file.name, file: reader.result };
+                updatedKeyParties[index].upload_evidence = [{ type: 'img', name: file.name, file: reader.result }];
+                console.log('Updated Key Parties:', updatedKeyParties);
                 setkeyParties(updatedKeyParties);
             };
         }
@@ -188,18 +190,18 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
         let flag = false
         let error = {}
 
-        if (!relatedPartyDetails.buyer) {
-            flag = true
-            error.buyer = 'Please select a party'
-        }
-        if (!relatedPartyDetails.shipper) {
-            flag = true
-            error.shipper = 'Please select a party'
-        }
-        if (!relatedPartyDetails.party_relation) {
-            flag = true
-            error.party_relation = 'Please select a relation'
-        }
+        // if (!relatedPartyDetails.buyer) {
+        //     flag = true
+        //     error.buyer = 'Please select a party'
+        // }
+        // if (!relatedPartyDetails.shipper) {
+        //     flag = true
+        //     error.shipper = 'Please select a party'
+        // }
+        // if (!relatedPartyDetails.party_relation) {
+        //     flag = true
+        //     error.party_relation = 'Please select a relation'
+        // }
         // if (relatedPartyDetails.length < 1) {
         //     flag = true
         //     error.relatedPartyDetails = 'Please enter document remittance'
@@ -409,7 +411,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                             {relatedPartyDetails.map((party, index) => (
                                 <Row key={index}>
                                     <Form.Group as={Col} lg={3}>
-                                        <Form.Label>Party 1</Form.Label>
+                                        <Form.Label>Party 1 <OptionalSpan /></Form.Label>
                                         <Form.Select
                                             onChange={(e) => handleParties(e, e.target.value, index, 'buyer')}
                                             value={party.buyer}
@@ -426,7 +428,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                                     </Form.Group>
 
                                     <Form.Group as={Col} lg={3}>
-                                        <Form.Label>Party 2</Form.Label>
+                                        <Form.Label>Party 2 <OptionalSpan /></Form.Label>
                                         <Form.Select
                                             onChange={(e) => handleParties(e, e.target.value, index, 'shipper')}
                                             value={party.shipper}
@@ -443,7 +445,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                                     </Form.Group>
 
                                     <Form.Group as={Col} controlId="formGridZip">
-                                        <Form.Label>Relation</Form.Label>
+                                        <Form.Label>Relation <OptionalSpan /></Form.Label>
                                         <Form.Select
                                             onChange={(e) => handleRelationChange(e, index)}
                                             value={party.party_relation || 'Choose...'}
@@ -477,7 +479,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                 </div>
             </div>
             <div className='footer_'>
-                <button onClick={() => { transactionType === "Export" ? hendelCancel() : navigate('/transactions') }} className="footer_cancel_btn">cancel</button>
+                <button onClick={() => { transactionType === "Export" ? hendelCancel() : navigate('/transactions') }} className="footer_cancel_btn">Back</button>
                 <button onClick={() => { tableData.length > 0 && next() }} className='footer_next_btn'> Next</button>
             </div>
 

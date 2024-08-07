@@ -8,7 +8,7 @@ var LettersOfCredit = new Schema({
     issuingBank: { type: Schema.Types.ObjectId, ref: "Entity", required: false, default: null },
     beneficiary: { type: Schema.Types.ObjectId, ref: "Entity", required: false, default: null },
     advisingBank: { type: Schema.Types.ObjectId, ref: "Entity", required: false, default: null },
-    confirmingBank: { type: Schema.Types.ObjectId, ref: "Entity", required: false, default: null },
+    conformingBank: { type: Schema.Types.ObjectId, ref: "Entity", required: false, default: null },
     negotiatingBank: { type: Schema.Types.ObjectId, ref: "Entity", required: false, default: null },
     secondBeneficiary: { type: Schema.Types.ObjectId, ref: "Entity", required: false, default: null },
     reimbursingBank: { type: Schema.Types.ObjectId, ref: "Entity", required: false, default: null },

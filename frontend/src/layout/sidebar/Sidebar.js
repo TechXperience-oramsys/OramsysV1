@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined, FileTextOutlined, AppstoreOutlined, TableOutlined } from '@ant-design/icons';
-import { Button, Layout, Menu, theme } from 'antd';
+import { Button, Dropdown, Layout, Menu, theme } from 'antd';
 import { useNavigate, Link } from 'react-router-dom';
 import STORAGEKEY from '../../config/APP/app.config';
 import AuthStorage from '../../helper/AuthStorage';
@@ -221,13 +221,31 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
   return (
     <>
       <Layout>
-        <Sider trigger={null} theme='light' collapsible collapsed={collapsed} width={210} >
+        <Sider
+          trigger={null}
+          // theme='dark'
+          className='bg-gray-100'
+          collapsible
+          collapsed={collapsed}
+          width={210} >
           <div className="demo-logo-vertical" />
           <div className={`d-flex ${collapsed ? 'justify-content-center' : 'justify-content-between'} align-items-center p-3`} style={{ backgroundColor: '#F0F0F0' }}>
-            <div className={`d-flex align-items-center ${collapsed ? 'justify-content-center w-100' : ''}`}>
-              <FaUserCircle size={30} />
-              {!collapsed && <span className='ms-2'>{userData?.name}</span>}
-            </div>
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.Item key="logout" onClick={() => setshowModal(true)}>
+                    <HiOutlineLogout size={20} /> Logout
+                  </Menu.Item>
+                  
+                </Menu>
+              }
+            >
+              <div className={`d-flex align-items-center ${collapsed ? 'justify-content-center w-100' : ''}`}>
+                <FaUserCircle size={30} />
+                {!collapsed && <span className='ms-2'>{userData?.name}</span>}
+              </div>
+            </Dropdown>
+            
             {!collapsed && (
               <div className="">
                 <Link onClick={() => setshowModal(true)} className="nav-link" href="#">
@@ -238,8 +256,8 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
             )}
           </div>
           <Menu
-            className='fs-6 mt-10'
-            theme="light"
+            className='fs-6 mt-10 bg-gray-100'
+            // theme="dark"
             mode="inline"
             defaultSelectedKeys={['1']}
             selectedKeys={[activeItem]}
@@ -262,6 +280,9 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
             }))}
             onClick={handleMenuClick}
           />
+          <div className="footer" style={{ position: 'absolute', bottom: 10, width: '100%', textAlign: 'center', color: '#a3a3a3' }}>
+            <span>&copy;</span> 2024 Oramsys V1.0
+          </div>
         </Sider>
 
         <Layout>

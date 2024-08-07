@@ -52,7 +52,6 @@ const Add_Edit_Product = () => {
   useEffect(() => {
     if (oneProductData && oneProductData.data) {
       setState({
-        ...state,
         name: oneProductData.data.name,
         unit: oneProductData.data.unit,
         nature: oneProductData.data.nature,
@@ -64,7 +63,7 @@ const Add_Edit_Product = () => {
         matric: oneProductData.data.matric
       })
     }
-  }, [state, oneProductData])
+  }, [oneProductData])
 
 
 
@@ -79,17 +78,17 @@ const Add_Edit_Product = () => {
     }
   }, [dispatch, productAddData])
 
-  useEffect(() => {
-    console.log('state', state)
-  }, [state])
+  // useEffect(() => {
+  //   console.log('state', state)
+  // }, [state])
 
 
-  const handleChange = (event) => {
-    setState({
-      ...state,
-      [event.target.name]: event.target.value
-    });
-  };
+  // const handleChange = (event) => {
+  //   setState({
+  //     ...state,
+  //     [event.target.name]: event.target.value
+  //   });
+  // };
 
   const validation = () => {
     let param = false
@@ -199,11 +198,8 @@ const Add_Edit_Product = () => {
               <Form.Group as={Col} controlId="formGridZip">
                 <Form.Label>Name</Form.Label>
                 <Form.Control className=''
-                  name='name'
                   value={state.name}
-                  onChange={(e) => {
-                    setState({ ...state, name: e.target.value })
-                  }}
+                  onChange={(e) => { console.log('Name changed to:', e.target.value); setState({ ...state, name: e.target.value }) }}
                   disabled={isView} />
                 {error?.name && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.name}</span>}
               </Form.Group>
@@ -211,7 +207,7 @@ const Add_Edit_Product = () => {
               <Form.Group as={Col} controlId="formGridZip">
                 <Form.Label>Nature</Form.Label>
                 <Form.Select className=''
-                  onChange={(e, newValue) => {
+                  onChange={(e) => {
                     setState({ ...state, nature: e.target.value });
                   }}
                   disabled={isView}
@@ -228,9 +224,7 @@ const Add_Edit_Product = () => {
               <Form.Group as={Col} controlId="formGridZip">
                 <Form.Label>Family</Form.Label>
                 <Form.Select className=''
-                  onChange={(event, newValue) => {
-                    setState({ ...state, family: newValue });
-                  }}
+                  onChange={(e) => setState({ ...state, family: e.target.value })}
                   disabled={isView}
                   value={state.family}>
 
@@ -248,9 +242,7 @@ const Add_Edit_Product = () => {
               <Form.Group as={Col} controlId="formGridZip">
                 <Form.Label>Category</Form.Label>
                 <Form.Select className=''
-                  onChange={(event, newValue) => {
-                    setState({ ...state, category: newValue });
-                  }}
+                  onChange={(e) => setState({ ...state, category: e.target.value })}
                   disabled={isView}
                   value={state.category}>
 
@@ -266,9 +258,8 @@ const Add_Edit_Product = () => {
               <Form.Group as={Col} controlId="formGridZip">
                 <Form.Label>Type</Form.Label>
                 <Form.Select className=''
-                  onChange={(event, newValue) => {
-                    setState({ ...state, type: newValue });
-                  }}
+                  name='type'
+                  onChange={(e) => setState({ ...state, type: e.target.value })}
                   disabled={isView}
                   value={state.type}>
 
@@ -283,9 +274,8 @@ const Add_Edit_Product = () => {
               <Form.Group as={Col} controlId="formGridZip">
                 <Form.Label>Status</Form.Label>
                 <Form.Control className=''
-                  name='name'
                   value={state.status}
-                  onChange={handleChange}
+                  onChange={(e) => setState({ ...state, status: e.target.value })}
                   disabled={isView} />
                 {error?.status && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.status}</span>}
               </Form.Group>
@@ -302,19 +292,18 @@ const Add_Edit_Product = () => {
                   placeholder="dd-mm-yyyy"
                   // min={transactionData.details.contractDetails.contractDate ? new Date(transactionData.details.contractDetails.contractDate).toISOString().split("T")[0] : ""}
                   value={state.expiryDate}
-                  onChange={handleChange}
+                  onChange={(e) => setState({ ...state, expiriyDate: e.target.value })}
                   required
                 />
-                {error && error?.paymentDate && <span style={{ color: 'red' }}>{error.paymentDate}</span>}
+                {error && error?.expiriyDate && <span style={{ color: 'red' }}>{error.expiriyDate}</span>}
               </Form.Group>
 
 
               <Form.Group as={Col} controlId="formGridZip">
                 <Form.Label>Product Unit</Form.Label>
                 <Form.Control className=''
-                  name='unit'
                   value={state.unit}
-                  onChange={handleChange}
+                  onChange={(e) => setState({ ...state, unit: e.target.value })}
                   disabled={isView} />
                 {error?.unit && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.unit}</span>}
               </Form.Group>
@@ -322,9 +311,8 @@ const Add_Edit_Product = () => {
               <Form.Group as={Col} controlId="formGridZip">
                 <Form.Label>Metric</Form.Label>
                 <Form.Control className=''
-                  name='matric'
                   value={state.matric}
-                  onChange={handleChange}
+                  onChange={(e) => setState({ ...state, matric: e.target.value })}
                   disabled={isView} />
                 {error?.matric && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.matric}</span>}
               </Form.Group>

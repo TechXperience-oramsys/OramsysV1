@@ -12,6 +12,8 @@ import { OptionalSpan, RequiredSpan } from '../../../transactions/Helpers/Option
 import moment from 'moment';
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
 import Select from 'react-select';
+import { billingAddressAtom, countryDataAtom, detailsAtom, sectorAtom, shippingAddressAtom } from '../../../transactions/Helpers/atoms';
+import { useAtom } from 'jotai';
 
 const Details = ({ handleNext, entityType }) => {
 
@@ -40,52 +42,11 @@ const Details = ({ handleNext, entityType }) => {
         type: entityType
     })
 
-    const [details, setDetails] = useState({
-        _id: '',
-        name: '',
-        country: '',
-        registrationNumber: '',
-        dateOfIncorporation: '',
-        sector: '',
-        subSector: '',
-        mainActivity: '',
-    })
-    const [bilingAddress, setBilingAddress] = useState({
-        _id: '',
-        type: 'Biling',
-        flatNumber: '',
-        addressLine1: '',
-        addressLine2: '',
-        addressLine3: '',
-        postcode: '',
-        state: '',
-        city: '',
-        billingCountryCode: '',
-        country: '',
-        mobile: '',
-        telephone: '',
-        fax: '',
-        email: '',
-    })
-    const [shippingAddress, setShippingAddress] = useState({
-        _id: '',
-        type: 'Shipping',
-        flatNumber: '',
-        addressLine1: '',
-        addressLine2: '',
-        addressLine3: '',
-        postcode: '',
-        shippingCountryCode: '',
-        state: '',
-        city: '',
-        country: '',
-        mobile: '',
-        telephone: '',
-        fax: '',
-        email: '',
-    })
-    const [countryData, setCountryData] = useState([])
-    const [sector, setSector] = useState([])
+    const [details, setDetails] = useAtom(detailsAtom)
+    const [bilingAddress, setBilingAddress] = useAtom(billingAddressAtom)
+    const [shippingAddress, setShippingAddress] = useAtom(shippingAddressAtom)
+    const [countryData, setCountryData] = useAtom(countryDataAtom)
+    const [sector, setSector] = useAtom(sectorAtom)
     const [formErrors, setFormErrors] = useState()
 
     const companyData = useSelector((state) => state.companydata.companydata)

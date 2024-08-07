@@ -86,13 +86,10 @@ export const originCountryAtom = atom([])
 export const tableDataAtom = atom([])
 export const rowEditDataAtom = atom('')
 export const relatedPartyDetailsAtom = atom([{
-    'buyer': '',
-    'shipper': '',
-    'party_relation': '',
-    'upload_evidence': ''
+    'party_relation': '', 'buyer': '', 'shipper': '', 'upload_evidence': [{}]
 }])
 export const keyPartiesAtom = atom([{
-    'party_relation': '', 'buyer': '', 'shipper': '', 'upload_evidence': ''
+    'party_relation': '', 'buyer': '', 'shipper': '', 'upload_evidence': [{}]
 }])
 export const relationAtom = atom();
 export const apiFetchedAtom = atom(false);
@@ -218,3 +215,54 @@ export const securityDocumentsAtom = atom([{
     name: "",
     file: ""
 }])
+
+
+// Entities
+
+
+export const detailsAtom = atom({
+    _id: '',
+    name: '',
+    country: '',
+    registrationNumber: '',
+    dateOfIncorporation: '',
+    sector: '',
+    subSector: '',
+    mainActivity: '',
+})
+export const billingAddressAtom = atom({
+    _id: '',
+    type: 'Biling',
+    flatNumber: '',
+    addressLine1: '',
+    addressLine2: '',
+    addressLine3: '',
+    postcode: '',
+    state: '',
+    city: '',
+    billingCountryCode: '',
+    country: '',
+    mobile: '',
+    telephone: '',
+    fax: '',
+    email: '',
+})
+export const shippingAddressAtom = atom({
+    _id: '',
+    type: 'Shipping',
+    flatNumber: '',
+    addressLine1: '',
+    addressLine2: '',
+    addressLine3: '',
+    postcode: '',
+    shippingCountryCode: '',
+    state: '',
+    city: '',
+    country: '',
+    mobile: '',
+    telephone: '',
+    fax: '',
+    email: '',
+})
+export const countryDataAtom = atom([])
+export const sectorAtom = atom([])

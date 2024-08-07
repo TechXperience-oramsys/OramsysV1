@@ -83,7 +83,7 @@ const SignIn = () => {
 
     return (
         <div className="content">
-            <div className="container">
+            <div className="">
                 <div className="">
                     {/* <div className="col-md-6">
                         <img src={svgIcon} style={{ height: '480x' }} alt="Image" className='img-slide img-responsive' />

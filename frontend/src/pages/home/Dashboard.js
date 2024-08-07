@@ -9,7 +9,6 @@ import { useSelector } from "react-redux"
 import AuthStorage from "../../helper/AuthStorage"
 import STORAGEKEY from "../../config/APP/app.config"
 import { useDispatch } from "react-redux"
-import { GET_TRANSACTION_BY_ID } from "../../redux/types"
 import { productGetAction } from "../../redux/actions/productAction"
 import { getAllTransaction } from "../../redux/actions/transactionDataAction"
 import { entityGetAction } from "../../redux/actions/entityAction"
@@ -17,11 +16,11 @@ import { userGetAction } from "../../redux/actions/userAction"
 import { ratingAgenciesAction } from "../../redux/actions/ratingAgenciesAction"
 import { ApiGet, ApiGet2 } from "../../helper/API/ApiData"
 import Slide from 'react-reveal/Slide';
-import { BankOutlined, SearchOutlined, StockOutlined } from '@ant-design/icons'
-import { AppstoreOutlined, MailOutlined, SettingOutlined, RiseOutlined } from '@ant-design/icons';
+import { BankOutlined, SearchOutlined, StockOutlined, BellOutlined, MailOutlined, RiseOutlined } from '@ant-design/icons'
 import { Input, Menu } from 'antd';
 import ChartComponent from "./Analytics"
 import Financials from "./Financials"
+import NotificationSection from "./Notification"
 
 const Dashboard = () => {
   const token = AuthStorage.getToken()
@@ -73,7 +72,7 @@ const Dashboard = () => {
       img: "sales",
       icon: StockOutlined,
       color: "bg-teal-500",
-      name: "entities",
+      name: "totalRev",
     },
 
   ]
@@ -108,6 +107,8 @@ const Dashboard = () => {
           return getAllEntities?.data?.length
         case "rating":
           return ratingAgenciesDatas?.data?.length
+        case "totalRev": 
+          return totalValue
         default:
           return
       }
@@ -207,6 +208,7 @@ const Dashboard = () => {
   }
   console.log('getArr', getAlltransactionData)
 
+  // tab menu iteems
   const items = [
     {
       label: 'Overview',
@@ -224,9 +226,9 @@ const Dashboard = () => {
       icon: <FaMoneyCheckAlt />,
     },
     {
-      label: 'Data',
-      key: 'alipay',
-      icon: <AppstoreOutlined />,
+      label: 'Notifications',
+      key: 'notifications',
+      icon: <BellOutlined />,
     },
   ];
 
@@ -236,6 +238,7 @@ const Dashboard = () => {
     setCurrent(e.key);
   };
 
+  // render tab meu contents
   const renderContent = () => {
     switch (current) {
       case 'overview':
@@ -502,16 +505,16 @@ const Dashboard = () => {
                               </td>
                               <td>
                                 {/* <img alt='...' src='https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80' className='avatar avatar-sm rounded-circle me-2' /> */}
-                                <Link className='text-decoration-none text-heading font-semibold' to='/'>
+                                <div className='text-decoration-none text-heading font-semibold'>
                                   {data.borrower_Applicant}
-                                </Link>
+                                </div>
                               </td>
 
                               <td>
                                 {/* <img alt='...' src='https://preview.webpixels.io/web/img/other/logos/logo-1.png' className='avatar avatar-xs rounded-circle me-2' /> */}
-                                <Link className='text-decoration-none  text-heading font-semibold' to='/'>
+                                <div className='text-decoration-none  text-heading font-semibold'>
                                   {data.lenders}
-                                </Link>
+                                </div>
                               </td>
                               <td>
                                 {formateCurrencyValue(data?.details?.contractDetails?.value)}
@@ -528,11 +531,11 @@ const Dashboard = () => {
                                 )}
                               </td>
                               <td className='text-end text-center'>
-                                <Link to='#' onClick={() => {
+                                <div onClick={() => {
                                   data.termSheet === 'Not Signed' ? downloadTermSheet(data._id, 'view') : ViewRiskAssessment()
                                 }} className='btn btn-sm btn-neutral'>
                                   View Termsheet
-                                </Link>
+                                </div>
 
                               </td>
                             </tr>
@@ -552,8 +555,8 @@ const Dashboard = () => {
         return <div><ChartComponent /></div>;
       case 'financials':
         return <div><Financials /></div>;
-      case 'data':
-        return <div>Data Content</div>;
+      case 'notifications':
+        return <div><NotificationSection /></div>;
       default:
         return <div>Select an option</div>;
     }
