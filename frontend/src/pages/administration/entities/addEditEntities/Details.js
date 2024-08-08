@@ -104,7 +104,7 @@ const Details = ({ handleNext, entityType }) => {
                 addressLine3: tempShipingData?.addressLine3,
                 postcode: tempShipingData?.postcode,
                 state: tempShipingData?.state,
-                shippingCountryCode: entityData?.data?.addresses?.forEach(address => address.shippingCountryCode),
+                shippingCountryCode: tempShipingData?.shippingCountryCode,
                 city: tempShipingData?.city,
                 country: tempShipingData?.country,
                 mobile: tempShipingData?.mobile,

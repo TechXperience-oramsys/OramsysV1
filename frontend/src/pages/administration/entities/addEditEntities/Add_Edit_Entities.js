@@ -32,8 +32,10 @@ const Add_Edit_Entities = () => {
     const dispatch = useDispatch();
     const queryParams = new URLSearchParams(location.search)
     const id = queryParams.get("id")
-    const entityType = location.state[0]?.type
-    let steps = location.state[0]?.type === "Company" ? ['Details', 'Financials', 'Licences', 'Ratings', 'Warehouse', 'Roles'] : ['Details', "Address"]
+    const entityType = location.state?.length > 0 ? location.state[0].type : null;
+    let steps = entityType === "Company"
+  ? ['Details', 'Financials', 'Licences', 'Ratings', 'Warehouse', 'Roles']
+  : ['Details', "Address"];
     const [activeStep, setActiveStep] = React.useState(0);
     const [individualDetailData, setIndividualDetailData] = React.useState({});
     const [common, setCommon] = React.useState({});
@@ -62,6 +64,8 @@ const Add_Edit_Entities = () => {
                     addressLine2: ele?.addressLine2,
                     addressLine3: ele?.addressLine3,
                     postcode: ele?.postcode,
+                    billingCountryCode: ele?.billingCountryCode,
+                    shippingCountryCode: ele?.shippingCountryCode,
                     state: ele?.state,
                     city: ele?.city,
                     country: ele?.country?._id,
@@ -226,12 +230,7 @@ const Add_Edit_Entities = () => {
                                 </>
                             ) : (
                                 <>
-                                    {activeStep === 0 && (
-                                        <IndividualDetail
-                                            handleNext={handleNext}
-                                            getDetailData={getIndividualDetailData}
-                                            getCommonData={setCommon}
-                                            entityType="Individual"
+                                    {activeStep === 0 && (  <IndividualDetail handleNext={handleNext} getDetailData={getIndividualDetailData} getCommonData={setCommon} entityType="Individual"
                                         />
                                     )}
                                     {activeStep === 1 && (

@@ -15,7 +15,7 @@ const IndividualDetail = ({ hendelNext, getDetailData, entityType, getCommonData
     const location = useLocation()
     const queryParams = new URLSearchParams(location.search)
     const id = queryParams.get("id")
-    const isView = location.state[1]?.isView
+    const isView = location.state?.[1]?.isView ?? false;
 
     const country = useSelector(state => state.countryData.country)
     const entityGetById = useSelector((state) => state.entityData.getEntityById)

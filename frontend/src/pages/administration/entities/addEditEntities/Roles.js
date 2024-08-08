@@ -122,6 +122,7 @@ const Roles = ({ hendelNext, handleBack }) => {
         setLoading(true)
         await dispatch(editEntityAction(id, body))
         setLoading(false)
+        navigate('/entities')
     }
 
     useEffect(() => {

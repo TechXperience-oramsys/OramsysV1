@@ -3562,7 +3562,7 @@ header.header {
 
 @media only screen and (max-width: 991px) {
   header.header {
-    display: none;
+    display: block;
   }
 }
 

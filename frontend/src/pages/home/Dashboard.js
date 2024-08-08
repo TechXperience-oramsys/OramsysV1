@@ -32,6 +32,13 @@ const Dashboard = () => {
   const dispatch = useDispatch()
   const cards = [
     {
+      title: "Total Revenue",
+      img: "sales",
+      icon: StockOutlined,
+      color: "bg-teal-500",
+      name: "totalRev",
+    },
+    {
       title: "Transactions",
       img: "Transact",
       icon: GrTransaction,
@@ -67,13 +74,7 @@ const Dashboard = () => {
       color: "bg-red-600",
       name: "rating",
     },
-    {
-      title: "Total Revenue",
-      img: "sales",
-      icon: StockOutlined,
-      color: "bg-teal-500",
-      name: "totalRev",
-    },
+
 
   ]
 
@@ -97,6 +98,8 @@ const Dashboard = () => {
   const getCount = useCallback(
     (name) => {
       switch (name) {
+        case "totalRev":
+          return totalValue
         case "transactions":
           return getAlltransactionData?.data?.length
         case "products":
@@ -107,8 +110,7 @@ const Dashboard = () => {
           return getAllEntities?.data?.length
         case "rating":
           return ratingAgenciesDatas?.data?.length
-        case "totalRev": 
-          return totalValue
+
         default:
           return
       }
@@ -590,7 +592,7 @@ const Dashboard = () => {
                         // value={searchTerm}
                         // onChange={(e) => setSearchTerm(e.target.value)}
                         style={{ width: 300 }}
-                    />
+                      />
 
                     </div>
 
