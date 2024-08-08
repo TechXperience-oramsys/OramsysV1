@@ -31,6 +31,7 @@ import Ports from "./administration/masterData/ports/Ports";
 import AirBases from "./administration/masterData/airBases/AirBases";
 import { ApiGet, ApiPost } from "../helper/API/ApiData";
 import { Create_new_password } from "./administration/users/CreatePassword";
+import CreateAdmin from "./functionalAdmin/CreateAdmin";
 
 const pathForLayout = ["/", "/signin", "/signup", "/admin-login", "/fa-login", "/verify-user"];
 const Index = () => {
@@ -129,6 +130,10 @@ const Index = () => {
     {
       path: "/add-edit-entities",
       component: Add_Edit_Entities,
+    },
+    {
+      path: "/create-admin",
+      component: CreateAdmin,
     },
     {
       path: "/transactions",

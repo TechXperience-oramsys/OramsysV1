@@ -128,6 +128,12 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
     },
     {
       key: '7',
+      icon: <HiOutlineUsers />,
+      label: 'Create Admin',
+      path: 'create-admin'
+    },
+    {
+      key: '8',
       icon: <FaMoneyBillTransfer />,
       label: 'Transactions',
       path: 'transactions'
