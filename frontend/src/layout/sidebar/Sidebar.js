@@ -254,9 +254,9 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
             
             {!collapsed && (
               <div className="">
-                <Link onClick={() => setshowModal(true)} className="nav-link" href="#">
+                <button onClick={() => setshowModal(true)} >
                   <HiOutlineLogout size={20} />
-                </Link>
+                </button>
               </div>
 
             )}

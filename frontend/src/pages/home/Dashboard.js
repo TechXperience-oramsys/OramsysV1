@@ -253,9 +253,11 @@ const Dashboard = () => {
                 {AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin" &&
                   cards.map((card, i) => (
                     <div className='col-xl-4 mb-3 col-sm-6 col-12' key={i}>
+                      {/* <div className="bg-blue-400 pb-3"></div> */}
                       <div className='card shadow border-0'>
                         <div className='card-body'>
                           <div className='row'>
+
                             <div className='col'>
                               <span className='h6 font-semibold fw-2 text-muted text-md d-block mb-2'>
                                 {card.title}

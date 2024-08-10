@@ -2,35 +2,11 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightLong, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { Carousel } from 'antd';
-import { ArrowRightOutlined, PlayCircleOutlined } from '@ant-design/icons'
+import { ArrowRightOutlined, MailOutlined, PhoneOutlined, PlayCircleOutlined } from '@ant-design/icons'
 
 
 const Home = () => {
 
-
-  // $('#ensign-nivoslider-1').nivoSlider({
-  //   effect: 'fold', 
-  //   slices: 15,
-  //   boxCols: 8, 
-  //   boxRows: 4,
-  //   animSpeed: 1000,
-  //   pauseTime: 9000, 
-  //   startSlide: 0, 
-  //   directionNav: true,
-  //   controlNav: false, 
-  //   controlNavThumbs: false, 
-  //   pauseOnHover: false, 
-  //   manualAdvance: true, 
-  //   prevText: 'Prev', 
-  //   nextText: 'Next',
-  //   randomStart: false, 
-  //   beforeChange: function () { }, 
-  //   afterChange: function () { },
-  //   slideshowEnd: function () { },
-  //   lastSlide: function () { }, 
-  //   afterLoad: function () { } 
-
-  // });
 
   const contentStyle = {
     display: 'flex',
@@ -66,9 +42,41 @@ const Home = () => {
               <div>
                 <div className="d-flex flex-column flex-md-row justify-content-between align-items-center" style={contentStyle}>
                   <div className="text-left mb-4 mb-md-0">
-                    <p className="h5">Platform Design</p>
-                    <h2>A bespoke engineering product</h2>
-                    <p className='fs-6'>Oramsys is an STF(Structured Trade Finance) platform that is tailor-made to specfic client needs.</p>
+                    <p className="h5">Empowering Global Trade</p>
+                    {/* <h2>A bespoke engineering product</h2> */}
+                    <p className='fs-6'>Unlock new opportunities with innovative trade finance solutions tailored for your business growth.</p>
+                    <div>
+                      <a href="#" className="btn btn-danger mr-3">Read more<ArrowRightOutlined size={20} className='ml-2' /></a>
+                      <a href="#" className="btn btn-secondary"><PlayCircleOutlined size={20} className='mr-2 font-bold' />Contact us</a>
+                    </div>
+                  </div>
+                  <div>
+                    <img src="./assets/img/slider/slider2.png" alt="slider" width="960" height="720" />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div className="d-flex flex-column flex-md-row justify-content-between align-items-center" style={contentStyle}>
+                  <div className="text-left mb-4 mb-md-0">
+                    <p className="h5">Seamless Transactions, Unmatched Efficiency</p>
+                    {/* <h2>A bespoke engineering product</h2> */}
+                    <p className='fs-6'>Streamline your trade operations with our cutting-edge technology and expert financial guidance.</p>
+                    <div>
+                      <a href="#" className="btn btn-danger mr-3">Read more<ArrowRightOutlined size={20} className='ml-2' /></a>
+                      <a href="#" className="btn btn-secondary"><PlayCircleOutlined size={20} className='mr-2 font-bold' />Contact us</a>
+                    </div>
+                  </div>
+                  <div className="background-shape7">
+                    <img src="./assets/img/my-img/bn.png" alt="slider" width="960" height="720" />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div className="d-flex flex-column flex-md-row justify-content-between align-items-center" style={contentStyle}>
+                  <div className="text-left mb-4 mb-md-0">
+                    <p className="h5">Bridging Markets, Building Futures</p>
+                    {/* <h2>A bespoke engineering product</h2> */}
+                    <p className='fs-6'>Connecting businesses across borders with secure and reliable trade finance services.</p>
                     <div>
                       <a href="#" className="btn btn-danger mr-3">Read more<ArrowRightOutlined size={20} className='ml-2' /></a>
                       <a href="#" className="btn btn-secondary"><PlayCircleOutlined size={20} className='mr-2 font-bold' />Contact us</a>
@@ -134,8 +142,8 @@ const Home = () => {
                     <img src="./assets/img/figure/figure41.png" alt="figure" height="45" width="47" />
                   </div>
                 </div>
-                <h2 className="heading-title"><a href="#" className="text-decoration-none">Major banks onboarded</a></h2>
-                <p>Over 4 banks already in pilot phase and looking to adopt </p>
+                <h2 className="heading-title"><a href="#" className="text-decoration-none">Tailored Financing Solutions</a></h2>
+                <p>We provide customized financial instruments designed to meet the unique needs of your trade transactions </p>
                 <div className="item-button">
                   <a href="#" className="item-btn text-decoration-none">+ <span>Read More</span></a>
                 </div>
@@ -149,8 +157,8 @@ const Home = () => {
                     <img src="./assets/img/figure/figure42.png" alt="figure" height="41" width="45" />
                   </div>
                 </div>
-                <h2 className="heading-title"><a href="#">Multi-regulatory liscences</a></h2>
-                <p>Businesses looking to aquire product model are assured insurance and regulatory boards compliance</p>
+                <h2 className="heading-title"><a href="#">Global Trade Expertise</a></h2>
+                <p>Our team of specialists leverages extensive industry experience with the use of tecnology to solve your international trade endeavors</p>
                 <div className="item-button">
                   <a href="#" className="item-btn">+ <span>Read More</span></a>
                 </div>
@@ -164,8 +172,8 @@ const Home = () => {
                     <img src="./assets/img/figure/figure43.png" alt="figure" height="45" width="49" />
                   </div>
                 </div>
-                <h2 className="heading-title"><a href="#">Certification</a></h2>
-                <p>Adoption of Prof orama, head of global sales aqusition</p>
+                <h2 className="heading-title"><a href="#">Risk Management Excellence</a></h2>
+                <p>Identify, transfer and mitigate trade risks with our comprehensive solutions, ensuring your business stays secure in a volatile market</p>
                 <div className="item-button">
                   <a href="#" className="item-btn">+ <span>Read More</span></a>
                 </div>
@@ -191,16 +199,16 @@ const Home = () => {
               <div className="about-box1">
                 <p className="section-subtitle">About Oramsys</p>
                 <h2 className="section-title">Who is oramsys and what do we offer?</h2>
-                <p>Oramsys is a leading platform specifically designed to facilitate structured trade, providing businesses with robust tools and solutions to manage and streamline their trade processes efficiently. Our platform caters to various industries, offering a comprehensive suite of services that enhance trade operations and promote growth.</p>
+                <p>Oramsys is a leading platform specifically designed to facilitate structured trade, providing businesses with robust tools and solutions to manage and streamline their trade processes efficiently. Our platform caters to various industries, offering a comprehensive suite of services that enhance trade operations and promote growth across board.</p>
                 <div className="media d-flex">
                   <div className="item-img">
                     <img src="./assets/img/figure/figure30.png" alt="figure" width="47" height="71" />
                   </div>
                   <div className="media-body">
                     <h3 className="heading-title"><a href="#">Trade Management Solutions</a></h3>
-                    <p>Access to a range of financing options tailored to meet the specific needs of your business.</p>
-                    <p>Secure and efficient payment processing systems to facilitate smooth transactions.</p>
-                    <p>Transparent and competitive financing rates to support your trade activities.</p>
+                    <p>Access to a range of trade financing options tailored to  <br /> meet the specific needs of your business.</p>
+                    {/* <p>Secure and efficient payment processing systems to facilitate smooth transactions.</p> */}
+                    <p>Transparent, competitive and current trade financing <br /> rates to support your trade activities.</p>
                   </div>
                 </div>
                 <div className="media d-flex">
@@ -210,7 +218,7 @@ const Home = () => {
                   <div className="media-body">
                     <h3 className="heading-title"><a href="#">Risk Management Services</a></h3>
                     <p>Advanced analytics and reporting tools to identify and mitigate potential risks.</p>
-                    <p>Insurance options to protect your trade investments against unforeseen events.</p>
+                    <p>Insurance options to protect your trade investments <br /> against unforeseen events.</p>
                   </div>
                 </div>
               </div>
@@ -234,12 +242,12 @@ const Home = () => {
             <div className="grd-info grd-info-tw">
               <div className="info-in">
                 <div className="consulting-service1">
-                  <h2 className="section-title">Lorem ipsum dolor sit amet consectetur</h2>
+                  <h2 className="section-title">Transforming  Structured Trade Finance</h2>
                 </div>
               </div>
               <div className="info-in">
                 <div className="consulting-service2">
-                  <p>Bookan unknown printer took a galley of type and scrambled make It has survived not only five centuries.Lorem ipsum dolor sitam consectetur adipiscg sedo eiusmod tempor incididuntlabore dolor ipsum dolor sit amet, consectetur.</p>
+                  <p>At <span className='font-bold'>ORAMSYS</span>, we offer a comprehensive suite of services designed to support every aspect of your trade finance needs.</p>
                 </div>
               </div>
             </div>
@@ -258,8 +266,8 @@ const Home = () => {
                         </div>
                       </div>
                       <div className="media-body">
-                        <h3 className="title-heading"><a href="#">ipsum dolor</a></h3>
-                        <p>Lorem ipsum dolor sitam consectetur adipiscg sedo eiusmod tempor incididuntlabore doloripsum dolor sit amet, consectetur.</p>
+                        <h3 className="title-heading"><a href="#"> Financing Solutions</a></h3>
+                        <p>From pre-shipment to post-delivery, we offer financing solutions that cater to every stage of your trade cycle.</p>
                         <div className="item-button">
                           <a href="#" className="item-btn">Read More
                             {/* <i className="fas fa-long-arrow-alt-right"></i> */}
@@ -280,8 +288,8 @@ const Home = () => {
                         </div>
                       </div>
                       <div className="media-body">
-                        <h3 className="title-heading"><a href="#">ipsum dolor</a></h3>
-                        <p>Lorem ipsum dolor sitam consectetur adipiscg sedo eiusmod tempor incididuntlabore doloripsum dolor sit amet, consectetur.</p>
+                        <h3 className="title-heading"><a href="#">Risk Mitigation</a></h3>
+                        <p>Our risk mitigation strategies protect your business from market volatility and unexpected disruptions.</p>
                         <div className="item-button">
                           <a href="#" className="item-btn">Read More
                             {/* <i className="fas fa-long-arrow-alt-right"></i> */}
@@ -302,8 +310,8 @@ const Home = () => {
                         </div>
                       </div>
                       <div className="media-body">
-                        <h3 className="title-heading"><a href="#">ipsum dolor</a></h3>
-                        <p>Lorem ipsum dolor sitam consectetur adipiscg sedo eiusmod tempor incididuntlabore doloripsum dolor sit amet, consectetur.</p>
+                        <h3 className="title-heading"><a href="#">Advisory Services</a></h3>
+                        <p>Leverage our expertise with tailored advisory services that guide you through the complexities of global trade.</p>
                         <div className="item-button">
                           <a href="#" className="item-btn">Read More
                             {/* <i className="fas fa-long-arrow-alt-right"></i> */}
@@ -324,8 +332,8 @@ const Home = () => {
                         </div>
                       </div>
                       <div className="media-body">
-                        <h3 className="title-heading"><a href="#">ipsum dolor</a></h3>
-                        <p>Lorem ipsum dolor sitam consectetur adipiscg sedo eiusmod tempor incididuntlabore doloripsum dolor sit amet, consectetur.</p>
+                        <h3 className="title-heading"><a href="#">Trade Facilitation</a></h3>
+                        <p>We facilitate smoother transactions with our advanced technology platforms and strategic partnerships.</p>
                         <div className="item-button">
                           <a href="#" className="item-btn">Read More
                             {/* <i className="fas fa-long-arrow-alt-right"></i> */}
@@ -387,20 +395,20 @@ const Home = () => {
                   <div className="btm-img"></div>
                 </div>
                 <div className="bannar-details">
-                  <h3 className="heading-title">Need Anyf Help!</h3>
+                  <h3 className="heading-title">Need Any Help?</h3>
                   <div className="contact-box2">
                     <div className="item-icon-box">
-                      <div className="item-icon"><i className="far fa-comments"></i></div>
+                      <div className="item-icon"><PhoneOutlined /></div>
                       <div className="banner-content">
                         <div className="item-hotline">Hotline</div>
                         <div className="item-number">001234 6789</div>
                       </div>
                     </div>
                     <div className="item-icon-box item-icon-box2">
-                      <div className="item-icon"><i className="far fa-envelope"></i></div>
+                      <div className="item-icon"><MailOutlined /></div>
                       <div className="banner-content">
                         <div className="item-hotline">Send Us Email</div>
-                        <div className="item-number">info@gmail.com</div>
+                        <div className="item-number">info@oramsys.com</div>
                       </div>
                     </div>
                   </div>
@@ -513,9 +521,9 @@ const Home = () => {
           <div className="row">
             <div className="col-lg-5 col-md-12">
               <div className="company-profit-box1">
-                <p className="section-subtitle">make a type specimen</p>
-                <h2 className="section-title">galley of type and scrambled it to make</h2>
-                <p>Finance when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuriFinance.</p>
+                {/* <p className="section-subtitle">Visualize Your Financial Path</p> */}
+                <h4 className="section-title">Visualize Your Financial Path</h4>
+                <p>Our interactive finance graph provides insights into your financial health and trade opportunities, helping you make informed decisions.</p>
                 <div className="item-button">
                   <a href="#" className="item-btn">Join Now<i className="fas fa-long-arrow-alt-right"></i></a>
                 </div>
@@ -578,10 +586,13 @@ const Home = () => {
       <section className="location-wrap-layout1">
         <div className="container">
           <div className="item-heading">
-            <p className="item-subtitle">Lorem, ipsum dolor</p>
-            <h2 className="section-heading">Lorem ipsum dolor sit amet.</h2>
+            <p className="item-subtitle">Where are our services utilized?</p>
+            {/* <h2 className="section-heading">Lorem ipsum dolor sit amet.</h2> */}
+            <div style={{ height: "88vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <p style={{ fontSize: '48px', fontWeight: "bold" }}>Not yet available. Coming soon.</p>
+            </div>
           </div>
-          <div className="row">
+          {/* <div className="row">
             <div className="col-lg-12">
               <div className="location-box">
                 <div className="item-img">
@@ -589,23 +600,18 @@ const Home = () => {
                   <div className="map-icon">
                     <ul>
                       <li>
-                        {/* <i className="fas fa-map-marker-alt"></i> */}
                         <FontAwesomeIcon icon={faMapMarkerAlt} className=""></FontAwesomeIcon>
                       </li>
                       <li>
-                        {/* <i className="fas fa-map-marker-alt"></i> */}
                         <FontAwesomeIcon icon={faMapMarkerAlt} className=""></FontAwesomeIcon>
                       </li>
                       <li>
-                        {/* <i className="fas fa-map-marker-alt"></i> */}
                         <FontAwesomeIcon icon={faMapMarkerAlt} className=""></FontAwesomeIcon>
                       </li>
                       <li>
-                        {/* <i className="fas fa-map-marker-alt"></i> */}
                         <FontAwesomeIcon icon={faMapMarkerAlt} className=""></FontAwesomeIcon>
                       </li>
                       <li>
-                        {/* <i className="fas fa-map-marker-alt"></i> */}
                         <FontAwesomeIcon icon={faMapMarkerAlt} className=""></FontAwesomeIcon>
                       </li>
                     </ul>
@@ -613,7 +619,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
 

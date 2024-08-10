@@ -28,9 +28,14 @@ const Edit_Transactions = () => {
     const dispatch = useDispatch()
     const queryParams = new URLSearchParams(location.search)
     const id = queryParams.get("id")
-    const transactionType = location?.state[0]?.type
-    const productNature = location?.state[1]?.type
-    const isView = location?.state[2]?.isView
+    // const transactionType = location.state && location.state.length > 0 ? location?.state?.[0]?.type : null
+    // const productNature = location.state && location.state.length > 0 ? location?.state?.[1]?.type : null
+    // const isView = location.state && location.state.length > 0 ? location?.state?.[2]?.isView : null
+
+    const transactionType = location.state?.[0]?.type ?? null;
+    const productNature = location.state?.[1]?.type ?? null;
+    const isView = location.state?.[2]?.isView ?? null;
+
     const [getTrans, setGetTrans] = useState({})
     const [transId, setTransId] = useState("");
     const [getLender, setGetLender] = useState("")
@@ -158,16 +163,19 @@ const Edit_Transactions = () => {
                                             :
                                             <>
                                                 <div style={{ height: "88vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                                    <p style={{ fontSize: '48px', fontWeight: "bold" }}>Product not yet available. Coming soon</p>
+                                                    <p style={{ fontSize: '48px', fontWeight: "bold" }}>Product not yet available.</p>
                                                 </div>
                                             </>
                                     }
                                 </React.Fragment>
                                     :
                                     <>
-                                        <div style={{ height: "88vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                            <p style={{ fontSize: '48px', fontWeight: "bold" }}>Product not yet available. Coming soon</p>
-                                        </div>
+                                        {!location.state && (
+                                            <div style={{ height: "88vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                                <p style={{ fontSize: '48px', fontWeight: "bold" }}>Product not yet available. Coming soon</p>
+                                            </div>
+                                        )}
+
                                     </>
                             }
                         </>
