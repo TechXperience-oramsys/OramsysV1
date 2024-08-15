@@ -232,7 +232,7 @@ h6 {
 }
 
 .topbar-right2 ul li .media .media-body .item-number {
-  color: #000;
+  color: #f1f1f1;
   font-size: 18px;
   font-weight: 700;
   font-family: "Figtree", sans-serif;
@@ -1041,7 +1041,7 @@ nav.template-main-menu > ul > li:hover .template-mega-menu {
 }
 
 .header-action-layout1 ul .header-number .media .media-body .item-number {
-  color: #000;
+  color: #f1f1f1;
   font-size: 18px;
   font-weight: 700;
   margin-top: -7px;

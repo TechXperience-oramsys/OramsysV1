@@ -1781,7 +1781,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                     </Form.Group> */}
 
                                     <Form.Group as={Col} controlId="formGridZip">
-                                        <Form.Label>Country of Origin</Form.Label>
+                                        <Form.Label>Destination Country</Form.Label>
                                         <Select
                                             className='no-border'
                                             onChange={(selectedOption) => {
