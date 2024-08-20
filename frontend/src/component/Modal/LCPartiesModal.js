@@ -99,9 +99,9 @@ const LCPartiesModal = ({ show, onHide, addParties, data }) => {
                             </div>
                             <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                                 <div className='form pt-2'>
-                                    <h2>Contract value</h2>
+                                    {/* <h2>Contract value</h2> */}
                                     <Row>
-                                        <Col lg={3}>
+                                        {/* <Col lg={3}>
                                             <Autocomplete
                                             options={CurrencyOptions}
                                             getOptionLabel={(option) => option.label}
@@ -118,7 +118,6 @@ const LCPartiesModal = ({ show, onHide, addParties, data }) => {
                                             value={CurrencyOptions && lcParties?.currency && CurrencyOptions.find(
                                                 (ele) => ele.label === lcParties.currency)}
                                             />
-                                            {/* {error && error?.justification && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error.justification}</span>} */}
                                         </Col>
                                         <Col lg={3}>
                                             <TextField
@@ -130,7 +129,7 @@ const LCPartiesModal = ({ show, onHide, addParties, data }) => {
                                             onChange={(e) => handleChange(e, "valueOfCurrency", "lcParties")}
                                             disabled={isView}
                                             />
-                                        </Col>
+                                        </Col> */}
                                         <Col lg={3}>
                                             <Autocomplete
                                                 options={applicant}

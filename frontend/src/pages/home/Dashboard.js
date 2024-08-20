@@ -32,19 +32,19 @@ const Dashboard = () => {
   const dispatch = useDispatch()
   const cards = [
     {
-      title: "Total Revenue",
-      img: "sales",
-      icon: StockOutlined,
-      color: "bg-teal-500",
-      name: "totalRev",
-    },
-    {
       title: "Transactions",
       img: "Transact",
       icon: GrTransaction,
       color: "bg-success",
       name: "transactions",
       status: "Completed",
+    },
+    {
+      title: "Transactions Revenue",
+      img: "sales",
+      icon: StockOutlined,
+      color: "bg-teal-500",
+      name: "totalRev",
     },
     {
       title: "Available Products",
@@ -85,14 +85,20 @@ const Dashboard = () => {
   const ratingAgenciesDatas = useSelector((state) => state.ratingAgenciesData?.ratingAgencies)
 
   const totalValue = useMemo(() => {
-    if (!getAlltransactionData?.data) return 0;
+    if (!getAlltransactionData?.data) return '0';
 
-    return getAlltransactionData.data.reduce((acc, item) => {
-      const value = item?.details?.contractDetails?.value;
-      return acc + (value ? Number(value) : 0);
+    const sum = getAlltransactionData.data.reduce((acc, item) => {
+      let value = item?.details?.contractDetails?.value;
+
+      // Remove any non-numeric characters except the decimal point
+      value = typeof value === 'string' ? value.replace(/[^0-9.]/g, '') : value;
+
+      return acc + (value ? parseFloat(value) : 0);
     }, 0);
-  }, [getAlltransactionData]);
 
+    // Format the sum with commas
+    return sum.toLocaleString();
+  }, [getAlltransactionData]);
   console.log("alltransactionn", getAlltransactionData)
   //Get data counts on everything
   const getCount = useCallback(

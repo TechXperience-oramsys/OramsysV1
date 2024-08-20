@@ -19,7 +19,8 @@ const CreateAdmin = () => {
     branch: '',
     logo: null,
     adminName: '',
-    country: ''
+    country: '',
+    password: '',
   });
 
   const handleFormChange = (changedValues) => {
@@ -144,6 +145,15 @@ const CreateAdmin = () => {
               rules={[{ required: true, message: 'Please enter country!' }]}
             >
               <Input placeholder="Country" />
+            </Form.Item>
+          </div>
+          <div className="col-md-6">
+            <Form.Item
+              label="Passsword"
+              name="password"
+              rules={[{ required: true, message: 'Please enter password!' }]}
+            >
+              <Input placeholder="Password" />
             </Form.Item>
           </div>
           <div className="col-md-6">

@@ -1,6 +1,6 @@
 import { TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Form, DropdownButton, InputGroup, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Row, Col, Form, DropdownButton, InputGroup, Dropdown, OverlayTrigger, Tooltip, FormControl } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { countrieAction } from '../../../../redux/actions/countrieAction';
 import { useDispatch } from 'react-redux';
@@ -130,12 +130,17 @@ const Details = ({ handleNext, entityType }) => {
 
     const handleChange = (e, name, type) => {
         if (type === 'details') {
-            if (name === "name" || name === 'country' || name === 'dateOfIncorporation' || name === 'sector' || name === 'subSector' || name === 'mainActivity') {
+            if (name === "name" || name === 'email' || name === 'country' || name === 'dateOfIncorporation' || name === 'sector' || name === 'subSector' || name === 'mainActivity') {
                 setDetails({ ...details, [name]: e.target.value })
             } else if (name === 'registrationNumber') {
                 if (e.target.value === '' || numberReg.test(e.target.value)) {
                     setDetails({ ...details, [name]: e.target.value })
                 }
+            }
+        }
+        else if (type === 'common') {
+            if (name === "email") {
+                setCommon({ ...common, [name]: e.target.value })
             }
         }
         else if (type === 'biling') {
@@ -375,42 +380,103 @@ const Details = ({ handleNext, entityType }) => {
     }
     // const [checked, setChecked] = useState(false);
 
+    // const countryCodes = [
+    //     { name: 'Nigeria', code: '+234' },
+    //     { name: 'United States', code: '+1' },
+    //     { name: 'United Kingdom', code: '+44' },
+    //     { name: 'Canada', code: '+1' },
+    //     { name: 'Australia', code: '+61' },
+    //     { name: 'India', code: '+91' },
+    //     { name: 'Germany', code: '+49' },
+    //     { name: 'France', code: '+33' },
+    //     { name: 'Italy', code: '+39' },
+    //     { name: 'Spain', code: '+34' },
+    //     { name: 'China', code: '+86' },
+    //     { name: 'Japan', code: '+81' },
+    //     { name: 'South Korea', code: '+82' },
+    //     { name: 'Brazil', code: '+55' },
+    //     { name: 'Mexico', code: '+52' },
+    //     { name: 'Russia', code: '+7' },
+    //     { name: 'South Africa', code: '+27' },
+    //     { name: 'Egypt', code: '+20' },
+    //     { name: 'Turkey', code: '+90' },
+    //     { name: 'Argentina', code: '+54' }
+    // ];
+    const [searchTerm, setSearchTerm] = useState('');
+
     const countryCodes = [
-        { name: 'Nigeria', code: '+234' },
-        { name: 'United States', code: '+1' },
-        { name: 'United Kingdom', code: '+44' },
-        { name: 'Canada', code: '+1' },
-        { name: 'Australia', code: '+61' },
-        { name: 'India', code: '+91' },
-        { name: 'Germany', code: '+49' },
-        { name: 'France', code: '+33' },
-        { name: 'Italy', code: '+39' },
-        { name: 'Spain', code: '+34' },
-        { name: 'China', code: '+86' },
-        { name: 'Japan', code: '+81' },
-        { name: 'South Korea', code: '+82' },
-        { name: 'Brazil', code: '+55' },
-        { name: 'Mexico', code: '+52' },
-        { name: 'Russia', code: '+7' },
-        { name: 'South Africa', code: '+27' },
+        { name: 'Algeria', code: '+213' },
+        { name: 'Angola', code: '+244' },
+        { name: 'Benin', code: '+229' },
+        { name: 'Botswana', code: '+267' },
+        { name: 'Burkina Faso', code: '+226' },
+        { name: 'Burundi', code: '+257' },
+        { name: 'Cabo Verde', code: '+238' },
+        { name: 'Cameroon', code: '+237' },
+        { name: 'Central African Republic', code: '+236' },
+        { name: 'Chad', code: '+235' },
+        { name: 'Comoros', code: '+269' },
+        { name: 'Congo (Brazzaville)', code: '+242' },
+        { name: 'Congo (Kinshasa)', code: '+243' },
+        { name: 'Djibouti', code: '+253' },
         { name: 'Egypt', code: '+20' },
-        { name: 'Turkey', code: '+90' },
-        { name: 'Argentina', code: '+54' }
+        { name: 'Equatorial Guinea', code: '+240' },
+        { name: 'Eritrea', code: '+291' },
+        { name: 'Eswatini', code: '+268' },
+        { name: 'Ethiopia', code: '+251' },
+        { name: 'Gabon', code: '+241' },
+        { name: 'Gambia', code: '+220' },
+        { name: 'Ghana', code: '+233' },
+        { name: 'Guinea', code: '+224' },
+        { name: 'Guinea-Bissau', code: '+245' },
+        { name: 'Ivory Coast', code: '+225' },
+        { name: 'Kenya', code: '+254' },
+        { name: 'Lesotho', code: '+266' },
+        { name: 'Liberia', code: '+231' },
+        { name: 'Libya', code: '+218' },
+        { name: 'Madagascar', code: '+261' },
+        { name: 'Malawi', code: '+265' },
+        { name: 'Mali', code: '+223' },
+        { name: 'Mauritania', code: '+222' },
+        { name: 'Mauritius', code: '+230' },
+        { name: 'Morocco', code: '+212' },
+        { name: 'Mozambique', code: '+258' },
+        { name: 'Namibia', code: '+264' },
+        { name: 'Niger', code: '+227' },
+        { name: 'Nigeria', code: '+234' },
+        { name: 'Rwanda', code: '+250' },
+        { name: 'Sao Tome and Principe', code: '+239' },
+        { name: 'Senegal', code: '+221' },
+        { name: 'Seychelles', code: '+248' },
+        { name: 'Sierra Leone', code: '+232' },
+        { name: 'Somalia', code: '+252' },
+        { name: 'South Africa', code: '+27' },
+        { name: 'South Sudan', code: '+211' },
+        { name: 'Sudan', code: '+249' },
+        { name: 'Tanzania', code: '+255' },
+        { name: 'Togo', code: '+228' },
+        { name: 'Tunisia', code: '+216' },
+        { name: 'Uganda', code: '+256' },
+        { name: 'Zambia', code: '+260' },
+        { name: 'Zimbabwe', code: '+263' }
     ];
 
-    const handleCountryCodeChange = (countryCode, type) => {
-        if (type === 'biling') {
-            setBilingAddress((prevState) => ({
-                ...prevState,
-                billingCountryCode: countryCode,
-            }));
-        } else if (type === 'shipping') {
-            setShippingAddress((prevState) => ({
-                ...prevState,
-                shippingCountryCode: countryCode,
-            }));
-        }
-    };
+    const filteredCountries = countryCodes.filter(country =>
+        country.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    // const handleCountryCodeChange = (countryCode, type) => {
+    //     if (type === 'biling') {
+    //         setBilingAddress((prevState) => ({
+    //             ...prevState,
+    //             billingCountryCode: countryCode,
+    //         }));
+    //     } else if (type === 'shipping') {
+    //         setShippingAddress((prevState) => ({
+    //             ...prevState,
+    //             shippingCountryCode: countryCode,
+    //         }));
+    //     }
+    // };
 
 
 
@@ -422,12 +488,7 @@ const Details = ({ handleNext, entityType }) => {
                     <div>
                         <Row>
                             <Form.Group as={Col} controlId="formGridZip">
-                                <div >
-                                    <Form.Label className="mb-0">
-                                        Corporation Name <RequiredSpan />
-                                    </Form.Label>
-
-                                </div>
+                                <Form.Label className="mb-0">Corporation Name <RequiredSpan /></Form.Label>
                                 <Form.Control
                                     className="no-border"
                                     value={details.name}
@@ -442,7 +503,7 @@ const Details = ({ handleNext, entityType }) => {
                                 <Form.Control className='no-border'
                                     value={common.email}
                                     name='email'
-                                    onChange={(e) => setCommon({ ...common, email: e.target.value })}
+                                    onChange={(e) => handleChange(e, 'email', 'common')}
                                     disabled={isView}
                                 />
                                 {formErrors && formErrors?.email && <span style={{ color: 'red' }}>{formErrors.email}</span>}
@@ -718,15 +779,23 @@ const Details = ({ handleNext, entityType }) => {
                                 <Form.Label>Phone 1 <RequiredSpan /></Form.Label>
                                 <InputGroup>
                                     <DropdownButton variant="outline-secondary" title={bilingAddress.billingCountryCode} id="input-group-dropdown-1">
-                                        {countryCodes.map((country, i) => (
-                                            <Dropdown.Item key={i} onClick={() =>
-                                                setBilingAddress((prevState) => ({
-                                                    ...prevState,
-                                                    billingCountryCode: country.code
-                                                }))}>
-                                                {country.name} ({country.code})
-                                            </Dropdown.Item>
-                                        ))}
+                                        <FormControl
+                                            autoFocus
+                                            placeholder="Search Country..."
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                            value={searchTerm}
+                                        />
+                                        <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                                            {filteredCountries.map((country, i) => (
+                                                <Dropdown.Item key={i} onClick={() =>
+                                                    setBilingAddress((prevState) => ({
+                                                        ...prevState,
+                                                        billingCountryCode: country.code
+                                                    }))}>
+                                                    {country.name} ({country.code})
+                                                </Dropdown.Item>
+                                            ))}
+                                        </div>
                                     </DropdownButton>
                                     <Form.Control
                                         value={bilingAddress.mobile}
@@ -886,7 +955,14 @@ const Details = ({ handleNext, entityType }) => {
                                 <Form.Label>Phone 1 <RequiredSpan /></Form.Label>
                                 <InputGroup>
                                     <DropdownButton variant="outline-secondary" title={shippingAddress.shippingCountryCode} id="input-group-dropdown-2">
-                                        {countryCodes.map((country, i) => (
+                                        <FormControl
+                                            autoFocus
+                                            placeholder="Search Country..."
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                            value={searchTerm}
+                                        />
+                                        <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                                        {filteredCountries.map((country, i) => (
                                             <Dropdown.Item key={i} onClick={() => setShippingAddress((prevState) => ({
                                                 ...prevState,
                                                 shippingCountryCode: country.code
@@ -895,6 +971,7 @@ const Details = ({ handleNext, entityType }) => {
                                                 {country.name} ({country.code})
                                             </Dropdown.Item>
                                         ))}
+                                        </div>
                                     </DropdownButton>
                                     <Form.Control
                                         // className=''

@@ -370,170 +370,119 @@ class entitiesController {
         let roles = req.body.roles;
         let updateData = {}
         // const newPassword = await hashPassword(req.body.password, 10);
+        const normalizedEmail = body.email.toLowerCase();
         const newEntity =
         {
-            email: body.email.toLowerCase(),
+            email: normalizedEmail,
             // password: newPassword,
             isLicense: body?.isLicense || false,
             isRatings: body?.isRatings || false,
             isWarehouse: body?.isWarehouse || false,
         }
         try {
-            const alreadyExist = await entities.getByEmail(req.body.email);
-            if (alreadyExist) {
-                if (alreadyExist._id.toString() !== id) {
-                    return res.status(httpStatus.OK).json(new APIResponse({}, 'Email is already exist', httpStatus.OK));
-                } else {
-                    const saveResponse = await entities.updateEntity(newEntity, id);
-                    if (detail) {
-
-                        detail = {
-                            ...detail,
-                            entityId: saveResponse._id
-                        }
-                        const entityDetailsResponse = await entityDetails.updateEntityDetail(detail, detail._id);
-                        updateData = {
-                            ...updateData,
-                            details: entityDetailsResponse._id
-                        }
-                    }
-                    if (addresses) {
-                        let addressesIds = []
-                        for (let i = 0; i < addresses.length; i++) {
-                            let element = addresses[i];
-                            element = {
-                                ...element,
-                                entityId: saveResponse._id
-                            }
-                            if (!element?._id) {
-                                const entityAddressModel = new entityAddress(element);
-                                const entityAddressResponse = await entityAddressModel.save();
-                                addressesIds.push(entityAddressResponse._id)
-                            } else {
-                                const entityAddressResponse = await entityAddress.updateEntityAddress(element, element._id);
-                                addressesIds.push(entityAddressResponse._id)
-                            }
-
-                        }
-
-
-                        updateData = {
-                            ...updateData,
-                            addresses: addressesIds
-                        }
-                    }
-                    if (financial) {
-
-                        financial = {
-                            ...financial,
-                            entityId: saveResponse._id
-                        }
-                        const entityFinancialsResponse = await entityFinancials.updateEntityFinancial(financial, financial._id);
-                        updateData = {
-                            ...updateData,
-                            financial: entityFinancialsResponse._id
-                        }
-                    }
-                    if (licenses) {
-                        let licensesIds = []
-                        for (let i = 0; i < licenses.length; i++) {
-                            let element = licenses[i];
-                            element = {
-                                ...element,
-                                entityId: saveResponse._id
-                            }
-                            if (!element?._id) {
-                                const entityLicenseModel = new entityLicense(element);
-                                const entityLicenseResponse = await entityLicenseModel.save();
-                                licensesIds.push(entityLicenseResponse._id)
-                                console.log('add new lic')
-                            } else {
-                                const entityLicenseResponse = await entityLicense.findOneAndUpdate({ _id: element._id }, element);
-                                licensesIds.push(entityLicenseResponse._id)
-                                console.log('update existing lic')
-                            }
-                        }
-                        console.log('returns here')
-
-                        updateData = {
-                            ...updateData,
-                            licenses: licensesIds
-                        }
-                        console.log('below the data')
-                    }
-                    if (ratings) {
-                        let ratingsIds = []
-                        for (let i = 0; i < ratings.length; i++) {
-                            let element = ratings[i];
-                            element = {
-                                ...element,
-                                entityId: saveResponse._id
-                            }
-                            if (!element?._id) {
-                                const entityRatingModel = new entityRating(element);
-                                const entityRatingResponse = await entityRatingModel.save();
-                                ratingsIds.push(entityRatingResponse._id)
-                            } else {
-                                const entityRatingResponse = await entityRating.findOneAndUpdate({ _id: element._id }, element);
-                                ratingsIds.push(entityRatingResponse._id)
-                            }
-                        }
-
-
-                        updateData = {
-                            ...updateData,
-                            ratings: ratingsIds
-                        }
-                    }
-                    if (warehouses) {
-                        let warehousesIds = []
-                        for (let i = 0; i < warehouses.length; i++) {
-                            let element = warehouses[i];
-                            element = {
-                                ...element,
-                                entityId: saveResponse._id
-                            }
-                            if (!element?._id) {
-                                const entityWarehouseModel = new entityWarehouse(element);
-                                const entityWarehouseResponse = await entityWarehouseModel.save();
-                                warehousesIds.push(entityWarehouseResponse._id)
-                            } else {
-                                const entityWarehouseResponse = await entityWarehouse.findOneAndUpdate({ _id: element._id }, element);
-                                warehousesIds.push(entityWarehouseResponse._id)
-                            }
-
-                        }
-
-
-                        updateData = {
-                            ...updateData,
-                            warehouses: warehousesIds
-                        }
-                    }
-                    if (roles) {
-                        let role = []
-                        for (let i = 0; i < roles.length; i++) {
-                            let element = roles[i];
-                            role.push({ roleId: element.roles, justification: element.justification })
-                            await entities.updateEntity({ roles: role }, saveResponse._id)
-                        }
-                    }
-                    const entity = await entities.updateEntity(updateData, saveResponse._id)
-                    return res.status(httpStatus.OK).json(new APIResponse(entity, 'Entity updated successfully.', httpStatus.OK));
-                }
-
+            // Check if the email already exists
+            const alreadyExist = await entities.getByEmail(normalizedEmail);
+    
+            if (alreadyExist && alreadyExist._id.toString() !== id) {
+                return res.status(httpStatus.OK).json(new APIResponse({}, 'Email already exists', httpStatus.OK));
             }
-
-            if (alreadyExist.email === req.body.email) {
-                res
-                    .status(httpStatus.OK)
-                    .send({ message: "email is already exist" });
-            } else {
-                res
-                    .status(httpStatus.OK)
-                    .send({ message: "Error updating User" });
+    
+            // Update the entity with the new data
+            const saveResponse = await entities.updateEntity(newEntity, id);
+    
+            if (body.detail) {
+                body.detail = { ...body.detail, entityId: saveResponse._id };
+                const entityDetailsResponse = await entityDetails.updateEntityDetail(body.detail, body.detail._id);
+                updateData.details = entityDetailsResponse._id;
+                console.log('first check')
             }
-
+    
+            if (body.addresses) {
+                const addressesIds = await Promise.all(
+                    body.addresses.map(async (element) => {
+                        element.entityId = saveResponse._id;
+                        if (!element._id) {
+                            const entityAddressModel = new entityAddress(element);
+                            const entityAddressResponse = await entityAddressModel.save();
+                            return entityAddressResponse._id;
+                        } else {
+                            const entityAddressResponse = await entityAddress.updateEntityAddress(element, element._id);
+                            return entityAddressResponse._id;
+                        }
+                    })
+                );
+                updateData.addresses = addressesIds;
+            }
+    
+            if (body.financial) {
+                body.financial.entityId = saveResponse._id;
+                const entityFinancialsResponse = await entityFinancials.updateEntityFinancial(body.financial, body.financial._id);
+                updateData.financial = entityFinancialsResponse._id;
+            }
+    
+            if (body.licenses) {
+                const licensesIds = await Promise.all(
+                    body.licenses.map(async (element) => {
+                        element.entityId = saveResponse._id;
+                        if (!element._id) {
+                            const entityLicenseModel = new entityLicense(element);
+                            const entityLicenseResponse = await entityLicenseModel.save();
+                            return entityLicenseResponse._id;
+                        } else {
+                            const entityLicenseResponse = await entityLicense.findOneAndUpdate({ _id: element._id }, element);
+                            return entityLicenseResponse._id;
+                        }
+                    })
+                );
+                updateData.licenses = licensesIds;
+            }
+    
+            if (body.ratings) {
+                const ratingsIds = await Promise.all(
+                    body.ratings.map(async (element) => {
+                        element.entityId = saveResponse._id;
+                        if (!element._id) {
+                            const entityRatingModel = new entityRating(element);
+                            const entityRatingResponse = await entityRatingModel.save();
+                            return entityRatingResponse._id;
+                        } else {
+                            const entityRatingResponse = await entityRating.findOneAndUpdate({ _id: element._id }, element);
+                            return entityRatingResponse._id;
+                        }
+                    })
+                );
+                updateData.ratings = ratingsIds;
+            }
+    
+            if (body.warehouses) {
+                const warehousesIds = await Promise.all(
+                    body.warehouses.map(async (element) => {
+                        element.entityId = saveResponse._id;
+                        if (!element._id) {
+                            const entityWarehouseModel = new entityWarehouse(element);
+                            const entityWarehouseResponse = await entityWarehouseModel.save();
+                            return entityWarehouseResponse._id;
+                        } else {
+                            const entityWarehouseResponse = await entityWarehouse.findOneAndUpdate({ _id: element._id }, element);
+                            return entityWarehouseResponse._id;
+                        }
+                    })
+                );
+                updateData.warehouses = warehousesIds;
+            }
+    
+            if (body.roles) {
+                const roles = body.roles.map(element => ({
+                    roleId: element.roles,
+                    justification: element.justification,
+                }));
+                await entities.updateEntity({ roles }, saveResponse._id);
+            }
+    
+            // Final update to the entity with all the new data
+            const entity = await entities.updateEntity(updateData, saveResponse._id);
+    
+            return res.status(httpStatus.OK).json(new APIResponse(entity, 'Entity updated successfully.', httpStatus.OK));
         } catch (e) {
             if (e.code === 11000) {
                 return res

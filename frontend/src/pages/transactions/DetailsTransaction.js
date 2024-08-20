@@ -1032,8 +1032,8 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                 warehouses: [...shippingOptions.warehouses, data],
             })
         }
-            // Debugging to check the updated state of warehouses
-    console.log("Updated warehouses:", shippingOptions.warehouses);
+        // Debugging to check the updated state of warehouses
+        console.log("Updated warehouses:", shippingOptions.warehouses);
 
     }
 
@@ -1898,7 +1898,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                         </div>
                                         <div>
                                             {shippingOptions.warehouses?.length > 0 ? (
-                                                
+
                                                 <MaterialTable
                                                     title=''
                                                     columns={[
@@ -2267,8 +2267,8 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                             </div>
                         </div>
                     </div>
-                    {addWarehouseModal && ( <AddWareHouseModal
-                        show={addWarehouseModal} onHide={() => { setAddWarehouseModal(false);  setWareHouseId("") }} wareHouseData={(e, id) => warehouseData(e, id)} wareHouseId={wareHouseId} />
+                    {addWarehouseModal && (<AddWareHouseModal
+                        show={addWarehouseModal} onHide={() => { setAddWarehouseModal(false); setWareHouseId("") }} wareHouseData={(e, id) => warehouseData(e, id)} wareHouseId={wareHouseId} />
                     )}
                     {/* {addWarehouseModal && <AddWareHouseModal show={addWarehouseModal} onHide={() => setAddWarehouseModal(false)} wareHouseData={(data) => setShippingOptions({ ...shippingOptions, warehouses: [...shippingOptions.warehouses, data] })} wareHouseId={wareHouseId} />} */}
                     {addInsuranceModal && (
@@ -2276,7 +2276,11 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                     )}
                     {/* {showTextEditModal && <TextEditerModal show={showTextEditModal} onHide={() => setShowTextEditModal(false)} commentDone={(e) => hadleChangeModal(e)} data={sendModalData} type={type} inputName={selectedName} />} */}
                     <div className='footer_'>
-                        <button onClick={() => navigate("/transactions")} className='footer_cancel_btn'> Back </button>
+                        <div className="d-flex justify-content-between">
+                            <button onClick={() => navigate("/transactions")} className='footer_cancel_btn'> Back </button>
+                            <button onClick={() => navigate("/transactions")} className='footer_cancel_btn'> Save Details </button>
+                        </div>
+
                         <button onClick={() => next()} className='footer_next_btn'> {" "} Next</button>
                     </div>
                 </>
