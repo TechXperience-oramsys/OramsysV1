@@ -355,8 +355,14 @@ const Home = () => {
           <div className="row no-gutters">
             <div className="col-lg-6 col-md-12 p-0">
               <div className="progress-bar-box1 progress-bar-box3">
-                <h2 className="section-title">Lorem ipsum dolor sit amet scrambled </h2>
-                <p> when an unknown printer took a galley of type and scrambled make a type specimen book.</p>
+                <h2 className="section-title">Register Now </h2>
+                <p> All the tools required for a structured trade transaction in one placeful</p>
+                <div className="item-button">
+                  <a href="#" className="item-btn">Register and begin
+                    {/* <i className="fas fa-long-arrow-alt-right"></i> */}
+                    <FontAwesomeIcon icon={faArrowRightLong} className="ms-3"></FontAwesomeIcon>
+                  </a>
+                </div>
                 {/* <div className="row">
                   <div className="col-lg-12 col-md-12 col-sm-12">
                     <div className="progress-box">
@@ -372,7 +378,7 @@ const Home = () => {
             <div className="col-lg-6 col-md-12 p-0">
               <div className="progress-bar-box2 progress-bar-box3">
                 <div className="background-image5">
-                  <img src="./assets/img/figure/figure38.png" alt="figure" width="475" height="553" />
+                  {/* <img src="./assets/img/figure/figure38.png" alt="figure" width="475" height="553" /> */}
                 </div>
                 <div className="item-img">
                   {/* <!-- <img src="img/service/service2.jpg" alt="service" width="960" height="555"> --> */}
@@ -422,17 +428,17 @@ const Home = () => {
 
       <section className="project-wrap-layout1">
         <div className="container">
-          <p className="section-subtitle">quas eligendi?</p>
+          <p className="section-subtitle">What do we offer?</p>
           <div className="row">
             <div className="col-lg-5">
               <div className="project-box1">
-                <h2 className="section-title">Lorem ipsum dolor sit amet consectetur</h2>
+                <h2 className="section-title">What you get from Oramsys:</h2>
               </div>
             </div>
             <div className="col-lg-7">
-              <div className="project-box2">
+              {/* <div className="project-box2">
                 <p>Bookan unknown printer took a galley of type and scrambled make It has survived not only five centuries.Lorem ipsum dolor sitam consectetur adipiscg sedo eiusmod tempor incididuntlabore dolor ipsum dolor sit amet, consectetur.</p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -447,9 +453,9 @@ const Home = () => {
                   </a>
                   <div className="item-content">
                     <div className="item-number">01</div>
-                    <p className="heading-subtitle">voluptatibus fugiat</p>
-                    <h3 className="heading-title">vero tenetur </h3>
-                    <p className="portfolio-para">Bohen an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+                    <p className="heading-subtitle"></p>
+                    <h3 className="heading-title">Minimizing Credit Losses: </h3>
+                    <p className="portfolio-para">The Oramsys platform has been designed to help financial institutions to minimize credit losses by improving the structure used for transactions. It achieves this through the knowledge that is embedded in the system as well as standardization of certain key processes that enhance decision-making.</p>
                     <div className="item-button">
                       <a href="#" className="item-btn">+ <span>Read More</span></a>
                     </div>
@@ -465,9 +471,9 @@ const Home = () => {
                   </a>
                   <div className="item-content">
                     <div className="item-number">02</div>
-                    <p className="heading-subtitle">voluptatibus fugiat</p>
-                    <h3 className="heading-title">vero tenetur </h3>
-                    <p className="portfolio-para">Bohen an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+                    <p className="heading-subtitle"></p>
+                    <h3 className="heading-title">Improved staff productivity: </h3>
+                    <p className="portfolio-para">The credit officers and other processing officers involved in structuring trade finance transactions will be more productive and efficient as they will have access to valuable insights and intelligence encoded into the system. It is also expected to reduce staffing costs across the credit value chain.</p>
                     <div className="item-button">
                       <a href="#" className="item-btn">+ <span>Read More</span></a>
                     </div>
@@ -483,9 +489,9 @@ const Home = () => {
                   </a>
                   <div className="item-content">
                     <div className="item-number">03</div>
-                    <p className="heading-subtitle">voluptatibus fugiat</p>
-                    <h3 className="heading-title">vero tenetur </h3>
-                    <p className="portfolio-para">Bohen an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+                    <p className="heading-subtitle"></p>
+                    <h3 className="heading-title">Access to trade counterparties </h3>
+                    <p className="portfolio-para">Oramsys platform incorporates all stakeholders involved in completing a trade finance transaction. This includes locations of ports, airports, warehouses and logistics providers, enhancing transparency within the process. The platform ensures accurate documentation and adherence to regulatory requirements which minimizes errors and delays.</p>
                     <div className="item-button">
                       <a href="#" className="item-btn">+ <span>Read More</span></a>
                     </div>
@@ -501,9 +507,9 @@ const Home = () => {
                   </a>
                   <div className="item-content">
                     <div className="item-number">04</div>
-                    <p className="heading-subtitle">voluptatibus fugiat</p>
-                    <h3 className="heading-title">vero tenetur </h3>
-                    <p className="portfolio-para">Bohen an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+                    <p className="heading-subtitle"></p>
+                    <h3 className="heading-title">Data-Driven Decision-Making:</h3>
+                    <p className="portfolio-para">The Oramsys platform enables the collection of comprehensive and accurate data, providing valuable insights that can inform decision- making processes. By harnessing the power of data analytics, financial institutions can optimize their operations and manage risks effectively.</p>
                     <div className="item-button">
                       <a href="#" className="item-btn">+ <span>Read More</span></a>
                     </div>
@@ -589,7 +595,7 @@ const Home = () => {
             <p className="item-subtitle">Where are our services utilized?</p>
             {/* <h2 className="section-heading">Lorem ipsum dolor sit amet.</h2> */}
             <div style={{ height: "88vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <p style={{ fontSize: '48px', fontWeight: "bold" }}>Not yet available. Coming soon.</p>
+              <p style={{ fontSize: '48px', fontWeight: "bold" }}>Coming soon.</p>
             </div>
           </div>
           {/* <div className="row">
@@ -690,7 +696,7 @@ const Home = () => {
                       <h2 className="section-title">Lorem ipsum</h2>
                       <ul className="information-list">
                         <li>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                          Oramsys is a Software as a Service Platform which is provisioned per institution based on your individual and internal use cases.
                         </li>
                       </ul>
                     </div>

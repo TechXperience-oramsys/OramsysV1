@@ -14,7 +14,7 @@ const makeTermSheet = async (doc, transaction) => {
 
     doc.font("Times-Bold", 17).text('IMPORTANT NOTICE:', leftPosition, topPosition += 50);
 
-    doc.font("Times-Roman", 14).text("We, [“the financier”] are pleased to provide you with a proposal of indicative terms in respect of the Facility (as defined below). This proposal is intended as a basis for discussions and should not be construed as a contractual offer or a binding commitment by [“the financier”]to arrange or finance the Facility. Any commitment by the [“the financier”]shall be subject to conditions acceptable to it including but not limited to (i) satisfactory due diligence; (ii) receipt of internal credit [and other relevant] approvals; (iii) there being no material adverse change in respect of market conditions, the business or financial condition of the Obligors or Belgium; and (iv) satisfactory documentation. Notwithstanding the above, the provisions of “Costs and Expenses” in this term sheet shall be immediately binding upon execution of this term sheet. [“the financier”] will not be responsible for any losses or damages which any person suffers or incurs because of reliance on or using this term sheet. This term sheet and its contents are intended for the exclusive use of the Borrower(s) and shall not be disclosed by the Borrower(s) to any person other than the Borrower's affiliates and legal and financial advisors for the purposes of the proposed transaction unless the prior written consent of the [“the financier”]is obtained.", leftPosition, topPosition += 30);
+    doc.font("Times-Roman", 14).text(` We, ${transaction.lenders}, are pleased to provide you with a proposal of indicative terms in respect of the Facility (as defined below). This proposal is intended as a basis for discussions and should not be construed as a contractual offer or a binding commitment by ${transaction.lenders} to arrange or finance the Facility. Any commitment by the ${transaction.lenders} shall be subject to conditions acceptable to it including but not limited to (i) satisfactory due diligence; (ii) receipt of internal credit [and other relevant] approvals; (iii) there being no material adverse change in respect of market conditions, the business or financial condition of the Obligors or Belgium; and (iv) satisfactory documentation. Notwithstanding the above, the provisions of “Costs and Expenses” in this term sheet shall be immediately binding upon execution of this term sheet. ${transaction.lenders} will not be responsible for any losses or damages which any person suffers or incurs because of reliance on or using this term sheet. This term sheet and its contents are intended for the exclusive use of the Borrower(s) and shall not be disclosed by the Borrower(s) to any person other than the Borrower's affiliates and legal and financial advisors for the purposes of the proposed transaction unless the prior written consent of the ${transaction.lenders} is obtained.`, leftPosition, topPosition += 30);
 
     doc.font("Times-Bold", 20).text('PARTIES', leftPosition + 220, topPosition += 300);
 
@@ -153,8 +153,8 @@ const makeTermSheet = async (doc, transaction) => {
     doc.font('Times-Bold', 14).text('Enforcement (Courts): ', leftPosition, topPosition += 25).moveDown();
     doc.font('Times-Roman', 14).text(`${transaction.facility.jurisdiction}`, leftPosition + 140, topPosition).moveDown();
 
-    doc.font("Times-Roman", 14).text("You should please indicate, at your earliest convenience, the acceptance of the above terms and conditions by countersigning and returning this document to [“the financier”]no later than end of business on [date].", leftPosition, topPosition += 30);
-    doc.font("Times-Roman", 14).text("For and on behalf of [“the financier”]", leftPosition, topPosition += 60);
+    doc.font("Times-Roman", 14).text(`You should please indicate, at your earliest convenience, the acceptance of the above terms and conditions by countersigning and returning this document to ${transaction.lenders} no later than end of business on [date].`, leftPosition, topPosition += 30);
+    doc.font("Times-Roman", 14).text(`For and on behalf of ${transaction.lenders}`, leftPosition, topPosition += 60);
 
     doc.font('Times-Bold', 14).text('Name: ', leftPosition, topPosition += 35).moveDown();
     doc.font('Times-Roman', 14).text("...................", leftPosition + 50, topPosition).moveDown();
@@ -165,7 +165,7 @@ const makeTermSheet = async (doc, transaction) => {
     doc.addPage();
     topPosition = 0;
 
-    doc.font("Times-Roman", 14).text("Accepted on behalf [“the borrower”]", leftPosition, topPosition += 50);
+    doc.font("Times-Roman", 14).text(`Accepted on behalf ${transaction.borrower_Applicant}`, leftPosition, topPosition += 50);
 
     doc.font('Times-Bold', 14).text('By: ', leftPosition, topPosition += 35).moveDown();
     doc.font('Times-Roman', 14).text("...................", leftPosition + 30, topPosition).moveDown();

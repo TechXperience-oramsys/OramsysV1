@@ -22,6 +22,8 @@ const CreateAdmin = () => {
     branch: '',
     logo: null,
     adminName: '',
+    country: '',
+    password: '',
   });
   const navigate = useNavigate();
   const handleFormChange = (changedValues) => {

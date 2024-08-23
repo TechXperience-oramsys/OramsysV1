@@ -3,6 +3,21 @@ import {
   ADD_TRANSACTION,
   ADD_TRANSACTION_ERROR,
   ADD_TRANSACTION_LOADING,
+  DETAILS,
+  DETAILS_ERROR,
+  DETAILS_LOADING,
+  KEYPARTIES,
+  KEYPARTIES_ERROR,
+  KEYPARTIES_LOADING,
+  FUNDFLOW,
+  FUNDFLOW_ERROR,
+  FUNDFLOW_LOADING,
+  DOCUMENTFLOW,
+  DOCUMENTFLOW_ERROR,
+  DOCUMENTFLOW_LOADING,
+  FACILITY,
+  FACILITY_ERROR,
+  FACILITY_LOADING,
   EDIT_TRANSACTION,
   EDIT_TRANSACTION_ERROR,
   EDIT_TRANSACTION_LOADING,
@@ -69,23 +84,60 @@ export const addTransaction = (body) => async (dispatch) => {
     });
   }
 };
-
-export const getAllTransaction = (id) => async (dispatch) => {
+export const saveDetails = (body) => async (dispatch) => {
   try {
     dispatch({
       type: IS_LOADING,
       payload: true,
     });
     dispatch({
-      type: GET_ALL_TRANSACTION_LOADING,
+      type: DETAILS_LOADING,
       payload: true,
     });
+    await ApiPost(`transaction/details`, body)
+    .then((res) => {
+      dispatch({
+        type: DETAILS,
+        payload: res,
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  dispatch({
+    type: DETAILS_LOADING,
+    payload: false,
+  });
+
+  dispatch({
+    type: IS_LOADING,
+    payload: false,
+  });
+  } catch (err) {
+    dispatch({
+      type: DETAILS_ERROR,
+      payload: err,
+    });
+
+    dispatch({
+      type: DETAILS_ERROR,
+      payload: false,
+    });
+
+    dispatch({
+      type: IS_LOADING,
+      payload: false,
+    });
+  }
+}
+
+export const getAllTransaction = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: IS_LOADING, payload: true, });
+    dispatch({ type: GET_ALL_TRANSACTION_LOADING, payload: true,});
     let role = localStorage.getItem("roles");
-    let user =
-      localStorage.getItem("userData") &&
-      JSON.parse(localStorage.getItem("userData"));
-    let url =
-      role.toLocaleLowerCase() != "admin"
+    let user = localStorage.getItem("userData") && JSON.parse(localStorage.getItem("userData"));
+    let url = role.toLocaleLowerCase() != "admin"
         ? `transaction/get?id=${id}&role=${role}&adminId=${user?.admin}`
         : `transaction/get?id=${id}&role=${role}`;
 
