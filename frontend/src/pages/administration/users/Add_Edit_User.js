@@ -34,7 +34,15 @@ const Add_Edit_User = () => {
     const registeredData = useSelector(state => state.registerData.register)
 
     useEffect(() => {
-        if (id) {
+        if (!id) {
+            setState({
+                name: '',
+                email: "",
+                department: "",
+                profile: "",
+                createdBy: ''
+            });
+        } else {
             dispatch(userGetByIdAction(id))
         }
         // console.log('id=============', id)
@@ -140,6 +148,14 @@ const Add_Edit_User = () => {
         dispatch(registerAction(state))
         // }
     }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (id) {
+            editUser();
+        } else {
+            addUser();
+        }
+    };
 
 
     const navigate = useNavigate()
@@ -242,7 +258,7 @@ const Add_Edit_User = () => {
 
                 <div className='footer_'>
                     <button onClick={() => navigate('/users')} className="footer_cancel_btn">cancel</button>
-                    <button onClick={() => { !id ? addUser() : editUser() }} className={`footer_next_btn ${isView ? 'd-none' : 'd-block'}`}>Save</button>
+                    <button onClick={handleSubmit} className={`footer_next_btn ${isView ? 'd-none' : 'd-block'}`}>Save</button>
                 </div>
             </div>
 

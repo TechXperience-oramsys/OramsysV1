@@ -54,7 +54,10 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
           </div>
         </div>
       </div> */}
-      <div className='open-sidebar d-flex align-items-center' style={{ padding: "15px" }}>
+      <div className='open-sidebar d-flex align-items-center' style={{
+        // backgroundColor: "#f1f1f1",
+        padding: "15px"
+      }}>
         {/* <div className="d-flex align-items-center">
           <MenuOutlined className='fs-5' onClick={() => setSidebar(!showSidebar)} />
           <span className="ms-2 fw-bold fs-5"></span>
@@ -67,11 +70,11 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
 
           <div className='ms-2 mx-auto'>
 
-            <Link onClick={() => setshowModal(true)} className="nav-link">
+            <button onClick={() => setshowModal(true)} className="nav-link">
               <HiOutlineLogout className='me-1' size={15} />
               <span>Logout</span>
               {/* <HiOutlineLogout className='text-white' size={22} /><span className='ps-3 fw-semibold text-danger'>Logout</span> */}
-            </Link>
+            </button>
           </div>
 
         </div>

@@ -15,7 +15,7 @@ const Users = () => {
 
   const userData = useSelector(state => state.userData?.getUserData)
 
-  // console.log('userData==================', userData)
+  console.log('userData==================', userData)
 
   useEffect(() => {
     setGetUserDatas(userData)
@@ -35,7 +35,15 @@ const Users = () => {
 
   const columns = [
     {
-      title: 'Name',
+      title: 'Organisation',
+      dataIndex: ['createdBy', 'details', 'name'],
+      key: 'department',
+      render: text => <Badge className="" status="success" text={text} />,
+      align: 'center',
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+    },
+    {
+      title: 'User name',
       dataIndex: 'name',
       key: 'name',
       align: 'center',
@@ -56,6 +64,7 @@ const Users = () => {
       align: 'center',
       sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
+
     {
       title: 'Profile',
       dataIndex: 'profile',

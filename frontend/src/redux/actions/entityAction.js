@@ -201,7 +201,7 @@ export const editEntityAction = (id, body) => async (dispatch) => {
             payload: true
         })
         await ApiPost(`entities/edit/${id}`, body)
-            .then(res =>
+            .then(res =>    
                 dispatch({
                     type: EDIT_ENTITY,
                     payload: res

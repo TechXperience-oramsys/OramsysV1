@@ -25,6 +25,7 @@ const Transactions = () => {
   const [showSubData, setShowSubData] = useState(false)
   const [transaction, setTransaction] = useState([])
   const [transaction2, setTransaction2] = useState([])
+  const [userName, setUserName] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [postsPerPage] = useState(10)
   const [setSearch] = useState('')
@@ -35,6 +36,7 @@ const Transactions = () => {
   const riskAssessment = useSelector(
     (state) => state.riskAssessmentData.getRiskAssessment
   )
+  const loginData = useSelector(state => state.login.login)
 
 
   useEffect(() => {
@@ -205,6 +207,12 @@ const Transactions = () => {
       className: 'hide-on-md',
     },
     {
+      title: 'Created by',
+      key: 'createdBy',
+      align: 'center',
+      render: () => loginData?.data?.name,
+    },
+    {
       title: 'Transaction Number',
       dataIndex: '_id',
       key: '_id',
@@ -265,7 +273,7 @@ const Transactions = () => {
           }}>
             {termSheet}
             {termSheet === "Signed" ? (
-              <AntButton onClick={() => { downloadTermSheet(record._id) }}><DownloadOutlined /></AntButton>
+              <DownloadOutlined className="ms-3" onClick={() => { downloadTermSheet(record._id) }} />
             ) : null}
           </p>
         </div>

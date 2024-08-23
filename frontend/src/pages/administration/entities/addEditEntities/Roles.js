@@ -127,20 +127,17 @@ const Roles = ({ hendelNext, handleBack }) => {
 
     useEffect(() => {
         if (editEntityData && editEntityData.status === 200) {
-            navigate('/entities')
+            if (editEntityData.message === 'Entity updated successfully.') {
+                toast.success(editEntityData.message);
+                navigate('/entities');
+            } else {
+                toast.error(editEntityData.message);
+            }
+
             dispatch({
                 type: EDIT_ENTITY,
                 payload: []
             })
-            // dispatch({
-            //     type: ENTITY_GET_BY_ID,
-            //     payload: []
-            // })
-            // dispatch({
-            //     type: COMPANY_DATA,
-            //     payload: [],
-            // });
-            toast.success(editEntityData.message);
         }
     }, [editEntityData])
 
