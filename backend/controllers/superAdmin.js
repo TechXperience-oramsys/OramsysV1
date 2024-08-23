@@ -5,6 +5,7 @@ const httpStatus = require('http-status');
 const APIResponse = require("../helpers/APIResponse");
 const { hashPassword, comparePassword } = require("../utils/bcrypt.helper");
 const { getJWTToken } = require("../utils/jwt.helper");
+const User = require("../models/user");
 
 class superAdminController {
 
@@ -55,6 +56,21 @@ class superAdminController {
                 .send({ message: "Somethig went wrong" });
         }
     }
+
+    async getAllUser(req, res, next) {
+        // try {
+        const user = await User.getAll(req.query.id, req.query.role);
+    
+        if (user) {
+          return res
+            .status(httpStatus.OK)
+            .json(new APIResponse(user, "User get successfully.", httpStatus.OK));
+        }
+    
+        return res
+          .status(httpStatus.BAD_REQUEST)
+          .send({ message: "user not found" });
+      }
 }
 
 

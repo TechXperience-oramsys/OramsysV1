@@ -219,9 +219,6 @@ class UserController {
 
   async getAllUser(req, res, next) {
     // try {
-
-
-
     const user = await User.getAll(req.query.id, req.query.role);
 
     if (user) {

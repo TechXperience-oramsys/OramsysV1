@@ -10,7 +10,7 @@ var Schema = new Schema({
     country: { type: Schema.Types.ObjectId, ref: "Countries", required: false, default: null },
     registrationNumber: { type: String, required: false, default: null },
     dateOfIncorporation: { type: Date, required: false, default: null },
-    sector: { type: String, required: false, default: null },
+    sector: { type: Schema.Types.ObjectId, ref: "EntitySector", required: false, default: null },
     subSector: { type: String, required: false, default: null },
     mainActivity: { type: String, required: false, default: null },
     givenName: { type: String, required: false, default: null },
