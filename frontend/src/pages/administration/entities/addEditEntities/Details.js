@@ -490,7 +490,13 @@ const Details = ({ handleNext, entityType }) => {
                     <div>
                         <Row>
                             <Form.Group as={Col} controlId="formGridZip">
-                                <Form.Label className="mb-0">Corporation Name <RequiredSpan /></Form.Label>
+                                <div >
+                                    <Form.Label className="mb-0">
+                                        Corporation Name 
+                                        <RequiredSpan />
+                                    </Form.Label>
+
+                                </div>
                                 <Form.Control
                                     className="no-border"
                                     value={details.name}

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bootstrap demo</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div
+      class="container d-flex justify-content-center align-items-center"
+      style="min-height: 100vh"
+      x-init="setId()"
+      x-data="resetPassword()"
+    >
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="text-center">Reset Password</h4>
+            <form @submit.prevent="submit()">
+              <!-- Old Password -->
+              <div class="mb-3">
+                <label for="old_password" class="form-label"
+                  >Old password</label
+                >
+                <div class="input-group">
+                  <input
+                    type="password"
+                    id="old_password"
+                    x-model="old_password"
+                    @input="clearError('old_password')"
+                    :type="old_password_show ? 'password' : 'text'"
+                    class="form-control"
+                  />
+                  <span
+                    class="input-group-text"
+                    @click="old_password_show = !old_password_show"
+                    style="cursor: pointer; color: blue"
+                  >
+                    <span x-text="old_password_show ? 'Show' : 'Hide'"></span>
+                  </span>
+                </div>
+                <p x-text="errors.old_password" class="text-danger"></p>
+              </div>
+
+              <!-- New Password -->
+              <div class="mb-3">
+                <label for="new_password" class="form-label"
+                  >New password</label
+                >
+                <div class="input-group">
+                  <input
+                    type="password"
+                    id="new_password"
+                    x-model="new_password"
+                    @input="clearError('new_password')"
+                    :type="new_password_show ? 'password' : 'text'"
+                    class="form-control"
+                  />
+                  <span
+                    class="input-group-text"
+                    @click="new_password_show = !new_password_show"
+                    style="cursor: pointer; color: blue"
+                  >
+                    <span x-text="new_password_show ? 'Show' : 'Hide'"></span>
+                  </span>
+                </div>
+                <p x-text="errors.new_password" class="text-danger"></p>
+              </div>
+
+              <!-- Confirm Password -->
+              <div class="mb-3">
+                <label for="confirm_password" class="form-label"
+                  >Confirm password</label
+                >
+                <div class="input-group">
+                  <input
+                    type="password"
+                    id="confirm_password"
+                    x-model="confirm_password"
+                    @input="clearError('confirm_password')"
+                    :type="confirm_password_show ? 'password' : 'text'"
+                    class="form-control"
+                  />
+                  <span
+                    class="input-group-text"
+                    @click="confirm_password_show = !confirm_password_show"
+                    style="cursor: pointer; color: blue"
+                  >
+                    <span
+                      x-text="confirm_password_show ? 'Show' : 'Hide'"
+                    ></span>
+                  </span>
+                </div>
+                <p x-text="errors.confirm_password" class="text-danger"></p>
+              </div>
+
+              <p x-text="errors.apiError" class="text-danger"></p>
+
+              <!-- Submit Button -->
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-block">
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js"
+      defer
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function resetPassword() {
+        return {
+          params: new URLSearchParams(window.location.search),
+          old_password: "",
+          new_password: "",
+          confirm_password: "",
+          old_password_show: true,
+          new_password_show: true,
+          confirm_password_show: true,
+          id: "",
+          errors: {
+            old_password: "",
+            new_password: "",
+            confirm_password: "",
+            apiError: "",
+          },
+          async submit() {
+            this.clearErrors(); // Clear previous errors
+
+            if (this.validate()) {
+              try {
+                // Prepare the payload with password data
+                const payload = {
+                  password: this.old_password,
+                  newPassword: this.new_password,
+                  confirm_password: this.confirm_password,
+                };
+
+                // Make the API call with a POST request
+                let response = await fetch(
+                  `https://backend.oramsysdev.com/admin/reset-password?id=${this.id}`,
+                  {
+                    method: "POST", // Use POST method
+                    headers: {
+                      "Content-Type": "application/json", // Ensure the content type is JSON
+                    },
+                    body: JSON.stringify(payload), // Convert payload to JSON string
+                  }
+                );
+
+                // Handle response
+                if (response.ok) {
+                  let resData = await response.json(); // Parse the JSON response
+                  console.log("Password updated successfully");
+                  this.resetInput();
+                  window.location.href = "https://oramsysdev.com/signin";
+                } else {
+                  let errorData = await response.json();
+                  this.errors.apiError = errorData.message;
+                  return;
+                }
+              } catch (error) {
+                console.error("Error updating password:", error);
+                // Handle the error (e.g., display a message)
+                this.errors.general =
+                  "An error occurred while updating the password. Please try again.";
+              }
+            } else {
+              return;
+            }
+          },
+          validate() {
+            let isValid = true;
+            // Validate old password is not empty
+            if (this.id == "") {
+              this.errors.old_password = "Please use a valid url.";
+              isValid = false;
+              return isValid;
+            }
+            // Validate old password is not empty
+            if (!this.old_password) {
+              this.errors.old_password = "Old password is required.";
+              isValid = false;
+            }
+            // Validate new password is not empty
+            if (!this.new_password) {
+              this.errors.new_password = "New password is required.";
+              isValid = false;
+            }
+            // Validate confirm password is not empty
+            if (!this.confirm_password) {
+              this.errors.confirm_password = "Confirm password is required.";
+              isValid = false;
+            }
+
+            // Validate new password requirements (min 8 characters, one uppercase, one lowercase, one number, one special character)
+            const passwordRegex =
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!this.new_password) {
+              this.errors.new_password = "New password is required.";
+              isValid = false;
+            } else if (!passwordRegex.test(this.new_password)) {
+              this.errors.new_password =
+                "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.";
+              isValid = false;
+            }
+
+            // Validate confirm password matches new password
+            if (this.confirm_password !== this.new_password) {
+              this.errors.confirm_password = "Passwords do not match.";
+              isValid = false;
+            }
+
+            // Check new password is not the same as old password
+            if (
+              this.new_password != "" &&
+              this.old_password != "" &&
+              this.new_password === this.old_password
+            ) {
+              this.errors.new_password =
+                "New password cannot be the same as old password.";
+              isValid = false;
+            }
+
+            return isValid;
+          },
+          clearErrors() {
+            this.errors.old_password = "";
+            this.errors.new_password = "";
+            this.errors.confirm_password = "";
+          },
+          clearError(field) {
+            this.errors[field] = "";
+          },
+          setId() {
+            this.id = this.params.get("id");
+          },
+          resetInput() {
+            this.old_password = "";
+            this.new_password = "";
+            this.confirm_password = "";
+          },
+        };
+      }
+    </script>
+  </body>
+</html>

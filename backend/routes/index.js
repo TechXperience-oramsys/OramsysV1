@@ -1,5 +1,7 @@
 "use strict"
 
+const { create } = require("../models/superAdmin");
+
 var exports = {}
 
 exports.setup = function (app) {
@@ -15,6 +17,9 @@ exports.setup = function (app) {
     var riskAssessment = require("./riskAssessment");
     var port = require("./port");
     var airBase = require("./airBase");
+    var uploadFile = require('./uploadFile');
+    var createAdmin = require('./createAdmin')
+
 
     app.use('/superAdmin',superAdmin)
     app.use('/user',users)
@@ -26,6 +31,11 @@ exports.setup = function (app) {
     app.use('/riskAssessment',riskAssessment)
     app.use('/port',port)
     app.use('/airBase',airBase)
+    app.use('/file',uploadFile)
+    app.use('/admin' , createAdmin)
 };
+
+
+console.log(exports , 'exports');
 
 module.exports = exports;
