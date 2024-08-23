@@ -13,7 +13,7 @@ export const API = API_LOCAL.host
 
 // if(window.location.origin.includes('oramsysdev.com')) {
 // API = 'https://backend.oramsysdev.com/' // this url is for live api
-API = "http://localhost:5003/";
+// API = "http://localhost:5003/";
 // }
 // else {
 //     API = 'http://localhost:5003/'
