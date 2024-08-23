@@ -35,6 +35,10 @@ app.all("*", function (req, res, next) {
     next();
 });
 
+
+
+
+
 function setupRoutes() {
     const routes = require("./routes/index")
     routes.setup(app)

@@ -424,7 +424,8 @@ const Details = ({ handleNext, entityType }) => {
                             <Form.Group as={Col} controlId="formGridZip">
                                 <div >
                                     <Form.Label className="mb-0">
-                                        Corporation Name <RequiredSpan />
+                                        Corporation Name 
+                                        <RequiredSpan />
                                     </Form.Label>
 
                                 </div>
