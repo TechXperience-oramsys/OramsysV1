@@ -6,9 +6,9 @@ const resetAdminPassword = () => async (req, res) => {
   try {
     const { password, newPassword, confirmPasswoed } = req?.body;
     const resData = await Corporation.findOne({ _id: req?.query?.id });
-    let match = await bcrypt.compare(password, resData.password);
-    console.log(match);
-    if (match) {
+    // let match = await bcrypt.compare(password, resData.password);
+
+    if (password == resData.password) {
       let hashedPassword = await bcrypt.hash(newPassword, 10);
 
       const updateData = await Corporation.findByIdAndUpdate(req.query.id, {
@@ -34,7 +34,7 @@ const resetAdminPassword = () => async (req, res) => {
           <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
             <p style="font-size: 16px;">Hi, ${resData?.adminName}</p>
              <p style="font-size: 12px;">Your password has been changed succesfully.</p>
-             <a href='https://oramsysdev.com/signin'>Visit Oramsys</a>
+             <a href='https://oramsys.com/fa-login'>Visit Oramsys</a>
           </div>
         `,
         };

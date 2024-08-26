@@ -1,5 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Routes, Route, useLocation, useNavigate, Navigate, Outlet } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+  Navigate,
+  Outlet,
+} from "react-router-dom";
 import AuthStorage from "../helper/AuthStorage";
 import AuthLayOut from "../layout/AuthLayOut";
 import Layout from "../layout/Layout";
@@ -32,10 +39,18 @@ import AirBases from "./administration/masterData/airBases/AirBases";
 import { ApiGet, ApiPost } from "../helper/API/ApiData";
 import { Create_new_password } from "./administration/users/CreatePassword";
 import CreateAdmin from "./functionalAdmin/CreateAdmin";
+import ForgetPassword from "./functionalAdmin/ForgetPassword";
 
-const pathForLayout = ["/", "/signin", "/signup", "/admin-login", "/fa-login", "/verify-user"];
+const pathForLayout = [
+  "/",
+  "/signin",
+  "/signup",
+  "/admin-login",
+  "/fa-login",
+  "/verify-user",
+  "/forget-password",
+];
 const Index = () => {
-
   const location = useLocation();
   const token = AuthStorage.getToken();
   const dispatch = useDispatch();
@@ -182,7 +197,7 @@ const Index = () => {
     {
       path: "/final-page",
       component: FinalPage,
-    }
+    },
   ];
 
   let primaryLinks = [];
@@ -249,6 +264,7 @@ const Index = () => {
               <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/fa-login" element={<FunctionalAdmin />} />
               <Route path="/verify-user" element={<Create_new_password />} />
+              <Route path="/forget-password" element={<ForgetPassword />} />
             </Routes>
           </Layout>
         )}
@@ -257,13 +273,16 @@ const Index = () => {
           <AuthLayOut>
             <Routes>
               {primaryLinks.map((item) => (
-                <Route key={item.path} path={`/${item.path}`} element={<item.component />} />
+                <Route
+                  key={item.path}
+                  path={`/${item.path}`}
+                  element={<item.component />}
+                />
               ))}
             </Routes>
           </AuthLayOut>
         )}
-      <Routes>
-      </Routes>
+      <Routes></Routes>
     </>
   );
 };
