@@ -210,6 +210,7 @@ const Transactions = () => {
       title: 'Created by',
       key: 'createdBy',
       align: 'center',
+      className: 'hide-on-md',
       render: () => loginData?.data?.name,
     },
     {
@@ -344,17 +345,7 @@ const Transactions = () => {
                   <div class='col-sm-6 col-12 text-sm-end'>
                     <div class='mx-n1 me-5 d-flex align-items-center justify-content-end gap-2'>
 
-                      {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" ? (
-                        <AntDropdown overlay={menu} trigger={['click']}>
 
-                          <AntButton class='btn d-inline-flex btn-md btn-light mx-1 py-2 me-3' id="dropdown-autoclose-outside">
-
-                            <span className='fw-bold'>Create Transaction</span>
-                          </AntButton>
-                        </AntDropdown>
-                      ) : (
-                        <></>
-                      )}
 
 
                       {/* <Link to='/transactions' style={{ borderColor: '#9E3E65' }} class='btn d-inline-flex btn-md btn-light border-base mx-1 me-3'>
@@ -384,6 +375,18 @@ const Transactions = () => {
                       <span class="position-absolute search"><CiSearch size={25} /></span>
                       <input type="text" id='search' onKeyUp={e => checkSearch(e)} onChange={(e) => setSearch(e.target.value)} className="form-control w-100 ps-5 fw-light border-none" placeholder="Search transaction..." />
                     </div>
+
+                    {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" ? (
+                      <AntDropdown overlay={menu} trigger={['click']}>
+
+                        <AntButton class='btn d-inline-flex btn-md btn-light mx-1 py-2 me-3' id="dropdown-autoclose-outside">
+
+                          <span className=''>Create transaction</span>
+                        </AntButton>
+                      </AntDropdown>
+                    ) : (
+                      <></>
+                    )}
 
 
                   </div>

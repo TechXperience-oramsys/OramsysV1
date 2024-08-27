@@ -595,7 +595,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
 
         if (productDetails.commoditySubType != undefined) {
             let product = []
-            productData.data.forEach((item) => {
+            productData?.data?.forEach((item) => {
                 console.log('item', item);
                 console.log('productDetails', productDetails);
                 // if (item.commodity_sub_type == productDetails.commoditySubType) {

@@ -7,6 +7,7 @@ import { registerReducer } from './redusers/registerReducer';
 import { countrieReducer } from './redusers/countrieReducer';
 import { productReducer } from './redusers/productReducer';
 import { userReducer } from './redusers/userReducer';
+import { adminReducer } from './redusers/adminReducer';
 import { ratingAgenciesReducer } from './redusers/ratingAgenciesReducer';
 import { entityReducer } from './redusers/entityReducer';
 import { entityRoleReducer } from './redusers/entitiesRoleReducer';
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   countryData: countrieReducer,
   product: productReducer,
   userData: userReducer,
+  adminData: adminReducer,
   ratingAgenciesData: ratingAgenciesReducer,
   entityData: entityReducer,
   entityRoleData: entityRoleReducer,

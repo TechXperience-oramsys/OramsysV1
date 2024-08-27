@@ -32,6 +32,7 @@ import AirBases from "./administration/masterData/airBases/AirBases";
 import { ApiGet, ApiPost } from "../helper/API/ApiData";
 import { Create_new_password } from "./administration/users/CreatePassword";
 import CreateAdmin from "./functionalAdmin/CreateAdmin";
+import Admin from "./functionalAdmin/AdminTable";
 
 const pathForLayout = ["/", "/signin", "/signup", "/admin-login", "/fa-login", "/verify-user"];
 const Index = () => {
@@ -132,6 +133,10 @@ const Index = () => {
       component: Add_Edit_Entities,
     },
     {
+      path: "/admins",
+      component: Admin,
+    },
+    {
       path: "/create-admin",
       component: CreateAdmin,
     },
@@ -187,42 +192,42 @@ const Index = () => {
 
   let primaryLinks = [];
 
+  const handleInvalidToken = () => {
+    if (pathForLayout.includes(location.pathname)) {
+      navigate(location.pathname);
+    } else {
+      navigate("/");
+    }
+    localStorage.clear();
+  };
+
   const checkUserRoleAndNavigate = () => {
     if (AuthStorage.isUserAuthenticated()) {
       ApiGet("user/validateToken")
         .then((res) => {
-          console.log(res, "resp");
           if (res.status === 200) {
-            if (AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin") {
-              navigate("/dashboard");
-            } else if (
-              AuthStorage.getStorageData(STORAGEKEY.roles) === "admin"
-            ) {
-              navigate("/dashboard");
-            } else if (
-              AuthStorage.getStorageData(STORAGEKEY.roles) === "user"
-            ) {
-              navigate("/dashboard");
+            const currentRole = AuthStorage.getStorageData(STORAGEKEY.roles);
+            const currentPath = location.pathname;
+  
+            if (currentRole === "superAdmin" || currentRole === "admin" || currentRole === "user") {
+              const validPaths = primaryLinks.map((link) => link.path);
+  
+              // Only redirect to the dashboard if the current path isn't valid for the role
+              if (!validPaths.includes(currentPath)) {
+                navigate("/dashboard");
+              }
             }
           } else {
-            if (pathForLayout.includes(location.pathname)) {
-              navigate(location.pathname);
-            } else {
-              navigate("/");
-            }
-            localStorage.clear();
+            handleInvalidToken();
           }
         })
         .catch((e) => {
-          if (pathForLayout.includes(location.pathname)) {
-            navigate(location.pathname);
-          } else {
-            navigate("/");
-          }
-          localStorage.clear();
+          handleInvalidToken();
         });
     }
   };
+  
+  
   useEffect(() => {
     checkUserRoleAndNavigate();
   }, []);

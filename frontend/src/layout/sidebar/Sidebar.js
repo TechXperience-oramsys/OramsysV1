@@ -130,7 +130,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
       key: '7',
       icon: <HiOutlineUsers />,
       label: 'Create Admin',
-      path: 'create-admin'
+      path: 'admins'
     },
     {
       key: '8',

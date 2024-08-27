@@ -38,7 +38,7 @@ const CreateAdmin = () => {
     function generateRandom4Digit() {
       return Math.floor(Math.random() * 9000) + 1000;
     }
-    
+
     // Example usage
     const random4Digit = generateRandom4Digit();
 
@@ -46,13 +46,14 @@ const CreateAdmin = () => {
 
     admin.createAdmin(formData).then((resp) => {
       message.success('Form submitted successfully!');
+      navigate('/admins')
       console.log('Resetting form fields...');
       form.resetFields();
       console.log('Form fields reset');
     }).catch((err) => {
-    message.error('Please check for duplicate data')
-   
-    
+      // message.error('Please check for duplicate data')
+      console.log('check')
+
     })
     console.log('Form data:', formData);
   };
@@ -64,18 +65,18 @@ const CreateAdmin = () => {
 
   const handleFileChange = async (info) => {
     console.log('File info:', info.file); // Log the entire file object to see its structure
-  
+
     // Check if the file is there
     if (info.file) {
       // Directly use info.file if originFileObj is not available
       const file = info.file.originFileObj || info.file; // Fallback to info.file
-  
+
       console.log('Using file:', file);
-  
+
       // Create FormData to send file
       const formData = new FormData();
       formData.append('file', file);
-  
+
       try {
         const response = await axios.post('http://localhost:5003/file/upload-file', formData, {
           headers: {
@@ -195,27 +196,27 @@ const CreateAdmin = () => {
               <Input placeholder="Admin Name" />
             </Form.Item>
           </div>
-       
+
 
           <div className="col-md-6">
-      <Form.Item
-        label="Logo"
-        name="logo"
-        valuePropName="file"
-        rules={[{ required: true, message: 'Please upload a logo!' }]}
-      >
-        <Dragger
-          beforeUpload={() => false} // Prevent automatic upload
-          onChange={handleFileChange} // Handle file change
-          className="upload"
-        >
-          <p className="ant-upload-drag-icon">
-            <InboxOutlined />
-          </p>
-          <p className="ant-upload-text">Click or drag file to this area to upload</p>
-        </Dragger>
-      </Form.Item>
-    </div>
+            <Form.Item
+              label="Logo"
+              name="logo"
+              valuePropName="file"
+              rules={[{ required: true, message: 'Please upload a logo!' }]}
+            >
+              <Dragger
+                beforeUpload={() => false} // Prevent automatic upload
+                onChange={handleFileChange} // Handle file change
+                className="upload"
+              >
+                <p className="ant-upload-drag-icon">
+                  <InboxOutlined />
+                </p>
+                <p className="ant-upload-text">Click or drag file to this area to upload</p>
+              </Dragger>
+            </Form.Item>
+          </div>
 
         </div>
         <div className="text-center">
