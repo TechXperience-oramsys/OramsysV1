@@ -32,7 +32,6 @@ export const dateFunction = (date) => {
   return moment(date).format("YYYY.MM.DD");
 };
 
-
 export const checkImageURL = (nationality) => {
   const pngImages = ["Antarctica"];
 
@@ -40,16 +39,15 @@ export const checkImageURL = (nationality) => {
   if (pngImages.includes(nationality)) {
     url_image = `./img/flags/${nationality}.png`;
   }
-  return url_image
-}
-
+  return url_image;
+};
 
 /*------------------------------------old file------------------------------------- */
 
 export const downloadAsFile = (name, data) => {
   let blob = new Blob([data]);
-  let downloadLink = document.createElement('a');
-  downloadLink.target = '_blank';
+  let downloadLink = document.createElement("a");
+  downloadLink.target = "_blank";
   downloadLink.download = name;
   let downloadUrl = URL.createObjectURL(blob);
   downloadLink.href = downloadUrl;
@@ -60,7 +58,7 @@ export const downloadAsFile = (name, data) => {
 };
 
 export const chunkSubstr = (str, size) => {
-  if (typeof str !== 'string') {
+  if (typeof str !== "string") {
     return [str];
   }
 
@@ -68,17 +66,13 @@ export const chunkSubstr = (str, size) => {
   const chunks = new Array(numChunks);
 
   for (let i = 0, o = 0; i < numChunks; ++i, o += size) {
-    chunks[i] = str.substr(
-      o,
-      size,
-    );
+    chunks[i] = str.substr(o, size);
   }
 
   return chunks;
 };
 
-export const copy = data => {
-
+export const copy = (data) => {
   if (!data) {
     return data;
   }
@@ -87,47 +81,32 @@ export const copy = data => {
     return [...data];
   }
 
-  if (typeof data === 'object') {
+  if (typeof data === "object") {
     return { ...data };
   }
 
   return data;
 };
 
-export const getValueByPath = (
-  obj,
-  path,
-  fallback,
-) => {
-
+export const getValueByPath = (obj, path, fallback) => {
   if (!obj || !path) {
     return fallback;
   }
 
-  const dotIndex = path.indexOf('.');
+  const dotIndex = path.indexOf(".");
   let key = path;
   let rest = null;
 
   if (dotIndex > -1) {
-    key = path.substring(
-      0,
-      dotIndex,
-    );
+    key = path.substring(0, dotIndex);
 
-    rest = path.substring(
-      dotIndex + 1,
-      path.length,
-    );
+    rest = path.substring(dotIndex + 1, path.length);
   }
 
   let value = obj[key];
 
-  if (typeof value === 'object' && rest) {
-    return getValueByPath(
-      value,
-      rest,
-      fallback,
-    );
+  if (typeof value === "object" && rest) {
+    return getValueByPath(value, rest, fallback);
   }
 
   if (rest) {
@@ -137,88 +116,74 @@ export const getValueByPath = (
   return copy(value) || fallback;
 };
 
-export const setValueByPath = (
-  obj,
-  path,
-  value,
-) => {
-
+export const setValueByPath = (obj, path, value) => {
   if (value === null || value === undefined || !path) {
     return;
   }
 
-  const dotIndex = path.indexOf('.');
+  const dotIndex = path.indexOf(".");
   let key = path;
   let rest = null;
 
   if (dotIndex > -1) {
-    key = path.substring(
-      0,
-      dotIndex,
-    );
+    key = path.substring(0, dotIndex);
 
-    rest = path.substring(
-      dotIndex + 1,
-      path.length,
-    );
+    rest = path.substring(dotIndex + 1, path.length);
   }
 
-  if (rest && (typeof obj[key] !== 'object' || Array.isArray(obj[key]))) {
+  if (rest && (typeof obj[key] !== "object" || Array.isArray(obj[key]))) {
     obj[key] = {};
   }
 
-  obj[key] = rest
-    ? setValueByPath(
-      obj[key],
-      rest,
-      value,
-    )
-    : value;
+  obj[key] = rest ? setValueByPath(obj[key], rest, value) : value;
 
   return obj;
 };
 
-export const flattenWorkflowConfig = workflowConfig => {
+export const flattenWorkflowConfig = (workflowConfig) => {
   let flattendConfig = [];
 
-  Object.keys(workflowConfig)
-    .forEach(step => {
-      flattendConfig = [...flattendConfig, ...workflowConfig[step]];
-    });
+  Object.keys(workflowConfig).forEach((step) => {
+    flattendConfig = [...flattendConfig, ...workflowConfig[step]];
+  });
 
   return flattendConfig;
 };
 
-export const flattenObject = object => {
-  if (!object) {return {};}
+export const flattenObject = (object) => {
+  if (!object) {
+    return {};
+  }
 
   let flattendObject = {};
 
-  Object.keys(object)
-    .forEach(key => {
-      if (typeof object[key] !== 'object') {
-        flattendObject = {
-          ...flattendObject,
-          [key]: object[key],
-        };
-
-        return;
-      }
-
+  Object.keys(object).forEach((key) => {
+    if (typeof object[key] !== "object") {
       flattendObject = {
         ...flattendObject,
-        ...flattenObject(object[key]),
+        [key]: object[key],
       };
-    });
+
+      return;
+    }
+
+    flattendObject = {
+      ...flattendObject,
+      ...flattenObject(object[key]),
+    };
+  });
 
   return flattendObject;
 };
 
 export const serialize = (config, data, obj = {}) => {
   for (const item of config) {
-    if (typeof item.isVisible === 'function' && item.isVisible({
-      formValues: data,
-    }) === false) {
+    if (
+      typeof item.isVisible === "function" &&
+      item.isVisible({
+        formValues: data,
+      }) === false
+    ) {
       continue;
     }
 
@@ -226,12 +191,12 @@ export const serialize = (config, data, obj = {}) => {
       item.path = item.name;
     }
 
-    if (typeof item.path === 'string') {
-      const [get, set] = item.path.split(':');
+    if (typeof item.path === "string") {
+      const [get, set] = item.path.split(":");
       item.path = set || get;
     }
 
-    if (typeof item.serialize === 'function') {
+    if (typeof item.serialize === "function") {
       item.serialize({
         obj,
         item,
@@ -241,7 +206,7 @@ export const serialize = (config, data, obj = {}) => {
       continue;
     }
 
-    if (typeof item.component?.serialize === 'function') {
+    if (typeof item.component?.serialize === "function") {
       item.component.serialize({
         obj,
         item,
@@ -251,21 +216,13 @@ export const serialize = (config, data, obj = {}) => {
       continue;
     }
 
-    if (typeof item.serialize === 'string') {
-      setValueByPath(
-        obj,
-        item.path,
-        item.serialize,
-      );
+    if (typeof item.serialize === "string") {
+      setValueByPath(obj, item.path, item.serialize);
 
       continue;
     }
 
-    setValueByPath(
-      obj,
-      item.path,
-      data[item.name],
-    );
+    setValueByPath(obj, item.path, data[item.name]);
   }
 
   return obj;
@@ -273,17 +230,16 @@ export const serialize = (config, data, obj = {}) => {
 
 export const deserialize = (config, data, obj = {}) => {
   for (const item of config) {
-
     if (!item.path) {
       item.path = item.name;
     }
 
-    if (typeof item.path === 'string') {
-      const [get] = item.path.split(':');
+    if (typeof item.path === "string") {
+      const [get] = item.path.split(":");
       item.path = get;
     }
 
-    if (typeof item.deserialize === 'function') {
+    if (typeof item.deserialize === "function") {
       item.deserialize({
         obj,
         item,
@@ -293,9 +249,11 @@ export const deserialize = (config, data, obj = {}) => {
       continue;
     }
 
-    if (!item.component) {continue;}
+    if (!item.component) {
+      continue;
+    }
 
-    if (typeof item.component.deserialize === 'function') {
+    if (typeof item.component.deserialize === "function") {
       item.component.deserialize({
         obj,
         item,
@@ -305,22 +263,13 @@ export const deserialize = (config, data, obj = {}) => {
       continue;
     }
 
-    obj[item.name] = getValueByPath(
-      data,
-      item.path,
-      item.component.default,
-    );
+    obj[item.name] = getValueByPath(data, item.path, item.component.default);
   }
 
   return obj;
 };
 
-export const resolveConfig = (
-  config,
-  context,
-  ignoreKey = ['component'],
-) => {
-
+export const resolveConfig = (config, context, ignoreKey = ["component"]) => {
   if (!config) {
     return;
   }
@@ -329,16 +278,12 @@ export const resolveConfig = (
   ignoreKey = new Set(ignoreKey);
 
   for (const [key, val] of Object.entries(field)) {
-
-    if (typeof(val) === 'function') {
-
-      if (!val.forceResolve && (ignoreKey.has(key))) {
+    if (typeof val === "function") {
+      if (!val.forceResolve && ignoreKey.has(key)) {
         continue;
       }
 
-      field[key] = val(
-        context,
-      );
+      field[key] = val(context);
     }
   }
 
@@ -346,10 +291,7 @@ export const resolveConfig = (
 };
 
 export const deepSpread = (obj1, obj2) => {
-
-  const obj = Array.isArray(obj1)
-    ? [...obj1]
-    : { ...obj1 };
+  const obj = Array.isArray(obj1) ? [...obj1] : { ...obj1 };
 
   for (const [key, value] of Object.entries(obj2)) {
     if (!obj[key]) {
@@ -362,11 +304,8 @@ export const deepSpread = (obj1, obj2) => {
       continue;
     }
 
-    if (typeof value === 'object') {
-      obj[key] = deepSpread(
-        obj1[key],
-        obj2[key],
-      );
+    if (typeof value === "object") {
+      obj[key] = deepSpread(obj1[key], obj2[key]);
 
       continue;
     }
@@ -377,40 +316,29 @@ export const deepSpread = (obj1, obj2) => {
   return obj;
 };
 
-export const formatNumber = n => {
-  return n.replace(
-    /\D/g,
-    '',
-  )
-    .replace(
-      /\B(?=(\d{3})+(?!\d))/g,
-      ',',
-    );
+export const formatNumber = (n) => {
+  return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
-export const formatCurrency = (value, prefix = '', suffix = '') => {
-  if (!value || value === '') {
+export const formatCurrency = (value, prefix = "", suffix = "") => {
+  if (!value || value === "") {
     return;
   }
 
   // appends $ to value, validates decimal side
   // and puts cursor back in right position.
   // get input value
-  let input_val = typeof value === 'number' ? value.toString() : value;
+  let input_val = typeof value === "number" ? value.toString() : value;
 
   // check for decimal
-  if (input_val.indexOf('.') >= 0) {
-
+  if (input_val.indexOf(".") >= 0) {
     // get position of first decimal
     // this prevents multiple decimals from
     // being entered
-    let decimal_pos = input_val.indexOf('.');
+    let decimal_pos = input_val.indexOf(".");
 
     // split number by decimal point
-    let left_side = input_val.substring(
-      0,
-      decimal_pos,
-    );
+    let left_side = input_val.substring(0, decimal_pos);
 
     let right_side = input_val.substring(decimal_pos);
 
@@ -419,70 +347,64 @@ export const formatCurrency = (value, prefix = '', suffix = '') => {
 
     // validate right side
     right_side = formatNumber(right_side);
-    right_side += '00';
+    right_side += "00";
 
     // Limit decimal to only 2 digits
-    right_side = right_side.substring(
-      0,
-      2,
-    );
+    right_side = right_side.substring(0, 2);
 
     // join number by .
-    input_val = prefix + left_side + '.' + right_side + suffix;
-
+    input_val = prefix + left_side + "." + right_side + suffix;
   } else {
     // no decimal entered
     // add commas to number
     // remove all non-digits
     input_val = formatNumber(input_val);
     input_val = prefix + input_val + suffix;
-    input_val += '.00';
+    input_val += ".00";
   }
 
   return input_val;
 };
 
-export const currencyToNumber = value => {
-  if (!value || typeof value === 'number') {
+export const currencyToNumber = (value) => {
+  if (!value || typeof value === "number") {
     return value;
   }
 
-  return parseFloat(value.replace(
-    /[^0-9.-]/g,
-    '',
-  ));
+  return parseFloat(value.replace(/[^0-9.-]/g, ""));
 };
 
 export const generateUUID = () => {
-  let d = new Date()
-    .getTime();
+  let d = new Date().getTime();
 
-  let d2 = (performance && performance.now && (performance.now() * 1000)) || 0;
+  let d2 = (performance && performance.now && performance.now() * 1000) || 0;
 
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
-    /[xy]/g,
-    function(c) {
-      let r = Math.random() * 16;//random number between 0 and 16
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    let r = Math.random() * 16; //random number between 0 and 16
 
-      if (d > 0) {//Use timestamp until depleted
-        r = (d + r) % 16 | 0;
-        d = Math.floor(d / 16);
-      } else {//Use microseconds since page-load if supported
-        r = (d2 + r) % 16 | 0;
-        d2 = Math.floor(d2 / 16);
-      }
+    if (d > 0) {
+      //Use timestamp until depleted
+      r = (d + r) % 16 | 0;
+      d = Math.floor(d / 16);
+    } else {
+      //Use microseconds since page-load if supported
+      r = (d2 + r) % 16 | 0;
+      d2 = Math.floor(d2 / 16);
+    }
 
-      return (c === 'x' ? r : ((r & 0x3) | 0x8)).toString(16);
-    },
-  );
+    return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
+  });
 };
 
-export const capitalizeFirstLetter = string => {
-
-  if (typeof string !== 'string') {
-    return '';
+export const capitalizeFirstLetter = (string) => {
+  if (typeof string !== "string") {
+    return "";
   }
 
-  return string.charAt(0)
-    .toUpperCase() + string.slice(1);
+  return string.charAt(0).toUpperCase() + string.slice(1);
 };
+
+export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+export const passwordRegex =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
