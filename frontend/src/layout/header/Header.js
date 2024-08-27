@@ -1,14 +1,15 @@
-import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
-import { faArrowAltCircleRight, faComments, faHandPointRight } from '@fortawesome/free-regular-svg-icons';
-import { useNavigate } from 'react-router-dom';
+import {
+  faArrowAltCircleRight,
+  faComments,
+  faHandPointRight,
+} from "@fortawesome/free-regular-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-
   const navigate = useNavigate();
-
-
 
   return (
     <header className="header">
@@ -19,7 +20,13 @@ const Header = () => {
               <div className="topbar-left">
                 <p className="item-paragraph">Not a User?</p>
                 <div className="header-button">
-                  <a href="/">You have to be registered under an institution <FontAwesomeIcon icon={faArrowRightLong} style={{ color: "#da251e" }}></FontAwesomeIcon></a>
+                  <a href="/">
+                    You have to be registered under an institution{" "}
+                    <FontAwesomeIcon
+                      icon={faArrowRightLong}
+                      style={{ color: "#da251e" }}
+                    ></FontAwesomeIcon>
+                  </a>
                 </div>
               </div>
             </div>
@@ -37,8 +44,15 @@ const Header = () => {
                   </li>
                 </ul> */}
                 <div className="header-right-button">
-                  <a onClick={() =>navigate('/signin') } className="header-btn">Sign In</a>
-                  <a onClick={() => navigate('/admin-login')} className="header-btn s-up">Administration</a>
+                  <a onClick={() => navigate("/signin")} className="header-btn">
+                    Sign In
+                  </a>
+                  <a
+                    onClick={() => navigate("/admin-login")}
+                    className="header-btn s-up"
+                  >
+                    Administration
+                  </a>
                 </div>
               </div>
             </div>
@@ -81,7 +95,10 @@ const Header = () => {
                   <li className="header-number">
                     <div className="media d-flex">
                       <div className="item-icon">
-                        <FontAwesomeIcon icon={faComments} style={{ color: "#da251e" }}></FontAwesomeIcon>
+                        <FontAwesomeIcon
+                          icon={faComments}
+                          style={{ color: "#da251e" }}
+                        ></FontAwesomeIcon>
                       </div>
                       <div className="media-body">
                         <div className="item-label">Hotline Number</div>
@@ -90,7 +107,10 @@ const Header = () => {
                     </div>
                   </li>
                   <li className="offcanvas-menu-trigger-wrap">
-                    <button type="button" className="offcanvas-menu-btn menu-status-open">
+                    <button
+                      type="button"
+                      className="offcanvas-menu-btn menu-status-open"
+                    >
                       <span className="btn-icon-wrap">
                         <span></span>
                         <span></span>
@@ -105,7 +125,7 @@ const Header = () => {
         </div>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

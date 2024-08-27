@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, Select, Upload, message } from 'antd';
-import { admin } from '../../_Services/adminServices';
-import { InboxOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { Form, Input, Button, Select, Upload, message } from "antd";
+import { admin } from "../../_Services/adminServices";
+import { InboxOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 // import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from 'axios';
+import axios from "axios";
 
 const { Option } = Select;
 const { Dragger } = Upload;
@@ -12,18 +12,18 @@ const { Dragger } = Upload;
 const CreateAdmin = () => {
   const [form] = Form.useForm();
   const [formData, setFormData] = useState({
-    corporationName: '',
-    businessEmail: '',
-    registrationNumber: '',
-    phone: '',
-    address1: '',
-    address2: '',
-    buildingNumber: '',
-    branch: '',
+    corporationName: "",
+    businessEmail: "",
+    registrationNumber: "",
+    phone: "",
+    address1: "",
+    address2: "",
+    buildingNumber: "",
+    branch: "",
     logo: null,
-    adminName: '',
-    country: '',
-    password: '',
+    adminName: "",
+    country: "",
+    password: "",
   });
   const navigate = useNavigate();
   const handleFormChange = (changedValues) => {
@@ -34,7 +34,6 @@ const CreateAdmin = () => {
   };
 
   const handleFinish = () => {
-
     function generateRandom4Digit() {
       return Math.floor(Math.random() * 9000) + 1000;
     }
@@ -42,60 +41,61 @@ const CreateAdmin = () => {
     // Example usage
     const random4Digit = generateRandom4Digit();
 
-    formData.code = random4Digit
+    formData.code = random4Digit;
 
-    admin.createAdmin(formData).then((resp) => {
-      message.success('Form submitted successfully!');
-      navigate('/admins')
-      console.log('Resetting form fields...');
-      form.resetFields();
-      console.log('Form fields reset');
-    }).catch((err) => {
-      // message.error('Please check for duplicate data')
-      console.log('check')
-
-    })
-    console.log('Form data:', formData);
+    admin
+      .createAdmin(formData)
+      .then((resp) => {
+        message.success("Form submitted successfully!");
+        console.log("Resetting form fields...");
+        form.resetFields();
+        console.log("Form fields reset");
+      })
+      .catch((err) => {
+        message.error("Please check for duplicate data");
+      });
+    console.log("Form data:", formData);
   };
 
   const handleFinishFailed = () => {
-    message.error('Please correct the errors in the form.');
+    message.error("Please correct the errors in the form.");
   };
 
-
   const handleFileChange = async (info) => {
-    console.log('File info:', info.file); // Log the entire file object to see its structure
+    console.log("File info:", info.file); // Log the entire file object to see its structure
 
     // Check if the file is there
     if (info.file) {
       // Directly use info.file if originFileObj is not available
       const file = info.file.originFileObj || info.file; // Fallback to info.file
 
-      console.log('Using file:', file);
+      console.log("Using file:", file);
 
       // Create FormData to send file
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append("file", file);
 
       try {
-        const response = await axios.post('http://localhost:5003/file/upload-file', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        const response = await axios.post(
+          "https://oramsysdev.com/file/upload-file",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
         setFormData((prevFormData) => ({
           ...prevFormData,
           logo: response.data.url, // Assuming your API returns { url: '...' }
         }));
       } catch (error) {
-        console.error('Error uploading file:', error);
+        console.error("Error uploading file:", error);
       }
     } else {
-      console.log('No file available');
+      console.log("No file available");
     }
   };
-
-
 
   return (
     <div className="container mt-5">
@@ -113,7 +113,12 @@ const CreateAdmin = () => {
             <Form.Item
               label="Corporation Name"
               name="corporationName"
-              rules={[{ required: true, message: 'Please enter the corporation name!' }]}
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter the corporation name!",
+                },
+              ]}
             >
               <Input placeholder="Corporation Name" />
             </Form.Item>
@@ -123,8 +128,11 @@ const CreateAdmin = () => {
               label="Business Email"
               name="businessEmail"
               rules={[
-                { required: true, message: 'Please enter the business email!' },
-                { type: 'email', message: 'Please enter a valid email address!' },
+                { required: true, message: "Please enter the business email!" },
+                {
+                  type: "email",
+                  message: "Please enter a valid email address!",
+                },
               ]}
             >
               <Input placeholder="Business Email" />
@@ -134,7 +142,12 @@ const CreateAdmin = () => {
             <Form.Item
               label="Registration Number"
               name="registrationNumber"
-              rules={[{ required: true, message: 'Please enter the registration number!' }]}
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter the registration number!",
+                },
+              ]}
             >
               <Input placeholder="Registration Number" />
             </Form.Item>
@@ -143,7 +156,9 @@ const CreateAdmin = () => {
             <Form.Item
               label="Phone"
               name="phone"
-              rules={[{ required: true, message: 'Please enter the phone number!' }]}
+              rules={[
+                { required: true, message: "Please enter the phone number!" },
+              ]}
             >
               <Input placeholder="Phone Number" />
             </Form.Item>
@@ -152,16 +167,13 @@ const CreateAdmin = () => {
             <Form.Item
               label="Address 1"
               name="address1"
-              rules={[{ required: true, message: 'Please enter the address!' }]}
+              rules={[{ required: true, message: "Please enter the address!" }]}
             >
               <Input placeholder="Address 1" />
             </Form.Item>
           </div>
           <div className="col-md-6">
-            <Form.Item
-              label="Address 2"
-              name="address2"
-            >
+            <Form.Item label="Address 2" name="address2">
               <Input placeholder="Address 2" />
             </Form.Item>
           </div>
@@ -169,7 +181,12 @@ const CreateAdmin = () => {
             <Form.Item
               label="Building Number"
               name="buildingNumber"
-              rules={[{ required: true, message: 'Please enter the building number!' }]}
+              rules={[
+                {
+                  required: true,
+                  message: "Please enter the building number!",
+                },
+              ]}
             >
               <Input placeholder="Building Number" />
             </Form.Item>
@@ -178,7 +195,7 @@ const CreateAdmin = () => {
             <Form.Item
               label="Branch"
               name="branch"
-              rules={[{ required: true, message: 'Please select a branch!' }]}
+              rules={[{ required: true, message: "Please select a branch!" }]}
             >
               <Select placeholder="Select a branch">
                 <Option value="branch1">Branch 1</Option>
@@ -191,19 +208,20 @@ const CreateAdmin = () => {
             <Form.Item
               label="Admin Name"
               name="adminName"
-              rules={[{ required: true, message: 'Please enter the admin name!' }]}
+              rules={[
+                { required: true, message: "Please enter the admin name!" },
+              ]}
             >
               <Input placeholder="Admin Name" />
             </Form.Item>
           </div>
-
 
           <div className="col-md-6">
             <Form.Item
               label="Logo"
               name="logo"
               valuePropName="file"
-              rules={[{ required: true, message: 'Please upload a logo!' }]}
+              rules={[{ required: true, message: "Please upload a logo!" }]}
             >
               <Dragger
                 beforeUpload={() => false} // Prevent automatic upload
@@ -213,11 +231,12 @@ const CreateAdmin = () => {
                 <p className="ant-upload-drag-icon">
                   <InboxOutlined />
                 </p>
-                <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                <p className="ant-upload-text">
+                  Click or drag file to this area to upload
+                </p>
               </Dragger>
             </Form.Item>
           </div>
-
         </div>
         <div className="text-center">
           <Button type="primary" htmlType="submit">
@@ -230,7 +249,6 @@ const CreateAdmin = () => {
 };
 
 export default CreateAdmin;
-
 
 // import React, { useState } from 'react';
 
