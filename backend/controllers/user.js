@@ -4,6 +4,7 @@ const User = require("../models/user");
 const httpStatus = require("http-status");
 const APIResponse = require("../helpers/APIResponse");
 const { hashPassword, comparePassword } = require("../utils/bcrypt.helper");
+const nodemailer = require("nodemailer");
 const {
   getJWTToken,
   verifyToken,
@@ -12,7 +13,7 @@ const {
 } = require("../utils/jwt.helper");
 
 class UserController {
-  // 
+  //
   // async function login(req, res, next) {
   //   try {
   //     const { user_name, password } = req.body;
@@ -21,29 +22,29 @@ class UserController {
   //         .status(httpStatus.BAD_REQUEST)
   //         .json(new APIResponse(null, "Username and password are required", httpStatus.BAD_REQUEST));
   //     }
-  
+
   //     const userLogin = user_name.toLowerCase();
   //     const user = await User.findOne({ email: userLogin });
-  
+
   //     if (!user) {
   //       return res
   //         .status(httpStatus.UNAUTHORIZED)
   //         .json(new APIResponse(null, "Invalid credentials", httpStatus.UNAUTHORIZED));
   //     }
-  
+
   //     const match = await bcrypt.compare(password, user.password);
   //     if (!match) {
   //       return res
   //         .status(httpStatus.UNAUTHORIZED)
   //         .json(new APIResponse(null, "Invalid credentials", httpStatus.UNAUTHORIZED));
   //     }
-  
+
   //     const token = getJWTToken({
   //       id: user.id,
   //       email: user.email,
   //       role: "user",
   //     });
-  
+
   //     const newUser = {
   //       id: user.id,
   //       name: user.name,
@@ -51,11 +52,11 @@ class UserController {
   //       token: token,
   //       admin: user.createdBy
   //     };
-  
+
   //     return res
   //       .status(httpStatus.OK)
   //       .json(new APIResponse(newUser, "Login Successful", httpStatus.OK));
-  
+
   //   } catch (e) {
   //     console.error("Login error:", e);
   //     return res
@@ -63,7 +64,7 @@ class UserController {
   //       .send({ message: "Something went wrong" });
   //   }
   // }
-  // 
+  //
   async login(req, res, next) {
     try {
       const userLogin = req.body.user_name.toLowerCase();
@@ -73,10 +74,7 @@ class UserController {
           .status(httpStatus.OK)
           .json(new APIResponse(null, "Wrong Email", httpStatus.NOT_FOUND));
       }
-      const match = await comparePassword(
-        req.body.password,
-        user.password
-      );
+      const match = await comparePassword(req.body.password, user.password);
       if (!match) {
         return res
           .status(httpStatus.OK)
@@ -88,24 +86,19 @@ class UserController {
         email: req.body.email,
         role: "user",
       });
-      console.log(user[0], 'here  new user');
+      console.log(user[0], "here  new user");
       let newUser;
       newUser = {
         id: user.id,
         name: user.name,
         email: user.email,
         token: token,
-        admin: user.createdBy
+        admin: user.createdBy,
       };
 
       return res
         .status(httpStatus.OK)
-        .json(
-          new APIResponse(newUser, "Login Successfully", httpStatus.OK)
-        );
-
-
-
+        .json(new APIResponse(newUser, "Login Successfully", httpStatus.OK));
     } catch (e) {
       return res
         .status(httpStatus.BAD_REQUEST)
@@ -134,7 +127,7 @@ class UserController {
       email: body.email.toLowerCase(),
       password: newPassword,
       otp: otp,
-      createdBy: body.createdBy
+      createdBy: body.createdBy,
     };
     console.log(generateOTP());
     const model = new User(newUser);
@@ -172,7 +165,6 @@ class UserController {
             </div>
           `,
         };
-
 
         // Send the email
         transporter.sendMail(mailOptions, (error, info) => {
@@ -220,8 +212,6 @@ class UserController {
   async getAllUser(req, res, next) {
     // try {
 
-
-
     const user = await User.getAll(req.query.id, req.query.role);
 
     if (user) {
@@ -234,7 +224,7 @@ class UserController {
       .status(httpStatus.BAD_REQUEST)
       .send({ message: "user not found" });
 
-    console.log(user, 'pipoiooj');
+    console.log(user, "pipoiooj");
     // } catch (e) {
     //     console.log(e , 'eee');
     //   return res
@@ -471,6 +461,143 @@ class UserController {
             error
           )
         );
+    }
+  }
+  async sendOtp(req, res, next) {
+    try {
+      const user = await User.findOne({ email: req?.body?.email });
+      if (!user) {
+        res.status(401).json({ message: "Enter a registred email!" });
+      } else {
+        const otp = Math.floor(Math.random() * 999999);
+        const resData = await User.findByIdAndUpdate(user._id, {
+          $set: { otp: otp },
+        });
+        if (resData) {
+          const transporter = nodemailer.createTransport({
+            host: "c116604.sgvps.net",
+            port: 465,
+            auth: {
+              user: "notification@techxperience.ng",
+              pass: "0ramsys!@#",
+            },
+          });
+
+          const mailOptions = {
+            from: "notification@techxperience.ng",
+            to: user?.email,
+            subject: "OTP Verification",
+            text: "OTP Recieved for Password",
+            html: `
+          <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
+            <p style="font-size: 16px;">Hi, ${user?.name}</p>
+             <p style="font-size: 12px;">Your OTP is here <strong>${otp}<strong>.</p>
+          </div>
+        `,
+          };
+
+          // Send the email
+          transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              console.error("Error sending email:", error);
+            } else {
+              console.log("Email sent successfully:", info.response);
+            }
+          });
+          res.status(201).json({ message: "OTP sent on your mail." });
+        }
+      }
+    } catch (error) {
+      // Handle specific error types
+      if (error.name === "ValidationError") {
+        // Mongoose validation error
+        res
+          .status(400)
+          .json({ message: "Validation error", errors: error.errors });
+      } else if (error.code && error.code === 11000) {
+        // MongoDB duplicate key error
+        res
+          .status(409)
+          .json({ message: "Duplicate key error", error: error.message });
+      } else {
+        // General server error
+        console.error("Unexpected error:", error);
+        res
+          .status(500)
+          .json({ message: "Internal Server Error", error: error.message });
+      }
+    }
+  }
+
+  async verifyUserOtp(req, res, next) {
+    try {
+      const body = req.body;
+      const userData = await User.findOne({ email: body.email });
+      if (userData) {
+        if (userData.otp == body.otp) {
+          res.status(201).json({ message: "OTP Verified" });
+        } else {
+          res.status(401).json({ message: "OTP not verified!" });
+        }
+      } else {
+        res.status(401).json({ message: "OTP not verified!" });
+      }
+    } catch (error) {
+      // Handle specific error types
+      if (error.name === "ValidationError") {
+        // Mongoose validation error
+        res
+          .status(400)
+          .json({ message: "Validation error", errors: error.errors });
+      } else if (error.code && error.code === 11000) {
+        // MongoDB duplicate key error
+        res
+          .status(409)
+          .json({ message: "Duplicate key error", error: error.message });
+      } else {
+        // General server error
+        console.error("Unexpected error:", error);
+        res
+          .status(500)
+          .json({ message: "Internal Server Error", error: error.message });
+      }
+    }
+  }
+
+  async setPassword(req, res, next) {
+    try {
+      const body = req.body;
+      const userData = await User.findOne({ email: body.email });
+      if (userData) {
+        let hashedPassword = await hashPassword(body.password, 10);
+        const resData = await User.findByIdAndUpdate(userData._id, {
+          $set: { password: hashedPassword },
+        });
+        if (resData) {
+          res.status(201).json({
+            message: "Password Changed Successfully!",
+          });
+        }
+      }
+    } catch (error) {
+      // Handle specific error types
+      if (error.name === "ValidationError") {
+        // Mongoose validation error
+        res
+          .status(400)
+          .json({ message: "Validation error", errors: error.errors });
+      } else if (error.code && error.code === 11000) {
+        // MongoDB duplicate key error
+        res
+          .status(409)
+          .json({ message: "Duplicate key error", error: error.message });
+      } else {
+        // General server error
+        console.error("Unexpected error:", error);
+        res
+          .status(500)
+          .json({ message: "Internal Server Error", error: error.message });
+      }
     }
   }
 }

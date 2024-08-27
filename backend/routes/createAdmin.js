@@ -10,7 +10,7 @@ const {
   verifyOtp,
   setPassword,
 } = require("../controllers/forgetAdminPassword");
-const { login } = require("../controllers/adminLogin");
+const { login, getAllAdmins } = require("../controllers/admin");
 const httpStatus = require("http-status");
 const Joi = require("joi");
 const APIResponse = require("../helpers/APIResponse");
@@ -22,6 +22,7 @@ router.post("/send-otp", sendOtp());
 router.post("/verify-otp", verifyOtp());
 router.post("/set-password", setPassword());
 router.post("/login", loginValidate, login());
+router.get("/getAdmins", getAllAdmins());
 
 const loginValidation = Joi.object({
   email: Joi.string().trim().error(new Error("Please enter Email/Mobile")),

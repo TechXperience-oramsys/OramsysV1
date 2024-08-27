@@ -40,6 +40,7 @@ import { ApiGet, ApiPost } from "../helper/API/ApiData";
 import { Create_new_password } from "./administration/users/CreatePassword";
 import CreateAdmin from "./functionalAdmin/CreateAdmin";
 import ForgetPassword from "./functionalAdmin/ForgetPassword";
+import UserForgetPassword from "./signIn/UserForgetPassword";
 
 const pathForLayout = [
   "/",
@@ -49,6 +50,7 @@ const pathForLayout = [
   "/fa-login",
   "/verify-user",
   "/forget-password",
+  "/user/forget",
 ];
 const Index = () => {
   const location = useLocation();
@@ -265,6 +267,7 @@ const Index = () => {
               <Route path="/fa-login" element={<FunctionalAdmin />} />
               <Route path="/verify-user" element={<Create_new_password />} />
               <Route path="/forget-password" element={<ForgetPassword />} />
+              <Route path="/user/forget" element={<UserForgetPassword />} />
             </Routes>
           </Layout>
         )}

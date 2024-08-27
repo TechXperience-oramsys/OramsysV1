@@ -52,4 +52,21 @@ const login = () => async (req, res) => {
   }
 };
 
-module.exports = { login };
+const getAllAdmins = () => async (req, res) => {
+  try {
+    const admins = await Corporation.getAll();
+    console.log(admins);
+    if (admins) {
+      return res
+        .status(httpStatus.OK)
+        .json(
+          new APIResponse(admins, "Admins get successfully.", httpStatus.OK)
+        );
+    }
+  } catch (error) {
+    return res
+      .status(httpStatus.BAD_REQUEST)
+      .send({ message: "Somethig went wrong" });
+  }
+};
+module.exports = { login, getAllAdmins };
