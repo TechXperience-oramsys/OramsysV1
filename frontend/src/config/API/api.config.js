@@ -1,4 +1,4 @@
-import API_LOCAL from './api-local';
+import API_LOCAL from "./api-local";
 // import API_PROD from './api-prod';
 const hostname = window.location.hostname;
 const port = window.location.port;
@@ -10,8 +10,8 @@ let isLocalApi = +port >= 5000;
 
 export let API;
 // if(window.location.origin.includes('oramsysdev.com')) {
-// API = 'https://backend.oramsysdev.com/' // this url is for live api
-API = "http://localhost:5003/";
+API = "https://backend.oramsysdev.com/"; // this url is for live api
+// API = "http://localhost:5003/";
 // }
 // else {
 //     API = 'http://localhost:5003/'
