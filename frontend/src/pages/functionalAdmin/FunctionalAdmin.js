@@ -75,8 +75,7 @@ const FunctionalAdmin = () => {
       password: login.password,
     };
     setLoading(true);
-    admin
-      .adminLogin(data)
+    admin.adminLogin(data)
       .then((res) => {
         dispatch({
           type: LOGIN,

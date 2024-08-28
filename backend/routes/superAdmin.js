@@ -16,6 +16,7 @@ const loginValidation = Joi.object({
 });
 
 router.post("/login", loginValidate, adminController.login);
+router.get("/getAllUsers",  adminController.getAllUser);
 
 
 function loginValidate(req, res, next) {

@@ -59,6 +59,7 @@ const Users = () => {
       align: "center",
       sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
+
     {
       title: "Profile",
       dataIndex: "profile",

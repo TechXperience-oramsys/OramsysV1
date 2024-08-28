@@ -130,7 +130,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
       key: '7',
       icon: <HiOutlineUsers />,
       label: 'Create Admin',
-      path: 'create-admin'
+      path: 'admins'
     },
     {
       key: '8',
@@ -241,11 +241,9 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
                 <Menu>
                   <Menu.Item key="logout" onClick={() => setshowModal(true)}>
                     <HiOutlineLogout size={20} /> Logout
-                  </Menu.Item>
-                  
+                  </Menu.Item>                
                 </Menu>
-              }
-            >
+              }>
               <div className={`d-flex align-items-center ${collapsed ? 'justify-content-center w-100' : ''}`}>
                 <FaUserCircle size={30} />
                 {!collapsed && <span className='ms-2'>{userData?.name}</span>}
@@ -292,7 +290,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
         </Sider>
 
         <Layout>
-          <Header style={{ padding: 0, background: colorBgContainer, outline: 'none' }}>
+          <Header style={{ padding: 0,  outline: 'none' }}>
             <Button
               type="text"
               icon={collapsed ? <MenuUnfoldOutlined style={{ fontSize: 25 }} /> : <MenuFoldOutlined style={{ fontSize: 20 }} />}
@@ -309,7 +307,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
               margin: '24px 16px',
               padding: 24,
               minHeight: 280,
-              background: 'colorBgContainer',
+              // background: 'colorBgContainer',
               borderRadius: borderRadiusLG,
             }}
           >

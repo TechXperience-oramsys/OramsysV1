@@ -595,7 +595,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
 
         if (productDetails.commoditySubType != undefined) {
             let product = []
-            productData.data.forEach((item) => {
+            productData?.data?.forEach((item) => {
                 console.log('item', item);
                 console.log('productDetails', productDetails);
                 // if (item.commodity_sub_type == productDetails.commoditySubType) {
@@ -2278,7 +2278,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                     <div className='footer_'>
                         <div className="d-flex justify-content-between">
                             <button onClick={() => navigate("/transactions")} className='footer_cancel_btn'> Back </button>
-                            <button onClick={() => navigate("/transactions")} className='footer_cancel_btn'> Save Details </button>
+                            {/* <button onClick={() => navigate("/transactions")} className='footer_cancel_btn'> Save Details </button> */}
                         </div>
 
                         <button onClick={() => next()} className='footer_next_btn'> {" "} Next</button>
@@ -2291,63 +2291,3 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
 
 
 export default DetailsTransaction
-
-const StyleSheet = {
-    container: {
-    },
-    closeView: { display: 'none' },
-    overall: {
-        width: '95%',
-        margin: '0 auto',
-        height: '30rem',
-        backgroundColor: '#fff',
-        position: 'absolute',
-        border: '1px solid lightgrey',
-        top: '5rem',
-        left: 0,
-        right: 0,
-        overflowY: 'auto',
-        display: 'block',
-        zIndex: '3',
-    },
-    data: {
-        padding: '0.5rem',
-        fontSize: '0.9rem',
-        cursor: 'pointer',
-    },
-    datashown: {
-        padding: '0.3rem',
-        borderBottom: '1px solid lightgrey',
-        cursor: 'pointer',
-        backgroundColor: 'blue',
-        color: 'white',
-    },
-    input: {
-        width: '100%',
-        border: '1px solid lightgrey',
-        padding: '1rem'
-    },
-    showRoom: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: 10,
-    },
-    roomItem: {
-        padding: '0.3rem 0.4rem',
-        border: '1px solid lightgrey',
-        borderRadius: '999px',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 10,
-        fontSize: '0.9rem',
-        backgroundColor: '#00BCD4',
-        color: 'white'
-    },
-    cancelButton: {
-        borderRadius: '999px',
-        backgroundColor: '#00BCD4',
-        color: 'white',
-        padding: '0.01rem 0.5rem',
-        cursor: 'pointer'
-    },
-}

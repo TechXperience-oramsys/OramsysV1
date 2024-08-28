@@ -24,6 +24,7 @@ const Entities = () => {
   const dispatch = useDispatch()
 
   const entityData = useSelector(state => state.entityData.entity)
+  console.log('GET ALL ENTITY', entityData)
   let userId = AuthStorage.getStorageData(STORAGEKEY.roles) === 'admin' ? AuthStorage.getStorageData(STORAGEKEY.userId) : ""
 
   useEffect(() => {
@@ -97,13 +98,6 @@ const Entities = () => {
       sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
-      align: 'center',
-      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
-    },
-    {
       title: 'Name',
       dataIndex: ['details', 'name'],
       key: 'name',
@@ -111,12 +105,20 @@ const Entities = () => {
       sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
-      title: 'Country',
-      dataIndex: ['details', 'country', 'name'],
-      key: 'country',
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
       align: 'center',
       sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
+
+    // {
+    //   title: 'Sector',
+    //   dataIndex: ['details', 'sector',],
+    //   key: 'sector',
+    //   align: 'center',
+    //   sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+    // },
     {
       title: 'Actions',
       key: 'actions',
@@ -131,7 +133,7 @@ const Entities = () => {
               <EditOutlined /> Edit
             </Menu.Item>
             <Menu.Item onClick={() => {
-             
+
               navigate(`/add-edit-entities?id=${record._id}`, {
                 state: [{ type: `${record.type}` }, { isView: false }],
               });

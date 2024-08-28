@@ -53,6 +53,8 @@ const Details = ({ handleNext, entityType }) => {
     const entityData = useSelector(state => state.entityData.entity)
     const country = useSelector((state) => state.countryData.country)
     const sectorData = useSelector((state) => state.sectorData.sector)
+    console.log('sectors', sectorData)
+    console.log('countries', country)
 
     useEffect(() => {
         dispatch(countrieAction("all"))
@@ -603,19 +605,21 @@ const Details = ({ handleNext, entityType }) => {
                         </Row>
 
                         <Row className='mt-4'>
-                            <Form.Group as={Col} controlId="formGridZip">
+                            <Form.Group as={Col} controlId="formGridSector">
                                 <Form.Label>Sector <RequiredSpan /></Form.Label>
-                                <Form.Select className='no-border'
-                                    onChange={(e, newVal) => setDetails({ ...details, sector: e.target.value })}
+                                <Form.Select
+                                    className='no-border'
+                                    onChange={(event) => {
+                                        const selectedVal = event.target.value;
+                                        setDetails({ ...details, sector: selectedVal });
+                                    }}
                                     disabled={isView}
-                                    disableClearable
-                                    value={(sector.length && details.sector) ? sector.find(item => item._id === details?.sector) : {}}
+                                    value={details.sector || ""}
                                 >
-                                    <option value="" disabled selected>Choose...</option>
+                                    <option value="" disabled>Choose...</option>
                                     {sector.map((item) => (
-                                        <option value={item}>{item.name}</option>
+                                        <option key={item._id} value={item._id}>{item.name}</option>
                                     ))}
-
                                 </Form.Select>
                                 {formErrors && formErrors?.sector && <span style={{ color: 'red' }}>{formErrors.sector}</span>}
                             </Form.Group>
@@ -968,15 +972,15 @@ const Details = ({ handleNext, entityType }) => {
                                             value={searchTerm}
                                         />
                                         <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
-                                        {filteredCountries.map((country, i) => (
-                                            <Dropdown.Item key={i} onClick={() => setShippingAddress((prevState) => ({
-                                                ...prevState,
-                                                shippingCountryCode: country.code
-                                            }))
-                                            }>
-                                                {country.name} ({country.code})
-                                            </Dropdown.Item>
-                                        ))}
+                                            {filteredCountries.map((country, i) => (
+                                                <Dropdown.Item key={i} onClick={() => setShippingAddress((prevState) => ({
+                                                    ...prevState,
+                                                    shippingCountryCode: country.code
+                                                }))
+                                                }>
+                                                    {country.name} ({country.code})
+                                                </Dropdown.Item>
+                                            ))}
                                         </div>
                                     </DropdownButton>
                                     <Form.Control
