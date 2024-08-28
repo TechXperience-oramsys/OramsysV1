@@ -75,7 +75,8 @@ const FunctionalAdmin = () => {
       password: login.password,
     };
     setLoading(true);
-    admin.adminLogin(data)
+    admin
+      .adminLogin(data)
       .then((res) => {
         dispatch({
           type: LOGIN,
@@ -195,7 +196,21 @@ const FunctionalAdmin = () => {
                         )}
                       </span>
                     </div>
-
+                    <div className="d-flex mb-5 align-items-center">
+                      <div className="mx-auto">
+                        <div className="col-12 text-center mt-4">
+                          <span className="">
+                            <a
+                              href="#"
+                              onClick={() => navigate("/forget-password")}
+                              className="mx-auto text-decoration-none forgot-pass"
+                            >
+                              Forgot Password?
+                            </a>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
                     <button
                       onClick={(e) => Login(e)}
                       className="btn btn-block btn-primary"
@@ -213,21 +228,6 @@ const FunctionalAdmin = () => {
                         </div>
                       )}
                     </button>
-                    <div className="d-flex mb-5 align-items-center">
-                      <div className="mx-auto">
-                        <div className="col-12 text-center mt-4">
-                          <span className="">
-                            <a
-                              href="#"
-                              onClick={() => navigate("/forget-password")}
-                              className="mx-auto text-decoration-none forgot-pass"
-                            >
-                              Forgot Password?
-                            </a>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
