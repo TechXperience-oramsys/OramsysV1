@@ -44,7 +44,7 @@ const login = () => async (req, res) => {
 
     return res
       .status(httpStatus.OK)
-      .json(new APIResponse(superAdmin, "Wrong email", httpStatus.OK));
+      .json(new APIResponse(null, "Wrong email", httpStatus.BAD_REQUEST));
   } catch (e) {
     return res
       .status(httpStatus.BAD_REQUEST)
@@ -54,8 +54,7 @@ const login = () => async (req, res) => {
 
 const getAllAdmins = () => async (req, res) => {
   try {
-    const admins = await Corporation.getAll();
-    console.log(admins);
+    const admins = await Corporation.find({});
     if (admins) {
       return res
         .status(httpStatus.OK)
@@ -69,4 +68,22 @@ const getAllAdmins = () => async (req, res) => {
       .send({ message: "Somethig went wrong" });
   }
 };
-module.exports = { login, getAllAdmins };
+
+const getAdminById = () => async (req, res) => {
+  try {
+    const user = await Corporation.findById(req.params.id);
+    if (!user) {
+      return res
+        .status(httpStatus.BAD_REQUEST)
+        .send({ message: "User not found!" });
+    }
+    return res
+      .status(httpStatus.OK)
+      .json(new APIResponse(user, "Admin get successfully.", httpStatus.OK));
+  } catch (error) {
+    return res
+      .status(httpStatus.BAD_REQUEST)
+      .send({ message: "Somethig went wrong" });
+  }
+};
+module.exports = { login, getAllAdmins, getAdminById };

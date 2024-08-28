@@ -1,5 +1,6 @@
 const { body, validationResult } = require("express-validator");
 const Corporation = require("../models/userAdmins/userAdmin");
+const APIResponse = require("../helpers/APIResponse");
 
 // Middleware for validation
 const validateCorporationData = [
@@ -24,8 +25,6 @@ const validateCorporationData = [
 ];
 
 const createAdmin = () => async (req, res) => {
-  console.log(req, "request");
-
   // Validate request data
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -172,4 +171,44 @@ const createAdmin = () => async (req, res) => {
   }
 };
 
-module.exports = { createAdmin, validateCorporationData };
+const updateAdmin = () => async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  try {
+    const admin = await Corporation.findById(req.params.id);
+
+    if (admin) {
+      const updatedAdmin = await Corporation.findOneAndUpdate(
+        { _id: admin._id },
+        { $set: req.body }
+      );
+      return res
+        .status(201)
+        .json(new APIResponse(updatedAdmin, "Admin updated successfully."));
+    } else {
+      return res.status(400).send({ message: "Admin not found" });
+    }
+  } catch (error) {
+    if (error.name === "ValidationError") {
+      // Mongoose validation error
+      res
+        .status(400)
+        .json({ message: "Validation error", errors: error.errors });
+    } else if (error.code && error.code === 11000) {
+      // MongoDB duplicate key error
+      res
+        .status(409)
+        .json({ message: "Duplicate key error", error: error.message });
+    } else {
+      // General server error
+      console.error("Unexpected error:", error);
+      res
+        .status(500)
+        .json({ message: "Internal Server Error", error: error.message });
+    }
+  }
+};
+
+module.exports = { createAdmin, updateAdmin, validateCorporationData };
