@@ -70,7 +70,7 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
 
           <div className='ms-2 mx-auto'>
 
-            <button onClick={() => setshowModal(true)} className="nav-link">
+            <button onClick={() => setshowModal(true)} className="nav-link text-dark">
               <HiOutlineLogout className='me-1' size={15} />
               <span>Logout</span>
               {/* <HiOutlineLogout className='text-white' size={22} /><span className='ps-3 fw-semibold text-danger'>Logout</span> */}

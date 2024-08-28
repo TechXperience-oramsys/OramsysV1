@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { productGetAction } from '../../../../redux/actions/productAction';
-import { Table, Dropdown, Menu, Button } from 'antd';
-import { EditOutlined, EllipsisOutlined, EyeOutlined } from '@ant-design/icons';
+import { Table, Dropdown, Menu, Button, Input } from 'antd';
+import { EditOutlined, EllipsisOutlined, EyeOutlined, SearchOutlined } from '@ant-design/icons';
 // import { navigate } from '@reach/router';
 
 const Products = () => {
@@ -160,17 +160,6 @@ const Products = () => {
 
   return (
     <>
-      {/* <div className='authheader_main'>
-        <h1>Products</h1>
-        <div className='d-flex'>
-        <div className='search_content'>
-        <input className='serch_input' id='search' value={search} onChange={(e) => setSearch(e.target.value)} />
-        <label htmlFor='search'>
-        <img src='../assets/img/about/search.png' />
-        </label>
-        </div>
-        </div>
-      </div> */}
       <div className='product'>
         <div class='container-fluid'>
           <div id='dash' class='mb-npx'>
@@ -180,28 +169,7 @@ const Products = () => {
                   <h1 class='h2 mb-0 fw-bold fs-4 ls-tight'>Product</h1>
                 </div>
 
-                <div class='col-sm-6 col-12 text-sm-end'>
-                  <div class='mx-n1 me-5 d-flex align-items-center justify-content-end gap-2'>
-                    <div className=''>
-                      <input type="text" id='search' value={search} onChange={(e) => setSearch(e.target.value)} className="form-control ps-5 fw-light border-none" placeholder="Search product..." />
-                    </div>
 
-                    <Link to='/add-product' style={{ borderColor: '#9E3E65' }} class='btn d-inline-flex btn-md btn-light border-base mx-1 me-3'>
-                      <span class=' pe-2'>
-                        <i class="bi bi-plus"></i>
-                      </span>
-                      <span className='fw-bold'>Add Product</span>
-                    </Link>
-
-
-
-                    {/* <div class="position-relative">
-                      <span class="position-absolute search"><HarmonyOSOutlined /></span>
-                      <input type="text" id='search' onKeyUp={e => checkSearch(e)} onChange={(e) => setSearch(e.target.value)} className="form-control w-100 ps-5 fw-light border-none" placeholder="Search transaction..." />
-                    </div> */}
-
-                  </div>
-                </div>
               </div>
             </header>
 
@@ -210,6 +178,28 @@ const Products = () => {
 
         {/* TABLE */}
         <div className='container mx-auto'>
+          <div class='col-sm-6 col-12 text-sm-end'>
+            <div class='mb-2 d-flex justify-content-start align-items-center'>
+
+              <div className=''>
+                <Input
+                  placeholder="Search "
+                  prefix={<SearchOutlined />}
+                  value={search} onChange={(e) => setSearch(e.target.value)}
+                  style={{ width: 300 }}
+                />
+                {/* <input type="text" id='search' value={search} onChange={(e) => setSearch(e.target.value)} className="form-control ps-5 fw-light border-none" placeholder="Search product..." /> */}
+              </div>
+
+              <Link to='/add-product' style={{ borderColor: '#9E3E65' }} class='btn d-inline-flex btn-md btn-light border-base mx-3'>
+                <span class='pe-2'>
+                  <i class="bi bi-plus"></i>
+                </span>
+                <span className='fw-bold'>Add Product</span>
+              </Link>
+            </div>
+          </div>
+
           <div class='row g-6 mb-4'></div>
           <Table
             dataSource={getAllProduct}

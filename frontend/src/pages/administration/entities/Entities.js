@@ -111,6 +111,13 @@ const Entities = () => {
       align: 'center',
       sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
+    {
+      title: 'Counrty',
+      dataIndex: 'country',
+      key: 'country',
+      align: 'center',
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+    },
 
     // {
     //   title: 'Sector',
