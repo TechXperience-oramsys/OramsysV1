@@ -1,174 +1,182 @@
-import React, { useState, useEffect } from 'react';
-import { MenuFoldOutlined, MenuUnfoldOutlined, FileTextOutlined, AppstoreOutlined, TableOutlined } from '@ant-design/icons';
-import { Button, Dropdown, Layout, Menu, theme } from 'antd';
-import { useNavigate, Link } from 'react-router-dom';
-import STORAGEKEY from '../../config/APP/app.config';
-import AuthStorage from '../../helper/AuthStorage';
-import LogoutModal from '../../component/Modal/LogoutModal';
-import { GrUserAdmin } from 'react-icons/gr';
-import { FaBoxOpen, FaThList, FaUserCircle, } from 'react-icons/fa';
+import React, { useState, useEffect } from "react";
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  FileTextOutlined,
+  AppstoreOutlined,
+  TableOutlined,
+} from "@ant-design/icons";
+import { Button, Dropdown, Layout, Menu, theme } from "antd";
+import { useNavigate, Link } from "react-router-dom";
+import STORAGEKEY from "../../config/APP/app.config";
+import AuthStorage from "../../helper/AuthStorage";
+import LogoutModal from "../../component/Modal/LogoutModal";
+import { GrUserAdmin } from "react-icons/gr";
+import { FaBoxOpen, FaThList, FaUserCircle } from "react-icons/fa";
 import { HiOutlineLogout, HiOutlineUsers } from "react-icons/hi";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { FaMoneyBillTransfer, FaUsersLine } from "react-icons/fa6";
-import Fade from 'react-reveal/Fade';
+import Fade from "react-reveal/Fade";
 const { Header, Sider, Content } = Layout;
 
 const Sidebar = ({ showSidebar, setSidebar }) => {
-
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
-  const [showModal, setshowModal] = useState(false)
-  const [showItem, setShowItem] = useState('')
-  const [showSubItem, setShowSubItem] = useState('')
-  const [userData, setUserData] = useState('')
-  const [activeItem, setActiveItem] = useState('Dashboard');
+  const [showModal, setshowModal] = useState(false);
+  const [showItem, setShowItem] = useState("");
+  const [showSubItem, setShowSubItem] = useState("");
+  const [userData, setUserData] = useState("");
+  const [activeItem, setActiveItem] = useState("Dashboard");
 
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
   const ShowSubItem = (item) => {
-    const { text, path } = item
+    const { text, path } = item;
     setActiveItem(text);
 
     if (text === "Administration") {
       if (text !== showItem) {
-        setShowItem(text)
+        setShowItem(text);
         setActiveItem(text);
-
       } else {
-        setShowItem('')
+        setShowItem("");
       }
     } else {
       if (text === "Master Data") {
         if (text !== showSubItem) {
-          setShowSubItem(text)
+          setShowSubItem(text);
           setActiveItem(text);
-
         } else {
-          setShowSubItem('')
+          setShowSubItem("");
         }
       } else {
-        navigate(`/${path}`)
+        navigate(`/${path}`);
       }
     }
-  }
+  };
   // const dispatch = useDispatch()
   let navbarData = [];
 
   const navbarDataForSuperAdmin = [
     {
-      key: '1',
+      key: "1",
       icon: <AppstoreOutlined size={20} />,
-      label: 'Dashboard',
-      path: 'dashboard'
+      label: "Dashboard",
+      path: "dashboard",
     },
     {
-      key: '2',
+      key: "2",
       icon: <MdAdminPanelSettings size={20} />,
-      label: 'Administration',
+      label: "Administration",
       children: [
-
         {
-          key: '2-1',
+          key: "2-1",
           icon: <TableOutlined />,
-          label: 'Master Data',
+          label: "Master Data",
           children: [
             {
-              key: '2-1-1',
+              key: "2-1-1",
               icon: <FileTextOutlined />,
-              label: 'Countries',
-              path: 'countries'
+              label: "Countries",
+              path: "countries",
             },
             {
-              key: '2-1-2',
+              key: "2-1-2",
               icon: <FileTextOutlined />,
-              label: 'Ports',
-              path: 'ports'
+              label: "Ports",
+              path: "ports",
             },
             {
-              key: '2-1-3',
+              key: "2-1-3",
               icon: <FileTextOutlined />,
-              label: 'Airports',
-              path: 'airports'
+              label: "Airports",
+              path: "airports",
             },
             {
-              key: '2-1-4',
+              key: "2-1-4",
               icon: <FileTextOutlined />,
-              label: 'Rating Agencies',
-              path: 'rating-agencies'
-            }
-          ]
-        }
-      ]
+              label: "Rating Agencies",
+              path: "rating-agencies",
+            },
+          ],
+        },
+      ],
     },
     {
-      key: '3',
+      key: "3",
       icon: <AppstoreOutlined />,
-      label: 'Entities Role',
-      path: 'entities-role'
+      label: "Entities Role",
+      path: "entities-role",
     },
     {
-      key: '4',
+      key: "4",
       icon: <FaUsersLine size={20} />,
-      label: 'Entities',
-      path: 'entities'
+      label: "Entities",
+      path: "entities",
     },
     {
-      key: '5',
+      key: "5",
       icon: <FaBoxOpen />,
-      label: 'Products',
-      path: 'products'
+      label: "Products",
+      path: "products",
     },
     {
-      key: '6',
+      key: "6",
       icon: <HiOutlineUsers />,
-      label: 'Users',
-      path: 'users'
+      label: "Users",
+      path: "users",
     },
     {
-      key: '7',
+      key: "7",
       icon: <HiOutlineUsers />,
-      label: 'Create Admin',
-      path: 'admins'
+      label: "Create Admin",
+      path: "admins",
     },
     {
-      key: '8',
+      key: "8",
       icon: <FaMoneyBillTransfer />,
-      label: 'Transactions',
-      path: 'transactions'
-    }
+      label: "Transactions",
+      path: "transactions",
+    },
+    {
+      key: "9",
+      icon: <HiOutlineUsers />,
+      label: "Admins",
+      path: "admins",
+    },
   ];
 
   const navbarDataForAdmin = [
     {
-      key: '1',
+      key: "1",
       icon: <GrUserAdmin />,
-      label: 'Administration',
+      label: "Administration",
       children: [
         {
-          key: '1-1',
+          key: "1-1",
           icon: <AppstoreOutlined />,
-          label: 'Dashboard',
-          path: 'dashboard',
+          label: "Dashboard",
+          path: "dashboard",
         },
         {
-          key: '1-2',
+          key: "1-2",
           icon: <FaUsersLine />,
-          label: 'Profile',
-          path: 'entities',
+          label: "Profile",
+          path: "entities",
         },
         {
-          key: '1-3',
+          key: "1-3",
           icon: <HiOutlineUsers />,
-          label: 'Users',
-          path: 'users',
+          label: "Users",
+          path: "users",
         },
         {
-          key: '1-4',
+          key: "1-4",
           icon: <FaMoneyBillTransfer />,
-          label: 'Transactions',
-          path: 'transactions',
+          label: "Transactions",
+          path: "transactions",
         },
       ],
     },
@@ -176,39 +184,41 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
 
   const navbarDataForUser = [
     {
-      key: '1',
+      key: "1",
       icon: <AppstoreOutlined />,
-      label: 'Dashboard',
-      path: 'dashboard',
+      label: "Dashboard",
+      path: "dashboard",
     },
     {
-      key: '2',
+      key: "2",
       icon: <FaMoneyBillTransfer />,
-      label: 'Transactions',
-      path: 'transactions',
+      label: "Transactions",
+      path: "transactions",
     },
   ];
 
   if (AuthStorage.getStorageData(STORAGEKEY.roles) === "user") {
-    navbarData = navbarDataForUser
+    navbarData = navbarDataForUser;
   } else if (AuthStorage.getStorageData(STORAGEKEY.roles) === "admin") {
-    navbarData = navbarDataForAdmin
+    navbarData = navbarDataForAdmin;
   } else if (AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin") {
-    navbarData = navbarDataForSuperAdmin
+    navbarData = navbarDataForSuperAdmin;
   }
 
-  const getData = AuthStorage.getStorageData(STORAGEKEY.roles)
+  const getData = AuthStorage.getStorageData(STORAGEKEY.roles);
   useEffect(() => {
     if (AuthStorage.getStorageData(STORAGEKEY.roles) === "admin") {
-      setShowItem("Administration")
+      setShowItem("Administration");
     }
-  }, [getData])
+  }, [getData]);
 
-  const getStorage = AuthStorage.getStorageData(STORAGEKEY.userData)
+  const getStorage = AuthStorage.getStorageData(STORAGEKEY.userData);
 
   useEffect(() => {
-    setUserData(JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)) ?? {})
-  }, [getStorage])
+    setUserData(
+      JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)) ?? {}
+    );
+  }, [getStorage]);
 
   // useEffect(() => {
   //   setUserData(JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)))
@@ -216,8 +226,17 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
   const handleMenuClick = (item) => {
     setActiveItem(item.key);
     const clickedItem = navbarData
-      .flatMap(item => item.children ? [item, ...item.children.flatMap(subItem => subItem.children ? [subItem, ...subItem.children] : subItem)] : item)
-      .find(navItem => navItem.key === item.key);
+      .flatMap((item) =>
+        item.children
+          ? [
+              item,
+              ...item.children.flatMap((subItem) =>
+                subItem.children ? [subItem, ...subItem.children] : subItem
+              ),
+            ]
+          : item
+      )
+      .find((navItem) => navItem.key === item.key);
 
     if (clickedItem && clickedItem.path) {
       navigate(`/${clickedItem.path}`);
@@ -230,40 +249,50 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
         <Sider
           trigger={null}
           // theme='dark'
-          className='bg-gray-100'
+          className="bg-gray-100"
           collapsible
           collapsed={collapsed}
-          width={210} >
+          width={210}
+        >
           <div className="demo-logo-vertical" />
-          <div className={`d-flex ${collapsed ? 'justify-content-center' : 'justify-content-between'} align-items-center p-3`} style={{ backgroundColor: '#F0F0F0' }}>
+          <div
+            className={`d-flex ${
+              collapsed ? "justify-content-center" : "justify-content-between"
+            } align-items-center p-3`}
+            style={{ backgroundColor: "#F0F0F0" }}
+          >
             <Dropdown
               overlay={
                 <Menu>
                   <Menu.Item key="logout" onClick={() => setshowModal(true)}>
                     <HiOutlineLogout size={20} /> Logout
-                  </Menu.Item>                
+                  </Menu.Item>
                 </Menu>
-              }>
-              <div className={`d-flex align-items-center ${collapsed ? 'justify-content-center w-100' : ''}`}>
+              }
+            >
+              <div
+                className={`d-flex align-items-center ${
+                  collapsed ? "justify-content-center w-100" : ""
+                }`}
+              >
                 <FaUserCircle size={30} />
-                {!collapsed && <span className='ms-2'>{userData?.name}</span>}
+                {!collapsed && <span className="ms-2">{userData?.name}</span>}
               </div>
             </Dropdown>
-            
+
             {!collapsed && (
               <div className="">
-                <button onClick={() => setshowModal(true)} >
+                <button onClick={() => setshowModal(true)}>
                   <HiOutlineLogout size={20} />
                 </button>
               </div>
-
             )}
           </div>
           <Menu
-            className='fs-6 mt-10 bg-gray-100'
+            className="fs-6 mt-10 bg-gray-100"
             // theme="dark"
             mode="inline"
-            defaultSelectedKeys={['1']}
+            defaultSelectedKeys={["1"]}
             selectedKeys={[activeItem]}
             items={navbarData.map((item) => ({
               key: item.key,
@@ -278,25 +307,40 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
                   key: subSubItem.key,
                   icon: subSubItem.icon,
                   label: subSubItem.label,
-                  path: subSubItem.path
-                }))
-              }))
+                  path: subSubItem.path,
+                })),
+              })),
             }))}
             onClick={handleMenuClick}
           />
-          <div className="footer" style={{ position: 'absolute', bottom: 10, width: '100%', textAlign: 'center', color: '#a3a3a3' }}>
+          <div
+            className="footer"
+            style={{
+              position: "absolute",
+              bottom: 10,
+              width: "100%",
+              textAlign: "center",
+              color: "#a3a3a3",
+            }}
+          >
             <span>&copy;</span> 2024 Oramsys V1.0
           </div>
         </Sider>
 
         <Layout>
-          <Header style={{ padding: 0,  outline: 'none' }}>
+          <Header style={{ padding: 0, outline: "none" }}>
             <Button
               type="text"
-              icon={collapsed ? <MenuUnfoldOutlined style={{ fontSize: 25 }} /> : <MenuFoldOutlined style={{ fontSize: 20 }} />}
+              icon={
+                collapsed ? (
+                  <MenuUnfoldOutlined style={{ fontSize: 25 }} />
+                ) : (
+                  <MenuFoldOutlined style={{ fontSize: 20 }} />
+                )
+              }
               onClick={() => setCollapsed(!collapsed)}
               style={{
-                fontSize: '16px',
+                fontSize: "16px",
                 width: 64,
                 height: 64,
               }}
@@ -304,18 +348,15 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           </Header>
           <Content
             style={{
-              margin: '24px 16px',
+              margin: "24px 16px",
               padding: 24,
               minHeight: 280,
               // background: 'colorBgContainer',
               borderRadius: borderRadiusLG,
             }}
-          >
-
-          </Content>
+          ></Content>
         </Layout>
       </Layout>
-
 
       {/* <!-- Vertical Navbar --> */}
       {/* <Fade left>
@@ -381,9 +422,11 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
 
         <div className="sidebar_responsive"></div>
       </Fade> */}
-      {showModal && <LogoutModal show={showModal} onHide={() => setshowModal(false)} />}
+      {showModal && (
+        <LogoutModal show={showModal} onHide={() => setshowModal(false)} />
+      )}
     </>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

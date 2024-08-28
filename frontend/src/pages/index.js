@@ -1,5 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Routes, Route, useLocation, useNavigate, Navigate, Outlet,} from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+  Navigate,
+  Outlet,
+} from "react-router-dom";
 import AuthStorage from "../helper/AuthStorage";
 import AuthLayOut from "../layout/AuthLayOut";
 import Layout from "../layout/Layout";
@@ -34,6 +41,8 @@ import { Create_new_password } from "./administration/users/CreatePassword";
 import CreateAdmin from "./functionalAdmin/CreateAdmin";
 import Admin from "./functionalAdmin/AdminTable";
 import ForgetPassword from "./functionalAdmin/ForgetPassword";
+import UserForgetPassword from "./signIn/UserForgetPassword";
+import EditAdmin from "./functionalAdmin/EditAdmin";
 
 const pathForLayout = [
   "/",
@@ -43,6 +52,7 @@ const pathForLayout = [
   "/fa-login",
   "/verify-user",
   "/forget-password",
+  "/user/forget",
 ];
 const Index = () => {
   const location = useLocation();
@@ -149,6 +159,10 @@ const Index = () => {
       component: CreateAdmin,
     },
     {
+      path: "/admin-edit",
+      component: EditAdmin,
+    },
+    {
       path: "/transactions",
       component: Transactions,
     },
@@ -216,10 +230,14 @@ const Index = () => {
           if (res.status === 200) {
             const currentRole = AuthStorage.getStorageData(STORAGEKEY.roles);
             const currentPath = location.pathname;
-  
-            if (currentRole === "superAdmin" || currentRole === "admin" || currentRole === "user") {
+
+            if (
+              currentRole === "superAdmin" ||
+              currentRole === "admin" ||
+              currentRole === "user"
+            ) {
               const validPaths = primaryLinks.map((link) => link.path);
-  
+
               // Only redirect to the dashboard if the current path isn't valid for the role
               if (!validPaths.includes(currentPath)) {
                 navigate("/dashboard");
@@ -234,8 +252,7 @@ const Index = () => {
         });
     }
   };
-  
-  
+
   useEffect(() => {
     checkUserRoleAndNavigate();
   }, []);
@@ -263,6 +280,7 @@ const Index = () => {
               <Route path="/fa-login" element={<FunctionalAdmin />} />
               <Route path="/verify-user" element={<Create_new_password />} />
               <Route path="/forget-password" element={<ForgetPassword />} />
+              <Route path="/user/forget" element={<UserForgetPassword />} />
             </Routes>
           </Layout>
         )}
