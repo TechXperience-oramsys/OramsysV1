@@ -56,8 +56,8 @@ const Entities = () => {
         return {
           ...item,
           name: item?.details?.name ?? item?.details?.givenName,
-          type: item.type,
-          email: item.email,
+          type: item?.type,
+          email: item?.email,
           country: item?.details?.country?.name,
         }
       }))
@@ -66,8 +66,8 @@ const Entities = () => {
         return {
           ...item,
           name: item?.details?.name ?? item?.details?.givenName,
-          type: item.type,
-          email: item.email,
+          type: item?.type,
+          email: item?.email,
           country: item?.details?.country?.name,
         }
       }))

@@ -9,7 +9,7 @@ import {
 } from "../types";
 
 const initialState = {
-  getAdminDataLoadimg: false,
+  getAdminDataLoading: false,
   getAdminData: [],
   getAdminDataError: [],
   getAdminId: [],
@@ -23,7 +23,7 @@ export const adminReducer = (state = initialState, action) => {
     case GET_ADMIN_DATA_LOADING:
       return {
         ...state,
-        getAdminDataLoadimg: action.payload,
+        getAdminDataLoading: action.payload,
       };
 
     case GET_ADMIN_DATA:

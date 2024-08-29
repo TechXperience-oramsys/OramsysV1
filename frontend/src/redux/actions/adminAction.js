@@ -26,6 +26,7 @@ export const adminGetAction = () => async (dispatch) => {
           type: GET_ADMIN_DATA,
           payload: res,
         });
+        console.log(res)
       })
       .catch((error) => {
         console.log(error);

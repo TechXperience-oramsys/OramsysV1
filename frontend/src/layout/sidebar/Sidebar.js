@@ -32,30 +32,30 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-  const ShowSubItem = (item) => {
-    const { text, path } = item;
-    setActiveItem(text);
+  // const ShowSubItem = (item) => {
+  //   const { text, path } = item;
+  //   setActiveItem(text);
 
-    if (text === "Administration") {
-      if (text !== showItem) {
-        setShowItem(text);
-        setActiveItem(text);
-      } else {
-        setShowItem("");
-      }
-    } else {
-      if (text === "Master Data") {
-        if (text !== showSubItem) {
-          setShowSubItem(text);
-          setActiveItem(text);
-        } else {
-          setShowSubItem("");
-        }
-      } else {
-        navigate(`/${path}`);
-      }
-    }
-  };
+  //   if (text === "Administration") {
+  //     if (text !== showItem) {
+  //       setShowItem(text);
+  //       setActiveItem(text);
+  //     } else {
+  //       setShowItem("");
+  //     }
+  //   } else {
+  //     if (text === "Master Data") {
+  //       if (text !== showSubItem) {
+  //         setShowSubItem(text);
+  //         setActiveItem(text);
+  //       } else {
+  //         setShowSubItem("");
+  //       }
+  //     } else {
+  //       navigate(`/${path}`);
+  //     }
+  //   }
+  // };
   // const dispatch = useDispatch()
   let navbarData = [];
 
@@ -164,7 +164,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           key: "1-2",
           icon: <FaUsersLine />,
           label: "Profile",
-          path: "entities",
+          path: "admins",
         },
         {
           key: "1-3",
@@ -252,15 +252,10 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           className="bg-gray-100"
           collapsible
           collapsed={collapsed}
-          width={210}
-        >
+          width={210}>
           <div className="demo-logo-vertical" />
-          <div
-            className={`d-flex ${
-              collapsed ? "justify-content-center" : "justify-content-between"
-            } align-items-center p-3`}
-            style={{ backgroundColor: "#F0F0F0" }}
-          >
+          <div className={`d-flex ${collapsed ? "justify-content-center" : "justify-content-between"} align-items-center p-3`}
+            style={{ backgroundColor: "#F0F0F0" }}>
             <Dropdown
               overlay={
                 <Menu>
@@ -268,13 +263,8 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
                     <HiOutlineLogout size={20} /> Logout
                   </Menu.Item>
                 </Menu>
-              }
-            >
-              <div
-                className={`d-flex align-items-center ${
-                  collapsed ? "justify-content-center w-100" : ""
-                }`}
-              >
+              }>
+              <div className={`d-flex align-items-center ${collapsed ? "justify-content-center w-100" : ""}`}>
                 <FaUserCircle size={30} />
                 {!collapsed && <span className="ms-2">{userData?.name}</span>}
               </div>

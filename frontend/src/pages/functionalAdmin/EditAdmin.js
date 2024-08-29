@@ -9,12 +9,23 @@ import { toast } from "react-toastify";
 
 const { Option } = Select;
 const { Dragger } = Upload;
+
 function EditAdmin() {
+
+  const [form] = Form.useForm();
+  const [formData, setFormData] = useState({});
+  const navigate = useNavigate();
   const searchParams = new URLSearchParams(window.location.search);
   const id = searchParams.get("id");
+  const adminData = useSelector((state) => state.adminData?.getAdminId);
+  const adminUpdate = useSelector((state) => state.adminData?.adminUpdate);
+  const [loading, setLoading] = useState(true)
+  console.log('Admin Data', adminData)
+  
   useEffect(() => {
     ApiGet(`admin/get-admin-by/${id}`)
       .then((res) => {
+        console.log(res, 'inside out')
         setFormData({
           corporationName: res.data?.corporationName || "",
           businessEmail: res.data?.businessEmail || "",
@@ -28,13 +39,11 @@ function EditAdmin() {
           adminName: res.data?.adminName || "",
         });
       })
-      .catch((error) => toast.error(error));
+      .catch((error) => toast.error(error))
+    .finally(() => setLoading(false))
   }, []);
-  const adminData = useSelector((state) => state.adminData?.getAdminId);
-  const [form] = Form.useForm();
+ 
 
-  const [formData, setFormData] = useState({});
-  const navigate = useNavigate();
   const handleFormChange = (changedValues) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -90,20 +99,27 @@ function EditAdmin() {
       console.log("No file available");
     }
   };
-  useEffect(() => {
-    form.setFieldsValue({
-      corporationName: adminData.data?.corporationName || "",
-      businessEmail: adminData.data?.businessEmail || "",
-      registrationNumber: adminData.data?.registrationNumber || "",
-      phone: adminData.data?.phone || "",
-      address1: adminData.data?.address1 || "",
-      address2: adminData.data?.address2 || "",
-      buildingNumber: adminData.data?.buildingNumber || "",
-      branch: adminData.data?.branch || "",
-      logo: adminData.data?.logo || null,
-      adminName: adminData.data?.adminName || "",
-    });
-  }, [adminData.data, form]);
+  // useEffect(() => {
+  //   if (adminData?.data && id) {
+  //     form.setFieldsValue({
+  //       corporationName: adminData?.data?.corporationName || "",
+  //       businessEmail: adminData?.data?.businessEmail || "",
+  //       registrationNumber: adminData?.data?.registrationNumber || "",
+  //       phone: adminData?.data?.phone || "",
+  //       address1: adminData?.data?.address1 || "",
+  //       address2: adminData?.data?.address2 || "",
+  //       buildingNumber: adminData?.data?.buildingNumber || "",
+  //       branch: adminData?.data?.branch || "",
+  //       logo: adminData?.data?.logo || null,
+  //       adminName: adminData?.data?.adminName || "",
+  //     });
+  //   }
+  // }, [adminData?.data, form]);
+
+
+  if (loading) return (
+    <div>Loading...</div>
+  )
 
   return (
     <div className="container mt-5">
