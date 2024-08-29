@@ -9,6 +9,8 @@ import {
   adminGetAction,
   adminGetByIdAction,
 } from "../../redux/actions/adminAction";
+import AuthStorage from "../../helper/AuthStorage";
+import STORAGEKEY from "../../config/APP/app.config";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -18,13 +20,19 @@ const Admin = () => {
   const [postsPerPage] = useState(10);
 
   const userData = useSelector((state) => state.adminData?.getAdminData);
+  let userId = AuthStorage.getStorageData(STORAGEKEY.roles) === 'admin' ? AuthStorage.getStorageData(STORAGEKEY.userId) : ""
+
   useEffect(() => {
     setGetUserDatas(userData?.data);
   }, [userData]);
 
   useEffect(() => {
-    dispatch(adminGetAction());
-  }, []);
+    if (userId) {
+      dispatch(adminGetByIdAction(userId));
+    } else {
+      dispatch(adminGetAction());
+    }
+  }, [userId]);
 
   const indexOfLastItem = currentPage * postsPerPage;
   const indexOfFirstItem = indexOfLastItem - postsPerPage;
@@ -100,7 +108,7 @@ const Admin = () => {
               <Menu.Item
                 key="preview"
                 onClick={() => {
-                  navigate(`/add-edit-entities?id=${record._id}`, {
+                  navigate(`/admin-edit?id=${record?._id}`, {
                     state: [{ type: `${record.type}` }, { isView: false }],
                   });
                 }}
@@ -132,21 +140,19 @@ const Admin = () => {
                 }}
               >
                 <div class="col-sm-6 col-12 mb-4 mb-sm-0">
-                  <h1 class="h2 mb-0 fw-bold fs-4 ls-tight">Admins</h1>
+                  <h1 class="h2 mb-0 fw-bold fs-4 ls-tight">{userId ? 'Profile' : 'Admins'}</h1>
                 </div>
 
                 <div class="col-sm-6 col-12 text-sm-end">
                   <div class="mx-n1 me-5 d-flex align-items-center justify-content-end gap-2">
-                    <Link
-                      to="/create-admin"
-                      style={{ borderColor: "#9E3E65" }}
-                      class="btn d-inline-flex btn-md btn-light border-base mx-1 me-3"
-                    >
-                      <span class=" pe-2">
-                        <i class="bi bi-plus"></i>
-                      </span>
-                      <span className="fw-bold">Create Admin</span>
-                    </Link>
+                    {AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin" ? (
+                      <Link to="/create-admin" style={{ borderColor: "#9E3E65" }} class="btn d-inline-flex btn-md btn-light border-base mx-1 me-3">
+                        <span class=" pe-2"><i class="bi bi-plus"></i></span>
+                        <span className="fw-bold">Create Admin</span>
+                      </Link>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 </div>
               </div>
