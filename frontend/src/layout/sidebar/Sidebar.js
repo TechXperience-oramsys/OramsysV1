@@ -164,7 +164,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           key: "1-2",
           icon: <FaUsersLine />,
           label: "Profile",
-          path: "admins",
+          path: "entities",
         },
         {
           key: "1-3",
