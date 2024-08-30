@@ -43,6 +43,7 @@ import Admin from "./functionalAdmin/AdminTable";
 import ForgetPassword from "./functionalAdmin/ForgetPassword";
 import UserForgetPassword from "./signIn/UserForgetPassword";
 import EditAdmin from "./functionalAdmin/EditAdmin";
+import profile from "./functionalAdmin/profile";
 
 const pathForLayout = [
   "/",
@@ -99,6 +100,10 @@ const Index = () => {
     {
       path: "/admin-edit",
       component: EditAdmin,
+    },
+    {
+      path: "/profile",
+      component: profile,
     },
     {
       path: "/transactions",
@@ -161,6 +166,10 @@ const Index = () => {
     {
       path: "/admin-edit",
       component: EditAdmin,
+    },
+    {
+      path: "/profile",
+      component: profile,
     },
     {
       path: "/transactions",

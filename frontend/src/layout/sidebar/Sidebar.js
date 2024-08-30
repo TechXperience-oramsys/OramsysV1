@@ -27,7 +27,10 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
   const [showSubItem, setShowSubItem] = useState("");
   const [userData, setUserData] = useState("");
   const [activeItem, setActiveItem] = useState("Dashboard");
-
+  const adminId =
+    AuthStorage.getStorageData(STORAGEKEY.roles) === "admin"
+      ? AuthStorage.getStorageData("userId")
+      : "";
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -164,7 +167,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           key: "1-2",
           icon: <FaUsersLine />,
           label: "Profile",
-          path: "admins",
+          path: `profile?id=${adminId}`,
         },
         {
           key: "1-3",
@@ -252,10 +255,15 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           className="bg-gray-100"
           collapsible
           collapsed={collapsed}
-          width={210}>
+          width={210}
+        >
           <div className="demo-logo-vertical" />
-          <div className={`d-flex ${collapsed ? "justify-content-center" : "justify-content-between"} align-items-center p-3`}
-            style={{ backgroundColor: "#F0F0F0" }}>
+          <div
+            className={`d-flex ${
+              collapsed ? "justify-content-center" : "justify-content-between"
+            } align-items-center p-3`}
+            style={{ backgroundColor: "#F0F0F0" }}
+          >
             <Dropdown
               overlay={
                 <Menu>
@@ -263,8 +271,13 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
                     <HiOutlineLogout size={20} /> Logout
                   </Menu.Item>
                 </Menu>
-              }>
-              <div className={`d-flex align-items-center ${collapsed ? "justify-content-center w-100" : ""}`}>
+              }
+            >
+              <div
+                className={`d-flex align-items-center ${
+                  collapsed ? "justify-content-center w-100" : ""
+                }`}
+              >
                 <FaUserCircle size={30} />
                 {!collapsed && <span className="ms-2">{userData?.name}</span>}
               </div>

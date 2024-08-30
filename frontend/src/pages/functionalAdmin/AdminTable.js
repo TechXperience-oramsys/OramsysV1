@@ -20,7 +20,10 @@ const Admin = () => {
   const [postsPerPage] = useState(10);
 
   const userData = useSelector((state) => state.adminData?.getAdminData);
-  let userId = AuthStorage.getStorageData(STORAGEKEY.roles) === 'admin' ? AuthStorage.getStorageData(STORAGEKEY.userId) : ""
+  let userId =
+    AuthStorage.getStorageData(STORAGEKEY.roles) === "admin"
+      ? AuthStorage.getStorageData(STORAGEKEY.userId)
+      : "";
 
   useEffect(() => {
     setGetUserDatas(userData?.data);
@@ -108,7 +111,7 @@ const Admin = () => {
               <Menu.Item
                 key="preview"
                 onClick={() => {
-                  navigate(`/admin-edit?id=${record?._id}`, {
+                  navigate(`/profile?id=${record?._id}`, {
                     state: [{ type: `${record.type}` }, { isView: false }],
                   });
                 }}
@@ -140,14 +143,23 @@ const Admin = () => {
                 }}
               >
                 <div class="col-sm-6 col-12 mb-4 mb-sm-0">
-                  <h1 class="h2 mb-0 fw-bold fs-4 ls-tight">{userId ? 'Profile' : 'Admins'}</h1>
+                  <h1 class="h2 mb-0 fw-bold fs-4 ls-tight">
+                    {userId ? "Profile" : "Admins"}
+                  </h1>
                 </div>
 
                 <div class="col-sm-6 col-12 text-sm-end">
                   <div class="mx-n1 me-5 d-flex align-items-center justify-content-end gap-2">
-                    {AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin" ? (
-                      <Link to="/create-admin" style={{ borderColor: "#9E3E65" }} class="btn d-inline-flex btn-md btn-light border-base mx-1 me-3">
-                        <span class=" pe-2"><i class="bi bi-plus"></i></span>
+                    {AuthStorage.getStorageData(STORAGEKEY.roles) ===
+                    "superAdmin" ? (
+                      <Link
+                        to="/create-admin"
+                        style={{ borderColor: "#9E3E65" }}
+                        class="btn d-inline-flex btn-md btn-light border-base mx-1 me-3"
+                      >
+                        <span class=" pe-2">
+                          <i class="bi bi-plus"></i>
+                        </span>
                         <span className="fw-bold">Create Admin</span>
                       </Link>
                     ) : (
