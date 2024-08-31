@@ -93,10 +93,10 @@ const Index = () => {
       path: "/admins",
       component: Admin,
     },
-    // {
-    //   path: "/entities-role",
-    //   component: EntitiesRole,
-    // },
+    {
+      path: "/add-edit-entities",
+      component: Add_Edit_Entities,
+    },
     {
       path: "/admin-edit",
       component: EditAdmin,
@@ -124,6 +124,10 @@ const Index = () => {
     {
       path: "/users",
       component: Users,
+    },
+    {
+      path: "/final-page",
+      component: FinalPage,
     },
   ];
   const superAdminRoutes = [

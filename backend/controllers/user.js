@@ -222,14 +222,6 @@ class UserController {
     return res
       .status(httpStatus.BAD_REQUEST)
       .send({ message: "user not found" });
-
-    console.log(user, "pipoiooj");
-    // } catch (e) {
-    //     console.log(e , 'eee');
-    //   return res
-    //     .status(httpStatus.BAD_REQUEST)
-    //     .send({ message: "Somethig went wrong" });
-    // }
   }
 
   async getUserById(req, res, next) {
