@@ -6,6 +6,7 @@ import Routes from "./routes/Routes";
 import store from "./redux/store";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// import './i18n';
 
 window.onbeforeunload = function () {
   // localStorage.clear();

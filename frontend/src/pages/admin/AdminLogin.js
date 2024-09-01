@@ -102,21 +102,21 @@ const AdminLogin = () => {
   };
   return (
     <>
-      <div class="content">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-6 contents">
-              <div class="row justify-content-center">
-                <div class="col-md-8">
+      <div className="content">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6 contents">
+              <div className="row justify-content-center">
+                <div className="col-md-8">
                   {/* <nav aria-label="breadcrumb">
-                                        <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                            <li class="breadcrumb-item"><a href="#" onClick={() => navigate('/')}>Client Login</a></li>
+                                        <ol className="breadcrumb">
+                                            <li className="breadcrumb-item"><a href="#">Home</a></li>
+                                            <li className="breadcrumb-item"><a href="#" onClick={() => navigate('/')}>Client Login</a></li>
                                         </ol>
                                     </nav> */}
-                  <div class="mb-4">
+                  <div className="mb-4">
                     <h3 className="title-admin">Super Admin</h3>
-                    <p class="mb-4">
+                    <p className="mb-4">
                       This is the administrative portal, if you are not an
                       administrator you cannot have access. Please go to the
                       client login
@@ -124,12 +124,12 @@ const AdminLogin = () => {
                   </div>
 
                   <div className="form">
-                    <div class="form-floating mb-3">
+                    <div className="form-floating mb-3">
                       <input
                         type="email"
                         name="email"
                         onChange={(e) => handelChange(e)}
-                        class="form-control"
+                        className="form-control"
                         id="floatingInput"
                         placeholder="Email"
                       />
@@ -147,12 +147,12 @@ const AdminLogin = () => {
                       )}
                     </div>
 
-                    <div class="position-relative form-floating mb-4">
+                    <div className="position-relative form-floating mb-4">
                       <input
                         type={passwordVisible ? "text" : "password"}
                         onChange={(e) => handelChange(e)}
                         name="password"
-                        class="form-control"
+                        className="form-control"
                         id="floatingPassword"
                         placeholder="Password"
                       />
@@ -183,17 +183,17 @@ const AdminLogin = () => {
 
                     <button
                       onClick={(e) => Login(e)}
-                      class="btn btn-block btn-primary"
+                      className="btn btn-block btn-primary"
                     >
                       {!loading ? "Log In" : ""}
                       {loading && (
-                        <div class="d-flex justify-content-center">
+                        <div className="d-flex justify-content-center">
                           <strong className="me-2">Logging in...</strong>
                           <div
                             className="spinner-border spinner-border-sm mt-1"
                             role="status"
                           >
-                            <span class="visually-hidden">Loading...</span>
+                            <span className="visually-hidden">Loading...</span>
                           </div>
                         </div>
                       )}
@@ -203,7 +203,7 @@ const AdminLogin = () => {
               </div>
             </div>
 
-            <div class="col-md-6">
+            <div className="col-md-6">
               <img
                 src={svgIcon}
                 style={{ height: "480x" }}

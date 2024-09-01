@@ -34,7 +34,7 @@ const Dashboard = () => {
   const [showspan, setShowspan] = useState(false);
   const [showSubData, setShowSubData] = useState(false);
   const [search, setSearch] = useState("");
-  console.log(search);
+  // console.log(search);
 
   const dispatch = useDispatch();
   const cards = [
@@ -108,7 +108,7 @@ const Dashboard = () => {
     // Format the sum with commas
     return sum.toLocaleString();
   }, [getAlltransactionData]);
-  console.log("alltransactionn", getAlltransactionData);
+  // console.log("alltransactionn", getAlltransactionData);
   //Get data counts on everything
   const getCount = useCallback(
     (name) => {

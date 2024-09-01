@@ -5,8 +5,9 @@ import {
   FileTextOutlined,
   AppstoreOutlined,
   TableOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
-import { Button, Dropdown, Layout, Menu, theme } from "antd";
+import { Avatar, Button, Dropdown, Layout, Menu, theme } from "antd";
 import { useNavigate, Link } from "react-router-dom";
 import STORAGEKEY from "../../config/APP/app.config";
 import AuthStorage from "../../helper/AuthStorage";
@@ -17,6 +18,7 @@ import { HiOutlineLogout, HiOutlineUsers } from "react-icons/hi";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { FaMoneyBillTransfer, FaUsersLine } from "react-icons/fa6";
 import Fade from "react-reveal/Fade";
+import { useSelector } from "react-redux";
 const { Header, Sider, Content } = Layout;
 
 const Sidebar = ({ showSidebar, setSidebar }) => {
@@ -28,9 +30,12 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
   const [userData, setUserData] = useState("");
   const [activeItem, setActiveItem] = useState("Dashboard");
 
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+  let userId = AuthStorage.getStorageData(STORAGEKEY.roles) === 'admin' ? AuthStorage.getStorageData(STORAGEKEY.userId) : ""
+  const getAdminData = useSelector((state) => state.adminData?.getAdminId);
+
+
+
+  const { token: { colorBgContainer, borderRadiusLG }, } = theme.useToken();
 
   // const ShowSubItem = (item) => {
   //   const { text, path } = item;
@@ -206,6 +211,8 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
   }
 
   const getData = AuthStorage.getStorageData(STORAGEKEY.roles);
+  console.log('get storage', getData)
+
   useEffect(() => {
     if (AuthStorage.getStorageData(STORAGEKEY.roles) === "admin") {
       setShowItem("Administration");
@@ -213,12 +220,14 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
   }, [getData]);
 
   const getStorage = AuthStorage.getStorageData(STORAGEKEY.userData);
+  console.log('get  storage DATA', getStorage)
 
   useEffect(() => {
     setUserData(
       JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)) ?? {}
     );
   }, [getStorage]);
+  console.log('USERDATA LOGO', userData)
 
   // useEffect(() => {
   //   setUserData(JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)))
@@ -229,11 +238,11 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
       .flatMap((item) =>
         item.children
           ? [
-              item,
-              ...item.children.flatMap((subItem) =>
-                subItem.children ? [subItem, ...subItem.children] : subItem
-              ),
-            ]
+            item,
+            ...item.children.flatMap((subItem) =>
+              subItem.children ? [subItem, ...subItem.children] : subItem
+            ),
+          ]
           : item
       )
       .find((navItem) => navItem.key === item.key);
@@ -242,6 +251,9 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
       navigate(`/${clickedItem.path}`);
     }
   };
+
+  // console.log('get user data', userData)
+
 
   return (
     <>
@@ -265,7 +277,14 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
                 </Menu>
               }>
               <div className={`d-flex align-items-center ${collapsed ? "justify-content-center w-100" : ""}`}>
-                <FaUserCircle size={30} />
+                <div>
+                  {(localStorage.getItem("roles").toLowerCase() == "admin" && userId)  ? (
+                    <Avatar  size={40} icon={<UserOutlined />} alt="Logo" src={getAdminData?.logo} />
+                  ) : (
+                    <FaUserCircle size={30} />
+                  )}
+
+                </div>
                 {!collapsed && <span className="ms-2">{userData?.name}</span>}
               </div>
             </Dropdown>

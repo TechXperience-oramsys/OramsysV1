@@ -339,7 +339,7 @@ const Transactions = () => {
                 <div class='row text-white align-items-center mb-3 product' style={{ backgroundImage: "linear-gradient(to right, #111827, #121b2f, #131f37, #142240, #152548)" }}>
                   <div class='col-sm-6 col-12 mb-4 mb-sm-0'>
 
-                    <h1 class='h2 mb-0 fw-bold fs-4 ls-tight'>Transaction</h1>
+                    <h1 class='h2 mb-0 fw-bold fs-4 ls-tight'>Transactions</h1>
                   </div>
 
                   <div class='col-sm-6 col-12 text-sm-end'>
