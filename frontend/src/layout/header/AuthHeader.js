@@ -1,24 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 import { FaPowerOff } from "react-icons/fa";
-import { HiOutlineLogout } from 'react-icons/hi';
+import { HiOutlineLogout } from "react-icons/hi";
 import { IoSettingsOutline } from "react-icons/io5";
-import { Link } from 'react-router-dom';
-import LogoutModal from '../../component/Modal/LogoutModal'
-import AuthStorage from '../../helper/AuthStorage'
-import STORAGEKEY from '../../config/APP/app.config'
-import { MenuOutlined } from '@ant-design/icons';
-import { Badge } from 'antd';
-
+import { Link } from "react-router-dom";
+import LogoutModal from "../../component/Modal/LogoutModal";
+import AuthStorage from "../../helper/AuthStorage";
+import STORAGEKEY from "../../config/APP/app.config";
+import { MenuOutlined } from "@ant-design/icons";
+import { Badge } from "antd";
 
 const AuthHeader = ({ showSidebar, setSidebar }) => {
-  const [showspan, setShowspan] = useState(false)
-  const [showSubData, setShowSubData] = useState(false)
-  const [showModal, setshowModal] = useState(false)
-  const [userData, setUserData] = useState('')
+  const [showspan, setShowspan] = useState(false);
+  const [showSubData, setShowSubData] = useState(false);
+  const [showModal, setshowModal] = useState(false);
+  const [userData, setUserData] = useState("");
 
   useEffect(() => {
-    setUserData(JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)) ?? {})
-  }, [AuthStorage.getStorageData(STORAGEKEY.userData)])
+    setUserData(
+      JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)) ?? {}
+    );
+  }, [AuthStorage.getStorageData(STORAGEKEY.userData)]);
 
   return (
     <>
@@ -54,35 +55,44 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
           </div>
         </div>
       </div> */}
-      <div className='open-sidebar d-flex align-items-center' style={{
-        // backgroundColor: "#f1f1f1",
-        padding: "15px"
-      }}>
+      <div
+        className="open-sidebar d-flex align-items-center"
+        style={{
+          // backgroundColor: "#f1f1f1",
+          padding: "15px",
+        }}
+      >
         {/* <div className="d-flex align-items-center">
           <MenuOutlined className='fs-5' onClick={() => setSidebar(!showSidebar)} />
           <span className="ms-2 fw-bold fs-5"></span>
         </div> */}
         <div className="d-flex align-items-center me-5 ms-auto">
-          <div className='me-2'>
-            <Badge className="font-semibold" size={30} status="success" text={userData?.name} />
-
+          <div className="me-2">
+            <Badge
+              className="font-semibold"
+              size={30}
+              status="success"
+              text={userData?.name}
+            />
           </div>
 
-          <div className='ms-2 mx-auto'>
-
-            <button onClick={() => setshowModal(true)} className="nav-link text-dark">
-              <HiOutlineLogout className='me-1' size={15} />
+          <div className="ms-2 mx-auto">
+            <button
+              onClick={() => setshowModal(true)}
+              className="nav-link text-dark"
+            >
+              <HiOutlineLogout className="me-1" size={15} />
               <span>Logout</span>
               {/* <HiOutlineLogout className='text-white' size={22} /><span className='ps-3 fw-semibold text-danger'>Logout</span> */}
             </button>
           </div>
-
         </div>
-
       </div>
-      {showModal && <LogoutModal show={showModal} onHide={() => setshowModal(false)} />}
+      {showModal && (
+        <LogoutModal show={showModal} onHide={() => setshowModal(false)} />
+      )}
     </>
-  )
-}
+  );
+};
 
-export default AuthHeader
+export default AuthHeader;

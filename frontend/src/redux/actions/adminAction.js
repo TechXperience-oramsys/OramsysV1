@@ -26,7 +26,6 @@ export const adminGetAction = () => async (dispatch) => {
           type: GET_ADMIN_DATA,
           payload: res,
         });
-        console.log(res)
       })
       .catch((error) => {
         console.log(error);
@@ -70,7 +69,7 @@ export const adminGetByIdAction = (id) => async (dispatch) => {
     await ApiGet(`admin/get-admin-by/${id}`)
       .then((res) => {
         dispatch({
-          type: GET_ADMIN_BY_ID,
+          type: GET_ADMIN_DATA,
           payload: res,
         });
       })

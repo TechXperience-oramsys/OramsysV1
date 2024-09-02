@@ -202,8 +202,7 @@ const Add_Edit_User = () => {
                 onChange={(e) => {
                   setState({ ...state, name: e.target.value });
                 }}
-                disabled={true}
-                readOnly
+                disabled={id ? true : false}
               />
               {error?.name && (
                 <span
@@ -228,8 +227,7 @@ const Add_Edit_User = () => {
                 onChange={(e) => {
                   setState({ ...state, email: e.target.value });
                 }}
-                disabled={true}
-                readOnly
+                disabled={id ? true : false}
               />
               {error?.email && (
                 <span

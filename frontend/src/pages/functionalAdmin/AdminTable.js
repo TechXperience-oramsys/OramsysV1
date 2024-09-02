@@ -108,7 +108,7 @@ const Admin = () => {
                 <EditOutlined /> Edit
               </Menu.Item>
 
-              <Menu.Item
+              {/* <Menu.Item
                 key="preview"
                 onClick={() => {
                   navigate(`/profile?id=${record?._id}`, {
@@ -117,7 +117,7 @@ const Admin = () => {
                 }}
               >
                 <EyeOutlined /> Preview
-              </Menu.Item>
+              </Menu.Item> */}
             </Menu>
           }
         >

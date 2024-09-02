@@ -53,7 +53,7 @@ Schema.statics.getAll = async function (createdBy, userType) {
   console.log(userType, createdBy, "logs here");
 
   const query = { isDeleted: false };
-  if (userType?.toLowerCase() === "superAdmin") {
+  if (userType?.toLowerCase() === "admin") {
     query.createdBy = createdBy;
   }
 

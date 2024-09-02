@@ -11,7 +11,6 @@ const { Option } = Select;
 const { Dragger } = Upload;
 
 function EditAdmin() {
-
   const [form] = Form.useForm();
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
@@ -19,30 +18,29 @@ function EditAdmin() {
   const id = searchParams.get("id");
   const adminData = useSelector((state) => state.adminData?.getAdminId);
   const adminUpdate = useSelector((state) => state.adminData?.adminUpdate);
-  const [loading, setLoading] = useState(true)
-  console.log('Admin Data', adminData)
-  
+  const [loading, setLoading] = useState(true);
+  console.log("Admin Data", adminData);
+
   useEffect(() => {
     ApiGet(`admin/get-admin-by/${id}`)
       .then((res) => {
-        console.log(res, 'inside out')
+        console.log(res, "inside out");
         setFormData({
-          corporationName: res.data?.corporationName || "",
-          businessEmail: res.data?.businessEmail || "",
-          registrationNumber: res.data?.registrationNumber || "",
-          phone: res.data?.phone || "",
-          address1: res.data?.address1 || "",
-          address2: res.data?.address2 || "",
-          buildingNumber: res.data?.buildingNumber || "",
-          branch: res.data?.branch || "",
-          logo: res.data?.logo || null,
-          adminName: res.data?.adminName || "",
+          corporationName: res.data[0]?.corporationName || "",
+          businessEmail: res.data[0]?.businessEmail || "",
+          registrationNumber: res.data[0]?.registrationNumber || "",
+          phone: res.data[0]?.phone || "",
+          address1: res.data[0]?.address1 || "",
+          address2: res.data[0]?.address2 || "",
+          buildingNumber: res.data[0]?.buildingNumber || "",
+          branch: res.data[0]?.branch || "",
+          logo: res.data[0]?.logo || null,
+          adminName: res.data[0]?.adminName || "",
         });
       })
       .catch((error) => toast.error(error))
-    .finally(() => setLoading(false))
+      .finally(() => setLoading(false));
   }, []);
- 
 
   const handleFormChange = (changedValues) => {
     setFormData((prevState) => ({
@@ -116,10 +114,7 @@ function EditAdmin() {
   //   }
   // }, [adminData?.data, form]);
 
-
-  if (loading) return (
-    <div>Loading...</div>
-  )
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div className="container mt-5">

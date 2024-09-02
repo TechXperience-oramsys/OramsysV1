@@ -79,7 +79,7 @@ const getAdminById = () => async (req, res) => {
     }
     return res
       .status(httpStatus.OK)
-      .json(new APIResponse(user, "Admin get successfully.", httpStatus.OK));
+      .json(new APIResponse([user], "Admin get successfully.", httpStatus.OK));
   } catch (error) {
     return res
       .status(httpStatus.BAD_REQUEST)

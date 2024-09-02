@@ -51,15 +51,13 @@ const Transactions = () => {
 
   useEffect(() => {
     let id =
-      AuthStorage.getStorageData(STORAGEKEY.roles) == "user"
+      AuthStorage.getStorageData(STORAGEKEY.roles) !== "superAdmin"
         ? AuthStorage.getStorageData(STORAGEKEY.userId)
         : "all";
     dispatch(getAllTransaction(id));
   }, [dispatch]);
 
   const refreshPage = useCallback(() => {
-    console.log(getAlltransactionData.data);
-
     if (
       getAlltransactionData &&
       getAlltransactionData.data &&

@@ -17,6 +17,7 @@ import { HiOutlineLogout, HiOutlineUsers } from "react-icons/hi";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { FaMoneyBillTransfer, FaUsersLine } from "react-icons/fa6";
 import Fade from "react-reveal/Fade";
+import { ApiGet } from "../../helper/API/ApiData";
 const { Header, Sider, Content } = Layout;
 
 const Sidebar = ({ showSidebar, setSidebar }) => {
@@ -27,6 +28,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
   const [showSubItem, setShowSubItem] = useState("");
   const [userData, setUserData] = useState("");
   const [activeItem, setActiveItem] = useState("Dashboard");
+  const [logo, setLogo] = useState("");
   const adminId =
     AuthStorage.getStorageData(STORAGEKEY.roles) === "admin"
       ? AuthStorage.getStorageData("userId")
@@ -143,12 +145,6 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
       label: "Transactions",
       path: "transactions",
     },
-    {
-      key: "9",
-      icon: <HiOutlineUsers />,
-      label: "Admins",
-      path: "admins",
-    },
   ];
 
   const navbarDataForAdmin = [
@@ -167,7 +163,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           key: "1-2",
           icon: <FaUsersLine />,
           label: "Profile",
-          path: `profile?id=${adminId}`,
+          path: `admins`,
         },
         {
           key: "1-3",
@@ -221,6 +217,15 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
     setUserData(
       JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)) ?? {}
     );
+    if (adminId) {
+      ApiGet(`admin/get-admin-by/${adminId}`)
+        .then((res) => {
+          setLogo(res.data[0]?.logo);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, [getStorage]);
 
   // useEffect(() => {
@@ -278,7 +283,11 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
                   collapsed ? "justify-content-center w-100" : ""
                 }`}
               >
-                <FaUserCircle size={30} />
+                {logo.length > 0 ? (
+                  <img src={logo} alt="user" className="user__logo" />
+                ) : (
+                  <FaUserCircle size={30} />
+                )}
                 {!collapsed && <span className="ms-2">{userData?.name}</span>}
               </div>
             </Dropdown>
