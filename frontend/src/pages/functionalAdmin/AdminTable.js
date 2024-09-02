@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import { userGetAction } from '../../../redux/actions/userAction';
-import { Table, Badge, Button, Menu, Dropdown } from "antd";
+import { Table, Badge, Button, Menu, Dropdown, Avatar } from "antd";
 
-import { EditOutlined, EllipsisOutlined, EyeOutlined } from "@ant-design/icons";
+import { EditOutlined, EllipsisOutlined, EyeOutlined, UserOutlined } from "@ant-design/icons";
 import {
   adminGetAction,
   adminGetByIdAction,
@@ -31,7 +31,7 @@ const Admin = () => {
 
   useEffect(() => {
     if (userId) {
-      dispatch(adminGetByIdAction(userId));
+      dispatch(adminGetAction(userId));
     } else {
       dispatch(adminGetAction());
     }
@@ -47,6 +47,21 @@ const Admin = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const columns = [
+    {
+      title: "Logo",
+      dataIndex: "logo",
+      key: "logo",
+      align: "center",
+      render: (logo) => (
+        <Avatar
+          size={40} // Adjust size as needed
+          src={logo}
+          icon={<UserOutlined />} // Default icon if no logo is provided
+          alt="Logo"
+          style={{ backgroundColor: "#f0f0f0" }} // Optional: background color for the avatar
+        />
+      ),
+    },
     {
       title: "Branch",
       dataIndex: "branch",

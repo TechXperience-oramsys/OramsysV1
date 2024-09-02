@@ -5,8 +5,9 @@ import {
   FileTextOutlined,
   AppstoreOutlined,
   TableOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
-import { Button, Dropdown, Layout, Menu, theme } from "antd";
+import { Avatar, Button, Dropdown, Layout, Menu, theme } from "antd";
 import { useNavigate, Link } from "react-router-dom";
 import STORAGEKEY from "../../config/APP/app.config";
 import AuthStorage from "../../helper/AuthStorage";
@@ -29,39 +30,16 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
   const [userData, setUserData] = useState("");
   const [activeItem, setActiveItem] = useState("Dashboard");
   const [logo, setLogo] = useState("");
+
   const adminId =
     AuthStorage.getStorageData(STORAGEKEY.roles) === "admin"
       ? AuthStorage.getStorageData("userId")
       : "";
+  console.log("admin id", adminId);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-  // const ShowSubItem = (item) => {
-  //   const { text, path } = item;
-  //   setActiveItem(text);
-
-  //   if (text === "Administration") {
-  //     if (text !== showItem) {
-  //       setShowItem(text);
-  //       setActiveItem(text);
-  //     } else {
-  //       setShowItem("");
-  //     }
-  //   } else {
-  //     if (text === "Master Data") {
-  //       if (text !== showSubItem) {
-  //         setShowSubItem(text);
-  //         setActiveItem(text);
-  //       } else {
-  //         setShowSubItem("");
-  //       }
-  //     } else {
-  //       navigate(`/${path}`);
-  //     }
-  //   }
-  // };
-  // const dispatch = useDispatch()
   let navbarData = [];
 
   const navbarDataForSuperAdmin = [
@@ -204,12 +182,13 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
     navbarData = navbarDataForSuperAdmin;
   }
 
-  const getData = AuthStorage.getStorageData(STORAGEKEY.roles);
-  useEffect(() => {
-    if (AuthStorage.getStorageData(STORAGEKEY.roles) === "admin") {
-      setShowItem("Administration");
-    }
-  }, [getData]);
+  // const getData = AuthStorage.getStorageData(STORAGEKEY.roles);
+
+  // useEffect(() => {
+  //   if (AuthStorage.getStorageData(STORAGEKEY.roles) === "admin") {
+  //     setShowItem("Administration");
+  //   }
+  // }, [getData]);
 
   const getStorage = AuthStorage.getStorageData(STORAGEKEY.userData);
 
@@ -228,9 +207,6 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
     }
   }, [getStorage]);
 
-  // useEffect(() => {
-  //   setUserData(JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)))
-  // }, [])
   const handleMenuClick = (item) => {
     setActiveItem(item.key);
     const clickedItem = navbarData

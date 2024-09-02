@@ -253,7 +253,6 @@ const Add_Edit_User = () => {
                   setIsActive(true);
                 }}
                 disabled={isView}
-                disableClearable
                 value={state.department}
               >
                 <option value="" disabled selected>
@@ -287,7 +286,6 @@ const Add_Edit_User = () => {
                   setIsActive(true);
                 }}
                 disabled={isView}
-                disableClearable
                 value={state.profile}
               >
                 <option value="" disabled selected>

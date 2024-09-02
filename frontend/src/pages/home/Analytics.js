@@ -1,6 +1,8 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { LineChart as LineChartIcon } from 'lucide-react';
+import { Table, Card, Row, Col } from 'antd';
+import { RiseOutlined } from '@ant-design/icons';
 
 // Sample data
 const data = [
@@ -39,6 +41,25 @@ const ChartComponent = () => {
           <Line type="monotone" dataKey="loss" stroke="#FF1616" />
         </LineChart>
       </ResponsiveContainer>
+
+      <Row gutter={16} style={{ marginBottom: '10px' }}>
+        <Col span={8}>
+          <Card title="Average Monthly Gains " bordered={false}>
+            <div><RiseOutlined /></div>
+            {/* ${(summaryData.totalSpending / 12).toFixed(2)} */} 1,000,000
+          </Card>
+        </Col>
+        <Col span={8}>
+          <Card title="Average Monthly Loss" bordered={false}>
+            {/* ${(summaryData.totalIncome / 12).toFixed(2)} */} 2,000,000
+          </Card>
+        </Col>
+        <Col span={8}>
+          <Card title="Average Monthly Savings" bordered={false}>
+            {/* ${(summaryData.totalSavings / 12).toFixed(2)} */} 6,000,000
+          </Card>
+        </Col>
+      </Row>
     </div>
   );
 };

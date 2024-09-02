@@ -226,12 +226,12 @@ const Transactions = () => {
       className: "hide-on-md",
       render: () => loginData?.data?.name,
     },
-    {
-      title: "Transaction Number",
-      dataIndex: "_id",
-      key: "_id",
-      className: "hide-on-md",
-    },
+    // {
+    //   title: "Transaction Number",
+    //   dataIndex: "_id",
+    //   key: "_id",
+    //   className: "hide-on-md",
+    // },
     {
       title: "Borrower",
       dataIndex: "borrower_Applicant",
@@ -279,9 +279,8 @@ const Transactions = () => {
       className: "hide-on-md",
       render: (termSheet, record) => (
         <div
-          className={`${
-            termSheet === "Not Signed" ? "bg-red-100" : "bg-green-100"
-          } text-center cursor-pointer`}
+          className={`${termSheet === "Not Signed" ? "bg-red-100" : "bg-green-100"
+            } text-center cursor-pointer`}
         >
           <p
             onClick={() => {
@@ -405,20 +404,17 @@ const Transactions = () => {
 
   return (
     <>
-      <div class="mx-5 d-flex flex-column flex-lg-row h-lg-full">
-        <div id="dash" class="h-screen flex-grow-1">
-          <header class="bg-surface-primary pt-6">
-            <div class="container-fluid">
-              <div id="dash" class="mb-npx">
-                <div
-                  class="row text-white align-items-center mb-3 product"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(to right, #111827, #121b2f, #131f37, #142240, #152548)",
-                  }}
-                >
-                  <div class="col-sm-6 col-12 mb-4 mb-sm-0">
-                    <h1 class="h2 mb-0 fw-bold fs-4 ls-tight">Transaction</h1>
+
+
+      <div class='mx-5 d-flex flex-column flex-lg-row h-lg-full'>
+        <div id='dash' class='h-screen flex-grow-1'>
+          <header class='bg-surface-primary pt-6'>
+            <div class='container-fluid'>
+              <div id='dash' class='mb-npx'>
+                <div class='row text-white align-items-center mb-3 product' style={{ backgroundImage: "linear-gradient(to right, #111827, #121b2f, #131f37, #142240, #152548)" }}>
+                  <div class='col-sm-6 col-12 mb-4 mb-sm-0'>
+
+                    <h1 class='h2 mb-0 fw-bold fs-4 ls-tight'>Transactions</h1>
                   </div>
 
                   <div class="col-sm-6 col-12 text-sm-end">
