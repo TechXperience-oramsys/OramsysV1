@@ -196,7 +196,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
     setUserData(
       JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)) ?? {}
     );
-    if (adminId) {
+    if (adminId.length > 0) {
       ApiGet(`admin/get-admin-by/${adminId}`)
         .then((res) => {
           setLogo(res.data[0]?.logo);
@@ -259,7 +259,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
                   collapsed ? "justify-content-center w-100" : ""
                 }`}
               >
-                {logo.length > 0 ? (
+                {logo?.length > 0 ? (
                   <img src={logo} alt="user" className="user__logo" />
                 ) : (
                   <FaUserCircle size={30} />
