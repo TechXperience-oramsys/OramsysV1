@@ -15,7 +15,7 @@ const Users = () => {
 
   const userData = useSelector((state) => state.userData?.getUserData);
 
-  console.log("userData==================", userData);
+  // console.log("userData==================", userData);
 
   useEffect(() => {
     setGetUserDatas(userData);
@@ -76,17 +76,17 @@ const Users = () => {
         <Dropdown
           overlay={
             <Menu>
-              <Menu.Item
+              {/* <Menu.Item
                 key="edit"
                 onClick={() => navigate(`/edit-user?id=${record?._id}`)}
               >
                 <EditOutlined /> Edit
-              </Menu.Item>
+              </Menu.Item> */}
 
               <Menu.Item
                 key="preview"
                 onClick={() => {
-                  navigate(`/add-edit-entities?id=${record._id}`, {
+                  navigate(`/edit-user?id=${record?._id}`, {
                     state: [{ type: `${record.type}` }, { isView: false }],
                   });
                 }}
@@ -148,6 +148,7 @@ const Users = () => {
           <div className="table-responsive">
             <Table
               dataSource={getAllUsers}
+              rowKey="_id"
               columns={columns}
               pagination={{
                 pageSize: postsPerPage,

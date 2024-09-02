@@ -30,38 +30,10 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
   const [userData, setUserData] = useState("");
   const [activeItem, setActiveItem] = useState("Dashboard");
 
-  let userId = AuthStorage.getStorageData(STORAGEKEY.roles) === 'admin' ? AuthStorage.getStorageData(STORAGEKEY.userId) : ""
-  const getAdminData = useSelector((state) => state.adminData?.getAdminId);
+  const adminId = AuthStorage.getStorageData(STORAGEKEY.roles) === "admin" ? AuthStorage.getStorageData("userId") : "";
+  console.log('admin id', adminId)
+  const {  token: { colorBgContainer, borderRadiusLG } } = theme.useToken();
 
-
-
-  const { token: { colorBgContainer, borderRadiusLG }, } = theme.useToken();
-
-  // const ShowSubItem = (item) => {
-  //   const { text, path } = item;
-  //   setActiveItem(text);
-
-  //   if (text === "Administration") {
-  //     if (text !== showItem) {
-  //       setShowItem(text);
-  //       setActiveItem(text);
-  //     } else {
-  //       setShowItem("");
-  //     }
-  //   } else {
-  //     if (text === "Master Data") {
-  //       if (text !== showSubItem) {
-  //         setShowSubItem(text);
-  //         setActiveItem(text);
-  //       } else {
-  //         setShowSubItem("");
-  //       }
-  //     } else {
-  //       navigate(`/${path}`);
-  //     }
-  //   }
-  // };
-  // const dispatch = useDispatch()
   let navbarData = [];
 
   const navbarDataForSuperAdmin = [
@@ -169,7 +141,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           key: "1-2",
           icon: <FaUsersLine />,
           label: "Profile",
-          path: "admins",
+          path: `profile?id=${adminId}`,
         },
         {
           key: "1-3",
@@ -210,28 +182,22 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
     navbarData = navbarDataForSuperAdmin;
   }
 
-  const getData = AuthStorage.getStorageData(STORAGEKEY.roles);
-  console.log('get storage', getData)
+  // const getData = AuthStorage.getStorageData(STORAGEKEY.roles);
 
-  useEffect(() => {
-    if (AuthStorage.getStorageData(STORAGEKEY.roles) === "admin") {
-      setShowItem("Administration");
-    }
-  }, [getData]);
+  // useEffect(() => {
+  //   if (AuthStorage.getStorageData(STORAGEKEY.roles) === "admin") {
+  //     setShowItem("Administration");
+  //   }
+  // }, [getData]);
 
   const getStorage = AuthStorage.getStorageData(STORAGEKEY.userData);
-  console.log('get  storage DATA', getStorage)
 
   useEffect(() => {
     setUserData(
       JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)) ?? {}
     );
   }, [getStorage]);
-  console.log('USERDATA LOGO', userData)
 
-  // useEffect(() => {
-  //   setUserData(JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)))
-  // }, [])
   const handleMenuClick = (item) => {
     setActiveItem(item.key);
     const clickedItem = navbarData
@@ -252,8 +218,6 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
     }
   };
 
-  // console.log('get user data', userData)
-
 
   return (
     <>
@@ -264,27 +228,20 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           className="bg-gray-100"
           collapsible
           collapsed={collapsed}
-          width={210}>
+          width={210}
+        >
           <div className="demo-logo-vertical" />
-          <div className={`d-flex ${collapsed ? "justify-content-center" : "justify-content-between"} align-items-center p-3`}
-            style={{ backgroundColor: "#F0F0F0" }}>
+          <div className={`d-flex ${collapsed ? "justify-content-center" : "justify-content-between" } align-items-center p-3`} style={{ backgroundColor: "#F0F0F0" }}>
             <Dropdown
               overlay={
                 <Menu>
                   <Menu.Item key="logout" onClick={() => setshowModal(true)}>
                     <HiOutlineLogout size={20} /> Logout
                   </Menu.Item>
-                </Menu>
-              }>
-              <div className={`d-flex align-items-center ${collapsed ? "justify-content-center w-100" : ""}`}>
-                <div>
-                  {(localStorage.getItem("roles").toLowerCase() == "admin" && userId)  ? (
-                    <Avatar  size={40} icon={<UserOutlined />} alt="Logo" src={getAdminData?.logo} />
-                  ) : (
-                    <FaUserCircle size={30} />
-                  )}
-
-                </div>
+                </Menu>}>
+              
+              <div className={`d-flex align-items-center ${collapsed ? "justify-content-center w-100" : "" }`}>
+                <FaUserCircle size={30} />
                 {!collapsed && <span className="ms-2">{userData?.name}</span>}
               </div>
             </Dropdown>

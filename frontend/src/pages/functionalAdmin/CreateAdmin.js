@@ -77,7 +77,7 @@ const CreateAdmin = () => {
 
       try {
         const response = await axios.post(
-          "https://oramsysdev.com/file/upload-file",
+          "https://backend.oramsysdev.com/file/upload-file",
           formData,
           {
             headers: {

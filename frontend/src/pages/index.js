@@ -43,6 +43,7 @@ import Admin from "./functionalAdmin/AdminTable";
 import ForgetPassword from "./functionalAdmin/ForgetPassword";
 import UserForgetPassword from "./signIn/UserForgetPassword";
 import EditAdmin from "./functionalAdmin/EditAdmin";
+import profile from "./functionalAdmin/profile";
 
 const pathForLayout = [
   "/",
@@ -92,13 +93,17 @@ const Index = () => {
       path: "/admins",
       component: Admin,
     },
-    // {
-    //   path: "/entities-role",
-    //   component: EntitiesRole,
-    // },
+    {
+      path: "/add-edit-entities",
+      component: Add_Edit_Entities,
+    },
     {
       path: "/admin-edit",
       component: EditAdmin,
+    },
+    {
+      path: "/profile",
+      component: profile,
     },
     {
       path: "/transactions",
@@ -119,6 +124,10 @@ const Index = () => {
     {
       path: "/users",
       component: Users,
+    },
+    {
+      path: "/final-page",
+      component: FinalPage,
     },
   ];
   const superAdminRoutes = [
@@ -161,6 +170,10 @@ const Index = () => {
     {
       path: "/admin-edit",
       component: EditAdmin,
+    },
+    {
+      path: "/profile",
+      component: profile,
     },
     {
       path: "/transactions",

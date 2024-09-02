@@ -136,7 +136,7 @@ const Header = () => {
             <div className="logo-area">
               <a href="/" className="temp-logo">
                 <div className="lgo-img">
-                  <img src="./assets/img/my-img/lgo-red.png" alt="logo" />
+                  <img src="./assets/img/logo.png" alt="logo" />
                 </div>
               </a>
             </div>
@@ -144,7 +144,7 @@ const Header = () => {
               <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul className="navbar-nav mr-auto mb-2 mb-lg-0">
+              <ul className="navbar-nav mr-auto mb-2 text-dark mb-lg-0">
                 <li className="nav-item">
                   <a className="nav-link active" aria-current="page" href="#">About us</a>
                 </li>

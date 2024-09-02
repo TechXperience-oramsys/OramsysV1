@@ -95,24 +95,24 @@ export const saveDetails = (body) => async (dispatch) => {
       payload: true,
     });
     await ApiPost(`transaction/details`, body)
-    .then((res) => {
-      dispatch({
-        type: DETAILS,
-        payload: res,
+      .then((res) => {
+        dispatch({
+          type: DETAILS,
+          payload: res,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
       });
-    })
-    .catch((error) => {
-      console.log(error);
+    dispatch({
+      type: DETAILS_LOADING,
+      payload: false,
     });
-  dispatch({
-    type: DETAILS_LOADING,
-    payload: false,
-  });
 
-  dispatch({
-    type: IS_LOADING,
-    payload: false,
-  });
+    dispatch({
+      type: IS_LOADING,
+      payload: false,
+    });
   } catch (err) {
     dispatch({
       type: DETAILS_ERROR,
@@ -129,16 +129,19 @@ export const saveDetails = (body) => async (dispatch) => {
       payload: false,
     });
   }
-}
+};
 
 export const getAllTransaction = (id) => async (dispatch) => {
   try {
-    dispatch({ type: IS_LOADING, payload: true, });
-    dispatch({ type: GET_ALL_TRANSACTION_LOADING, payload: true,});
+    dispatch({ type: IS_LOADING, payload: true });
+    dispatch({ type: GET_ALL_TRANSACTION_LOADING, payload: true });
     let role = localStorage.getItem("roles");
-    let user = localStorage.getItem("userData") && JSON.parse(localStorage.getItem("userData"));
-    let url = role.toLocaleLowerCase() != "admin"
-        ? `transaction/get?id=${id}&role=${role}&adminId=${user?.admin}`
+    let user =
+      localStorage.getItem("userData") &&
+      JSON.parse(localStorage.getItem("userData"));
+    let url =
+      role.toLocaleLowerCase() != "admin"
+        ? `transaction/get?id=${id}&role=${role}&adminId=${user?.id}`
         : `transaction/get?id=${id}&role=${role}`;
 
     await ApiGet(`${url}`)
