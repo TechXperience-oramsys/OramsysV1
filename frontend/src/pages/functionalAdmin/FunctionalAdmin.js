@@ -45,6 +45,11 @@ const FunctionalAdmin = () => {
   const handelChange = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
   };
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      Login(e); // Trigger the Login function
+    }
+  };
 
   const validation = () => {
     let param = false;
@@ -67,14 +72,18 @@ const FunctionalAdmin = () => {
   };
   const Login = async (e) => {
     e.preventDefault();
+  
     if (validation()) {
       return;
     }
+  
     let data = {
       email: login.email,
       password: login.password,
     };
-    setLoading(true);
+  
+    setLoading(true); // Start loading spinner
+  
     admin
       .adminLogin(data)
       .then((res) => {
@@ -82,14 +91,11 @@ const FunctionalAdmin = () => {
           type: LOGIN,
           payload: { res: res.data, is_loggedin: true },
         });
+  
         if (res.data.status === 200 && res.data.data.token) {
           toast.success(res.data.message);
           navigate("/dashboard");
-          AuthStorage.setStorageData(
-            STORAGEKEY.token,
-            res.data.data.token,
-            true
-          );
+          AuthStorage.setStorageData(STORAGEKEY.token, res.data.data.token, true);
           AuthStorage.setStorageData(STORAGEKEY.roles, "admin", true);
           AuthStorage.setStorageData(STORAGEKEY.userId, res.data.data.id, true);
           AuthStorage.setStorageData(
@@ -103,9 +109,13 @@ const FunctionalAdmin = () => {
       })
       .catch((error) => {
         console.log(error);
+        toast.error("Login failed. Please try again.");
+      })
+      .finally(() => {
+        setLoading(false); // Stop loading spinner
       });
-    setLoading(false);
   };
+  
   const { authState, oktaAuth } = useOktaAuth();
   const loginWithRedirect = () =>
     oktaAuth.signInWithRedirect({ originalUri: `/` });
@@ -145,6 +155,7 @@ const FunctionalAdmin = () => {
                         type="email"
                         name="email"
                         onChange={handelChange}
+                        onKeyDown={handleKeyPress}
                         className="form-control"
                         id="floatingInput"
                         placeholder="Email"
@@ -167,6 +178,7 @@ const FunctionalAdmin = () => {
                       <input
                         type={passwordVisible ? "text" : "password"}
                         onChange={handelChange}
+                        onKeyDown={handleKeyPress}
                         name="password"
                         className="form-control"
                         id="floatingPassword"

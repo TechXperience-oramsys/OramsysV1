@@ -43,6 +43,11 @@ const AdminLogin = () => {
   const handelChange = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
   };
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      Login(e); // Trigger the Login function
+    }
+  };
 
   const validation = () => {
     let param = false;
@@ -117,8 +122,7 @@ const AdminLogin = () => {
                   <div className="mb-4">
                     <h3 className="title-admin">Super Admin</h3>
                     <p className="mb-4">
-                      This is the administrative portal, if you are not an
-                      administrator you cannot have access. Please go to the
+                      This is the oramsys administrative portal. if you are not an administrator you cannot have access. Please go to the
                       client login
                     </p>
                   </div>
@@ -129,6 +133,7 @@ const AdminLogin = () => {
                         type="email"
                         name="email"
                         onChange={(e) => handelChange(e)}
+                        onKeyDown={handleKeyPress}
                         className="form-control"
                         id="floatingInput"
                         placeholder="Email"
@@ -151,6 +156,7 @@ const AdminLogin = () => {
                       <input
                         type={passwordVisible ? "text" : "password"}
                         onChange={(e) => handelChange(e)}
+                        onKeyDown={handleKeyPress}
                         name="password"
                         className="form-control"
                         id="floatingPassword"

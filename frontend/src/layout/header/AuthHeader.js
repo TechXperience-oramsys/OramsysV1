@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom';
 import LogoutModal from '../../component/Modal/LogoutModal'
 import AuthStorage from '../../helper/AuthStorage'
 import STORAGEKEY from '../../config/APP/app.config'
-import { MenuOutlined } from '@ant-design/icons';
-import { Badge } from 'antd';
+import { GlobalOutlined, MenuOutlined } from '@ant-design/icons';
+import { Badge, Button, Dropdown, Menu } from 'antd';
 
 
 const AuthHeader = ({ showSidebar, setSidebar }) => {
@@ -19,6 +19,27 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
   useEffect(() => {
     setUserData(JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)) ?? {})
   }, [AuthStorage.getStorageData(STORAGEKEY.userData)])
+
+  const handleMenuClick = (e) => {
+    // Handle language change here
+    console.log('Selected language:', e.key);
+    // Example: navigate to different language route or update state
+  };
+
+  const menu = (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key="en">
+        English
+      </Menu.Item>
+      <Menu.Item key="es">
+        Español
+      </Menu.Item>
+      <Menu.Item key="fr">
+        Français
+      </Menu.Item>
+      {/* Add more languages as needed */}
+    </Menu>
+  );
 
   return (
     <>
@@ -65,11 +86,9 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
         <div className="d-flex align-items-center me-5 ms-auto">
           <div className='me-2'>
             <Badge className="font-semibold" size={30} status="success" text={userData?.name} />
-
           </div>
 
           <div className='ms-2 mx-auto'>
-
             <button onClick={() => setshowModal(true)} className="nav-link text-dark">
               <HiOutlineLogout className='me-1' size={15} />
               <span>Logout</span>
@@ -77,6 +96,13 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
             </button>
           </div>
 
+          <Dropdown overlay={menu} className="ms-2" trigger={['click']}>
+            <Button
+              icon={<GlobalOutlined style={{ fontSize: '24px' }} />} // Increase the icon size here
+              shape="square"
+              style={{ width: '30px', height: '30px' }} // Ensure the button is square
+            />
+          </Dropdown>
         </div>
 
       </div>

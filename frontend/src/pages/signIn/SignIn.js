@@ -71,6 +71,12 @@ const SignIn = () => {
     dispatch(loginAction(data));
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      Login(e); // Trigger the Login function
+    }
+  };
+
   const { authState, oktaAuth } = useOktaAuth();
   const loginWithRedirect = () =>
     oktaAuth.signInWithRedirect({ originalUri: `/` });
@@ -109,6 +115,7 @@ const SignIn = () => {
                       type="email"
                       name="email"
                       onChange={(e) => handelChange(e)}
+                      onKeyDown={handleKeyPress}
                       className="form-control"
                       id="floatingInput"
                       placeholder="Email"
@@ -131,6 +138,7 @@ const SignIn = () => {
                     <input
                       type={passwordVisible ? "text" : "password"}
                       onChange={(e) => handelChange(e)}
+                      onKeyDown={handleKeyPress}
                       name="password"
                       className="form-control"
                       id="floatingPassword"
