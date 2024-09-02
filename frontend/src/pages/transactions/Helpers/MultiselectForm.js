@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Form, Col, Row } from 'react-bootstrap';
+import { OptionalSpan } from './OptionalTags';
 
 export const MultiSelectForm = ({ facility, setFacility, error, options, propertyName, label }) => {
     const toggleRef = useRef(null);
@@ -103,7 +104,7 @@ export const MultiSelectForm = ({ facility, setFacility, error, options, propert
 
     return (
         <Form.Group as={Col} controlId={`formGrid${propertyName}`}>
-            <Form.Label>{label}</Form.Label>
+            <Form.Label>{label} <OptionalSpan /></Form.Label>
             <div style={StyleSheet.container}>
                 <div ref={toggleRef} style={view ? StyleSheet.overall : StyleSheet.closeView}>
                     {options.map((item, i) => (

@@ -228,12 +228,12 @@ const Transactions = () => {
       className: "hide-on-md",
       render: () => loginData?.data?.name,
     },
-    {
-      title: "Transaction Number",
-      dataIndex: "_id",
-      key: "_id",
-      className: "hide-on-md",
-    },
+    // {
+    //   title: "Transaction Number",
+    //   dataIndex: "_id",
+    //   key: "_id",
+    //   className: "hide-on-md",
+    // },
     {
       title: "Borrower",
       dataIndex: "borrower_Applicant",
@@ -281,9 +281,8 @@ const Transactions = () => {
       className: "hide-on-md",
       render: (termSheet, record) => (
         <div
-          className={`${
-            termSheet === "Not Signed" ? "bg-red-100" : "bg-green-100"
-          } text-center cursor-pointer`}
+          className={`${termSheet === "Not Signed" ? "bg-red-100" : "bg-green-100"
+            } text-center cursor-pointer`}
         >
           <p
             onClick={() => {

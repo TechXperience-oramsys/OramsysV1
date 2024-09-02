@@ -838,20 +838,20 @@ const Facility = ({ hendelCancel, hendelNext }) => {
       detail:
         transactionType !== "Import"
           ? {
-              ...transactionData.details,
-              shippingOptions: {
-                ...transactionData?.details?.shippingOptions,
-                warehouses:
-                  transactionData?.details?.shippingOptions?.warehouses?.map(
-                    (ele) => {
-                      return {
-                        warehouse: ele?.warehouse?.value,
-                        warehouseCompany: ele?.warehouseCompany?.value,
-                      };
-                    }
-                  ),
-              },
-            }
+            ...transactionData.details,
+            shippingOptions: {
+              ...transactionData?.details?.shippingOptions,
+              warehouses:
+                transactionData?.details?.shippingOptions?.warehouses?.map(
+                  (ele) => {
+                    return {
+                      warehouse: ele?.warehouse?.value,
+                      warehouseCompany: ele?.warehouseCompany?.value,
+                    };
+                  }
+                ),
+            },
+          }
           : "",
 
       keyParties: {
@@ -945,20 +945,20 @@ const Facility = ({ hendelCancel, hendelNext }) => {
       detail:
         transactionType !== "Import"
           ? {
-              ...transactionData.details,
-              shippingOptions: {
-                ...transactionData?.details?.shippingOptions,
-                warehouses:
-                  transactionData?.details?.shippingOptions?.warehouses?.map(
-                    (ele) => {
-                      return {
-                        warehouse: ele?.warehouse?.value,
-                        warehouseCompany: ele?.warehouseCompany?.value,
-                      };
-                    }
-                  ),
-              },
-            }
+            ...transactionData.details,
+            shippingOptions: {
+              ...transactionData?.details?.shippingOptions,
+              warehouses:
+                transactionData?.details?.shippingOptions?.warehouses?.map(
+                  (ele) => {
+                    return {
+                      warehouse: ele?.warehouse?.value,
+                      warehouseCompany: ele?.warehouseCompany?.value,
+                    };
+                  }
+                ),
+            },
+          }
           : "",
       keyParties: {
         keyParties: transactionData.keyParties?.keyParties?.map((ele) => {
@@ -1279,10 +1279,10 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                   min={
                     transactionData.details.contractDetails.contractDate
                       ? new Date(
-                          transactionData.details.contractDetails.contractDate
-                        )
-                          .toISOString()
-                          .split("T")[0]
+                        transactionData.details.contractDetails.contractDate
+                      )
+                        .toISOString()
+                        .split("T")[0]
                       : ""
                   }
                   value={facility.interestPaymentDate}
@@ -1319,7 +1319,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
               </Form.Group>
 
               <Form.Group as={Col} lg={3} controlId="formGridZip">
-                <Form.Label>Annual Management Fee</Form.Label>
+                <Form.Label>Annual Management Fee <OptionalSpan /></Form.Label>
                 <InputGroup>
                   <Form.Control
                     name="managementFee"
@@ -1335,7 +1335,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
             </Row>
             <Row className="mt-3">
               <Form.Group as={Col} lg={3} controlId="formGridZip">
-                <Form.Label>Drawdown Fee</Form.Label>
+                <Form.Label>Drawdown Fee <OptionalSpan /></Form.Label>
                 <InputGroup>
                   <Form.Control
                     name="drawdownFee"
@@ -1349,7 +1349,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
               </Form.Group>
 
               <Form.Group as={Col} lg={3} controlId="formGridZip">
-                <Form.Label>Commitment Fee</Form.Label>
+                <Form.Label>Commitment Fee <OptionalSpan /></Form.Label>
                 <InputGroup>
                   <Form.Control
                     name="commitmentFee"
@@ -1379,7 +1379,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
               </Form.Group>
 
               <Form.Group as={Col} lg={3} controlId="formGridZip">
-                <Form.Label>Pre-Payment</Form.Label>
+                <Form.Label>Pre-Payment <OptionalSpan /></Form.Label>
                 <InputGroup>
                   <Form.Control
                     name="prePayment"
@@ -1395,7 +1395,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
 
             <Row className="mt-3">
               <Form.Group as={Col} lg={3} controlId="formGridZip">
-                <Form.Label>Cancellation Fee</Form.Label>
+                <Form.Label>Cancellation Fee <OptionalSpan /></Form.Label>
                 <InputGroup>
                   <Form.Control
                     name="cancellationFee"
@@ -1409,7 +1409,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
               </Form.Group>
 
               <Form.Group as={Col} lg={3} controlId="formGridZip">
-                <Form.Label>Agency Fee</Form.Label>
+                <Form.Label>Agency Fee <OptionalSpan /></Form.Label>
                 <InputGroup>
                   <Form.Control
                     name="agencyFee"
@@ -1423,7 +1423,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
               </Form.Group>
 
               <Form.Group as={Col} lg={3} controlId="formGridZip">
-                <Form.Label>Advisory Fee</Form.Label>
+                <Form.Label>Advisory Fee <OptionalSpan /></Form.Label>
                 <InputGroup>
                   <Form.Control
                     name="advisoryFee"
@@ -1437,7 +1437,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
               </Form.Group>
 
               <Form.Group as={Col} lg={3} controlId="formGridZip">
-                <Form.Label>Default Interest</Form.Label>
+                <Form.Label>Default Interest <OptionalSpan /></Form.Label>
                 <InputGroup>
                   <Form.Control
                     name="defaultInterest"
@@ -1458,7 +1458,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
             <h4 className="fs-5 fw-bold mb-4">Loan to Collateral Value</h4>
             <Row>
               <Form.Group as={Col} lg={3} controlId="formGridZip">
-                <Form.Label></Form.Label>
+                <Form.Label><span className='text-danger text-red fw-lighter fst-italic'>This field is not editable</span></Form.Label>
                 <InputGroup>
                   <Form.Control
                     name=""
@@ -1705,40 +1705,40 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                         actions={
                           isView
                             ? [
-                                {
-                                  icon: "preview",
-                                  tooltip: "View Currency hedge details",
-                                  onClick: (event, rowData) => {
-                                    setCurrencyHedgeDetailsModal(true);
-                                    setEditRowData(rowData);
-                                  },
+                              {
+                                icon: "preview",
+                                tooltip: "View Currency hedge details",
+                                onClick: (event, rowData) => {
+                                  setCurrencyHedgeDetailsModal(true);
+                                  setEditRowData(rowData);
                                 },
-                              ]
+                              },
+                            ]
                             : [
-                                {
-                                  icon: "edit",
-                                  tooltip: "Edit Currency hedge details",
-                                  onClick: (event, rowData) => {
-                                    setCurrencyHedgeDetailsModal(true);
-                                    setEditRowData(rowData);
-                                  },
+                              {
+                                icon: "edit",
+                                tooltip: "Edit Currency hedge details",
+                                onClick: (event, rowData) => {
+                                  setCurrencyHedgeDetailsModal(true);
+                                  setEditRowData(rowData);
                                 },
-                                {
-                                  icon: "preview",
-                                  tooltip: "View Currency hedge details",
-                                  onClick: (event, rowData) => {
-                                    setCurrencyHedgeDetailsModal(true);
-                                    setEditRowData(rowData);
-                                  },
+                              },
+                              {
+                                icon: "preview",
+                                tooltip: "View Currency hedge details",
+                                onClick: (event, rowData) => {
+                                  setCurrencyHedgeDetailsModal(true);
+                                  setEditRowData(rowData);
                                 },
-                                {
-                                  icon: "delete",
-                                  tooltip: "Delete hedge details",
-                                  onClick: (event, rowData) => {
-                                    DeleteCurrencyhedgedetails(rowData);
-                                  },
+                              },
+                              {
+                                icon: "delete",
+                                tooltip: "Delete hedge details",
+                                onClick: (event, rowData) => {
+                                  DeleteCurrencyhedgedetails(rowData);
                                 },
-                              ]
+                              },
+                            ]
                         }
                         options={{
                           filtering: false,
@@ -1892,44 +1892,44 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                     actions={
                       isView
                         ? [
-                            {
-                              icon: "preview",
-                              tooltip: "View Source of Repayment",
-                              onClick: (event, rowData) => {
-                                setAddSourceOfRepayment(true);
-                                setRowEditData(rowData);
-                                setView(isView);
-                              },
-                              // onClick: (event, rowData) => navigate(`/edit-product?id=${rowData?._id}`, { state: { isView: true } })
+                          {
+                            icon: "preview",
+                            tooltip: "View Source of Repayment",
+                            onClick: (event, rowData) => {
+                              setAddSourceOfRepayment(true);
+                              setRowEditData(rowData);
+                              setView(isView);
                             },
-                          ]
+                            // onClick: (event, rowData) => navigate(`/edit-product?id=${rowData?._id}`, { state: { isView: true } })
+                          },
+                        ]
                         : [
-                            {
-                              icon: "edit",
-                              tooltip: "Edit Source of Repayment",
-                              onClick: (event, rowData) => {
-                                setAddSourceOfRepayment(true);
-                                setRowEditData(rowData);
-                              },
+                          {
+                            icon: "edit",
+                            tooltip: "Edit Source of Repayment",
+                            onClick: (event, rowData) => {
+                              setAddSourceOfRepayment(true);
+                              setRowEditData(rowData);
                             },
-                            {
-                              icon: "preview",
-                              tooltip: "View Source of Repayment",
-                              onClick: (event, rowData) => {
-                                setAddSourceOfRepayment(true);
-                                setRowEditData(rowData);
-                                setView(isView);
-                              },
-                              // onClick: (event, rowData) => navigate(`/edit-product?id=${rowData?._id}`, { state: { isView: true } })
+                          },
+                          {
+                            icon: "preview",
+                            tooltip: "View Source of Repayment",
+                            onClick: (event, rowData) => {
+                              setAddSourceOfRepayment(true);
+                              setRowEditData(rowData);
+                              setView(isView);
                             },
-                            {
-                              icon: "delete",
-                              tooltip: "Delete source of repayment",
-                              onClick: (event, rowData) => {
-                                DeleteSourceOfRepayment(rowData);
-                              },
+                            // onClick: (event, rowData) => navigate(`/edit-product?id=${rowData?._id}`, { state: { isView: true } })
+                          },
+                          {
+                            icon: "delete",
+                            tooltip: "Delete source of repayment",
+                            onClick: (event, rowData) => {
+                              DeleteSourceOfRepayment(rowData);
                             },
-                          ]
+                          },
+                        ]
                     }
                     options={{
                       filtering: false,
