@@ -4,7 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 // import { userGetAction } from '../../../redux/actions/userAction';
 import { Table, Badge, Button, Menu, Dropdown, Avatar } from "antd";
 
-import { EditOutlined, EllipsisOutlined, EyeOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  EllipsisOutlined,
+  EyeOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import {
   adminGetAction,
   adminGetByIdAction,
@@ -25,13 +30,14 @@ const Admin = () => {
       ? AuthStorage.getStorageData(STORAGEKEY.userId)
       : "";
 
+  console.log(userId, "--------------------------");
   useEffect(() => {
     setGetUserDatas(userData?.data);
   }, [userData]);
 
   useEffect(() => {
     if (userId) {
-      dispatch(adminGetAction(userId));
+      dispatch(adminGetByIdAction(userId));
     } else {
       dispatch(adminGetAction());
     }
