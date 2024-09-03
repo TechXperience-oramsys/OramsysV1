@@ -50,6 +50,7 @@ const CreateAdmin = () => {
         console.log("Resetting form fields...");
         form.resetFields();
         console.log("Form fields reset");
+        navigate("/admins");
       })
       .catch((err) => {
         message.error("Please check for duplicate data");

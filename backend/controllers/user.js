@@ -185,14 +185,14 @@ class UserController {
             )
           );
       } else if (alreadyExist.email === req.body.email) {
-        res.status(httpStatus.OK).send({ message: "email is already exist" });
-      } else {
-        res.status(httpStatus.OK).send({ message: "Error Adding User" });
+        res
+          .status(httpStatus.BAD_REQUEST)
+          .send({ message: "email is already exist" });
       }
     } catch (e) {
       if (e.code === 11000) {
         return res
-          .status(httpStatus.OK)
+          .status(httpStatus.BAD_REQUEST)
           .send({ message: "user is already exist" });
       } else {
         return res
