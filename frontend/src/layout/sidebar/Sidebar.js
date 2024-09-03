@@ -35,7 +35,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
     AuthStorage.getStorageData(STORAGEKEY.roles) === "admin"
       ? AuthStorage.getStorageData("userId")
       : "";
-  console.log("admin id", adminId);
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -205,7 +205,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           console.log(err);
         });
     }
-  }, [getStorage]);
+  }, [getStorage, adminId]);
 
   const handleMenuClick = (item) => {
     setActiveItem(item.key);

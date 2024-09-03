@@ -30,7 +30,6 @@ const Admin = () => {
       ? AuthStorage.getStorageData(STORAGEKEY.userId)
       : "";
 
-  console.log(userId, "--------------------------");
   useEffect(() => {
     setGetUserDatas(userData?.data);
   }, [userData]);
