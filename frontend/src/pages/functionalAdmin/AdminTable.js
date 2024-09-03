@@ -5,10 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Table, Badge, Button, Menu, Dropdown, Avatar } from "antd";
 
 import { EditOutlined, EllipsisOutlined, EyeOutlined, UserOutlined } from "@ant-design/icons";
-import {
-  adminGetAction,
-  adminGetByIdAction,
-} from "../../redux/actions/adminAction";
+import { adminGetAction, adminGetByIdAction } from "../../redux/actions/adminAction";
 import AuthStorage from "../../helper/AuthStorage";
 import STORAGEKEY from "../../config/APP/app.config";
 
@@ -20,10 +17,7 @@ const Admin = () => {
   const [postsPerPage] = useState(10);
 
   const userData = useSelector((state) => state.adminData?.getAdminData);
-  let userId =
-    AuthStorage.getStorageData(STORAGEKEY.roles) === "admin"
-      ? AuthStorage.getStorageData(STORAGEKEY.userId)
-      : "";
+  let userId = AuthStorage.getStorageData(STORAGEKEY.roles) === "admin" ? AuthStorage.getStorageData(STORAGEKEY.userId) : "";
 
   useEffect(() => {
     setGetUserDatas(userData?.data);
@@ -31,7 +25,7 @@ const Admin = () => {
 
   useEffect(() => {
     if (userId) {
-      dispatch(adminGetAction(userId));
+      dispatch(adminGetByIdAction(userId));
     } else {
       dispatch(adminGetAction());
     }
@@ -123,7 +117,7 @@ const Admin = () => {
                 <EditOutlined /> Edit
               </Menu.Item>
 
-              <Menu.Item
+              {/* <Menu.Item
                 key="preview"
                 onClick={() => {
                   navigate(`/profile?id=${record?._id}`, {
@@ -132,7 +126,7 @@ const Admin = () => {
                 }}
               >
                 <EyeOutlined /> Preview
-              </Menu.Item>
+              </Menu.Item> */}
             </Menu>
           }
         >

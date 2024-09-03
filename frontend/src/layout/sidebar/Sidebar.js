@@ -18,7 +18,7 @@ import { HiOutlineLogout, HiOutlineUsers } from "react-icons/hi";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { FaMoneyBillTransfer, FaUsersLine } from "react-icons/fa6";
 import Fade from "react-reveal/Fade";
-import { useSelector } from "react-redux";
+import { ApiGet } from "../../helper/API/ApiData";
 const { Header, Sider, Content } = Layout;
 
 const Sidebar = ({ showSidebar, setSidebar }) => {
@@ -29,10 +29,16 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
   const [showSubItem, setShowSubItem] = useState("");
   const [userData, setUserData] = useState("");
   const [activeItem, setActiveItem] = useState("Dashboard");
+  const [logo, setLogo] = useState("");
 
-  const adminId = AuthStorage.getStorageData(STORAGEKEY.roles) === "admin" ? AuthStorage.getStorageData("userId") : "";
-  console.log('admin id', adminId)
-  const {  token: { colorBgContainer, borderRadiusLG } } = theme.useToken();
+  const adminId =
+    AuthStorage.getStorageData(STORAGEKEY.roles) === "admin"
+      ? AuthStorage.getStorageData("userId")
+      : "";
+  console.log("admin id", adminId);
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
 
   let navbarData = [];
 
@@ -117,12 +123,6 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
       label: "Transactions",
       path: "transactions",
     },
-    {
-      key: "9",
-      icon: <HiOutlineUsers />,
-      label: "Admins",
-      path: "admins",
-    },
   ];
 
   const navbarDataForAdmin = [
@@ -141,7 +141,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           key: "1-2",
           icon: <FaUsersLine />,
           label: "Profile",
-          path: `profile?id=${adminId}`,
+          path: `admins`,
         },
         {
           key: "1-3",
@@ -196,6 +196,15 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
     setUserData(
       JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)) ?? {}
     );
+    if (adminId.length > 0) {
+      ApiGet(`admin/get-admin-by/${adminId}`)
+        .then((res) => {
+          setLogo(res.data[0]?.logo);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, [getStorage]);
 
   const handleMenuClick = (item) => {
@@ -204,11 +213,11 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
       .flatMap((item) =>
         item.children
           ? [
-            item,
-            ...item.children.flatMap((subItem) =>
-              subItem.children ? [subItem, ...subItem.children] : subItem
-            ),
-          ]
+              item,
+              ...item.children.flatMap((subItem) =>
+                subItem.children ? [subItem, ...subItem.children] : subItem
+              ),
+            ]
           : item
       )
       .find((navItem) => navItem.key === item.key);
@@ -217,7 +226,6 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
       navigate(`/${clickedItem.path}`);
     }
   };
-
 
   return (
     <>
@@ -231,17 +239,31 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           width={210}
         >
           <div className="demo-logo-vertical" />
-          <div className={`d-flex ${collapsed ? "justify-content-center" : "justify-content-between" } align-items-center p-3`} style={{ backgroundColor: "#F0F0F0" }}>
+          <div
+            className={`d-flex ${
+              collapsed ? "justify-content-center" : "justify-content-between"
+            } align-items-center p-3`}
+            style={{ backgroundColor: "#F0F0F0" }}
+          >
             <Dropdown
               overlay={
                 <Menu>
                   <Menu.Item key="logout" onClick={() => setshowModal(true)}>
                     <HiOutlineLogout size={20} /> Logout
                   </Menu.Item>
-                </Menu>}>
-              
-              <div className={`d-flex align-items-center ${collapsed ? "justify-content-center w-100" : "" }`}>
-                <FaUserCircle size={30} />
+                </Menu>
+              }
+            >
+              <div
+                className={`d-flex align-items-center ${
+                  collapsed ? "justify-content-center w-100" : ""
+                }`}
+              >
+                {logo?.length > 0 ? (
+                  <img src={logo} alt="user" className="user__logo" />
+                ) : (
+                  <FaUserCircle size={30} />
+                )}
                 {!collapsed && <span className="ms-2">{userData?.name}</span>}
               </div>
             </Dropdown>

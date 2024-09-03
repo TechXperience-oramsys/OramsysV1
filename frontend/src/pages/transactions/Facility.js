@@ -908,7 +908,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
     let user =
       localStorage.getItem("userData") &&
       JSON.parse(localStorage.getItem("userData"));
-    body.admin = user.id;
+    body.admin = user.admin;
 
     console.log("body final===", body);
     // return false;

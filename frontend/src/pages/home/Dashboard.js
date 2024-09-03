@@ -34,7 +34,6 @@ const Dashboard = () => {
   const [showspan, setShowspan] = useState(false);
   const [showSubData, setShowSubData] = useState(false);
   const [search, setSearch] = useState("");
-  // console.log(search);
 
   const dispatch = useDispatch();
   const superAdminCard = [
@@ -276,7 +275,6 @@ const Dashboard = () => {
       `<iframe width='100%' height='100%' src=${linkSources}></iframe>`
     );
   };
-  console.log("getArr", getAlltransactionData);
 
   // tab menu iteems
   const items = [
