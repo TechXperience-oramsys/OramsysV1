@@ -127,11 +127,11 @@ const createAdmin = () => async (req, res) => {
         html: `
           <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
             <p style="font-size: 16px;">Hi, ${req?.body?.adminName}</p>
-             <p style="font-size: 12px;">You have been onboarded on the Oramsys platform. Click on the link below to rest your password.</p>
-            <p style="font-size: 12px;">your current password is <strong>${password}</strong>.</p>
+             <p style="font-size: 12px;">You have been onboarded on the Oramsys platform. Click on the link below to reset your password.</p>
+            <p style="font-size: 12px;">Your current password is <strong>${password}</strong>.</p>
             <p>
               <a href="https://oramsysdev.com/verifyAdmin.html?id=${id}" style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">
-             Reset password
+             Reset password and login
               </a>
             </p>
           </div>

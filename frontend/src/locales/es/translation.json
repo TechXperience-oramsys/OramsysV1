@@ -1,3 +1,9 @@
 {
-  
-}
+    "dashboard": "panel",
+    "overview": "descripción general",
+    "analytics": "analítica",
+    "financials": "finanzas",
+    "badgeText": "Usuario: {{name}}",
+    "super admin": "superadministrador",
+    "Logout": "cerrar sesión"
+  }

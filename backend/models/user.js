@@ -23,7 +23,7 @@ var Schema = new Schema(
       default: UserProfileTypes.User,
     },
     otp: { type: Number },
-    createdBy: { type: Schema.Types.ObjectId, ref: "Entity" },
+    createdBy: { type: Schema.Types.ObjectId, ref: "Corporation" },
   },
   {
     timestamps: true,
@@ -61,11 +61,7 @@ Schema.statics.getAll = async function (createdBy, userType) {
     .sort({ name: 1 })
     .populate({
       path: "createdBy",
-      select: ["details"],
-      populate: {
-        path: "details",
-        select: ["name"],
-      },
+      select: "corporationName",
     })
     .exec();
 };

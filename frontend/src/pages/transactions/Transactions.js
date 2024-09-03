@@ -406,22 +406,22 @@ const Transactions = () => {
     <>
 
 
-      <div class='mx-5 d-flex flex-column flex-lg-row h-lg-full'>
-        <div id='dash' class='h-screen flex-grow-1'>
-          <header class='bg-surface-primary pt-6'>
-            <div class='container-fluid'>
-              <div id='dash' class='mb-npx'>
-                <div class='row text-white align-items-center mb-3 product' style={{ backgroundImage: "linear-gradient(to right, #111827, #121b2f, #131f37, #142240, #152548)" }}>
-                  <div class='col-sm-6 col-12 mb-4 mb-sm-0'>
+      <div className='mx-5 d-flex flex-column flex-lg-row h-lg-full'>
+        <div id='dash' className='h-screen flex-grow-1'>
+          <header className='bg-surface-primary pt-6'>
+            <div className='container-fluid'>
+              <div id='dash' className='mb-npx'>
+                <div className='row text-white align-items-center mb-3 product' style={{ backgroundImage: "linear-gradient(to right, #111827, #121b2f, #131f37, #142240, #152548)" }}>
+                  <div className='col-sm-6 col-12 mb-4 mb-sm-0'>
 
-                    <h1 class='h2 mb-0 fw-bold fs-4 ls-tight'>Transactions</h1>
+                    <h1 className='h2 mb-0 fw-bold fs-4 ls-tight'>Transactions</h1>
                   </div>
 
-                  <div class="col-sm-6 col-12 text-sm-end">
-                    <div class="mx-n1 me-5 d-flex align-items-center justify-content-end gap-2">
-                      {/* <Link to='/transactions' style={{ borderColor: '#9E3E65' }} class='btn d-inline-flex btn-md btn-light border-base mx-1 me-3'>
-                        <span class=' pe-2'>
-                          <i class='bi bi-pencil'></i>
+                  <div className="col-sm-6 col-12 text-sm-end">
+                    <div className="mx-n1 me-5 d-flex align-items-center justify-content-end gap-2">
+                      {/* <Link to='/transactions' style={{ borderColor: '#9E3E65' }} className='btn d-inline-flex btn-md btn-light border-base mx-1 me-3'>
+                        <span className=' pe-2'>
+                          <i className='bi bi-pencil'></i>
                         </span>
                         <span className='fw-bold'>Edit</span>
                       </Link> */}
@@ -433,14 +433,14 @@ const Transactions = () => {
           </header>
 
           <Fade>
-            <main class="py-2">
-              <div class="container-fluid">
-                <div class="row g-6 mb-4"></div>
+            <main className="py-2">
+              <div className="container-fluid">
+                <div className="row g-6 mb-4"></div>
 
-                <div class="container mx-auto">
-                  <div class="mb-2 d-flex justify-content-start align-items-center">
-                    <div class="position-relative">
-                      <span class="position-absolute search">
+                <div className="container mx-auto">
+                  <div className="mb-2 d-flex justify-content-start align-items-center">
+                    <div className="position-relative">
+                      <span className="position-absolute search">
                         <CiSearch size={25} />
                       </span>
                       <input
@@ -456,7 +456,7 @@ const Transactions = () => {
                     {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" ? (
                       <AntDropdown overlay={menu} trigger={["click"]}>
                         <AntButton
-                          class="btn d-inline-flex btn-md btn-light mx-1 py-2 me-3"
+                          className="btn d-inline-flex btn-md btn-light mx-1 py-2 me-3"
                           id="dropdown-autoclose-outside"
                         >
                           <span className="">Create transaction</span>
@@ -480,8 +480,8 @@ const Transactions = () => {
                       }}
                     />
                   </div>
-                  <div class=" border-0 mb-0">
-                    <span class="text-muted text-sm">
+                  <div className=" border-0 mb-0">
+                    <span className="text-muted text-sm">
                       <Paginate
                         postsPerPage={postsPerPage}
                         totalPosts={getAlltransactionData?.data?.length}

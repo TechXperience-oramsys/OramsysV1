@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { FaPowerOff } from "react-icons/fa";
 import { HiOutlineLogout } from "react-icons/hi";
-import { IoSettingsOutline } from "react-icons/io5";
-import { Link } from 'react-router-dom';
 import LogoutModal from '../../component/Modal/LogoutModal'
 import AuthStorage from '../../helper/AuthStorage'
 import STORAGEKEY from '../../config/APP/app.config'
-import { GlobalOutlined, MenuOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, GlobalOutlined, MenuOutlined } from '@ant-design/icons';
 import { Badge, Button, Dropdown, Menu } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 
 const AuthHeader = ({ showSidebar, setSidebar }) => {
@@ -17,15 +15,17 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
   const [userData, setUserData] = useState("");
 
   useEffect(() => {
-    setUserData(
-      JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)) ?? {}
-    );
+    setUserData(JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)) ?? {});
   }, [AuthStorage.getStorageData(STORAGEKEY.userData)]);
 
+  const { i18n, t } = useTranslation();
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
   const handleMenuClick = (e) => {
-    // Handle language change here
     console.log('Selected language:', e.key);
-    // Example: navigate to different language route or update state
+    changeLanguage(e.key); // Change language based on the selected menu item
   };
 
   const menu = (
@@ -77,39 +77,33 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
           </div>
         </div>
       </div> */}
-      <div
-        className="open-sidebar d-flex align-items-center"
-        style={{
-          // backgroundColor: "#f1f1f1",
-          padding: "15px",
-        }}
-      >
-        {/* <div className="d-flex align-items-center">
-          <MenuOutlined className='fs-5' onClick={() => setSidebar(!showSidebar)} />
-          <span className="ms-2 fw-bold fs-5"></span>
-        </div> */}
-        <div className="d-flex align-items-center me-5 ms-auto">
-          <div className='me-2'>
-            <Badge className="font-semibold" size={30} status="success" text={userData?.name} />
-          </div>
+      <div className="open-sidebar d-flex align-items-center justify-content-between" style={{ padding: "15px" }}>
+        <div className="d-flex align-items-center">
+          {/* <Badge className="font-semibold me-4" size={30} status="success" text={userData?.name} />  */}
+        </div>
 
-          <div className='ms-2 mx-auto'>
-            <button onClick={() => setshowModal(true)} className="nav-link text-dark">
-              <HiOutlineLogout className='me-1' size={15} />
-              <span>Logout</span>
-              {/* <HiOutlineLogout className='text-white' size={22} /><span className='ps-3 fw-semibold text-danger'>Logout</span> */}
-            </button>
-          </div>
+        <div className="d-flex align-items-center">
+          <Badge className="font-semibold me-4" size={30} status="success" text={t('badgeText', { name: userData?.name || 'Guest' })} /> {/* Added some right margin */}
 
-          <Dropdown overlay={menu} className="ms-2" trigger={['click']}>
+          <Dropdown overlay={menu} className="me-3" trigger={['click']}>
             <Button
-              icon={<GlobalOutlined style={{ fontSize: '24px' }} />} // Increase the icon size here
+              icon={<GlobalOutlined style={{ fontSize: '24px' }} />} // Increased the icon size
               shape="square"
-              style={{ width: '30px', height: '30px' }} // Ensure the button is square
-            />
+              style={{ width: 'auto', height: '30px' }} // Ensure the button adjusts with text
+            >
+              <span style={{ marginLeft: '8px' }}><CaretDownOutlined /></span>
+            </Button>
           </Dropdown>
+
+          <button onClick={() => setshowModal(true)} className="nav-link text-dark me-4"> {/* Added some right margin */}
+            <HiOutlineLogout className="me-1" size={15} />
+            <span>{t('Logout')}</span>
+          </button>
+
+
         </div>
       </div>
+
       {showModal && (
         <LogoutModal show={showModal} onHide={() => setshowModal(false)} />
       )}

@@ -114,7 +114,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
     {
       key: "7",
       icon: <HiOutlineUsers />,
-      label: "Create Admin",
+      label: "Admin",
       path: "admins",
     },
     {
@@ -213,11 +213,11 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
       .flatMap((item) =>
         item.children
           ? [
-              item,
-              ...item.children.flatMap((subItem) =>
-                subItem.children ? [subItem, ...subItem.children] : subItem
-              ),
-            ]
+            item,
+            ...item.children.flatMap((subItem) =>
+              subItem.children ? [subItem, ...subItem.children] : subItem
+            ),
+          ]
           : item
       )
       .find((navItem) => navItem.key === item.key);
@@ -239,28 +239,37 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           width={210}
         >
           <div className="demo-logo-vertical" />
-          <div
-            className={`d-flex ${
-              collapsed ? "justify-content-center" : "justify-content-between"
-            } align-items-center p-3`}
-            style={{ backgroundColor: "#F0F0F0" }}
-          >
-            <Dropdown
-              overlay={
-                <Menu>
-                  <Menu.Item key="logout" onClick={() => setshowModal(true)}>
-                    <HiOutlineLogout size={20} /> Logout
-                  </Menu.Item>
-                </Menu>
-              }
-            >
-              <div
-                className={`d-flex align-items-center ${
-                  collapsed ? "justify-content-center w-100" : ""
-                }`}
-              >
-                {logo?.length > 0 ? (
-                  <img src={logo} alt="user" className="user__logo" />
+          <div className="user-style">
+
+            <div className={`align-items-center ${collapsed ? "justify-content-center w-100" : ""}`}>
+              {logo?.length > 0 ? (<img src={logo} alt="user" className="user__logo" />
+              ) : (
+                <FaUserCircle size={30} />
+              )}
+
+            </div>
+
+            {!collapsed && <span className="ms-2 fw-semibold">{userData?.name}</span>}
+
+
+            {!collapsed && (
+              <div className="mt-1">
+                <button style={{ background: '#E6EEF4' }} onClick={() => setshowModal(true)}>
+                  <HiOutlineLogout size={20} />
+                </button>
+              </div>
+            )}
+          </div>
+          {/* <div className={`d-flex ${collapsed ? "justify-content-center" : "justify-content-between"} align-items-center p-3`} style={{ backgroundColor: "#F0F0F0" }}>
+            <Dropdown overlay={
+              <Menu>
+                <Menu.Item key="logout" onClick={() => setshowModal(true)}>
+                  <HiOutlineLogout size={20} /> Logout
+                </Menu.Item>
+              </Menu>
+            }>
+              <div className={`d-flex align-items-center ${collapsed ? "justify-content-center w-100" : ""}`}>
+                {logo?.length > 0 ? (<img src={logo} alt="user" className="user__logo" />
                 ) : (
                   <FaUserCircle size={30} />
                 )}
@@ -275,7 +284,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
                 </button>
               </div>
             )}
-          </div>
+          </div> */}
           <Menu
             className="fs-6 mt-10 bg-gray-100"
             // theme="dark"

@@ -17,6 +17,7 @@ const Admin = () => {
   const [postsPerPage] = useState(10);
 
   const userData = useSelector((state) => state.adminData?.getAdminData);
+  console.log('get admin data', userData.data)
   let userId = AuthStorage.getStorageData(STORAGEKEY.roles) === "admin" ? AuthStorage.getStorageData(STORAGEKEY.userId) : "";
 
   useEffect(() => {
@@ -65,14 +66,14 @@ const Admin = () => {
       sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
-      title: "User name",
+      title: "Organisation",
       dataIndex: "corporationName",
       key: "corporationName",
       align: "center",
       sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
-      title: "Name",
+      title: "Admin Name",
       dataIndex: "adminName",
       key: "adminName",
       align: "center",
@@ -160,7 +161,7 @@ const Admin = () => {
                 <div class="col-sm-6 col-12 text-sm-end">
                   <div class="mx-n1 me-5 d-flex align-items-center justify-content-end gap-2">
                     {AuthStorage.getStorageData(STORAGEKEY.roles) ===
-                    "superAdmin" ? (
+                      "superAdmin" ? (
                       <Link
                         to="/create-admin"
                         style={{ borderColor: "#9E3E65" }}

@@ -73,9 +73,10 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     const productData = useSelector((state) => state.product.product)
     const country = useSelector((state) => state.countryData.country)
     const entityData = useSelector((state) => state.entityData.entity)
+   
     const loginData = useSelector((state) => state.login.login)
-    console.log('LOGIN DATA', loginData)
-    console.log('ENTITY DATA', entityData)
+    // console.log('LOGIN DATA', loginData)
+    // console.log('ENTITY DATA', entityData)
     // const getTransactionByIdData = useSelector(
     //     (state) => state.transactionData.getTransactionById
     // )
@@ -130,16 +131,16 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     }, [ports, airBase, countries, shippingOptions])
 
     useEffect(() => {
-        console.log('=======airBase', airBase.data)
+        // console.log('=======airBase', airBase.data)
     }, [airBase])
 
     useEffect(() => {
-        console.log('=======portsOptions', portsOptions)
+        // console.log('=======portsOptions', portsOptions)
     }, [portsOptions])
 
     const setPorts = (country) => {
 
-        console.log('setPorts shippingOptions.shipmentMode', shippingOptions.shipmentMode);
+        // console.log('setPorts shippingOptions.shipmentMode', shippingOptions.shipmentMode);
         if (shippingOptions.shipmentMode === "SEA") {
             dispatch(portsAction(country))
         } else if (shippingOptions.shipmentMode === "AIR") {
@@ -176,16 +177,16 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     }, [shippingOptions.countryOfOrigin, shippingOptions.destinationCountry])
 
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        console.log('active on change', activeOnChange);
+    //     console.log('active on change', activeOnChange);
 
-    }, [activeOnChange])
+    // }, [activeOnChange])
 
     useEffect(() => {
         let entityDetails = []
         if (entityData && entityData.data) {
-            console.log('Entity DATA', entityData)
+            // console.log('Entity DATA', entityData)
 
             entityData.data.forEach((ele) => {
                 ele.roles.forEach(roleDetail => {
@@ -205,7 +206,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
             })
         }
         setCounterPartyOption(entityDetails)
-        console.log("TAG HEDGE COUNTERPARTY", counterPartyOption)
+        // console.log("TAG HEDGE COUNTERPARTY", counterPartyOption)
     }, [entityData])
 
     useEffect(() => {
@@ -231,7 +232,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
             })
         }
         setShippingCompanyOption(shipDetails)
-        console.log("TAG WAREHOUSE", shippingCompanyOption)
+        // console.log("TAG WAREHOUSE", shippingCompanyOption)
     }, [entityData])
 
     useEffect(() => {
@@ -256,7 +257,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
             })
         }
         setBorrowerOption(getBuyer)
-        console.log("TAG BORROWER", borrowerOption, borrower_Applicant)
+        // console.log("TAG BORROWER", borrowerOption, borrower_Applicant)
     }, [entityData])
 
     // useEffect(() => {
@@ -321,47 +322,92 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     //     console.log("TAG LENDER", lenderOption);
     // }, [entityData, loginData]);
 
+    const adminData = useSelector((state) => state.adminData?.getAdminData);
+    // console.log("get admins", adminData.data)
+
+
     useEffect(() => {
         let bankRole = [];
-        let lendersArray = [];
         const storedLoginData = JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData));
         const adminId = storedLoginData?.admin;
 
-        if (entityData && entityData.data) {
-            entityData.data.forEach((ele) => {
-                ele.roles.forEach((roleDetail) => {
-                    // Check if adminId matches entityData.data.details.entityId
-                    if (adminId === ele?.details?.entityId) {
+        if (adminData && adminData.data) {
+            adminData.data.forEach((ele) => {
+                
+                    // Check if adminId matches adminData.data.corporationName
+                    if (adminId === ele?._id) {
                         // If there's a match, set lenderOption to the entityData.data.details.name
-                        setLenders(ele?.details?.name);
-                    } else {
-                        if (roleDetail.roleId?.roleName === "Bank") {
-                            var temp = {
-                                label: ele?.details?.name,
-                                value: ele._id
-                            };
-                            bankRole.push(temp);
-                        } else {
-                            var temp = {
-                                label: ele?.details?.givenName,
-                                value: ele._id
-                            };
-                            bankRole.push(temp);
-                        }
+                        setLenders(ele?.corporationName);
                     }
-                });
+                    // else {
+                    //     if (roleDetail.roleId?.roleName === "Bank") {
+                    //         var temp = {
+                    //             label: ele?.details?.name,
+                    //             value: ele._id
+                    //         };
+                    //         bankRole.push(temp);
+                    //     } else {
+                    //         var temp = {
+                    //             label: ele?.details?.givenName,
+                    //             value: ele._id
+                    //         };
+                    //         bankRole.push(temp);
+                    //     }
+                    // }
+                
             });
 
             // Only set lenderOption if there's no match found and bankRole is populated
-            if (!adminId || !entityData.data.some(ele => adminId === ele?.details?.entityId)) {
+            if (!adminId || !adminData.data.some(ele => adminId === ele?._id)) {
                 setLenderOption(bankRole);
             }
 
 
         }
 
-        console.log("TAG LENDER", lenderOption);
+        // console.log("TAG LENDER", lenderOption);
     }, [entityData]);
+
+    // useEffect(() => {
+    //     let bankRole = [];
+    //     const storedLoginData = JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData));
+    //     const adminId = storedLoginData?.admin;
+
+    //     if (entityData && entityData.data) {
+    //         entityData.data.forEach((ele) => {
+    //             ele.roles.forEach((roleDetail) => {
+    //                 // Check if adminId matches entityData.data.details.entityId
+    //                 if (adminId === ele?.details?.entityId) {
+    //                     // If there's a match, set lenderOption to the entityData.data.details.name
+    //                     setLenders(ele?.details?.name);
+    //                 } else {
+    //                     if (roleDetail.roleId?.roleName === "Bank") {
+    //                         var temp = {
+    //                             label: ele?.details?.name,
+    //                             value: ele._id
+    //                         };
+    //                         bankRole.push(temp);
+    //                     } else {
+    //                         var temp = {
+    //                             label: ele?.details?.givenName,
+    //                             value: ele._id
+    //                         };
+    //                         bankRole.push(temp);
+    //                     }
+    //                 }
+    //             });
+    //         });
+
+    //         // Only set lenderOption if there's no match found and bankRole is populated
+    //         if (!adminId || !entityData.data.some(ele => adminId === ele?.details?.entityId)) {
+    //             setLenderOption(bankRole);
+    //         }
+
+
+    //     }
+
+    //     console.log("TAG LENDER", lenderOption);
+    // }, [entityData]);
 
 
 
@@ -397,10 +443,10 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                 .then((getTransactionByIdData) => {
                     let resp = getTransactionByIdData.data;
                     let respProductDetails = getTransactionByIdData.data.details.productDetails;
-                    console.log('CHECK ALL DATA', getTransactionByIdData.data)
-                    console.log(respProductDetails, 'prductings')
+                    // console.log('CHECK ALL DATA', getTransactionByIdData.data)
+                    // console.log(respProductDetails, 'prductings')
 
-                    console.log('frm borooowed', getTransactionByIdData.data?.borrower_Applicant)
+                    // console.log('frm borooowed', getTransactionByIdData.data?.borrower_Applicant)
                     if (getTransactionByIdData && getTransactionByIdData.data) {
                         setEditId(getTransactionByIdData.data?.details?._id)
                         setBorrower_Applicant(getTransactionByIdData.data?.borrower_Applicant)
@@ -596,8 +642,8 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         if (productDetails.commoditySubType != undefined) {
             let product = []
             productData?.data?.forEach((item) => {
-                console.log('item', item);
-                console.log('productDetails', productDetails);
+                // console.log('item', item);
+                // console.log('productDetails', productDetails);
                 // if (item.commodity_sub_type == productDetails.commoditySubType) {
                 //     product.push(item);
                 // }
@@ -1010,7 +1056,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     }
 
     const warehouseData = (data, id) => {
-        console.log("Initial warehouses:", shippingOptions.warehouses);
+        // console.log("Initial warehouses:", shippingOptions.warehouses);
         if (!Array.isArray(shippingOptions.warehouses)) {
             shippingOptions.warehouses = [];
         }
@@ -1033,7 +1079,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
             })
         }
         // Debugging to check the updated state of warehouses
-        console.log("Updated warehouses:", shippingOptions.warehouses);
+        // console.log("Updated warehouses:", shippingOptions.warehouses);
 
     }
 

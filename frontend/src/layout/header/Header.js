@@ -7,10 +7,32 @@ import {
   faHandPointRight,
 } from "@fortawesome/free-regular-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { Badge, Button, Dropdown, Menu } from 'antd';
+import { CaretDownOutlined, GlobalOutlined, MenuOutlined } from '@ant-design/icons';
 
 const Header = () => {
   const navigate = useNavigate();
   // const [expanded, setExpanded] = useState(false);
+
+  const handleMenuClick = (e) => {
+    // Handle language change here
+    console.log('Selected language:', e.key);
+    // Example: navigate to different language route or update state
+  };
+  const menu = (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key="en">
+        English
+      </Menu.Item>
+      <Menu.Item key="es">
+        Español
+      </Menu.Item>
+      <Menu.Item key="fr">
+        Français
+      </Menu.Item>
+      {/* Add more languages as needed */}
+    </Menu>
+  );
 
   return (
     <>
@@ -127,7 +149,7 @@ const Header = () => {
         </div>
       </div> */}
 
-        <nav className="navbar navbar-expand-lg navbar-red navbar-dark">
+        <nav className="navbar navbar-expand-lg navbar-white text-black navbar-dark">
           <div className="wrapper">
 
           </div>
@@ -143,7 +165,7 @@ const Header = () => {
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <div className="collapse ms-6 navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto mb-2 text-dark mb-lg-0">
                 <li className="nav-item">
                   <a className="nav-link active" aria-current="page" href="#">About us</a>
@@ -172,8 +194,16 @@ const Header = () => {
               </ul>
               <div className="d-flex flex-column sim">
 
-                <span>1 item added to your quote</span>
-                <small className="text-primary">view your quote</small>
+                <Dropdown overlay={menu} className="me-3" trigger={['click']}>
+                  <Button
+                    icon={<GlobalOutlined style={{ fontSize: '24px', color: 'white' }} />} // Increased the icon size
+                    shape="square"
+                    style={{ width: 'auto', height: '30px', background: "#000" }} // Ensure the button adjusts with text
+                  >
+                    <span style={{ marginLeft: '8px' }}><CaretDownOutlined className="text-white" /></span>
+                  </Button>
+                </Dropdown>
+
 
               </div>
             </div>

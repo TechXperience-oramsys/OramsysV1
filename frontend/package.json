@@ -32,6 +32,8 @@
     "chart.js": "^4.4.0",
     "choices.js": "^10.2.0",
     "dayjs": "^1.11.9",
+    "i18next": "^23.14.0",
+    "i18next-browser-languagedetector": "^8.0.0",
     "jotai": "^2.8.4",
     "lucide-react": "^0.417.0",
     "material-table": "^1.69.3",
@@ -43,6 +45,7 @@
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-html-parser": "^2.0.2",
+    "react-i18next": "^15.0.1",
     "react-icons": "^4.7.1",
     "react-lottie": "^1.2.3",
     "react-redux": "^8.0.2",
@@ -64,7 +67,7 @@
     "slick-carousel": "^1.8.1",
     "web-vitals": "^2.1.4"
   },
-  "scripts": { 
+  "scripts": {
     "start": "react-scripts start",
     "awssync": "aws s3 sync ./build 's3://oramsys.com/'",
     "server": "node server/index.js",
