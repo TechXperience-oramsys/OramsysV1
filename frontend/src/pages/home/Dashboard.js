@@ -4,6 +4,7 @@ import { IoTimerOutline } from "react-icons/io5";
 import { FcBusinessman } from "react-icons/fc";
 import { GrTransaction } from "react-icons/gr";
 import { FaMoneyCheckAlt } from "react-icons/fa";
+import { CiUser } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import AuthStorage from "../../helper/AuthStorage";
@@ -28,12 +29,16 @@ import { Input, Menu } from "antd";
 import ChartComponent from "./Analytics";
 import Financials from "./Financials";
 import NotificationSection from "./Notification";
+import { useTranslation } from "react-i18next";
+import { adminGetAction } from "../../redux/actions/adminAction";
 
 const Dashboard = () => {
   const token = AuthStorage.getToken();
   const [showspan, setShowspan] = useState(false);
   const [showSubData, setShowSubData] = useState(false);
   const [search, setSearch] = useState("");
+
+  const { t } = useTranslation();
 
   const dispatch = useDispatch();
   const superAdminCard = [
@@ -74,6 +79,13 @@ const Dashboard = () => {
       name: "entities",
     },
     {
+      title: "Corporations",
+      img: "admins",
+      icon: CiUser,
+      color: "bg-warning",
+      name: "corporations",
+    },
+    {
       title: "Rating Agencies",
       img: "rating",
       icon: BankOutlined,
@@ -89,6 +101,14 @@ const Dashboard = () => {
       color: "bg-success",
       name: "transactions",
       status: "Completed",
+    },
+    {
+      title: "Transactions in progress",
+      img: "Transact",
+      icon: GrTransaction,
+      color: "bg-danger",
+      name: "inProgress",
+      status: "Not Completed",
     },
     {
       title: "Transactions Revenue",
@@ -124,18 +144,23 @@ const Dashboard = () => {
       name: "inProgress",
       status: "Not Completed",
     },
+    {
+      title: "Your Transactions Revenue",
+      img: "sales",
+      icon: StockOutlined,
+      color: "bg-teal-500",
+      name: "totalRev",
+    },
 
   ];
 
-  const getAlltransactionData = useSelector(
-    (state) => state.transactionData.getAllTransaction
-  );
+  const getAlltransactionData = useSelector((state) => state.transactionData.getAllTransaction);
   const productGetDatas = useSelector((state) => state.product.product);
   const getAllUsers = useSelector((state) => state.userData.getUserData);
   const getAllEntities = useSelector((state) => state.entityData.entity);
-  const ratingAgenciesDatas = useSelector(
-    (state) => state.ratingAgenciesData?.ratingAgencies
-  );
+  const ratingAgenciesDatas = useSelector((state) => state.ratingAgenciesData?.ratingAgencies);
+  const adminDatas = useSelector((state) => state.adminData?.getAdminData);
+  console.log('admin data', adminDatas)
 
   const totalValue = useMemo(() => {
     if (!getAlltransactionData?.data) return "0";
@@ -184,6 +209,8 @@ const Dashboard = () => {
           return getAllUsers?.data?.length; // or the array of users like users.length;
         case "entities":
           return getAllEntities?.data?.length;
+        case "corporations":
+          return adminDatas?.data?.length;
         case "rating":
           return ratingAgenciesDatas?.data?.length;
 
@@ -196,16 +223,14 @@ const Dashboard = () => {
       getAlltransactionData,
       productGetDatas,
       getAllEntities,
+      adminDatas,
       ratingAgenciesDatas,
     ]
   );
 
   //get all transaction
   const Authsend = useCallback(() => {
-    let id =
-      AuthStorage.getStorageData(STORAGEKEY.roles) !== "superAdmin"
-        ? AuthStorage.getStorageData(STORAGEKEY.userId)
-        : "all";
+    let id = AuthStorage.getStorageData(STORAGEKEY.roles) !== "superAdmin" ? AuthStorage.getStorageData(STORAGEKEY.userId) : "all";
     dispatch(getAllTransaction(id));
   }, [dispatch]);
 
@@ -222,6 +247,9 @@ const Dashboard = () => {
   const agencyAction = useCallback(() => {
     dispatch(ratingAgenciesAction());
   }, [dispatch]);
+  const adminAction = useCallback(() => {
+    dispatch(adminGetAction());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(() => Authsend());
@@ -229,6 +257,7 @@ const Dashboard = () => {
     dispatch(() => entityAction());
     dispatch(() => userAction());
     dispatch(() => agencyAction());
+    dispatch(() => adminAction());
     // console.log(getAlltransactionData)
     // eslint-disable-next-line
   }, []);
@@ -396,9 +425,20 @@ const Dashboard = () => {
                               <span className="h6 font-semibold fw-2 text-muted text-md d-block mb-2">
                                 {card.title}
                               </span>
+                              {card.status === "Completed" ? (
+                                <span className="h3 font-bold mb-0">
+                                  {signedCount.length}
+                                </span>
+                              ) : card.status === "Not Completed" ? (
+                                <span className="h3 font-bold mb-0">
+                                  {notSignedCount.length}
+                                </span>
+                              ) : (
                               <span className="h3 font-bold mb-0">
                                 {getCount(card.name)}
                               </span>
+                              )}
+
                             </div>
                             <div className="col-auto">
                               <div className={`icon icon-shape rounded-circle`}>
@@ -477,13 +517,24 @@ const Dashboard = () => {
                       <div className="card shadow border-0">
                         <div className="card-body">
                           <div className="row">
-                            <div className="col">
-                              <span className="h6 font-semibold text-muted text-sm d-block mb-2">
+                          <div className="col">
+                              <span className="h6 font-semibold fw-2 text-muted text-md d-block mb-2">
                                 {card.title}
                               </span>
+                              {card.status === "Completed" ? (
+                                <span className="h3 font-bold mb-0">
+                                  {signedCount.length}
+                                </span>
+                              ) : card.status === "Not Completed" ? (
+                                <span className="h3 font-bold mb-0">
+                                  {notSignedCount.length}
+                                </span>
+                              ) : (
                               <span className="h3 font-bold mb-0">
                                 {getCount(card.name)}
                               </span>
+                              )}
+
                             </div>
 
                             <div className="col-auto">
@@ -495,28 +546,36 @@ const Dashboard = () => {
                           <div className="mt-2 mb-0 text-sm">
                             {card.status === "Completed" ? (
                               <>
-                                <span className='badge badge-pill bg-soft-success text-success me-2'>
+                                <span className="badge badge-pill bg-soft-success text-success me-2">
                                   {signedCount.length}
                                 </span>
-                                <span className='text-nowrap text-xs text-muted'>
+                                <span className="text-nowrap text-xs text-muted">
                                   Completed
                                 </span>
-                                <span className='badge mx-2 badge-pill bg-danger text-success-white me-2'>
+                              </>
+                            ) : card.status === "Not Completed" ? (
+                              <>
+                                <span className="badge mx-2 badge-pill bg-danger text-success-white me-2">
                                   {notSignedCount.length}
                                 </span>
-                                <span className='text-nowrap text-xs text-muted'>
+                                <span className="text-nowrap text-xs text-muted">
                                   In Progress...
                                 </span>
                               </>
                             ) : (
-                                <>
+                              <>
                                 <span className='text-nowrap text-xs text-muted'>
-                                    {card.title === "Registered Users" && (
-                                      <Link className='text-decoration-none' to='/users'>
-                                        View Users{" "} <i className='bi bi-arrow-right me-1'></i>
-                                      </Link>
-                                    )}
-                                  </span></>
+                                  {card.title === "Registered Users" && (
+                                    <Link className='text-decoration-none' to='/users'>
+                                      View Users{" "} <i className='bi bi-arrow-right me-1'></i>
+                                    </Link>
+                                  )}
+                                  {card.title === "Transactions Revenue" && (
+                                    <Link className='text-decoration-none' to='/transactions'>
+                                      See Transactions{" "} <i className='bi bi-arrow-right me-1'></i>
+                                    </Link>
+                                  )}
+                                </span></>
                             )}
                           </div>
                         </div>

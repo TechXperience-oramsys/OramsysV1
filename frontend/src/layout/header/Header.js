@@ -68,15 +68,8 @@ const Header = () => {
                   </li>
                 </ul> */}
                   <div className="header-right-button">
-                    <a onClick={() => navigate("/signin")} className="header-btn">
-                      Sign In
-                    </a>
-                    <a
-                      onClick={() => navigate("/admin-login")}
-                      className="header-btn s-up"
-                    >
-                      Administration
-                    </a>
+                    <a onClick={() => navigate("/signin")} className="header-btn"> Sign In </a>
+                    <a onClick={() => navigate("/admin-login")} className="header-btn s-up">Administration</a>
                   </div>
                 </div>
               </div>
@@ -158,7 +151,7 @@ const Header = () => {
             <div className="logo-area">
               <a href="/" className="temp-logo">
                 <div className="lgo-img">
-                  <img src="./assets/img/logo.png" alt="logo" />
+                  <img src="./assets/img/lgo-red.png" alt="logo" />
                 </div>
               </a>
             </div>
@@ -168,19 +161,19 @@ const Header = () => {
             <div className="collapse ms-6 navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto mb-2 text-dark mb-lg-0">
                 <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="#">About us</a>
+                  <a className="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">Products</a>
+                  <a className="nav-link" href="#">About us</a>
                 </li>
 
                 <li className="nav-item">
                   <a className="nav-link" href="#">Services</a>
                 </li>
 
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <a className="nav-link" href="#">Events</a>
-                </li>
+                </li> */}
 
                 <li className="nav-item">
                   <a className="nav-link" href="#">contact</a>
@@ -192,7 +185,7 @@ const Header = () => {
 
 
               </ul>
-              <div className="d-flex flex-column sim">
+              {/* <div className="d-flex flex-column sim">
 
                 <Dropdown overlay={menu} className="me-3" trigger={['click']}>
                   <Button
@@ -205,7 +198,7 @@ const Header = () => {
                 </Dropdown>
 
 
-              </div>
+              </div> */}
             </div>
           </div>
         </nav>

@@ -219,13 +219,13 @@ const Transactions = () => {
         new Date(createdAt).toLocaleDateString("en-US", DATE_OPTIONS),
       className: "hide-on-md",
     },
-    {
-      title: "Created by",
-      key: "createdBy",
-      align: "center",
-      className: "hide-on-md",
-      render: () => loginData?.data?.name,
-    },
+    // {
+    //   title: "Created by",
+    //   key: "createdBy",
+    //   align: "center",
+    //   className: "hide-on-md",
+    //   render: () => loginData?.data?.name,
+    // },
     // {
     //   title: "Transaction Number",
     //   dataIndex: "_id",
@@ -470,17 +470,17 @@ const Transactions = () => {
                     <Table
                       columns={columns}
                       dataSource={currentTrans}
-                      rowKey="_id"
-                      loading={!currentTrans}
                       pagination={{
                         total: getAlltransactionData?.data?.length,
                         pageSize: postsPerPage,
                         current: currentPage,
-                        onChange: (page) => setCurrentPage(page),
+                        onChange: paginate,
                       }}
+                      loading={!currentTrans}
+                      rowKey={(record) => record._id}
                     />
                   </div>
-                  <div className=" border-0 mb-0">
+                  {/* <div className=" border-0 mb-0">
                     <span className="text-muted text-sm">
                       <Paginate
                         postsPerPage={postsPerPage}
@@ -492,7 +492,7 @@ const Transactions = () => {
                         currentTrans={currentTrans}
                       />
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </main>

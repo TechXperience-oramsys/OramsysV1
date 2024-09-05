@@ -154,7 +154,7 @@ const Admin = () => {
               >
                 <div class="col-sm-6 col-12 mb-4 mb-sm-0">
                   <h1 class="h2 mb-0 fw-bold fs-4 ls-tight">
-                    {userId ? "Profile" : "Admins"}
+                    {userId ? "Your profile" : "Corporations"}
                   </h1>
                 </div>
 
@@ -170,7 +170,7 @@ const Admin = () => {
                         <span class=" pe-2">
                           <i class="bi bi-plus"></i>
                         </span>
-                        <span className="fw-bold">Create Admin</span>
+                        <span className="fw-bold">Add Organisation</span>
                       </Link>
                     ) : (
                       <></>

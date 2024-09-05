@@ -62,7 +62,7 @@ export const pricingDetailsAtom = atom({
 export const borrowerApplicantAtom = atom("");
 export const lendersAtom = atom("");
 
-export const shippingCompanyAtom = atom("")
+export const shippingCompanyAtom = atom([])
 export const hedgingPartyAtom = atom("")
 export const hedgingStatusAtom = atom(false)
 export const warehouseStatusAtom = atom(false)
@@ -266,3 +266,12 @@ export const shippingAddressAtom = atom({
 })
 export const countryDataAtom = atom([])
 export const sectorAtom = atom([])
+
+// USER
+export const userAtom = atom({
+    name: "",
+    email: "",
+    department: "",
+    profile: "",
+    createdBy: "",
+  });

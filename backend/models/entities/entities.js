@@ -227,6 +227,7 @@ Schema.statics.deleteEntity = async function (id) {
 
 }
 
+
 Schema.statics.getEntitiesFromArrayOfIds = async function (ids) {
     return await this.find({
         '_id': { $in: ids }

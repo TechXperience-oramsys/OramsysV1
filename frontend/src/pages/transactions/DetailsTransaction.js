@@ -73,7 +73,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     const productData = useSelector((state) => state.product.product)
     const country = useSelector((state) => state.countryData.country)
     const entityData = useSelector((state) => state.entityData.entity)
-   
+
     const loginData = useSelector((state) => state.login.login)
     // console.log('LOGIN DATA', loginData)
     // console.log('ENTITY DATA', entityData)
@@ -329,43 +329,17 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     useEffect(() => {
         let bankRole = [];
         const storedLoginData = JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData));
-        const adminId = storedLoginData?.admin;
+        console.log('first', storedLoginData)
 
-        if (adminData && adminData.data) {
-            adminData.data.forEach((ele) => {
-                
-                    // Check if adminId matches adminData.data.corporationName
-                    if (adminId === ele?._id) {
-                        // If there's a match, set lenderOption to the entityData.data.details.name
-                        setLenders(ele?.corporationName);
-                    }
-                    // else {
-                    //     if (roleDetail.roleId?.roleName === "Bank") {
-                    //         var temp = {
-                    //             label: ele?.details?.name,
-                    //             value: ele._id
-                    //         };
-                    //         bankRole.push(temp);
-                    //     } else {
-                    //         var temp = {
-                    //             label: ele?.details?.givenName,
-                    //             value: ele._id
-                    //         };
-                    //         bankRole.push(temp);
-                    //     }
-                    // }
-                
-            });
+        if (storedLoginData && storedLoginData.admin) {
+            const adminId = storedLoginData?.admin.corporationName;
+            console.log('second', adminId)
 
-            // Only set lenderOption if there's no match found and bankRole is populated
-            if (!adminId || !adminData.data.some(ele => adminId === ele?._id)) {
-                setLenderOption(bankRole);
-            }
-
-
+            setLenders(adminId);
+        } else {
+            console.warn('Admin data is missing in the stored login data.')
         }
 
-        // console.log("TAG LENDER", lenderOption);
     }, [entityData]);
 
     // useEffect(() => {
@@ -1121,6 +1095,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
             type: transactionType,
         }
 
+        console.log(body.shipping_company, 'WAHALA')
 
         dispatch(transactionDataAction(body))
         signalContract(body.details.contractDetails)
@@ -1490,7 +1465,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             }}
                                             value={contractDetails.currency}
                                             disabled={isView}
-                                            defaultValue="Choose...">
+                                        >
                                             <option value="" disabled selected>Choose...</option>
                                             {CurrencyOptions.map((item, i) => (
                                                 <option key={i} value={item.label}>{item.label}</option>

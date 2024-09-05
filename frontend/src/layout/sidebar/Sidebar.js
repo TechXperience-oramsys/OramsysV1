@@ -114,7 +114,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
     {
       key: "7",
       icon: <HiOutlineUsers />,
-      label: "Admin",
+      label: "Corporations",
       path: "admins",
     },
     {

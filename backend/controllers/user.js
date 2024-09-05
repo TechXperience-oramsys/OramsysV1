@@ -68,7 +68,10 @@ class UserController {
   async login(req, res, next) {
     try {
       const userLogin = req.body.user_name.toLowerCase();
-      const user = await User.findOne({ email: userLogin });
+      const user = await User.findOne({ email: userLogin }).populate({
+        path: "createdBy",
+        select: "corporationName",
+      });
       if (!user) {
         return res
           .status(httpStatus.OK)

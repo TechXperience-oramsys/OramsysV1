@@ -6,10 +6,10 @@ let isLocalApi = +port >= 5000;
 
 // export const API = API_PROD
 // export const API = hostname === 'localhost' ? API_LOCAL : API_PROD
-// export const API = API_LOCAL.host
+export const API = API_LOCAL.host
 
-export let API;
-API = 'https://backend.oramsysdev.com/' // this url is for live api
+// export let API;
+// API = 'https://backend.oramsysdev.com/' // this url is for live api
 
 // if(window.location.origin.includes('oramsysdev.com')) {
 // API = "https://backend.oramsysdev.com/"; // this url is for live api

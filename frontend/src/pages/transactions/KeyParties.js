@@ -279,7 +279,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
     console.log('Check for lender', getLender)
 
     console.log('warehouse company', getWarehouseCompany?.warehouses?.[0]?.warehouseCompany?.label)
-    console.log('Shipping company', getShippingCompany?.shippingCompany?.label)
+    console.log('Shipping company', getShippingCompany)
     // console.log('Hedging Counterparty', getCounterParty.pricingCounterParty?.details?.name)
     useEffect(() => {
         AddUpParties()

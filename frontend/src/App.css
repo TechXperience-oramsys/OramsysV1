@@ -3027,24 +3027,24 @@ h6 {
   color: #fff !important;
 } */
 
-.wrapper {
-  width: 100%;
+/* .wrapper {
+  width: 50%;
   position: absolute;
   height: 100%;
   background-color: #000;
-  clip-path: polygon(81.5% 0, 100% 0, 100% 50%, 100% 100%, 71% 100%);
+  clip-path: polygon(100% 0, 100% 50%, 100% 100%, 71% 100%, 71% 0);
   transition: 1s all;
-}
+} */
 
 .navbar-brand {
   color: #fff;
-  font-family: "Allerta Stencil", sans-serif;
+  font-family: "Figtree", sans-serif;
   margin-bottom: 4px;
   font-size: 27px;
 }
 
 .navbar-white:hover .wrapper {
-  clip-path: polygon(81% 0, 100% 0, 100% 50%, 100% 100%, 65% 100%);
+  clip-path: polygon(100% 0, 100% 50%, 100% 100%, 71% 100%, 71% 0);
 }
 
 .navbar-brand:hover {
@@ -3082,11 +3082,11 @@ h6 {
 .user-style {
   width: 95%;
   margin: 0 auto;
-  background-color: #E6EEF4;
+  background-color: #e6eef4;
   border-radius: 8px;
   padding: 15px;
   margin-top: 10px;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   color: #373a3d;
   text-align: center;
   font-size: 15px;
