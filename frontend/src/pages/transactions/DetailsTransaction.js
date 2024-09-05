@@ -19,6 +19,8 @@ import { useAtom } from 'jotai';
 import { productDetailsAtom, contractDetailsAtom, borrowerApplicantAtom, lendersAtom, shippingOptionsAtom, transShipmentAtom, pricingDetailsAtom, shippingCompanyAtom, hedgingPartyAtom, hedgingStatusAtom, warehouseStatusAtom, productNameAtom, countriesAtom, counterPartyOptionAtom, borrowerOptionAtom, lenderOptionAtom, wareHouseIdAtom, errorAtom, editIdAtom, selectedProductAtom, portsOptionsAtom, originCountryAtom, shippingCompanyOptionAtom } from '../transactions/Helpers/atoms';
 import AuthStorage from "../../helper/AuthStorage"
 import STORAGEKEY from "../../config/APP/app.config"
+import { toast } from "react-hot-toast";
+
 
 
 const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalCounterParty, signalShippingCompany, signalWarehouseCompany, signalWarehouseStatus, signalContract, signalBorrower, signalLender, transaction_id, signalPricingHedgingStatus }) => {
@@ -791,6 +793,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         if (!borrower_Applicant) {
             flag = true
             error.borrower_Applicant = "Please enter borrower applicant name!"
+            toast.error(error.borrower_Applicant);
         }
         // if (!lenders) {
         //     flag = true
@@ -799,6 +802,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         if (!productDetails.name) {
             flag = true
             error.name = "Please enter product name!"
+            toast.error(error.name);
         }
 
         // if (!productDetails.type) {
@@ -820,120 +824,151 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         if (!productDetails.quantity) {
             flag = true
             error.quantity = "Please enter product quantity!"
+            toast.error(error.quantity);
         }
 
         if (!productDetails.metric) {
             flag = true
             error.metric = "Please enter metric!"
+            toast.error(error.metric);
+
         }
 
         if (!productDetails.quality) {
             flag = true
             error.quality = "Please enter product Quality!"
+            toast.error(error.quality);
+
         }
 
         if (!contractDetails.currency) {
             flag = true
             error.currency = "Please enter contract currency!"
+            toast.error(error.currency);
+
         }
 
         if (!contractDetails.value) {
             flag = true
             error.value = "Please enter contract value!"
+            toast.error(error.value);
+
         }
 
         if (!contractDetails.contractDate) {
             flag = true
             error.contractDate = "Please enter contract date!"
+            toast.error(error.contractDate);
+
         }
 
         if (!contractDetails.expiryDate) {
             flag = true
             error.expiryDate = "Please enter expiry date!"
+            toast.error(error.expiriyDate);
+
         }
 
         if (!contractDetails.conditionsOfContract) {
             flag = true
             error.conditionsOfContract = "Please enter conditions of contract!"
+            toast.error(error.conditionsOfContract);
+
         }
 
         if (!contractDetails.descriptionOfContract) {
             flag = true
             error.descriptionOfContract = "Please enter sescription of contract!"
+            toast.error(error.descriptionOfContract);
+
         }
 
         if (!shippingOptions.countryOfOrigin) {
             flag = true
             error.countryOfOrigin = "Please enter country of Origin!"
+            toast.error(error.countryOfOrigin);
         }
 
         if (shippingOptions.shipmentMode === "SEA") {
             if (!shippingOptions.portOfOrigin) {
                 flag = true
                 error.portOfOrigin = "Please enter port of origin!"
+                toast.error(error.portOfOrigin);
             }
         } else if (shippingOptions.shipmentMode === "AIR") {
             if (!shippingOptions.airbaseOfOrigin) {
                 flag = true
                 error.portOfOrigin = "Please enter port of origin!"
+                toast.error(error.portOfOrigin);
             }
         }
 
         if (!shippingOptions.shipmentDate) {
             flag = true
             error.shipmentDate = "Please enter shipment date!"
+            toast.error(error.shipmentDate);
         }
 
         if (!shippingOptions.shipmentMode) {
             flag = true
             error.shipmentMode = "Please enter shipment mode!"
+            toast.error(error.shipmentMode);
         }
 
         if (!shippingOptions.shipmentTerms) {
             flag = true
             error.shipmentTerms = "Please enter shipment terms!"
+            toast.error(error.shipmentTerms);
         }
 
         if (!shippingOptions.shippedWeights) {
             flag = true
             error.shippedWeights = "Please enter proipped weights!"
+            toast.error(error.shippedWeights);
         }
 
         if (!shippingOptions.destinationCountry) {
             flag = true
             error.destinationCountry = "Please enter destination country!"
+            toast.error(error.destinationCountry);
         }
 
         if (shippingOptions.shipmentMode === "SEA") {
             if (!shippingOptions.destinationPort) {
                 flag = true
                 error.destinationPort = "Please enter destination port!"
+                toast.error(error.destinationPort);
             }
         } else if (shippingOptions.shipmentMode === "AIR") {
             if (!shippingOptions.destinationAirbase) {
                 flag = true
                 error.destinationPort = "Please enter destination port!"
+                toast.error(error.destinationPort);
             }
         }
 
         if (!shippingOptions.shipmentFrequency) {
             flag = true
             error.shipmentFrequency = "Please enter shipment frequency!"
+            toast.error(error.shipmentFrequency);
         }
 
         if (shippingOptions.warehouseRequired === "") {
             flag = true
             error.warehouseRequired = "Please enter warehouse required!"
+            toast.error(error.warehouseRequired);
         }
 
         if (transShipmentOptions.tranShipmentRequired === "") {
             flag = true
             error.tranShipmentRequired = "Please enter transhipment required!"
+            toast.error(error.tranShipmentRequired);
         }
 
         if (transShipmentOptions.tranShipmentRequired && !transShipmentOptions.street) {
             flag = true
             error.street = "Please enter street!"
+            toast.error(error.street);
         }
 
         if (
@@ -942,6 +977,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         ) {
             flag = true
             error.city = "Please enter city!"
+            toast.error(error.city);
         }
 
         if (
@@ -950,6 +986,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         ) {
             flag = true
             error.country = "Please select country!"
+            toast.error(error.country);
         }
 
         if (
@@ -958,6 +995,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         ) {
             flag = true
             error.transShipmentQuantity = "Please enter transshipment quantity (kg)!"
+            toast.error(error.transShipmentQuantity);
         }
 
         if (
@@ -966,11 +1004,13 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         ) {
             flag = true
             error.transShipmentDate = "Please enter transhipment date!"
+            toast.error(error.transShipmentDate);
         }
 
         if (!pricingDetails.pricingType) {
             flag = true
             error.pricingType = "Please enter pricing type!"
+            toast.error(error.pricingType);
         }
 
         if (
@@ -979,6 +1019,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         ) {
             flag = true
             error.pricingAmount = "Please enter pricing amount!"
+            toast.error(error.pricingAmount);
         }
 
         if (
@@ -986,8 +1027,8 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
             !pricingDetails.previousDayClosingAmount
         ) {
             flag = true
-            error.previousDayClosingAmount =
-                "Please enter previous_day_closing_amount!"
+            error.previousDayClosingAmount = "Please enter previous_day_closing_amount!"
+            toast.error(error.previousDayClosingAmount);
         }
 
         if (
@@ -996,6 +1037,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         ) {
             flag = true
             error.pricingFormula = "Please enter pricing formula!"
+            toast.error(error.pricingFormula);
         }
 
         if (
@@ -1004,6 +1046,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         ) {
             flag = true
             error.pricingHedgingStatus = "Please enter pricing hedgeing status!"
+            toast.error(error.pricingHedgingStatus);
         }
 
         if (
@@ -1012,6 +1055,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         ) {
             flag = true
             error.pricingHedgingMethod = "Please enter hedgeing method!"
+            toast.error(error.pricingHedgingMethod);
         }
 
         if (
@@ -1020,13 +1064,19 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         ) {
             flag = true
             error.pricingCounterParty = "Please enter counter party!"
+            toast.error(error.pricingCounterParty);
         }
         if (!shippingOptions.shippingCompany) {
             flag = true
             error.shippingCompany = "Please enter a shipping company!"
+            toast.error(error.shippingCompany);
         }
-        setError(error)
-        return flag
+
+     
+            setError(error)
+            return flag
+        
+        
     }
 
     const warehouseData = (data, id) => {

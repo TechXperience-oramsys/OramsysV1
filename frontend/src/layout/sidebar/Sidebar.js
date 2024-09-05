@@ -239,6 +239,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           width={210}
         >
           <div className="demo-logo-vertical" />
+
           <div className="user-style">
 
             <div className={`align-items-center ${collapsed ? "justify-content-center w-100" : ""}`}>
@@ -246,15 +247,12 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
               ) : (
                 <FaUserCircle size={30} />
               )}
-
+              {!collapsed && <span className="ms-2 fw-semibold">{userData?.name}</span>}
             </div>
-
-            {!collapsed && <span className="ms-2 fw-semibold">{userData?.name}</span>}
-
 
             {!collapsed && (
               <div className="mt-1">
-                <button style={{ background: '#E6EEF4' }} onClick={() => setshowModal(true)}>
+                <button style={{ background: '#fff' }} onClick={() => setshowModal(true)}>
                   <HiOutlineLogout size={20} />
                 </button>
               </div>

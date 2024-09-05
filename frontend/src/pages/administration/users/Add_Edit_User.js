@@ -204,8 +204,7 @@ const Add_Edit_User = () => {
               <Form.Label>
                 Name <RequiredSpan />
               </Form.Label>
-              <Form.Control
-                className=""
+              <Form.Control className=""
                 value={state.name}
                 onChange={(e) => {
                   setState({ ...state, name: e.target.value });

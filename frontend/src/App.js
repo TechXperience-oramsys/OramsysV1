@@ -18,7 +18,11 @@ function App() {
       <Provider store={store}>
         <BrowserRouter>
           <Routes />
-          <ToastContainer />
+          <ToastContainer
+            newestOnTop={true}
+            position="top-right"
+            autoClose={5000} draggable
+            pauseOnHover />
         </BrowserRouter>
       </Provider>
     </div>

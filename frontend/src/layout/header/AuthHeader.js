@@ -83,9 +83,9 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
         </div>
 
         <div className="d-flex align-items-center">
-          <Badge className="font-semibold me-4" size={30} status="success" text={t('badgeText', { name: userData?.name || 'Guest' })} /> {/* Added some right margin */}
+          <Badge className="font-semibold me-4" size={30} status="success" text={userData?.name} /> {/* Added some right margin */}
 
-          <Dropdown overlay={menu} className="me-3" trigger={['click']}>
+          {/* <Dropdown overlay={menu} className="me-3" trigger={['click']}>
             <Button
               icon={<GlobalOutlined style={{ fontSize: '24px' }} />} // Increased the icon size
               shape="square"
@@ -93,11 +93,11 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
             >
               <span style={{ marginLeft: '8px' }}><CaretDownOutlined /></span>
             </Button>
-          </Dropdown>
+          </Dropdown> */}
 
           <button onClick={() => setshowModal(true)} className="nav-link text-dark me-4"> {/* Added some right margin */}
             <HiOutlineLogout className="me-1" size={15} />
-            <span>{t('Logout')}</span>
+            <span>Logout</span>
           </button>
 
 

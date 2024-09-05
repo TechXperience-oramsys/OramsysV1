@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { entitiesRoleAction } from '../../redux/actions/entitiesRoleAction';
 import { entityGetAction } from '../../redux/actions/entityAction';
 import AddEntityModal from './AddEntityModal';
+import { toast } from "react-hot-toast";
+
 
 const PartiesEditModal = ({ show, onHide, getModalData, isView, editData }) => {
 
@@ -75,11 +77,13 @@ const PartiesEditModal = ({ show, onHide, getModalData, isView, editData }) => {
         if (!parties.type) {
             flag = true
             error.type = 'Please enter type!'
+            toast.error(error.type);
         }
 
         if (!parties.name) {
             flag = true
             error.name = 'Please enter name!'
+            toast.error(error.name);
         }
         setError(error)
         return flag
