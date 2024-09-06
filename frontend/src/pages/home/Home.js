@@ -350,7 +350,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="progress-bar-wrap1">
+      {/* <section className="progress-bar-wrap1">
         <div className="container-fluid">
           <div className="row no-gutters">
             <div className="col-lg-6 col-md-12 p-0">
@@ -359,11 +359,11 @@ const Home = () => {
                 <p> All the tools required for a structured trade transaction in one placeful</p>
                 <div className="item-button">
                   <a href="#" className="item-btn">Register and begin
-                    {/* <i className="fas fa-long-arrow-alt-right"></i> */}
+                    <i className="fas fa-long-arrow-alt-right"></i>
                     <FontAwesomeIcon icon={faArrowRightLong} className="ms-3"></FontAwesomeIcon>
                   </a>
                 </div>
-                {/* <div className="row">
+                <div className="row">
                   <div className="col-lg-12 col-md-12 col-sm-12">
                     <div className="progress-box">
                       <div className="circle-progress">
@@ -372,23 +372,22 @@ const Home = () => {
                       </div>
                     </div>
                   </div>
-                </div> */}
+                </div>
               </div>
             </div>
             <div className="col-lg-6 col-md-12 p-0">
               <div className="progress-bar-box2 progress-bar-box3">
                 <div className="background-image5">
-                  {/* <img src="./assets/img/figure/figure38.png" alt="figure" width="475" height="553" /> */}
+                  <img src="./assets/img/figure/figure38.png" alt="figure" width="475" height="553" />
                 </div>
                 <div className="item-img">
-                  {/* <!-- <img src="img/service/service2.jpg" alt="service" width="960" height="555"> --> */}
                   <div className="rgt-img"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
 
       <section className="banner-wrap1">
@@ -589,16 +588,16 @@ const Home = () => {
       </section>
 
 
-      <section className="location-wrap-layout1">
+      {/* <section className="location-wrap-layout1">
         <div className="container">
           <div className="item-heading">
             <p className="item-subtitle">Where are our services utilized?</p>
-            {/* <h2 className="section-heading">Lorem ipsum dolor sit amet.</h2> */}
+            <h2 className="section-heading">Lorem ipsum dolor sit amet.</h2>
             <div style={{ height: "88vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <p style={{ fontSize: '48px', fontWeight: "bold" }}>Coming soon.</p>
             </div>
           </div>
-          {/* <div className="row">
+          <div className="row">
             <div className="col-lg-12">
               <div className="location-box">
                 <div className="item-img">
@@ -625,9 +624,9 @@ const Home = () => {
                 </div>
               </div>
             </div>
-          </div> */}
+          </div>
         </div>
-      </section>
+      </section> */}
 
       <section className="testimonial-wrap1">
         <div className="container">
