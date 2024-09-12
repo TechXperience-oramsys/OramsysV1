@@ -247,9 +247,9 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
               ) : (
                 <FaUserCircle size={30} />
               )}
-              {!collapsed && <span className="ms-2 fw-semibold">{userData?.name}</span>}
-            </div>
 
+            </div>
+            {!collapsed && <span className="ms-2 fw-semibold">{userData?.name}</span>}
             {!collapsed && (
               <div className="mt-1">
                 <button style={{ background: '#fff' }} onClick={() => setshowModal(true)}>

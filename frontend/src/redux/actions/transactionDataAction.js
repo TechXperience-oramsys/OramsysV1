@@ -84,52 +84,28 @@ export const addTransaction = (body) => async (dispatch) => {
     });
   }
 };
-export const saveDetails = (body) => async (dispatch) => {
+export const saveDetailsAction = (body) => async (dispatch) => {
   try {
-    dispatch({
-      type: IS_LOADING,
-      payload: true,
-    });
-    dispatch({
-      type: DETAILS_LOADING,
-      payload: true,
-    });
-    await ApiPost(`transaction/details`, body)
-      .then((res) => {
-        dispatch({
-          type: DETAILS,
-          payload: res,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    dispatch({
-      type: DETAILS_LOADING,
-      payload: false,
-    });
+    // Set loading state
+    dispatch({ type: IS_LOADING, payload: true });
+    dispatch({ type: DETAILS_LOADING, payload: true });
 
-    dispatch({
-      type: IS_LOADING,
-      payload: false,
-    });
+    // Perform API call
+    const res = await ApiPost(`transaction/details`, body);
+    console.log('BODY', res, body)
+    dispatch({ type: DETAILS, payload: res });
   } catch (err) {
-    dispatch({
-      type: DETAILS_ERROR,
-      payload: err,
-    });
-
-    dispatch({
-      type: DETAILS_ERROR,
-      payload: false,
-    });
-
-    dispatch({
-      type: IS_LOADING,
-      payload: false,
-    });
+    // Handle error state
+    dispatch({ type: DETAILS_ERROR, payload: err });
+  } finally {
+    // Reset loading state
+    dispatch({ type: DETAILS_LOADING, payload: false });
+    dispatch({ type: IS_LOADING, payload: false });
   }
 };
+
+
+
 
 export const getAllTransaction = (id) => async (dispatch) => {
   try {

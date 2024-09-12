@@ -9,7 +9,7 @@ import { productGetAction } from "../../redux/actions/productAction"
 import { countrieAction } from "../../redux/actions/countrieAction"
 import { CurrencyOptions } from "../../helper/common"
 import { entityGetAction } from "../../redux/actions/entityAction"
-import { transactionDataAction } from "../../redux/actions/transactionDataAction"
+import { saveDetailsAction, transactionDataAction } from "../../redux/actions/transactionDataAction"
 import moment from "moment"
 import { airPortsAction, portsAction } from "../../redux/actions/portsAction"
 import LoadingSpinner from "../../component/LoadingSpinner";
@@ -20,6 +20,8 @@ import { productDetailsAtom, contractDetailsAtom, borrowerApplicantAtom, lenders
 import AuthStorage from "../../helper/AuthStorage"
 import STORAGEKEY from "../../config/APP/app.config"
 import { toast } from "react-hot-toast";
+// import { transactionItems } from '../../_Services/transactions'
+import { message } from "antd"
 
 
 
@@ -1072,11 +1074,11 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
             toast.error(error.shippingCompany);
         }
 
-     
-            setError(error)
-            return flag
-        
-        
+
+        setError(error)
+        return flag
+
+
     }
 
     const warehouseData = (data, id) => {
@@ -1148,6 +1150,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         console.log(body.shipping_company, 'WAHALA')
 
         dispatch(transactionDataAction(body))
+        toast.success("Details added successfully!");
         signalContract(body.details.contractDetails)
         signalBorrower(body.borrower_Applicant)
         signalWarehouseCompany(body.details.shippingOptions)
@@ -1159,9 +1162,51 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         hendelNext()
     }
 
-    const save = () => {
+    const transactionData = useSelector((state) => state.transactionData.transactionData);
+    const addTransactionData = useSelector(
+        (state) => state.transactionData.addTransaction
+      );
 
+    const save = () => {
+        if (validation()) {
+            return
+        }
+       
+        // const detailBody = {
+        //     detail: {
+        //         ...transactionData.details,
+        //         shippingOptions: {
+        //             ...transactionData?.details?.shippingOptions,
+        //             warehouses: transactionData?.details?.shippingOptions?.warehouses?.map((ele) => ({
+        //                 warehouse: ele?.warehouse?.value,
+        //                 warehouseCompany: ele?.warehouseCompany?.value,
+        //             })),
+        //         },
+        //     },
+        // };
+
+        let detailBody = {
+            details: {
+                _id: editId,
+                productDetails,
+                contractDetails,
+                shippingOptions,
+                transShipmentOptions,
+                pricingDetails,
+            },
+            borrower_Applicant,
+            lenders,
+            shipping_company,
+            hedging_party,
+            hedging_status,
+            warehouse_status,
+            type: transactionType,
+        }
+        console.log('get', detailBody)
+        dispatch(saveDetailsAction(detailBody));
+        navigate('/transactions')
     }
+
     const handleCommoditySubtypeChange = (e, newVal) => {
         // let product = [];
         // productData.data.forEach((item) => {
@@ -2349,7 +2394,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                     <div className='footer_'>
                         <div className="d-flex justify-content-between">
                             <button onClick={() => navigate("/transactions")} className='footer_cancel_btn'> Back </button>
-                            {/* <button onClick={() => navigate("/transactions")} className='footer_cancel_btn'> Save Details </button> */}
+                            <button onClick={() => { save();  console.log('Click me')}} className='footer_cancel_btn'> Save Details and exit </button>
                         </div>
 
                         <button onClick={() => next()} className='footer_next_btn'> {" "} Next</button>

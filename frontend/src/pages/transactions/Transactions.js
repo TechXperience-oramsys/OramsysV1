@@ -44,6 +44,8 @@ const Transactions = () => {
   const getAlltransactionData = useSelector(
     (state) => state.transactionData.getAllTransaction
   );
+  console.log('get all transactins', getAlltransactionData)
+
   const riskAssessment = useSelector(
     (state) => state.riskAssessmentData.getRiskAssessment
   );
@@ -175,6 +177,7 @@ const Transactions = () => {
   const indexOfLastTrans = currentPage * postsPerPage;
   const indexOfFirstTrans = indexOfLastTrans - postsPerPage;
   const currentTrans = transaction?.slice(indexOfFirstTrans, indexOfLastTrans);
+  console.log('get all transactins', currentTrans)
   //page change
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -310,23 +313,23 @@ const Transactions = () => {
         <AntDropdown
           overlay={
             <Menu>
-              <Menu.Item
-                onClick={() => {
-                  navigate(`/edit-transactions?id=${record._id}`, {
-                    state: [
-                      { type: record.type },
-                      {
-                        type: record?.details?.productDetails?.nature
-                          ? record.details.productDetails.nature
-                          : "",
-                      },
+              {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" && (
+                <Menu.Item
+                onClick={() => { 
+                  navigate(`/edit-transactions?id=${record._id}`,
+                    {
+                      state: [{ type: record.type },
+                      { type: record?.details?.productDetails?.nature ? record.details.productDetails.nature : "" },
                       { isView: false },
-                    ],
-                  });
+                      ],
+                    });
                 }}
               >
                 <EditOutlined /> Edit
               </Menu.Item>
+              )}
+              
+
               <Menu.Item
                 onClick={() => {
                   navigate(`/edit-transactions?id=${record._id}`, {

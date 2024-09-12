@@ -835,9 +835,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
     delete transactionData.fundFlow?._id;
     delete facility._id;
     let body = {
-      detail:
-        transactionType !== "Import"
-          ? {
+      detail: transactionType !== "Import" ? {
             ...transactionData.details,
             shippingOptions: {
               ...transactionData?.details?.shippingOptions,
@@ -850,9 +848,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                     };
                   }
                 ),
-            },
-          }
-          : "",
+            } } : "",
 
       keyParties: {
         keyParties: transactionData.keyParties?.keyParties?.map((ele) => {
@@ -905,9 +901,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
       userId: AuthStorage.getStorageData(STORAGEKEY.userId),
     };
 
-    let user =
-      localStorage.getItem("userData") &&
-      JSON.parse(localStorage.getItem("userData"));
+    let user = localStorage.getItem("userData") && JSON.parse(localStorage.getItem("userData"));
     body.admin = user.admin;
 
     console.log("body final===", body);
@@ -916,7 +910,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
     setLoading(true);
     await dispatch(addTransaction(body));
     setLoading(false);
-    // navigate("/final-page")
+    navigate("/final-page")
   };
 
   useEffect(() => {

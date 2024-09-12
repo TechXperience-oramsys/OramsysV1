@@ -76,7 +76,7 @@ var PricingDetailOptions = new Schema({
 })
 
 var Schema = new Schema({
-    transactionId: { type: String, required: true, default: null },
+    transactionId: { type: Schema.Types.ObjectId, required: true,  ref: 'Transaction' },
     productDetails: { type: ProductDetails, required: false, default: null },
     contractDetails: { type: ContractDetails, required: false, default: null },
     shippingOptions: { type: ShippingOptions, required: false, default: null },

@@ -16,7 +16,7 @@ const PDFDocument = require("pdfkit");
 const makeTermSheet = require("../utils/makeTermSheet");
 
 class transactionController {
-  async getPorts(req, res, next) {}
+  async getPorts(req, res, next) { }
 
   // async create(req, res, next) {
   //     let body = req.body;
@@ -146,17 +146,21 @@ class transactionController {
 
   async saveDetails(req, res, next) {
     const { detail } = req.body;
+    const { id } = req.params;
+
+    console.log('Transaction ID in the backend:', id)
     try {
       if (detail) {
+        detail.transactionId = mongoose.Types.ObjectId(id);
+
         if (!detail.pricingDetails.pricingHedgingStatus) {
           delete detail.pricingDetails.pricingCounterParty;
         }
-        detail.transactionId = req.params.id;
+        // detail.transactionId = req.params.id;
         const transactionDetailsModel = new transactionDetails(detail);
         const transactionDetailsResponse = await transactionDetailsModel.save();
         await transaction.updateTransaction(
-          { details: transactionDetailsResponse._id },
-          req.params.id
+          { details: transactionDetailsResponse._id }, id
         );
         return res
           .status(httpStatus.OK)

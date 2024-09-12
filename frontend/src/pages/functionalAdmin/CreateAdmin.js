@@ -47,9 +47,7 @@ const CreateAdmin = () => {
       .createAdmin(formData)
       .then((resp) => {
         message.success("Form submitted successfully!");
-        console.log("Resetting form fields...");
         form.resetFields();
-        console.log("Form fields reset");
         navigate("/admins");
       })
       .catch((err) => {
