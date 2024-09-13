@@ -2394,7 +2394,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                     <div className='footer_'>
                         <div className="d-flex justify-content-between">
                             <button onClick={() => navigate("/transactions")} className='footer_cancel_btn'> Back </button>
-                            <button onClick={() => { save();  console.log('Click me')}} className='footer_cancel_btn'> Save Details and exit </button>
+                            {/* <button onClick={() => { save();  console.log('Click me')}} className='footer_cancel_btn'> Save Details and exit </button> */}
                         </div>
 
                         <button onClick={() => next()} className='footer_next_btn'> {" "} Next</button>
