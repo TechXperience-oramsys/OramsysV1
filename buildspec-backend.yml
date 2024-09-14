@@ -8,7 +8,7 @@ phases:
       # Retrieve the ECR login password and authenticate Docker to the ECR registry
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
       # Set the image tag to the short commit ID or specify a default tag if necessary
-      - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG="pilot"
       - echo "Image tag set to $IMAGE_TAG"
 
   build:
