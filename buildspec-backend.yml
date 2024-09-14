@@ -7,15 +7,15 @@ phases:
       - aws --version
       # Retrieve the ECR login password and authenticate Docker to the ECR registry
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
-      # Set the image tag
-      - IMAGE_TAG=${CODEBUILD_RESOLVED_SOURCE_VERSION}
-      - echo Building the Docker image with tag $IMAGE_TAG
+      # Set the image tag to the short commit ID or specify a default tag if necessary
+      - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - echo "Image tag set to $IMAGE_TAG"
 
   build:
     commands:
       - echo Building the Docker image...
+      # Navigate to the backend folder and build the Docker image
       - cd backend
-      # Build the Docker image with the specified tag
       - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
 
   post_build:
@@ -27,4 +27,3 @@ phases:
       # Push the Docker image to the ECR repository
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
       - echo Build completed successfully.
-
