@@ -51,7 +51,7 @@ const Dashboard = () => {
       status: "Completed",
     },
     {
-      title: "Transactions Revenue",
+      title: "Transactions Value",
       img: "sales",
       icon: StockOutlined,
       color: "bg-teal-500",
@@ -111,7 +111,7 @@ const Dashboard = () => {
       status: "Not Completed",
     },
     {
-      title: "Transactions Revenue",
+      title: "Transactions Value",
       img: "sales",
       icon: StockOutlined,
       color: "bg-teal-500",
@@ -145,7 +145,7 @@ const Dashboard = () => {
       status: "Not Completed",
     },
     {
-      title: "Your Transactions Revenue",
+      title: "Your Transactions Value",
       img: "sales",
       icon: StockOutlined,
       color: "bg-teal-500",
@@ -570,7 +570,7 @@ const Dashboard = () => {
                                       View Users{" "} <i className='bi bi-arrow-right me-1'></i>
                                     </Link>
                                   )}
-                                  {card.title === "Transactions Revenue" && (
+                                  {card.title === "Transactions Value" && (
                                     <Link className='text-decoration-none' to='/transactions'>
                                       See Transactions{" "} <i className='bi bi-arrow-right me-1'></i>
                                     </Link>
