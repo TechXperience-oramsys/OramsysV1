@@ -12,8 +12,7 @@ export let API;
 API = 'https://backend.oramsysdev.com/'
 
 // if(window.location.origin.includes('oramsysdev.com')) {
-// API = "https://backend.oramsysdev.com/"; // this url is for live api
-// API = "http://localhost:5003/";
+// API = "https://backend.oramsysdev.com/";
 // }
 // else {
 //     API = 'http://localhost:5003/'
