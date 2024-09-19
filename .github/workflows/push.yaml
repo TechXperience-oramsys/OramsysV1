@@ -33,14 +33,6 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
-          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
-          DB_CONNECTION_CLUSTER: ${{ secrets.DB_CONNECTION_CLUSTER }}
-          PORT: ${{ secrets.PORT }}
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
-          EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
-          EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
-          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
         run: |
           echo "$SSH_PRIVATE_KEY" > staging-server-oramyses.pem
           chmod 600 staging-server-oramyses.pem
