@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { emailRegex, passwordRegex } from "../../helper/utils";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { userServices } from "../../_Services/userServices";
 import { Spinner } from "react-bootstrap";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";

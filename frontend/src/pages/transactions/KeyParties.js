@@ -161,14 +161,15 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
         if (nameOption?.data) {
             // console.log(nameOption?.data);
             var temp_names = [];
-            nameOption?.data.forEach((element, index) => {
-                element.details.name = element.details?.name != null ? element.details?.name : element.details?.givenName;
-                temp_names.push(element)
+            nameOption?.data?.forEach((element, index) => {
+                // Assign the correct name back to element.details.name
+                element.details.name = element.details?.name !== null ? element.details?.name : element.details?.givenName;
+                temp_names.push(element);
             });
             console.log("GET RELATED PARTIES DATA-----", temp_names);
-            setNames(temp_names)
+            setNames(temp_names);
         }
-    }, [nameOption])
+    }, [nameOption]);
 
     const partiesEditData = (data, id) => {
         if (id !== undefined) {

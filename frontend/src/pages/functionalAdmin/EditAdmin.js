@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { ApiGet, ApiPut } from "../../helper/API/ApiData";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 
 const { Option } = Select;
 const { Dragger } = Upload;
