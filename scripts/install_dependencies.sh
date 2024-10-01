@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Change to the backend directory
+echo "Navigating to backend directory..."
+cd /data/oramsys/backend || { echo "Failed to navigate to backend directory"; exit 1; }
+
+# Install backend dependencies
+echo "Installing backend dependencies..."
+sudo npm install --force || { echo "Failed to install backend dependencies"; exit 1; }
+
 # Log everything for debugging
 exec > >(tee /var/log/install_dependencies.log) 2>&1
 
