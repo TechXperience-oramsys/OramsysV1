@@ -106,7 +106,7 @@ const SignIn = () => {
                   </ol>
                 </nav>
                 <div className="mb-4">
-                  <h3 className="title">Sign In</h3>
+                  <h3 className="title">Sign</h3>
                 </div>
 
                 <div className="form">
