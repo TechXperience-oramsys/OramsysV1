@@ -1,9 +1,14 @@
 #!/bin/bash
 
-# Change directory to the backend and install dependencies
-cd /data/oramsys/backend
-sudo npm install
+# Log everything for debugging
+exec > >(tee /var/log/install_dependencies.log) 2>&1
 
-# Change directory to the frontend and install dependencies
-cd /data/oramsys/frontend
-sudo npm install
+# Change to the frontend directory
+echo "Navigating to frontend directory..."
+cd /data/oramsys/frontend || { echo "Failed to navigate to frontend directory"; exit 1; }
+
+# Install frontend dependencies
+echo "Installing frontend dependencies..."
+npm install || { echo "Failed to install frontend dependencies"; exit 1; }
+
+echo "Deployment script executed successfully."

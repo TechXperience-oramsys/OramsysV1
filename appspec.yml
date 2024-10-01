@@ -11,9 +11,9 @@ hooks:
   AfterInstall:
     - location: scripts/install_dependencies.sh
       timeout: 300
-      runas: root
+      runas: ubuntu
 
   ApplicationStart:
     - location: scripts/build_frontend.sh
       timeout: 600
-      runas: root
+      runas: ubuntu

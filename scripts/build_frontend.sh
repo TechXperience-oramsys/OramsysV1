@@ -4,4 +4,4 @@
 cd /data/oramsys/frontend
 
 # Create a production build of the frontend
-sudo npm run build
+npm run build
