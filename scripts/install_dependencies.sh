@@ -17,6 +17,6 @@ cd /data/oramsys/frontend || { echo "Failed to navigate to frontend directory"; 
 
 # Install frontend dependencies
 echo "Installing frontend dependencies..."
-sudo npm install --force || { echo "Failed to install frontend dependenciess"; exit 1; }
+sudo npm install || { echo "Failed to install frontend dependenciess"; exit 1; }
 
 echo "Deployment script executed successfully."
