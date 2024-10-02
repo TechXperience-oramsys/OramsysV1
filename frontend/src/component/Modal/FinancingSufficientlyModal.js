@@ -4,7 +4,7 @@ import { Row, Col } from "react-bootstrap";
 // import Autocomplete from "@mui/lab";
 import { useSelector } from 'react-redux'
 import { CurrencyOptions } from '../../helper/common';
-import { useLocation } from 'react-router-dom'
+// import { useLocation } from 'react-router-dom'
 
 const FinancingSufficientlyModal = ({ show, onHide, getModalData, data }) => {
   const [financingSufficiently, setFinancingSufficiently] = useState({
@@ -14,9 +14,9 @@ const FinancingSufficientlyModal = ({ show, onHide, getModalData, data }) => {
     facilityAmount: "",
   });
 
-  const location = useLocation();
+  // const location = useLocation();
   // const isView = location.state?.isView;
-  const queryParams = new URLSearchParams(location.search);
+  // const queryParams = new URLSearchParams(location.search);
   // const id = queryParams.get("id");
 
   const getTransactionByIdData = useSelector((state) => state.transactionData.getTransactionById);

@@ -1,7 +1,7 @@
 import { Backdrop, Fade,  Modal, TextField, Autocomplete } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 // import Autocomplete from "@mui/lab";
 import { entityGetAction } from '../../redux/actions/entityAction';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,9 +9,9 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const LCPartiesModal = ({ show, onHide, addParties, data }) => {
 
-    let numberReg = /^[1-7]\d{0,7}$/
+    // let numberReg = /^[1-7]\d{0,7}$/
 
-    const location = useLocation()
+    // const location = useLocation()
     // const isView = location.state[2]?.isView
 
     const [lcParties, setLcParties] = useState({

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import{ Modal, TextField, Backdrop, Fade, Autocomplete }from '@mui/material';
+import { Modal, TextField, Backdrop, Fade, Autocomplete } from '@mui/material';
 import { Col, Row } from 'react-bootstrap';
 import { entityGetAction } from '../../redux/actions/entityAction';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,7 +28,7 @@ const AddWareHouseModal = ({ onHide, show, wareHouseData, wareHouseId }) => {
             console.log('Entity DATA', entityData)
 
             entityData.data.forEach((ele) => {
-                ele.roles.map(roleDetail => {
+                ele.roles.forEach(roleDetail => { // Changed map to forEach
                     let temp;
                     if (roleDetail.roleId?.roleName === "Warehouse Company") {
                         temp = {
@@ -41,9 +41,10 @@ const AddWareHouseModal = ({ onHide, show, wareHouseData, wareHouseId }) => {
                             label: ele?.details?.givenName,
                             value: ele._id
                         }
+                        entityDetails.push(temp); // You need to push temp here as well
                     }
-                })
-            })
+                });
+            });
         }
         setWareHouseCompanyOption(entityDetails)
         // if (entityData && entityData.data) {

@@ -1,7 +1,7 @@
 import { Backdrop, Fade, Modal, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
-import { useSelector, useDispatch } from 'react-redux'
+import {  useDispatch } from 'react-redux'
 import {entityRoleAddAction, entityRoleUpdateAction} from '../../redux/actions/entitiesRoleAction'
 
 const EntitiesRoleAddModal = ({ show, onHide, data, formType }) => {
