@@ -1,4 +1,3 @@
-import MaterialTable from 'material-table'
 import React, { useEffect, useState } from 'react'
 import RatingModal from '../../../../component/Modal/RatingModal'
 import { useSelector, useDispatch } from 'react-redux';
@@ -6,8 +5,7 @@ import { companydataAction } from '../../../../redux/actions/companydataAction';
 import { ratingAgenciesAction } from '../../../../redux/actions/ratingAgenciesAction';
 import { useLocation } from 'react-router-dom';
 import { Col, Form, Row } from "react-bootstrap"
-import { TextField } from "@material-ui/core"
-import Autocomplete from "@material-ui/lab/Autocomplete"
+// import { TextField, Autocomplete } from "@mui/material"
 import { Button, Space, Table } from 'antd';
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
 import { OptionalSpan } from '../../../transactions/Helpers/OptionalTags'
@@ -32,7 +30,7 @@ const Ratings = ({ handleNext, handleBack }) => {
 
     useEffect(() => {
         dispatch(ratingAgenciesAction())
-    }, [ratingAgenciesAction])
+    }, [dispatch])
 
     useEffect(() => {
         if (companyData && companyData.ratings && agencyData?.data) {

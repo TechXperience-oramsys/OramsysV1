@@ -157,43 +157,7 @@ const EntitiesRole = () => {
                         </div>
                     </div>
 
-                    {/* <MaterialTable
-                        title=""
-                        columns={[
-                            { title: 'Grade', field: 'roleName' },
-                            { title: 'Value', field: 'product' },
-                            { title: 'Acceptable', field: 'type' },
-                            { title: 'Comments', field: 'comments' },
-                        ]}
-                        data={entityRole?.data}
-                        actions={[
-                            {
-                                icon: 'edit',
-                                tooltip: 'Edit Role',
-                                onClick: (e, rowData) => {
-                                    setFormType('edit');
-                                    setAddEntityModal(true);
-                                    setRowData(rowData)
-                                }
-                            },
-                            {
-                                icon: 'delete',
-                                tooltip: 'Delete Role',
-                                onClick: (e, rowData) => {
-                                    setRowData(rowData)
-                                    setShowModal(true)
-                                }
-                            }
-                        ]}
-                        options={{
-                            filtering: true,
-                            actionsColumnIndex: -1,
-                            sorting: true,
-                            pageSize: 10,
-                            search: false,
-                        }}
-                    /> */}
-
+                    
                 </div>
                 {/* <div className='footer_'>
                     <button onClick={() => { }} className="footer_cancel_btn">cancel</button>

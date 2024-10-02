@@ -20,7 +20,7 @@ const SignUp = () => {
       toast.success(registeredData.message);
       navigate("/");
     }
-  }, [registeredData]);
+  }, [registeredData, navigate]);
 
   const handelChange = (e) => {
     setRegisterData({ ...registerData, [e.target.name]: e.target.value });
@@ -77,7 +77,7 @@ const SignUp = () => {
                 <nav aria-label="breadcrumb">
                   <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                      <a href="#" onClick={() => navigate("/")}>
+                      <a href="/" onClick={() => navigate("/")}>
                         Home
                       </a>
                     </li>
@@ -185,7 +185,7 @@ const SignUp = () => {
                         <label class="control control--checkbox mb-0">
                           <span class="caption">
                             Already Registered?{" "}
-                            <a
+                            <a href="/"
                               className="fw-semibold"
                               onClick={() => navigate("/")}
                             >

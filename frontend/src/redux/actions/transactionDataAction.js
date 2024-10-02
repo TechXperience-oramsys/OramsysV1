@@ -6,18 +6,18 @@ import {
   DETAILS,
   DETAILS_ERROR,
   DETAILS_LOADING,
-  KEYPARTIES,
-  KEYPARTIES_ERROR,
-  KEYPARTIES_LOADING,
-  FUNDFLOW,
-  FUNDFLOW_ERROR,
-  FUNDFLOW_LOADING,
-  DOCUMENTFLOW,
-  DOCUMENTFLOW_ERROR,
-  DOCUMENTFLOW_LOADING,
-  FACILITY,
-  FACILITY_ERROR,
-  FACILITY_LOADING,
+  // KEYPARTIES,
+  // KEYPARTIES_ERROR,
+  // KEYPARTIES_LOADING,
+  // FUNDFLOW,
+  // FUNDFLOW_ERROR,
+  // FUNDFLOW_LOADING,
+  // DOCUMENTFLOW,
+  // DOCUMENTFLOW_ERROR,
+  // DOCUMENTFLOW_LOADING,
+  // FACILITY,
+  // FACILITY_ERROR,
+  // FACILITY_LOADING,
   EDIT_TRANSACTION,
   EDIT_TRANSACTION_ERROR,
   EDIT_TRANSACTION_LOADING,
@@ -116,7 +116,7 @@ export const getAllTransaction = (id) => async (dispatch) => {
       localStorage.getItem("userData") &&
       JSON.parse(localStorage.getItem("userData"));
     let url =
-      role.toLocaleLowerCase() != "admin"
+      role.toLocaleLowerCase() !== "admin"
         ? `transaction/get?id=${id}&role=${role}&adminId=${user?.id}`
         : `transaction/get?id=${id}&role=${role}`;
 

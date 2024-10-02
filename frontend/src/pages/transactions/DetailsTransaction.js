@@ -1,33 +1,33 @@
-import React, { useCallback, useEffect, useRef, useState } from "react"
-import { Col, Row, Button, Form, InputGroup } from 'react-bootstrap'
-import { Link, useLocation, useNavigate } from "react-router-dom"
+import React, { useCallback, useEffect, useState } from "react"
+import { Col, Row, Form, InputGroup } from 'react-bootstrap'
+import { useLocation, useNavigate } from "react-router-dom"
 import AddWareHouseModal from "../../component/Modal/AddWareHouseModal"
 import AddInsuranceModal from "../../component/Modal/AddInsuranceModal"
-import MaterialTable from "material-table"
 import { useDispatch, useSelector } from "react-redux"
 import { productGetAction } from "../../redux/actions/productAction"
 import { countrieAction } from "../../redux/actions/countrieAction"
 import { CurrencyOptions } from "../../helper/common"
 import { entityGetAction } from "../../redux/actions/entityAction"
-import { saveDetailsAction, transactionDataAction } from "../../redux/actions/transactionDataAction"
+import { transactionDataAction } from "../../redux/actions/transactionDataAction"
 import moment from "moment"
 import { airPortsAction, portsAction } from "../../redux/actions/portsAction"
 import LoadingSpinner from "../../component/LoadingSpinner";
-import { ApiGet, ApiPost } from '../../helper/API/ApiData';
+import { ApiGet } from '../../helper/API/ApiData';
 import Select from 'react-select';
 import { useAtom } from 'jotai';
-import { productDetailsAtom, contractDetailsAtom, borrowerApplicantAtom, lendersAtom, shippingOptionsAtom, transShipmentAtom, pricingDetailsAtom, shippingCompanyAtom, hedgingPartyAtom, hedgingStatusAtom, warehouseStatusAtom, productNameAtom, countriesAtom, counterPartyOptionAtom, borrowerOptionAtom, lenderOptionAtom, wareHouseIdAtom, errorAtom, editIdAtom, selectedProductAtom, portsOptionsAtom, originCountryAtom, shippingCompanyOptionAtom } from '../transactions/Helpers/atoms';
+import { productDetailsAtom, contractDetailsAtom, borrowerApplicantAtom, lendersAtom, shippingOptionsAtom, transShipmentAtom, pricingDetailsAtom, shippingCompanyAtom, hedgingPartyAtom, hedgingStatusAtom, warehouseStatusAtom, productNameAtom, countriesAtom, counterPartyOptionAtom, borrowerOptionAtom, wareHouseIdAtom, errorAtom, editIdAtom, portsOptionsAtom, originCountryAtom, shippingCompanyOptionAtom } from '../transactions/Helpers/atoms';
 import AuthStorage from "../../helper/AuthStorage"
 import STORAGEKEY from "../../config/APP/app.config"
 import { toast } from "react-hot-toast";
 // import { transactionItems } from '../../_Services/transactions'
-import { message } from "antd"
+import { Table, Button, Tooltip } from "antd"
+import { EyeOutlined, EditOutlined } from '@ant-design/icons'
 
 
 
 const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalCounterParty, signalShippingCompany, signalWarehouseCompany, signalWarehouseStatus, signalContract, signalBorrower, signalLender, transaction_id, signalPricingHedgingStatus }) => {
     const navigate = useNavigate()
-    let numberReg = /^[0-9\b]+$/;
+    // let numberReg = /^[0-9\b]+$/;
     const [isLoading, setIsLoading] = useState(true);
 
     const [lenders, setLenders] = useAtom(lendersAtom)
@@ -44,7 +44,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
 
     const [pricingDetails, setPricingDetails] = useAtom(pricingDetailsAtom)
 
-    const [loading, setLoading] = useState(false)
+    // const [loading, setLoading] = useState(false)
     const [shipping_company, setShippingCompany] = useAtom(shippingCompanyAtom)
     const [hedging_party, setHedgingParty] = useAtom(hedgingPartyAtom)
     const [hedging_status, setHedgingStatus] = useAtom(hedgingStatusAtom)
@@ -57,18 +57,18 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     const isView = location.state[2]?.isView
     const dispatch = useDispatch()
     const [productName, setProductName] = useAtom(productNameAtom)
-    const [showTextEditModal, setShowTextEditModal] = useState(false)
-    const [type, setType] = useState("")
-    const [selectedName, setSelectedName] = useState("")
+    // const [showTextEditModal, setShowTextEditModal] = useState(false)
+    // const [type, setType] = useState("")
+    // const [selectedName, setSelectedName] = useState("")
     const [countries, setcountries] = useAtom(countriesAtom)
-    const [sendModalData, setSendModalData] = useState("")
+    // const [sendModalData, setSendModalData] = useState("")
     const [counterPartyOption, setCounterPartyOption] = useAtom(counterPartyOptionAtom)
     const [shippingCompanyOption, setShippingCompanyOption] = useAtom(shippingCompanyOptionAtom)
     const [borrowerOption, setBorrowerOption] = useAtom(borrowerOptionAtom)
-    const [lenderOption, setLenderOption] = useAtom(lenderOptionAtom)
+    // const [lenderOption, setLenderOption] = useAtom(lenderOptionAtom)
     const [wareHouseId, setWareHouseId] = useAtom(wareHouseIdAtom)
     const [error, setError] = useAtom(errorAtom)
-    const [selectedProduct, setSelectedProduct] = useAtom(selectedProductAtom)
+    // const [selectedProduct, setSelectedProduct] = useAtom(selectedProductAtom)
     const [editId, setEditId] = useAtom(editIdAtom)
     const [portsOptions, setPortsOptions] = useAtom(portsOptionsAtom)
     const [originCountry, setOriginCountry] = useAtom(originCountryAtom)
@@ -78,7 +78,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     const country = useSelector((state) => state.countryData.country)
     const entityData = useSelector((state) => state.entityData.entity)
 
-    const loginData = useSelector((state) => state.login.login)
+    // const loginData = useSelector((state) => state.login.login)
     // console.log('LOGIN DATA', loginData)
     // console.log('ENTITY DATA', entityData)
     // const getTransactionByIdData = useSelector(
@@ -86,13 +86,13 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     // )
     const ports = useSelector((state) => state.ports.port)
     const airBase = useSelector((state) => state.airPorts.airPort)
-    const [activeOnChange, setActiveOnChange] = useState('');
-    const [apiCalled, setApiCalled] = useState(true);
+    // const [activeOnChange, setActiveOnChange] = useState('');
+    // const [apiCalled, setApiCalled] = useState(true);
     useEffect(() => {
         dispatch(productGetAction("all"))
         dispatch(countrieAction("all"))
         dispatch(entityGetAction("Company"))
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         if (
@@ -132,7 +132,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                 airBase.data[0].country === tempData && setPortsOptions(airBase.data)
             }
         }
-    }, [ports, airBase, countries, shippingOptions])
+    }, [ports, airBase, countries, shippingOptions, setOriginCountry, setPortsOptions])
 
     useEffect(() => {
         // console.log('=======airBase', airBase.data)
@@ -142,27 +142,24 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         // console.log('=======portsOptions', portsOptions)
     }, [portsOptions])
 
-    const setPorts = (country) => {
-
-        // console.log('setPorts shippingOptions.shipmentMode', shippingOptions.shipmentMode);
+    const setPorts = useCallback((country) => {
         if (shippingOptions.shipmentMode === "SEA") {
-            dispatch(portsAction(country))
+            dispatch(portsAction(country));
         } else if (shippingOptions.shipmentMode === "AIR") {
-            dispatch(airPortsAction(country))
+            dispatch(airPortsAction(country));
         }
-        setActiveOnChange('origin')
-        // setApiCalled(false)
-    }
+        // setActiveOnChange('origin');
+        // setApiCalled(false);
+    }, [shippingOptions.shipmentMode, dispatch]); 
 
-    const setDestinationPorts = (country) => {
-        if (shippingOptions.shipmentMode === "SEA") {
-            dispatch(portsAction(country))
-        } else if (shippingOptions.shipmentMode === "AIR") {
-            dispatch(airPortsAction(country))
-        }
-        setActiveOnChange('destination')
-        // setApiCalled(false)
-    }
+    // const setDestinationPorts = (country) => {
+    //     if (shippingOptions.shipmentMode === "SEA") {
+    //         dispatch(portsAction(country))
+    //     } else if (shippingOptions.shipmentMode === "AIR") {
+    //         dispatch(airPortsAction(country))
+    //     }
+    //     setActiveOnChange('destination')
+    // }
 
     useEffect(() => {
         if (shippingOptions.countryOfOrigin) {
@@ -178,7 +175,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                 )?.name
             )
         }
-    }, [shippingOptions.countryOfOrigin, shippingOptions.destinationCountry])
+    }, [shippingOptions.countryOfOrigin, shippingOptions.destinationCountry, countries, setPorts])
 
 
     // useEffect(() => {
@@ -194,14 +191,15 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
 
             entityData.data.forEach((ele) => {
                 ele.roles.forEach(roleDetail => {
-                    if (roleDetail.roleId?.roleName == "Hedge Counterparty") {
-                        var temp = {
+                    let temp
+                    if (roleDetail.roleId?.roleName === "Hedge Counterparty") {
+                        temp = {
                             label: ele?.details?.name,
                             value: ele._id
                         }
                         entityDetails.push(temp)
                     } else {
-                        var temp = {
+                        temp = {
                             label: ele?.details?.givenName,
                             value: ele._id
                         }
@@ -211,7 +209,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         }
         setCounterPartyOption(entityDetails)
         // console.log("TAG HEDGE COUNTERPARTY", counterPartyOption)
-    }, [entityData])
+    }, [entityData, setCounterPartyOption])
 
     useEffect(() => {
         let shipDetails = []
@@ -219,14 +217,15 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
 
             entityData.data.forEach((ele) => {
                 ele.roles.forEach(roleDetail => {
-                    if (roleDetail.roleId?.roleName == "Shipping Company") {
-                        var temp = {
+                    let temp
+                    if (roleDetail.roleId?.roleName === "Shipping Company") {
+                        temp = {
                             label: ele?.details?.name,
                             value: ele._id,
                         }
                         shipDetails.push(temp)
                     } else {
-                        var temp = {
+                        temp = {
                             label: ele?.details?.givenName,
                             value: ele._id
                         }
@@ -237,7 +236,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         }
         setShippingCompanyOption(shipDetails)
         // console.log("TAG WAREHOUSE", shippingCompanyOption)
-    }, [entityData])
+    }, [entityData, setShippingCompanyOption])
 
     useEffect(() => {
         let getBuyer = []
@@ -245,14 +244,15 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
 
             entityData.data.forEach((ele) => {
                 ele.roles.forEach(roleDetail => {
-                    if (roleDetail.roleId?.roleName == "Buyer" || roleDetail.roleId?.roleName == "Seller") {
-                        var temp1 = {
+                    let temp1;
+                    if (roleDetail.roleId?.roleName === "Buyer" || roleDetail.roleId?.roleName === "Seller") {
+                        temp1 = {
                             label: ele?.details?.name,
                             value: ele._id
                         }
                         getBuyer.push(temp1)
                     } else {
-                        var temp1 = {
+                        temp1 = {
                             label: ele?.details?.givenName,
                             value: ele._id
                         }
@@ -262,7 +262,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         }
         setBorrowerOption(getBuyer)
         // console.log("TAG BORROWER", borrowerOption, borrower_Applicant)
-    }, [entityData])
+    }, [entityData, setBorrowerOption])
 
     // useEffect(() => {
     //     let bankRole = []
@@ -288,7 +288,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     //     setLenderOption(bankRole)
     //     console.log("TAG LENDER", lenderOption)
     // }, [entityData])
-    JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData))
+    // JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData))
     // useEffect(() => {
     //     let bankRole = [];
 
@@ -326,12 +326,12 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     //     console.log("TAG LENDER", lenderOption);
     // }, [entityData, loginData]);
 
-    const adminData = useSelector((state) => state.adminData?.getAdminData);
+    // const adminData = useSelector((state) => state.adminData?.getAdminData);
     // console.log("get admins", adminData.data)
 
 
     useEffect(() => {
-        let bankRole = [];
+        // let bankRole = [];
         const storedLoginData = JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData));
         console.log('first', storedLoginData)
 
@@ -344,7 +344,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
             console.warn('Admin data is missing in the stored login data.')
         }
 
-    }, [entityData]);
+    }, [entityData, setLenders]);
 
     // useEffect(() => {
     //     let bankRole = [];
@@ -395,7 +395,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         } else {
             setProductDetails({ ...productDetails, nature: "Non-Physical" })
         }
-    }, [productType])
+    }, [productType, productDetails, setProductDetails])
 
 
 
@@ -407,19 +407,19 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                 unit: productName.find((ele) => ele._id === productDetails.name)?.unit
             })
         }
-    }, [productDetails.name, productName])
+    }, [productDetails.name, productName, productDetails, setProductDetails])
 
     useEffect(() => {
         if (country && country.data) {
             setcountries(country.data)
         }
-    }, [country])
+    }, [country, setcountries])
 
     const transactionDetail = useCallback(async (id) => {
         if (id) {
             await ApiGet(`transaction/getById/${id}`)
                 .then((getTransactionByIdData) => {
-                    let resp = getTransactionByIdData.data;
+                    // let resp = getTransactionByIdData.data;
                     let respProductDetails = getTransactionByIdData.data.details.productDetails;
                     // console.log('CHECK ALL DATA', getTransactionByIdData.data)
                     // console.log(respProductDetails, 'prductings')
@@ -582,13 +582,13 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                         setHedgingStatus(getTransactionByIdData.data?.details?.pricingDetails
                             ?.pricingHedgingStatus)
 
-                        if (respProductDetails.commoditySubType != undefined) {
+                        if (respProductDetails.commoditySubType !== undefined) {
                             let product = [];
                             productData.data.forEach((item) => {
                                 // if (item.commodity_sub_type == respProductDetails.commoditySubType) {
                                 //     product.push(item);
                                 // }
-                                if (item.category == respProductDetails.commodityType) {
+                                if (item.category === respProductDetails.commodityType) {
                                     product.push(item);
                                 }
                             })
@@ -604,20 +604,20 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                 .catch((error) => {
                     console.log(error);
                 })
-            setLoading(false)
+                setIsLoading(false)
         }
-    }, [])
+    }, [productData, setBorrower_Applicant, setContractDetails, setEditId, setHedgingParty, setHedgingStatus, setLenders, setPricingDetails, setProductDetails, setProductName, setShippingCompany, setShippingOptions, setTransShipmentOptions, setWarehouseStatus])
 
     useEffect(() => {
         if (transaction_id) {
             transactionDetail(transaction_id);
         }
-    }, [transaction_id]);
+    }, [transaction_id, transactionDetail]);
 
 
     useEffect(() => {
 
-        if (productDetails.commoditySubType != undefined) {
+        if (productDetails.commoditySubType !== undefined) {
             let product = []
             productData?.data?.forEach((item) => {
                 // console.log('item', item);
@@ -625,7 +625,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                 // if (item.commodity_sub_type == productDetails.commoditySubType) {
                 //     product.push(item);
                 // }
-                if (item.category == productDetails.commodityType) {
+                if (item.category === productDetails.commodityType) {
                     product.push(item);
                 }
             })
@@ -635,11 +635,11 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                 setProductName(productData.data)
             }
         }
-    }, [productData])
+    }, [productData, productDetails.commoditySubType, productDetails.commodityType, setProductName])
 
-    const hadleChangeModal = (e) => {
-        setContractDetails({ ...contractDetails, [e.name]: e.value })
-    }
+    // const hadleChangeModal = (e) => {
+    //     setContractDetails({ ...contractDetails, [e.name]: e.value })
+    // }
 
     let options = [
         { value: true, label: "Yes" },
@@ -666,7 +666,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                     ? ["Agricultural"]
                     : []
 
-    const metricOptions = ["Tonnes", "KG", "Barrels", "Carat", "Bales", "Gallons"]
+    // const metricOptions = ["Tonnes", "KG", "Barrels", "Carat", "Bales", "Gallons"]
 
     const productQualityOption = [
         { value: "Exchange traded", label: "Exchange traded" },
@@ -679,7 +679,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     //     { value: "SEA", label: "SEA" },
     // ]
 
-    const portOfOriginOptions = ["Mumbai", "Chennai", "Kolkata", "Cochin"]
+    // const portOfOriginOptions = ["Mumbai", "Chennai", "Kolkata", "Cochin"]
 
     const shipmentTermsOptions = [
         { value: "Free on Board  (FOB)", label: "Free on Board  (FOB)" },
@@ -705,16 +705,6 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         "SWAPS",
         "Forwards",
         "Other",
-    ]
-
-    const portData = [
-        "RAS AL KHAIMAH",
-        "RUWAIS",
-        "SHARJAH",
-        "ZURKU ISLAND",
-        "BOST",
-        "CHAKCHARAN",
-        "DARWAZ",
     ]
 
     let warehouseRequiredOptions = [
@@ -1162,69 +1152,62 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         hendelNext()
     }
 
-    const transactionData = useSelector((state) => state.transactionData.transactionData);
-    const addTransactionData = useSelector(
-        (state) => state.transactionData.addTransaction
-      );
+    // const transactionData = useSelector((state) => state.transactionData.transactionData);
+    // const addTransactionData = useSelector(
+    //     (state) => state.transactionData.addTransaction
+    // );
 
-    const save = () => {
-        if (validation()) {
-            return
-        }
-       
-        // const detailBody = {
-        //     detail: {
-        //         ...transactionData.details,
-        //         shippingOptions: {
-        //             ...transactionData?.details?.shippingOptions,
-        //             warehouses: transactionData?.details?.shippingOptions?.warehouses?.map((ele) => ({
-        //                 warehouse: ele?.warehouse?.value,
-        //                 warehouseCompany: ele?.warehouseCompany?.value,
-        //             })),
-        //         },
-        //     },
-        // };
+    // const save = () => {
+    //     if (validation()) {
+    //         return
+    //     }
 
-        let detailBody = {
-            details: {
-                _id: editId,
-                productDetails,
-                contractDetails,
-                shippingOptions,
-                transShipmentOptions,
-                pricingDetails,
-            },
-            borrower_Applicant,
-            lenders,
-            shipping_company,
-            hedging_party,
-            hedging_status,
-            warehouse_status,
-            type: transactionType,
-        }
-        console.log('get', detailBody)
-        dispatch(saveDetailsAction(detailBody));
-        navigate('/transactions')
-    }
+    //     const detailBody = {
+    //         detail: {
+    //             ...transactionData.details,
+    //             shippingOptions: {
+    //                 ...transactionData?.details?.shippingOptions,
+    //                 warehouses: transactionData?.details?.shippingOptions?.warehouses?.map((ele) => ({
+    //                     warehouse: ele?.warehouse?.value,
+    //                     warehouseCompany: ele?.warehouseCompany?.value,
+    //                 })),
+    //             },
+    //         },
+    //     };
 
-    const handleCommoditySubtypeChange = (e, newVal) => {
-        // let product = [];
-        // productData.data.forEach((item) => {
-        // if (item.commodity_sub_type == e) {
-        //     product.push(item);
-        // }
-        // })
-        // setProductName(product);
-        setProductDetails({
-            ...productDetails,
-            commoditySubType: e,
-        })
-    }
+    //     let detailBody = {
+    //         details: {
+    //             _id: editId,
+    //             productDetails,
+    //             contractDetails,
+    //             shippingOptions,
+    //             transShipmentOptions,
+    //             pricingDetails,
+    //         },
+    //         borrower_Applicant,
+    //         lenders,
+    //         shipping_company,
+    //         hedging_party,
+    //         hedging_status,
+    //         warehouse_status,
+    //         type: transactionType,
+    //     }
+    //     console.log('get', detailBody)
+    //     dispatch(saveDetailsAction(detailBody));
+    //     navigate('/transactions')
+    // }
+
+    // const handleCommoditySubtypeChange = (e, newVal) => {
+    //     setProductDetails({
+    //         ...productDetails,
+    //         commoditySubType: e,
+    //     })
+    // }
 
     const handleCommodityTypeChange = (e, newVal) => {
         let product = [];
         productData.data.forEach((item) => {
-            if (item.category == e) {
+            if (item.category === e) {
                 product.push(item);
             }
         })
@@ -1234,21 +1217,64 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
             commodityType: e,
         })
     }
-    const disabledDate = (current) => {
-        // Can not select days before today and today
-        return current > moment().subtract(1, 'day');
-    };
-    const disabledDate2 = (current) => {
-        // Can not select days before today and today
-        return current < moment(contractDetails?.contractDate);
-    };
-    const dateFormat = 'DD/MM/YYYY'
+    // const disabledDate = (current) => {
+    //     return current > moment().subtract(1, 'day');
+    // };
+    // const disabledDate2 = (current) => {
+    //     return current < moment(contractDetails?.contractDate);
+    // };
+    // const dateFormat = 'DD/MM/YYYY'
 
-    const productOptions = productName.map(item => ({
-        value: item._id,
-        label: item.name,
-        unit: item.unit
-    }));
+    // const productOptions = productName.map(item => ({
+    //     value: item._id,
+    //     label: item.name,
+    //     unit: item.unit
+    // }));
+
+    const columns = [
+        {
+            title: "Warehouse Company",
+            dataIndex: ["warehouseCompany", "label"],  // Nested field access
+            key: "warehouseCompany",
+        },
+        {
+            title: "Warehouse",
+            dataIndex: ["warehouse", "label"],
+            key: "warehouse",
+        },
+        {
+            title: "Actions",
+            key: "actions",
+            render: (text, record) => (
+                <>
+                    {!isView && (
+                        <Tooltip title="Edit Entities">
+                            <Button
+                                type="primary"
+                                shape="circle"
+                                icon={<EditOutlined />}
+                                onClick={() => {
+                                    setAddWarehouseModal(true);
+                                    setWareHouseId(record);
+                                }}
+                                style={{ marginRight: 8 }}
+                            />
+                        </Tooltip>
+                    )}
+                    <Tooltip title="View Entities">
+                        <Button
+                            type="default"
+                            shape="circle"
+                            icon={<EyeOutlined />}
+                            onClick={() => {
+                                // Define what happens on view click here
+                            }}
+                        />
+                    </Tooltip>
+                </>
+            ),
+        },
+    ];
 
     return (
         <>
@@ -1454,7 +1480,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                         <Form.Select className='no-border'
                                             onChange={(e, newVal) => {
                                                 setProductDetails({ ...productDetails, name: e.target.value })
-                                                setSelectedProduct(newVal?.unit ? newVal.unit : "")
+                                                // setSelectedProduct(newVal?.unit ? newVal.unit : "")
                                             }}
                                             disabled={isView}
                                             value={productDetails.name}>
@@ -2014,45 +2040,11 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                         </div>
                                         <div>
                                             {shippingOptions.warehouses?.length > 0 ? (
-
-                                                <MaterialTable
-                                                    title=''
-                                                    columns={[
-                                                        { title: "Warehouse Company", field: "warehouseCompany.label" },
-                                                        { title: "Warehouse", field: "warehouse.label" },
-                                                    ]}
-                                                    data={shippingOptions.warehouses}
-                                                    actions={isView ? [
-                                                        {
-                                                            icon: "preview",
-                                                            tooltip: "View Entities",
-                                                            onClick: (e, rowData) => { },
-                                                        },
-                                                    ]
-                                                        : [
-                                                            {
-                                                                icon: "edit",
-                                                                tooltip: "Edit Entities",
-                                                                onClick: (e, rowData) => {
-                                                                    setAddWarehouseModal(true)
-                                                                    setWareHouseId(rowData)
-                                                                },
-                                                            },
-                                                            {
-                                                                icon: "preview",
-                                                                tooltip: "View Entities",
-                                                                onClick: (e, rowData) => { },
-                                                            },
-                                                        ]
-                                                    }
-                                                    options={{
-                                                        filtering: false,
-                                                        actionsColumnIndex: -1,
-                                                        sorting: false,
-                                                        pageSize: 10,
-                                                        search: false,
-                                                        emptyRowsWhenPaging: false,
-                                                    }}
+                                                <Table
+                                                    columns={columns}
+                                                    dataSource={shippingOptions.warehouses}
+                                                    pagination={{ pageSize: 10 }}
+                                                    rowKey={(record) => record.id} // Assuming each warehouse has a unique `id`
                                                 />
                                             ) : (
                                                 "No data found"

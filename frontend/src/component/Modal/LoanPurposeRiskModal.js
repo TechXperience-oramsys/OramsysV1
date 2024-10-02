@@ -1,4 +1,4 @@
-import { Backdrop, Fade, Modal, TextField } from '@material-ui/core'
+import { Backdrop, Fade, Modal, TextField } from '@mui/material'
 import { DropzoneArea } from 'material-ui-dropzone';
 import React, { useState } from 'react'
 import { useEffect } from 'react';

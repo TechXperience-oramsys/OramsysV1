@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect } from "react";
 import {
   Routes,
   Route,
   useLocation,
   useNavigate,
-  Navigate,
-  Outlet,
+  // Navigate,
+  // Outlet,
 } from "react-router-dom";
 import AuthStorage from "../helper/AuthStorage";
 import AuthLayOut from "../layout/AuthLayOut";
@@ -14,8 +14,8 @@ import Home from "./home/Home";
 import Dashboard from "./home/Dashboard";
 import SignIn from "./signIn/SignIn";
 import SignUp from "./signUp/SignUp";
-import { useDispatch } from "react-redux";
-import { changeLoginState } from "../redux/actions/loginAction";
+// import { useDispatch } from "react-redux";
+// import { changeLoginState } from "../redux/actions/loginAction";
 // import Product from './product/Product';
 import Add_Edit_Product from "./administration/masterData/products/Add_Edit_Product";
 import Products from "./administration/masterData/products/Products";
@@ -36,8 +36,8 @@ import STORAGEKEY from "../config/APP/app.config";
 import RiskAssessment from "./transactions/riskAssessment/RiskAssessment";
 import Ports from "./administration/masterData/ports/Ports";
 import AirBases from "./administration/masterData/airBases/AirBases";
-import { ApiGet, ApiPost } from "../helper/API/ApiData";
-import { Create_new_password } from "./administration/users/CreatePassword";
+import { ApiGet } from "../helper/API/ApiData";
+import { CreateNewPassword } from "./administration/users/CreatePassword";
 import CreateAdmin from "./functionalAdmin/CreateAdmin";
 import Admin from "./functionalAdmin/AdminTable";
 import ForgetPassword from "./functionalAdmin/ForgetPassword";
@@ -57,8 +57,8 @@ const pathForLayout = [
 ];
 const Index = () => {
   const location = useLocation();
-  const token = AuthStorage.getToken();
-  const dispatch = useDispatch();
+  // const token = AuthStorage.getToken();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const userRoutes = [
@@ -268,7 +268,7 @@ const Index = () => {
 
   useEffect(() => {
     checkUserRoleAndNavigate();
-  }, []);
+  }, [checkUserRoleAndNavigate]);
 
   if (AuthStorage.getStorageData(STORAGEKEY.roles) === "user") {
     primaryLinks = userRoutes;
@@ -291,7 +291,7 @@ const Index = () => {
               <Route path="/signup" element={<SignUp />} />
               <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/fa-login" element={<FunctionalAdmin />} />
-              <Route path="/verify-user" element={<Create_new_password />} />
+              <Route path="/verify-user" element={<CreateNewPassword />} />
               <Route path="/forget-password" element={<ForgetPassword />} />
               <Route path="/user/forget" element={<UserForgetPassword />} />
             </Routes>
@@ -318,41 +318,41 @@ const Index = () => {
 
 export default Index;
 
-const RouteProtecter = () => {
-  const isAuthenticated = AuthStorage.isUserAuthenticated();
-  return !isAuthenticated ? (
-    <Navigate to={"/"} />
-  ) : (
-    <AuthLayOut>
-      <Outlet />
-    </AuthLayOut>
-  );
-};
+// const RouteProtecter = () => {
+//   const isAuthenticated = AuthStorage.isUserAuthenticated();
+//   return !isAuthenticated ? (
+//     <Navigate to={"/"} />
+//   ) : (
+//     <AuthLayOut>
+//       <Outlet />
+//     </AuthLayOut>
+//   );
+// };
 
-const PublicRoutes = () => {
-  const isAuthenticated = AuthStorage.isUserAuthenticated();
-  const navigate = useNavigate();
-  const location = useLocation();
+// const PublicRoutes = () => {
+//   const isAuthenticated = AuthStorage.isUserAuthenticated();
+//   const navigate = useNavigate();
+//   const location = useLocation();
 
-  useEffect(() => {
-    !isAuthenticated ? (
-      pathForLayout.includes(location.pathname) ? (
-        <Navigate to={location} />
-      ) : (
-        <Navigate to="/" />
-      )
-    ) : pathForLayout.includes(location.pathname) ? (
-      navigate(-1)
-    ) : location.pathname === "/" ? (
-      navigate("/products")
-    ) : (
-      navigate("/")
-    );
-  }, [isAuthenticated]);
+//   useEffect(() => {
+//     !isAuthenticated ? (
+//       pathForLayout.includes(location.pathname) ? (
+//         <Navigate to={location} />
+//       ) : (
+//         <Navigate to="/" />
+//       )
+//     ) : pathForLayout.includes(location.pathname) ? (
+//       navigate(-1)
+//     ) : location.pathname === "/" ? (
+//       navigate("/products")
+//     ) : (
+//       navigate("/")
+//     );
+//   }, [isAuthenticated]);
 
-  return (
-    <Layout>
-      <Outlet />
-    </Layout>
-  );
-};
+//   return (
+//     <Layout>
+//       <Outlet />
+//     </Layout>
+//   );
+// };

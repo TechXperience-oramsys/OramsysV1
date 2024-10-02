@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import MaterialTable from "material-table"
 import { useDispatch, useSelector } from "react-redux"
 import { ratingAgenciesAction } from "../../../../redux/actions/ratingAgenciesAction"
 import { countrieAction } from "../../../../redux/actions/countrieAction"
-import { MdEdit, MdPreview } from "react-icons/md"
+// import { MdEdit, MdPreview } from "react-icons/md"
 // import { Tooltip } from "react-tooltip"
 // import Paginate from "./ratingPagination"
 import { Button, Spin, Table } from "antd"
@@ -15,7 +14,7 @@ const RatingAgencies = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [currentPage, setCurrentPage] = useState(1)
-  const [postsPerPage, setPostsPerPage] = useState(10)
+  const [postsPerPage] = useState(10)
 
   const ratingAgenciesDatas = useSelector(
     (state) => state.ratingAgenciesData?.ratingAgencies
@@ -199,43 +198,7 @@ const RatingAgencies = () => {
             </div> */}
           </div>
         </div>
-        {/* <MaterialTable
-          title=''
-          columns={[
-            { title: "Name", field: "name" },
-            { title: "City", field: "city" },
-            { title: "Street", field: "street" },
-            { title: "Postcode", field: "postcode" },
-            { title: "Country", field: "country" },
-          ]}
-          data={ratingData}
-          actions={[
-            {
-              icon: "edit",
-              tooltip: "Edit RatingAgencie",
-              onClick: (e, rowData) => {
-                navigate(`/rating-agencies-edit?id=${rowData?.id}`, {
-                  state: { isView: false }})
-                console.log("rowData", rowData)
-              },
-            },
-            {
-              icon: "preview",
-              tooltip: "View RatingAgencie",
-              onClick: (e, rowData) =>
-                navigate(`/rating-agencies-edit?id=${rowData?.id}`, {
-                  state: { isView: true },
-                }),
-            },
-          ]}
-          options={{
-            filtering: true,
-            actionsColumnIndex: -1,
-            sorting: true,
-            pageSize: 10,
-            search: false,
-          }}
-        /> */}
+       
       </div>
     </>
   )

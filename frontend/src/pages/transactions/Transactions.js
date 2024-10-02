@@ -10,7 +10,7 @@ import ExcelModal from "../../component/Modal/ExcelModal";
 import { ApiGet } from "../../helper/API/ApiData";
 import { GET_TRANSACTION_BY_ID } from "../../redux/types";
 import { CiSearch } from "react-icons/ci";
-import Paginate from "./Pagination";
+// import Paginate from "./Pagination";
 import Fade from "react-reveal/Fade";
 import {
   Table,
@@ -36,7 +36,7 @@ const Transactions = () => {
   const [showSubData, setShowSubData] = useState(false);
   const [transaction, setTransaction] = useState([]);
   const [transaction2, setTransaction2] = useState([]);
-  const [userName, setUserName] = useState([]);
+  // const [userName, setUserName] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
   const [setSearch] = useState("");
@@ -49,7 +49,7 @@ const Transactions = () => {
   const riskAssessment = useSelector(
     (state) => state.riskAssessmentData.getRiskAssessment
   );
-  const loginData = useSelector((state) => state.login.login);
+  // const loginData = useSelector((state) => state.login.login);
 
   useEffect(() => {
     let id =

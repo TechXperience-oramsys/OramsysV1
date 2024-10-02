@@ -5,21 +5,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import AuthStorage from '../../../helper/AuthStorage';
 import STORAGEKEY from '../../../config/APP/app.config';
 import { COMPANY_DATA, EDIT_ENTITY, ENTITY_GET_BY_ID } from '../../../redux/types';
-import { Table, Space, Tooltip, Button, Menu, Dropdown, Spin } from 'antd';
+import { Table, Button, Menu, Dropdown, Spin } from 'antd';
 import { EditOutlined, EyeOutlined, EllipsisOutlined } from '@ant-design/icons';
 import { CiSearch } from 'react-icons/ci';
-import { companydataReducer } from '../../../redux/redusers/companydataReducer';
+// import { companydataReducer } from '../../../redux/redusers/companydataReducer';
 import { companydataAction } from '../../../redux/actions/companydataAction';
 
 const Entities = () => {
 
-  const [showspan, setShowspan] = useState(false)
+  // const [showspan, setShowspan] = useState(false)
   const [showSubData, setShowSubData] = useState(false)
-  const [entitySearch, setEntitySearch] = useState([])
+  // const [entitySearch, setEntitySearch] = useState([])
   const [entityTableData, setEntityTableData] = useState([])
-  const [search, setSearch] = useState('')
+  const [ setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
-  const [postsPerPage, setPostsPerPage] = useState(10)
+  const [postsPerPage] = useState(10)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -33,7 +33,7 @@ const Entities = () => {
     } else {
       dispatch(entityGetAction("all"))
     }
-  }, [userId])
+  }, [userId, dispatch])
 
   useEffect(() => {
     dispatch({
@@ -48,7 +48,7 @@ const Entities = () => {
       type: COMPANY_DATA,
       payload: [],
     });
-  }, [])
+  }, [dispatch])
 
   const refreshPage = useCallback(() => {
     if (entityData.data) {
@@ -62,21 +62,21 @@ const Entities = () => {
         }
       }))
 
-      setEntitySearch(entityData.data?.map(item => {
-        return {
-          ...item,
-          name: item?.details?.name ?? item?.details?.givenName,
-          type: item?.type,
-          email: item?.email,
-          country: item?.details?.country?.name,
-        }
-      }))
+      // setEntitySearch(entityData.data?.map(item => {
+      //   return {
+      //     ...item,
+      //     name: item?.details?.name ?? item?.details?.givenName,
+      //     type: item?.type,
+      //     email: item?.email,
+      //     country: item?.details?.country?.name,
+      //   }
+      // }))
     }
   }, [entityData])
 
   useEffect(() => {
     dispatch(() => refreshPage())
-  }, [entityData])
+  }, [entityData, dispatch, refreshPage])
 
 
   const indexOfLastItem = currentPage * postsPerPage

@@ -1,8 +1,8 @@
-import { Backdrop, Fade, Modal, TextField } from '@material-ui/core'
+import { Backdrop, Fade, Modal, TextField, Autocomplete } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { DropzoneArea } from 'material-ui-dropzone';
 import { Row, Col } from 'react-bootstrap'
-import Autocomplete from "@material-ui/lab/Autocomplete";
+// import {Autocomplete} from "@mui/lab";
 
 const CounterpartiesModal = ({ show, onHide, getModalData, type, modalOption ,data}) => {
 

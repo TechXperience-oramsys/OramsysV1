@@ -19,7 +19,7 @@ const FinalPage = () => {
         setTimeout(() => {
             navigate('/transactions')
         }, 2000);
-    }, [])
+    }, [navigate])
 
     return (
         <>

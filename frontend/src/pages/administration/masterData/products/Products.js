@@ -26,7 +26,7 @@ const Products = () => {
 
   useEffect(() => {
     dispatch(productGetAction(search ? search : "all"))
-  }, [search])
+  }, [search, dispatch])
 
   const indexOfLastItem = currentPage * postsPerPage
   const indexOfFirstItem = indexOfLastItem - postsPerPage

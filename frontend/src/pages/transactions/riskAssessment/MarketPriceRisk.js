@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import LoanPurposeRiskModal from '../../../component/Modal/LoanPurposeRiskModal'
 import CurrencyHedgeDetailsModal from '../../../component/Modal/CurrencyHedgeDetailsModal'
 import FinancingSufficientlyModal from '../../../component/Modal/FinancingSufficientlyModal'
-import { addRiskAssessment, getRiskAssessment, riskAssessmentAction } from '../../../redux/actions/riskAssessmentAction'
+import { addRiskAssessment, getRiskAssessment } from '../../../redux/actions/riskAssessmentAction'
 import { ADD_RISK_ASSESSMENT } from '../../../redux/types'
 
 
 const MarketPriceRisk = ({ hendelNext, hendelCancel }) => {
 
-    const location = useLocation()
+    // const location = useLocation()
     const searchParams = new URLSearchParams(window.location.search)
     const id = searchParams.get('id')
-    const [pricingType, setPricingType] = useState('')
+    // const [pricingType, setPricingType] = useState('')
     const navigate = useNavigate()
     const [showModal, setShowModal] = useState(false)
     const [currencyHedgeDetailsModal, setCurrencyHedgeDetailsModal] = useState(false)
@@ -39,15 +38,15 @@ const MarketPriceRisk = ({ hendelNext, hendelCancel }) => {
     })
     const [loading, setLoading] = useState(false)
 
-    const modalData = (e) => {
-        if (e.name === 'internationalCreditStanding') {
-            setMarketPriceRisk({ ...marketPriceRisk, internationalCreditStanding: e.value })
-        }
-    }
+    // const modalData = (e) => {
+    //     if (e.name === 'internationalCreditStanding') {
+    //         setMarketPriceRisk({ ...marketPriceRisk, internationalCreditStanding: e.value })
+    //     }
+    // }
 
     const riskAssessment = useSelector(state => state.riskAssessmentData.riskAssessment)
     const addRiskAssessmentData = useSelector(state => state.riskAssessmentData.addRiskAssessment)
-    const getRiskAssessmentId = useSelector(state => state.riskAssessmentData.getRiskAssessment)
+    // const getRiskAssessmentId = useSelector(state => state.riskAssessmentData.getRiskAssessment)
 
     useEffect(() => {
         if (addRiskAssessmentData && addRiskAssessmentData.data && addRiskAssessmentData.status === 200) {
@@ -60,7 +59,7 @@ const MarketPriceRisk = ({ hendelNext, hendelCancel }) => {
             toast.success(addRiskAssessmentData.message)
 
         }
-    }, [addRiskAssessmentData])
+    }, [addRiskAssessmentData, navigate, dispatch])
 
     useEffect(() => {
         if (getRiskAssessment && getRiskAssessment.data && getRiskAssessment.status === 200) {
@@ -71,7 +70,7 @@ const MarketPriceRisk = ({ hendelNext, hendelCancel }) => {
                 financingSufficiently: getRiskAssessment.data.details?.financingSufficiently,
             })
         }
-    }, [getRiskAssessment])
+    }, [marketPriceRisk])
 
     useEffect(() => {
         if (riskAssessment) {
@@ -157,7 +156,7 @@ const MarketPriceRisk = ({ hendelNext, hendelCancel }) => {
         <>
             <div className='add-edit-product'>
                 <div className='d-flex align-items-center justify-content-center error-info mb-3'>
-                    <img src={`../../../assets/img/about/${marketPriceRisk?.contractsBasis?.justification || marketPriceRisk?.priceHedge?.hedgingMethod || marketPriceRisk?.financingSufficiently?.justification ? "error-info-success.png" : "error-info.png"}`} className='me-3' />
+                    <img alt='icon' src={`../../../assets/img/about/${marketPriceRisk?.contractsBasis?.justification || marketPriceRisk?.priceHedge?.hedgingMethod || marketPriceRisk?.financingSufficiently?.justification ? "error-info-success.png" : "error-info.png"}`} className='me-3' />
                     {marketPriceRisk?.contractsBasis?.justification || marketPriceRisk?.priceHedge?.hedgingMethod || marketPriceRisk?.financingSufficiently?.contractValue ?
                         <p className='success'>Risks are acceptable due to mitigants</p> :
                         <p className='error'>The below risks require your attention</p>
@@ -168,17 +167,17 @@ const MarketPriceRisk = ({ hendelNext, hendelCancel }) => {
                         <h2 className='mb-3'>Market/Price risk</h2>
                         {marketPriceRisk?.contractsBasis?.justification && marketPriceRisk?.priceHedge?.hedgingMethod && marketPriceRisk?.financingSufficiently?.contractValue ? <p>No risk</p> :
                             <div>
-                                {getTransactionByIdData.data?.details?.pricingDetails.pricingType != "Firm fixed price" ? <><div className='risk-tab' onClick={() => { setShowModal(true); setSelected('contractsBasis') }}>
+                                {getTransactionByIdData.data?.details?.pricingDetails.pricingType !== "Firm fixed price" ? <><div className='risk-tab' onClick={() => { setShowModal(true); setSelected('contractsBasis') }}>
                                     <h3>Finance only on Firm Fixed Price contracts basis</h3>
-                                    <img src={`../../../assets/img/about/${marketPriceRisk?.contractsBasis?.justification ? "correct-success.png" : "correct (1).png"}`} />
+                                    <img alt='icon' src={`../../../assets/img/about/${marketPriceRisk?.contractsBasis?.justification ? "correct-success.png" : "correct (1).png"}`} />
                                 </div></> : ''}
                                 <div className='risk-tab' onClick={() => { setCurrencyHedgeDetailsModal(true); setSelected('priceHedge') }}>
                                     <h3>Enter a price hedge</h3>
-                                    <img src={`../../../assets/img/about/${marketPriceRisk?.priceHedge?.hedgingMethod ? "correct-success.png" : "correct (1).png"}`} />
+                                    <img alt='icon' src={`../../../assets/img/about/${marketPriceRisk?.priceHedge?.hedgingMethod ? "correct-success.png" : "correct (1).png"}`} />
                                 </div>
                                 <div className='risk-tab' onClick={() => { setFinancingSufficientlyModal(true); setSelected('financingSufficiently') }}>
                                     <h3>Margin the financing sufficiently</h3>
-                                    <img src={`../../../assets/img/about/${marketPriceRisk?.financingSufficiently?.contractValue ? "correct-success.png" : "correct (1).png"}`} />
+                                    <img alt='icon' src={`../../../assets/img/about/${marketPriceRisk?.financingSufficiently?.contractValue ? "correct-success.png" : "correct (1).png"}`} />
                                 </div>
                             </div>
                         }

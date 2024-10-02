@@ -1,12 +1,8 @@
 import React, { useState } from 'react'
-import Backdrop from '@material-ui/core/Backdrop';
-import Modal from '@material-ui/core/Modal';
-import Fade from '@material-ui/core/Fade';
+import {Fade, Modal, Backdrop, TextField, Autocomplete} from '@mui/material'
 import { Col, Row } from 'react-bootstrap';
-import { toast } from 'react-hot-toast'
-import { FormControl, InputLabel, Select, TextField } from '@material-ui/core';
+// import { toast } from 'react-hot-toast'
 import { DropzoneArea } from 'material-ui-dropzone';
-import { Autocomplete } from "@autocomplete/material-ui";
 
 const AddInsuranceModal = ({ onHide, show }) => {
 
@@ -16,13 +12,13 @@ const AddInsuranceModal = ({ onHide, show }) => {
 
     })
 
-    const handleChange = (event) => {
-        const name = event.target.name;
-        setState({
-            ...state,
-            [name]: event.target.value,
-        });
-    };
+    // const handleChange = (event) => {
+    //     const name = event.target.name;
+    //     setState({
+    //         ...state,
+    //         [name]: event.target.value,
+    //     });
+    // };
 
     const options = [
         "Afghanistan",

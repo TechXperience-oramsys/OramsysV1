@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import RichTextEditor from 'react-rte';
-import { Modal, Fade } from '@material-ui/core';
+import { Modal, Fade } from '@mui/material';
 
 const TextEditerModal = ({ onHide, show, commentDone, data, type, inputName }) => {
     const [state, setState] = useState({

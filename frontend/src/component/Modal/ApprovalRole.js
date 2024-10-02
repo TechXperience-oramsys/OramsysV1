@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import Backdrop from '@material-ui/core/Backdrop';
-import Modal from '@material-ui/core/Modal';
-import Fade from '@material-ui/core/Fade';
-import { Col, Row } from 'react-bootstrap';
-import { toast } from 'react-hot-toast'
-import { FormControl, FormControlLabel, FormLabel, InputLabel, Radio, RadioGroup, Select, TextField } from '@material-ui/core';
+import {Backdrop, Modal, Fade, FormControl, FormControlLabel, Radio, RadioGroup} from '@mui/material';
 
 const ApprovalRole = ({ onHide, show }) => {
 

@@ -13,14 +13,14 @@ const defaultHeaders = {
     "Access-Control-Allow-Origin": "https://oramsys3.netlify.app"
 };
 
-const termHeaders = {
-    isAuth: true,
-    isJsonRequest: true,
-    "Access-Control-Allow-Origin": "https://oramsys3.netlify.app"
-};
+// const termHeaders = {
+//     isAuth: true,
+//     isJsonRequest: true,
+//     "Access-Control-Allow-Origin": "https://oramsys3.netlify.app"
+// };
 
 export const ApiGet = (type) => {
-    const s = type.includes('?') ? '&' : '?';
+    // const s = type.includes('?') ? '&' : '?';
     return new Promise((resolve, reject) => {
         axios.get(`${BaseURL}${type}`, getHttpOptions())
             .then((responseJson) => {
@@ -44,7 +44,7 @@ export const ApiGet = (type) => {
 
 
 export const ApiGet2 = (type) => {
-    const s = type.includes('?') ? '&' : '?';
+    // const s = type.includes('?') ? '&' : '?';
     return new Promise((resolve, reject) => {
         axios.get(`${BaseURL}${type}`, {
             headers: {
@@ -72,7 +72,7 @@ export const ApiGet2 = (type) => {
 
 
 export const ApiGetNoAuth = (type) => {
-    const s = type.includes('?') ? '&' : '?';
+    // const s = type.includes('?') ? '&' : '?';
     return new Promise((resolve, reject) => {
         axios.get(`${BaseURL}${type}`, getHttpOptions({ ...defaultHeaders, isAuth: false }))
             .then((responseJson) => {
@@ -96,7 +96,7 @@ export const ApiGetNoAuth = (type) => {
 
 
 export const ApiPost = (type, userData) => {
-    const s = type.includes('?') ? '&' : '?';
+    // const s = type.includes('?') ? '&' : '?';
     return new Promise((resolve, reject) => {
         axios.post(`${BaseURL}${type}`, userData, getHttpOptions())
             .then((responseJson) => {
@@ -144,7 +144,7 @@ export const ApiPostNoAuth = (type, userData) => {
 
 
 export const ApiPatch = (type, userData) => {
-    const s = type.includes('?') ? '&' : '?';
+    // const s = type.includes('?') ? '&' : '?';
     return new Promise((resolve, reject) => {
         axios.patch(`${BaseURL}${type}`, userData, getHttpOptions())
             .then((responseJson) => {
@@ -168,7 +168,7 @@ export const ApiPatch = (type, userData) => {
 
 
 export const ApiDelete = (type, userData) => {
-    const s = type.includes('?') ? '&' : '?';
+    // const s = type.includes('?') ? '&' : '?';
     return new Promise((resolve, reject) => {
         axios.delete(`${BaseURL}${type}`, getHttpOptions())
             .then((responseJson) => {
@@ -191,7 +191,7 @@ export const ApiDelete = (type, userData) => {
 }
 
 export const ApiPut = (type, userData) => {
-    const s = type.includes('?') ? '&' : '?';
+    // const s = type.includes('?') ? '&' : '?';
     return new Promise((resolve, reject) => {
         axios.put(`${BaseURL}${type}`, userData, getHttpOptions())
             .then((responseJson) => {

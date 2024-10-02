@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { BsBox, BsFillPeopleFill } from "react-icons/bs";
-import { IoTimerOutline } from "react-icons/io5";
+// import { IoTimerOutline } from "react-icons/io5";
 import { FcBusinessman } from "react-icons/fc";
 import { GrTransaction } from "react-icons/gr";
 import { FaMoneyCheckAlt } from "react-icons/fa";
@@ -15,7 +15,7 @@ import { getAllTransaction } from "../../redux/actions/transactionDataAction";
 import { entityGetAction } from "../../redux/actions/entityAction";
 import { userGetAction } from "../../redux/actions/userAction";
 import { ratingAgenciesAction } from "../../redux/actions/ratingAgenciesAction";
-import { ApiGet, ApiGet2 } from "../../helper/API/ApiData";
+import { ApiGet } from "../../helper/API/ApiData";
 import Slide from "react-reveal/Slide";
 import {
   BankOutlined,
@@ -29,16 +29,16 @@ import { Input, Menu } from "antd";
 import ChartComponent from "./Analytics";
 import Financials from "./Financials";
 import NotificationSection from "./Notification";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 import { adminGetAction } from "../../redux/actions/adminAction";
 
 const Dashboard = () => {
-  const token = AuthStorage.getToken();
-  const [showspan, setShowspan] = useState(false);
-  const [showSubData, setShowSubData] = useState(false);
-  const [search, setSearch] = useState("");
+  // const token = AuthStorage.getToken();
+  // const [showspan, setShowspan] = useState(false);
+  // const [showSubData, setShowSubData] = useState(false);
+  const [search] = useState("");
 
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   const dispatch = useDispatch();
   const superAdminCard = [
@@ -185,14 +185,12 @@ const Dashboard = () => {
   const notSignedCount = [];
   //check to geet the number of signed transactions and un-signed transaction
   if (getAlltransactionData?.data) {
-    getAlltransactionData.data.map((item) => {
+    getAlltransactionData.data.forEach((item) => {  // Use forEach instead of map
       if (item.termSheet === "Signed") {
         signedCount.push(item);
-      }
-      if (item.termSheet !== "Signed") {
+      } else {
         notSignedCount.push(item);
       }
-      // return alltransCount
     });
   }
   //Get data counts on everything
@@ -225,6 +223,7 @@ const Dashboard = () => {
       getAllEntities,
       adminDatas,
       ratingAgenciesDatas,
+      totalValue
     ]
   );
 

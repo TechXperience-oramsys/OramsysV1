@@ -1,12 +1,10 @@
-import MaterialTable from 'material-table'
 import React, { useEffect, useState } from 'react'
 import WarehouseEditModal from '../../../../component/Modal/WarehouseEditModal'
 import { useSelector, useDispatch } from 'react-redux'
 import { companydataAction } from '../../../../redux/actions/companydataAction'
 import { useLocation } from 'react-router-dom'
 import { Col, Form, Row } from "react-bootstrap"
-import { TextField } from "@material-ui/core"
-import Autocomplete from "@material-ui/lab/Autocomplete"
+// import { TextField, Autocomplete } from "@mui/material"
 import { OptionalSpan } from '../../../transactions/Helpers/OptionalTags'
 import { Button, Space, Table } from 'antd'
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons'

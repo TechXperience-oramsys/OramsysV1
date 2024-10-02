@@ -1,22 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import Backdrop from '@material-ui/core/Backdrop';
-import Modal from '@material-ui/core/Modal';
-import Fade from '@material-ui/core/Fade';
 import { Col, Row } from 'react-bootstrap';
-import { toast } from 'react-hot-toast'
+// import { toast } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux';
-import { TextField } from '@material-ui/core';
+import { TextField, Fade, Backdrop, Modal, Autocomplete } from '@mui/material';
 import { entitiesRoleAction } from '../../redux/actions/entitiesRoleAction';
-import Autocomplete from "@material-ui/lab/Autocomplete";
+// import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextEditerModal from './TextEditerModal';
 import { companydataAction } from '../../redux/actions/companydataAction';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 
 const RoleEditModal = ({ onHide, show, mode, editData }) => {
 
-    const location = useLocation()
-    const queryParams = new URLSearchParams(location.search)
-    const id = queryParams.get("id")
+    // const location = useLocation()
+    // const queryParams = new URLSearchParams(location.search)
+    // const id = queryParams.get("id")
 
     const [roles, setRoles] = useState({
         _id: "",
@@ -26,8 +23,8 @@ const RoleEditModal = ({ onHide, show, mode, editData }) => {
 
     const [roleOption, setRoleOption] = useState([])
     const [commentModal, setCommentModal] = useState(false)
-    const [type, setType] = useState('')
-    const [selectedName, setSelectedName] = useState('')
+    const [type] = useState('')
+    const [selectedName] = useState('')
     const [error, setError] = useState()
     const dispatch = useDispatch()
 
@@ -42,18 +39,18 @@ const RoleEditModal = ({ onHide, show, mode, editData }) => {
 
     useEffect(() => {
         dispatch(entitiesRoleAction())
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
-        if (mode === "Edit" || mode === "View" && companyData.roles) {
-            let temp = companyData.roles?.find((e, i) => i == editData)
+        if ((mode === "Edit" || mode === "View") && companyData.roles) {
+            let temp = companyData.roles?.find((e, i) => i === editData)
             setRoles({
                 _id: temp?._id,
                 roles: temp?.roles,
                 justification: temp?.justification
             })
         }
-    }, [editData, mode])
+    }, [editData, mode,companyData.roles])
 
     const validation = () => {
         let flag = false
@@ -94,7 +91,7 @@ const RoleEditModal = ({ onHide, show, mode, editData }) => {
         }
         const body = {
             ...companyData,
-            roles: companyData.roles.map((ele, i) => i == editData ? roles : ele)
+            roles: companyData.roles.map((ele, i) => i === editData ? roles : ele)
         }
         dispatch(companydataAction(body))
         onHide()
@@ -125,7 +122,7 @@ const RoleEditModal = ({ onHide, show, mode, editData }) => {
                     <div className='modal-content'>
                         <div className='d-flex justify-content-between'>
                             <h2 id="transition-modal-title" className='modal-title'>{mode} Role</h2>
-                            <img src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                            <img alt='item' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                         </div>
                         <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                             <div className='form'>

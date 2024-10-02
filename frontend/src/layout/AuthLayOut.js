@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import AuthFooter from "./footer/AuthFooter";
+import React, { useState } from "react";
+// import { useSelector } from "react-redux";
+// import AuthFooter from "./footer/AuthFooter";
 import AuthHeader from "./header/AuthHeader";
-import Loader from "./loader/Loader";
+// import Loader from "./loader/Loader";
 import Sidebar from "./sidebar/Sidebar";
 
 const AuthLayOut = ({ children, ...props }) => {

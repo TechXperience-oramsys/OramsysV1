@@ -1,19 +1,18 @@
-import MaterialTable from 'material-table'
 import React, { useEffect, useState } from 'react'
 import ApprovalRole from '../../../../component/Modal/ApprovalRole'
 import RoleEditModal from '../../../../component/Modal/RoleEditModal'
 import { useSelector, useDispatch } from 'react-redux';
 import { companydataAction } from '../../../../redux/actions/companydataAction'
 import { editEntityAction, entityAddAction } from '../../../../redux/actions/entityAction';
-import { COMPANY_DATA, EDIT_ENTITY, ENTITY_ADD, ENTITY_GET_BY_ID } from '../../../../redux/types';
+import { EDIT_ENTITY, ENTITY_ADD } from '../../../../redux/types';
 import { toast } from 'react-hot-toast'
 import { useLocation, useNavigate } from 'react-router-dom';
-import ReactHtmlParser from 'react-html-parser';
+// import ReactHtmlParser from 'react-html-parser';
 import { entitiesRoleAction } from '../../../../redux/actions/entitiesRoleAction';
 import { Button, Space, Table } from 'antd';
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
 
-const Roles = ({ hendelNext, handleBack }) => {
+const Roles = ({ handleBack }) => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -36,7 +35,7 @@ const Roles = ({ hendelNext, handleBack }) => {
 
     useEffect(() => {
         dispatch(entitiesRoleAction())
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         if (companyData && companyData.roles && rolesData?.data) {
@@ -101,7 +100,7 @@ const Roles = ({ hendelNext, handleBack }) => {
             })
             toast.success(entityAddData.message);
         }
-    }, [entityAddData])
+    }, [entityAddData, dispatch, navigate])
 
     const edit = async () => {
         const body = {
@@ -139,7 +138,7 @@ const Roles = ({ hendelNext, handleBack }) => {
                 payload: []
             })
         }
-    }, [editEntityData])
+    }, [editEntityData, dispatch, navigate])
 
     const columns = [
         {
@@ -202,49 +201,7 @@ const Roles = ({ hendelNext, handleBack }) => {
                             Add Roles
                         </button>
                     </div>
-                    {/* <MaterialTable
-                        title=""
-                        columns={[
-                            { title: 'Role', field: 'roles' },
-                            { title: 'Justification', field: 'justification' },
-                        ]}
-                        data={roles}
-                        actions={isView ? [
-                            {
-                                icon: 'preview',
-                                tooltip: 'View Role',
-                                onClick: (e, data) => { setEditModal(true); setMode("View"); setEditData(data.tableData.id) }
-                            },
-                        ] : [
-                            {
-                                icon: 'edit',
-                                tooltip: 'Edit Role',
-                                onClick: (e, data) => { setEditModal(true); setMode("Edit"); setEditData(data.tableData.id) }
-                            },
-                            {
-                                icon: 'preview',
-                                tooltip: 'View Role',
-                                onClick: (e, data) => { setEditModal(true); setMode("View"); setEditData(data.tableData.id) }
-                            },
-                            {
-                                icon: 'delete',
-                                tooltip: 'Delete Role',
-                                onClick: (e, data) => { Delete(data) }
-                            },
-                            {
-                                icon: 'check',
-                                tooltip: 'Approval Role',
-                                onClick: () => setApproval(true)
-                            }
-                        ]}
-                        options={{
-                            filtering: true,
-                            actionsColumnIndex: -1,
-                            sorting: true,
-                            pageSize: 10,
-                            search: false,
-                        }}
-                    /> */}
+                    
 
                     <Table
                         columns={columns}

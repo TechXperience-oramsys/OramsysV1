@@ -1,8 +1,7 @@
-import { Backdrop, Fade, Modal, TextField } from '@material-ui/core'
+import { Backdrop, Fade, Modal, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import {entityRoleAddAction, entityRoleUpdateAction} from '../../redux/actions/entitiesRoleAction'
 
 const EntitiesRoleAddModal = ({ show, onHide, data, formType }) => {
@@ -11,7 +10,7 @@ const EntitiesRoleAddModal = ({ show, onHide, data, formType }) => {
         roleName: ""
     })
 
-    const [addEntityRoleData, setAddEntityRoleData] = useState()
+    // const [addEntityRoleData, setAddEntityRoleData] = useState()
     const [error, setError] = useState()
     const handleChange = (e) => {
         setState({
@@ -21,10 +20,9 @@ const EntitiesRoleAddModal = ({ show, onHide, data, formType }) => {
     }
     const addEntityRole = useSelector(state => state.entityRoleData.entityRoleAdd)
 
-    useEffect(() => {
-        // console.log('addEntityRole ====', addEntityRole)
-        setAddEntityRoleData(addEntityRole)
-    }, [addEntityRole])
+    // useEffect(() => {
+    //     setAddEntityRoleData(addEntityRole)
+    // }, [addEntityRole])
 
     useEffect(() => {
         if (data) {

@@ -25,7 +25,7 @@ const Footer = () => {
                   </div>
                 </a>
               </div>
-              <p> <span class='font-weight-bold'>Oramsys</span> is a structured trade finance platform specialized and designed to facilitate and streamline complex trade transactions, particularly in emerging markets where traditional financing may be limited. This platform provides a comprehensive solution tailored to the specific needs of participants in global trade, including exporters, importers, banks, and other financial institutions.</p>
+              <p> <span className='font-weight-bold'>Oramsys</span> is a structured trade finance platform specialized and designed to facilitate and streamline complex trade transactions, particularly in emerging markets where traditional financing may be limited. This platform provides a comprehensive solution tailored to the specific needs of participants in global trade, including exporters, importers, banks, and other financial institutions.</p>
             </div>
           </div>
           <div className="col-xl-4 col-lg-6 col-md-4 col-sm-6">

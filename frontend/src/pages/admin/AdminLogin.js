@@ -38,7 +38,7 @@ const AdminLogin = () => {
         navigate("/dashboard");
       }
     }
-  }, [loginData]);
+  }, [loginData, navigate]);
 
   const handelChange = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
@@ -85,7 +85,7 @@ const AdminLogin = () => {
           type: LOGIN,
           payload: { res: res, is_loggedin: true },
         });
-        if (res.status === 200 && res.data != undefined) {
+        if (res.status === 200 && res.data !== undefined) {
           toast.success(res.message);
           navigate("/dashboard");
           AuthStorage.setStorageData(STORAGEKEY.token, res.data.token, true);
@@ -213,7 +213,7 @@ const AdminLogin = () => {
               <img
                 src={svgIcon}
                 style={{ height: "480x" }}
-                alt="Image"
+                alt="show svg"
                 className="img-slide img-responsive"
               />
             </div>

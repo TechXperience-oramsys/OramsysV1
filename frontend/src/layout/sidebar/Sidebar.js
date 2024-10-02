@@ -5,19 +5,19 @@ import {
   FileTextOutlined,
   AppstoreOutlined,
   TableOutlined,
-  UserOutlined,
+  
 } from "@ant-design/icons";
-import { Avatar, Button, Dropdown, Layout, Menu, theme } from "antd";
-import { useNavigate, Link } from "react-router-dom";
+import {  Button,  Layout, Menu, theme } from "antd";
+import { useNavigate } from "react-router-dom";
 import STORAGEKEY from "../../config/APP/app.config";
 import AuthStorage from "../../helper/AuthStorage";
 import LogoutModal from "../../component/Modal/LogoutModal";
 import { GrUserAdmin } from "react-icons/gr";
-import { FaBoxOpen, FaThList, FaUserCircle } from "react-icons/fa";
+import { FaBoxOpen, FaUserCircle } from "react-icons/fa";
 import { HiOutlineLogout, HiOutlineUsers } from "react-icons/hi";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { FaMoneyBillTransfer, FaUsersLine } from "react-icons/fa6";
-import Fade from "react-reveal/Fade";
+// import Fade from "react-reveal/Fade";
 import { ApiGet } from "../../helper/API/ApiData";
 const { Header, Sider, Content } = Layout;
 
@@ -25,8 +25,8 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const [showModal, setshowModal] = useState(false);
-  const [showItem, setShowItem] = useState("");
-  const [showSubItem, setShowSubItem] = useState("");
+  // const [showItem, setShowItem] = useState("");
+  // const [showSubItem, setShowSubItem] = useState("");
   const [userData, setUserData] = useState("");
   const [activeItem, setActiveItem] = useState("Dashboard");
   const [logo, setLogo] = useState("");
@@ -37,7 +37,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
       : "";
 
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { borderRadiusLG },
   } = theme.useToken();
 
   let navbarData = [];

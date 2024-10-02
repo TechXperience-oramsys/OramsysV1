@@ -1,4 +1,4 @@
-import { TextField } from '@material-ui/core';
+// import { TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Form, DropdownButton, InputGroup, Dropdown, OverlayTrigger, Tooltip, FormControl } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -7,10 +7,9 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { sectorAction } from '../../../../redux/actions/sectorAction';
 import { companydataAction } from '../../../../redux/actions/companydataAction';
-import Autocomplete from "@material-ui/lab/Autocomplete";
 import { OptionalSpan, RequiredSpan } from '../../../transactions/Helpers/OptionalTags';
 import moment from 'moment';
-import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
+// import { EyeOutlined } from '@ant-design/icons'
 import Select from 'react-select';
 import { billingAddressAtom, countryDataAtom, detailsAtom, sectorAtom, shippingAddressAtom } from '../../../transactions/Helpers/atoms';
 import { useAtom } from 'jotai';
@@ -27,15 +26,15 @@ const Details = ({ handleNext, entityType }) => {
     let numberReg = /^[0-9\b]+$/;
     let nigReg = /^[0-9]+$/
     let emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-    let faxReg = /^\+?[0-9]{6,}$/;
-    let telephoneReg = /^[+]?(\d{1,2})?[\s.-]?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
+    // let faxReg = /^\+?[0-9]{6,}$/;
+    // let telephoneReg = /^[+]?(\d{1,2})?[\s.-]?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
     // const [billingCountryCode, setBillingCountryCode] = useState('+234');
     // const [shippingCountryCode, setShippingCountryCode] = useState('+234');
 
-    const [passwordVisible, setPasswordVisible] = useState(false);
-    const togglePasswordVisibility = () => {
-        setPasswordVisible(!passwordVisible);
-    };
+    // const [passwordVisible, setPasswordVisible] = useState(false);
+    // const togglePasswordVisibility = () => {
+    //     setPasswordVisible(!passwordVisible);
+    // };
     const [common, setCommon] = useState({
         email: '',
         password: '',
@@ -50,7 +49,7 @@ const Details = ({ handleNext, entityType }) => {
     const [formErrors, setFormErrors] = useState()
 
     const companyData = useSelector((state) => state.companydata.companydata)
-    const entityData = useSelector(state => state.entityData.entity)
+    // const entityData = useSelector(state => state.entityData.entity)
     const country = useSelector((state) => state.countryData.country)
     const sectorData = useSelector((state) => state.sectorData.sector)
     console.log('sectors', sectorData)
@@ -116,19 +115,19 @@ const Details = ({ handleNext, entityType }) => {
             })
             console.log('country code', companyData)
         }
-    }, [companyData])
+    }, [companyData, id, setBilingAddress, setDetails, setShippingAddress])
 
     useEffect(() => {
         if (country && country.data) {
             setCountryData(country.data)
         }
-    }, [country])
+    }, [country, setCountryData])
 
     useEffect(() => {
         if (sectorData && sectorData.data && sectorData.data.length > 0) {
             setSector(sectorData.data)
         }
-    }, [sectorData])
+    }, [sectorData, setSector])
 
     const handleChange = (e, name, type) => {
         if (type === 'details') {

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import { userGetAction } from '../../../redux/actions/userAction';
 import { Table, Badge, Button, Menu, Dropdown, Avatar } from "antd";
 
-import { EditOutlined, EllipsisOutlined, EyeOutlined, UserOutlined } from "@ant-design/icons";
+import { EditOutlined, EllipsisOutlined, UserOutlined } from "@ant-design/icons";
 import { adminGetAction, adminGetByIdAction } from "../../redux/actions/adminAction";
 import AuthStorage from "../../helper/AuthStorage";
 import STORAGEKEY from "../../config/APP/app.config";
@@ -13,7 +13,7 @@ const Admin = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [getUserDatas, setGetUserDatas] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [ setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
 
   const userData = useSelector((state) => state.adminData?.getAdminData);
@@ -30,14 +30,14 @@ const Admin = () => {
     } else {
       dispatch(adminGetAction());
     }
-  }, [userId]);
+  }, [userId, dispatch]);
 
-  const indexOfLastItem = currentPage * postsPerPage;
-  const indexOfFirstItem = indexOfLastItem - postsPerPage;
-  const getAllUsers = getUserDatas?.data?.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
+  // const indexOfLastItem = currentPage * postsPerPage;
+  // const indexOfFirstItem = indexOfLastItem - postsPerPage;
+  // const getAllUsers = getUserDatas?.data?.slice(
+  //   indexOfFirstItem,
+  //   indexOfLastItem
+  // );
   //page change
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 

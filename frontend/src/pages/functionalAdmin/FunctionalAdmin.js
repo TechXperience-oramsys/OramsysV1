@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import STORAGEKEY from "../../config/APP/app.config";
-import { ApiPostNoAuth } from "../../helper/API/ApiData";
+// import { ApiPostNoAuth } from "../../helper/API/ApiData";
 import AuthStorage from "../../helper/AuthStorage";
 import { LOGIN } from "../../redux/types";
 import { toast } from "react-hot-toast";
-import { useOktaAuth } from "@okta/okta-react";
-import svgIcon from "../../css/undraw_developer_activity_re_39tg.svg";
+// import { useOktaAuth } from "@okta/okta-react";
+// import svgIcon from "../../css/undraw_developer_activity_re_39tg.svg";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import "../../css/login.css";
 import "../../css/bootstrap.min.css";
@@ -40,7 +40,7 @@ const FunctionalAdmin = () => {
         navigate("/Dashboard");
       }
     }
-  }, [loginData]);
+  }, [loginData, navigate]);
 
   const handelChange = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
@@ -116,13 +116,13 @@ const FunctionalAdmin = () => {
       });
   };
   
-  const { authState, oktaAuth } = useOktaAuth();
-  const loginWithRedirect = () =>
-    oktaAuth.signInWithRedirect({ originalUri: `/` });
-  const logOut = () => oktaAuth.signOut();
+  // const { oktaAuth } = useOktaAuth();
+  // const loginWithRedirect = () =>
+  //   oktaAuth.signInWithRedirect({ originalUri: `/` });
+  // const logOut = () => oktaAuth.signOut();
 
-  const buttonText = authState?.isAuthenticated ? "Logout" : "Login";
-  const btnLogic = authState?.isAuthenticated ? logOut : loginWithRedirect;
+  // const buttonText = authState?.isAuthenticated ? "Logout" : "Login";
+  // const btnLogic = authState?.isAuthenticated ? logOut : loginWithRedirect;
   return (
     <>
       <div className="content">
@@ -135,9 +135,9 @@ const FunctionalAdmin = () => {
                     <ol className="breadcrumb">
                       {/* <li className="breadcrumb-item"><a href="#">Home</a></li> */}
                       <li className="breadcrumb-item">
-                        <a href="#" onClick={() => navigate("/signin")}>
+                        <Link to="/signin">
                           Staff Login
-                        </a>
+                        </Link>
                       </li>
                     </ol>
                   </nav>
@@ -212,13 +212,12 @@ const FunctionalAdmin = () => {
                       <div className="mx-auto">
                         <div className="col-12 text-center mt-4">
                           <span className="">
-                            <a
-                              href="#"
-                              onClick={() => navigate("/forget-password")}
+                            <Link to="/forget-password"
+                            
                               className="mx-auto text-decoration-none forgot-pass"
                             >
                               Forgot Password?
-                            </a>
+                            </Link>
                           </span>
                         </div>
                       </div>

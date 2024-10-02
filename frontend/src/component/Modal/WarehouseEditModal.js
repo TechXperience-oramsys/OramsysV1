@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import Backdrop from '@material-ui/core/Backdrop';
-import Modal from '@material-ui/core/Modal';
-import Fade from '@material-ui/core/Fade';
 import { Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-hot-toast'
-import { TextField } from '@material-ui/core';
-import Autocomplete from "@material-ui/lab/Autocomplete";
+// import { toast } from 'react-hot-toast'
+import { TextField, Backdrop, Modal, Fade, Autocomplete } from '@mui/material';
 import { countrieAction } from '../../redux/actions/countrieAction';
 import { companydataAction } from '../../redux/actions/companydataAction';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 
 const WarehouseEditModal = ({ onHide, show, mode, editData }) => {
     const dispatch = useDispatch()
-    const location = useLocation()
-    const queryParams = new URLSearchParams(location.search)
-    const id = queryParams.get("id")
+    // const location = useLocation()
+    // const queryParams = new URLSearchParams(location.search)
+    // const id = queryParams.get("id")
 
     const [countryData, setCountryData] = useState([])
     const [error, setError] = useState()
@@ -53,8 +49,8 @@ const WarehouseEditModal = ({ onHide, show, mode, editData }) => {
     ];
 
     useEffect(() => {
-        if (mode === "Edit" || mode === "View" && companyData.warehouses) {
-            let temp = companyData.warehouses?.find((e, i) => i == editData)
+        if ((mode === "Edit" || mode === "View") && companyData.warehouses) {
+            let temp = companyData.warehouses?.find((e, i) => i === editData)
             setWarehouse({
                 _id: temp?._id,
                 nature: temp?.nature,
@@ -120,7 +116,7 @@ const WarehouseEditModal = ({ onHide, show, mode, editData }) => {
 
     useEffect(() => {
         dispatch(countrieAction('all'))
-    }, [])
+    }, [dispatch])
 
     const saveData = () => {
         if (validation()) {
@@ -157,7 +153,7 @@ const WarehouseEditModal = ({ onHide, show, mode, editData }) => {
         }
         const body = {
             ...companyData,
-            warehouses: companyData.warehouses.map((ele, i) => i == editData ? warehouse : ele)
+            warehouses: companyData.warehouses.map((ele, i) => i === editData ? warehouse : ele)
         }
         dispatch(companydataAction(body))
         onHide()
@@ -181,7 +177,7 @@ const WarehouseEditModal = ({ onHide, show, mode, editData }) => {
                     <div className='modal-content'>
                         <div className='d-flex justify-content-between'>
                             <h2 id="transition-modal-title" className='modal-title'>{mode} Warehouse</h2>
-                            <img src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                            <img alt='item' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                         </div>
                         <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                             <div className='form'>

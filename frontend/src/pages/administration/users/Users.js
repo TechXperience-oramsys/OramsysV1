@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userGetAction } from "../../../redux/actions/userAction";
 import { Table, Badge, Button, Menu, Dropdown } from "antd";
@@ -25,7 +25,7 @@ const Users = () => {
 
   useEffect(() => {
     dispatch(userGetAction());
-  }, []);
+  }, [dispatch]);
 
   const indexOfLastItem = currentPage * postsPerPage;
   const indexOfFirstItem = indexOfLastItem - postsPerPage;
@@ -123,8 +123,8 @@ const Users = () => {
 
                 <div className="col-sm-6 col-12 text-sm-end">
                   <div className="mx-n1 me-5 d-flex align-items-center justify-content-end gap-2">
-                    {(localStorage.getItem("roles").toLowerCase() == "admin" ||
-                      localStorage.getItem("roles").toLowerCase() ==
+                    {(localStorage.getItem("roles").toLowerCase() === "admin" ||
+                      localStorage.getItem("roles").toLowerCase() ===
                         "superAdmin") && (
                       <Link to="/add-user" style={{ borderColor: "#9E3E65" }} className="btn d-inline-flex btn-md btn-light border-base mx-1 me-3">
                         <span className=" pe-2"> <i className="bi bi-plus"></i></span>

@@ -1,46 +1,28 @@
 import Choices from "choices.js";
-import MaterialTable from "material-table";
-import React, { useEffect, useState, useRef } from "react";
-import { Col, Row, Button, Form, InputGroup } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Col, Row, Form, InputGroup } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import AddSourceOfRepayment from "../../component/Modal/AddSourceOfRepayment";
 import CurrencyHedgeDetailsModal from "../../component/Modal/CurrencyHedgeDetailsModal";
 import { CurrencyOptions } from "../../helper/common";
 import { useSelector } from "react-redux";
-import {
-  addTransaction,
-  editTransaction,
-} from "../../redux/actions/transactionDataAction";
+import { addTransaction, editTransaction } from "../../redux/actions/transactionDataAction";
 import { useDispatch } from "react-redux";
 import AuthStorage from "../../helper/AuthStorage";
 import STORAGEKEY from "../../config/APP/app.config";
-import {
-  ADD_TRANSACTION,
-  EDIT_TRANSACTION,
-  GET_TRANSACTION_BY_ID,
-} from "../../redux/types";
+import { ADD_TRANSACTION, EDIT_TRANSACTION, GET_TRANSACTION_BY_ID } from "../../redux/types";
 import { toast } from "react-hot-toast";
 import moment from "moment";
 import { productGetAction } from "../../redux/actions/productAction";
-import { companydataAction } from "../../redux/actions/companydataAction";
-import {
-  eventsOfDefaultOptions,
-  genovertakingOptions,
-  repsOptions,
-} from "./Helpers/TermsOptions";
+// import { companydataAction } from "../../redux/actions/companydataAction";
+import { eventsOfDefaultOptions, genovertakingOptions, repsOptions } from "./Helpers/TermsOptions";
 import { MultiSelectForm } from "./Helpers/MultiselectForm";
 import Select from "react-select";
-import {
-  addCurrencyHedgeAtom,
-  addSourceOfRepaymentAtom,
-  currencyHedgeDetailsModalAtom,
-  facilityAtom,
-  securityDocumentsAtom,
-  sourceOfRepaymentAtom,
-  typeAtom,
-} from "./Helpers/atoms";
+import { addCurrencyHedgeAtom, addSourceOfRepaymentAtom, currencyHedgeDetailsModalAtom, facilityAtom, sourceOfRepaymentAtom } from "./Helpers/atoms";
 import { useAtom } from "jotai";
 import { OptionalSpan } from "./Helpers/OptionalTags";
+import { Table, Button, Tooltip } from 'antd';
+import { EditOutlined, EyeOutlined, DeleteOutlined } from '@ant-design/icons';
 // import dayjs from "dayjs";
 // import customParseFormat from "dayjs/plugin/customParseFormat";
 // import { DatePicker, Space } from "antd";
@@ -102,25 +84,25 @@ const Facility = ({ hendelCancel, hendelNext }) => {
   const [addSourceOfRepayment, setAddSourceOfRepayment] = useAtom(
     addSourceOfRepaymentAtom
   );
-  const [showTextEditor, setShowTextEditor] = useState(false);
-  const [type, setType] = useAtom(typeAtom);
-  const [selectedName, setSelectedName] = useState("");
+  // const [showTextEditor, setShowTextEditor] = useState(false);
+  // const [type, setType] = useAtom(typeAtom);
+  // const [selectedName, setSelectedName] = useState("");
   const [addCurrencyHedge, setAddCurrencyHedge] = useAtom(addCurrencyHedgeAtom);
   const [sourceOfRepayment, setSourceOfRepayment] = useAtom(
     sourceOfRepaymentAtom
   );
-  const [securityDocuments, setSecurityDocuments] = useAtom(
-    securityDocumentsAtom
-  );
+  // const [securityDocuments, setSecurityDocuments] = useAtom(
+  //   securityDocumentsAtom
+  // );
   const [rowEditData, setRowEditData] = useState("");
   const [error, setError] = useState();
   const [editRowData, setEditRowData] = useState("");
   const [view, setView] = useState();
   const [loading, setLoading] = useState(false);
 
-  const getAlltransactionData = useSelector(
-    (state) => state.transactionData.getAllTransaction
-  );
+  // const getAlltransactionData = useSelector(
+  //   (state) => state.transactionData.getAllTransaction
+  // );
   const transactionData = useSelector(
     (state) => state.transactionData.transactionData
   );
@@ -133,7 +115,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
   const editTransactionData = useSelector(
     (state) => state.transactionData.editTransaction
   );
-  const productData = useSelector((state) => state.product.product);
+  // const productData = useSelector((state) => state.product.product);
 
   useEffect(() => {
     if (getTransactionByIdData && getTransactionByIdData.data) {
@@ -154,7 +136,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
           ).format("YYYY-MM-DD"),
         rePaymentCurrency:
           getTransactionByIdData.data?.facility?.rePaymentCurrency,
-        currency: getTransactionByIdData.data?.facility?.currency,
+        // currency: getTransactionByIdData.data?.facility?.currency,
         // interestRate: getTransactionByIdData.data?.facility?.interestRate,
         // interestPaymentDate: getTransactionByIdData.data?.facility?.interestPaymentDate && moment(getTransactionByIdData.data?.facility?.interestPaymentDate).format("YYYY-MM-DD"),
         // rePaymentCurrency: getTransactionByIdData.data?.facility?.rePaymentCurrency,
@@ -255,7 +237,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
         currency: transactionData.details.contractDetails.currency,
       });
     }
-  }, [getTransactionByIdData]);
+  }, [getTransactionByIdData, facility, setAddCurrencyHedge, setFacility, setSourceOfRepayment, transactionData.details.contractDetails.currency]);
 
   const counterpartyOptions = useSelector((state) => state.entityData.entity);
 
@@ -278,7 +260,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
         })
       );
     }
-  }, [transactionData]);
+  }, [transactionData, counterpartyOptions.data, setAddCurrencyHedge]);
 
   const propsEditData = (e) => {
     let editData = sourceOfRepayment.map((item, i) =>
@@ -300,21 +282,13 @@ const Facility = ({ hendelCancel, hendelNext }) => {
     { value: "Quarterly", label: "Quarterly" },
     { value: "Bi-annual", label: "Bi-annual" },
     { value: "Annual", label: "Annual" },
-
-    // "Weekly",
-    // "Monthly",
-    // "Quarterly",
-    // "Bi-annual",
-    // "Annual",
   ];
 
   const baseRateOptions = [
     { value: "LIBOR", label: "LIBOR" },
     { value: "SOFR", label: "SOFR" },
     { value: "Other(Please Specify", label: "Other(Please Specify" },
-    // "LIBOR",
-    // "SOFR",
-    // "Other(Please Specify)",
+
   ];
 
   const interestRateTypeOptions = [
@@ -416,29 +390,26 @@ const Facility = ({ hendelCancel, hendelNext }) => {
     { value: false, label: "No" },
   ];
 
-  const hadleChangeModal = (e) => {
-    setFacility({
-      ...facility,
-      [e.name]: e.value,
-    });
-  };
+  // const hadleChangeModal = (e) => {
+  //   setFacility({
+  //     ...facility,
+  //     [e.name]: e.value,
+  //   });
+  // };
 
   useEffect(() => {
     if (facility.currencyHedge === "No") {
       setAddCurrencyHedge([]);
     }
-  }, [facility.currencyHedge]);
+  }, [facility.currencyHedge, setAddCurrencyHedge]);
 
   useEffect(() => {
     dispatch(productGetAction("all"));
-  }, []);
+  }, [dispatch]);
 
-  // useEffect(() => {
-  //     console.log("securityDocuments.length===", securityDocuments)
-  // }, [securityDocuments])
 
   const handleChangeNumber = (e, name) => {
-    let numberReg = /^[0-9\b]+$/;
+    // let numberReg = /^[0-9\b]+$/;
     let numberPointReg = /\b((100)|[0-9]\d?)\b/;
     console.log("e.target.value", e.target.value);
     if (
@@ -836,19 +807,20 @@ const Facility = ({ hendelCancel, hendelNext }) => {
     delete facility._id;
     let body = {
       detail: transactionType !== "Import" ? {
-            ...transactionData.details,
-            shippingOptions: {
-              ...transactionData?.details?.shippingOptions,
-              warehouses:
-                transactionData?.details?.shippingOptions?.warehouses?.map(
-                  (ele) => {
-                    return {
-                      warehouse: ele?.warehouse?.value,
-                      warehouseCompany: ele?.warehouseCompany?.value,
-                    };
-                  }
-                ),
-            } } : "",
+        ...transactionData.details,
+        shippingOptions: {
+          ...transactionData?.details?.shippingOptions,
+          warehouses:
+            transactionData?.details?.shippingOptions?.warehouses?.map(
+              (ele) => {
+                return {
+                  warehouse: ele?.warehouse?.value,
+                  warehouseCompany: ele?.warehouseCompany?.value,
+                };
+              }
+            ),
+        }
+      } : "",
 
       keyParties: {
         keyParties: transactionData.keyParties?.keyParties?.map((ele) => {
@@ -926,7 +898,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
       navigate("/transactions");
       toast.success(addTransactionData.message);
     }
-  }, [addTransactionData]);
+  }, [addTransactionData, dispatch, navigate]);
 
   const edit = async () => {
     if (validation()) {
@@ -1031,7 +1003,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
       navigate("/transactions");
       toast.success(editTransactionData.message);
     }
-  }, [editTransactionData]);
+  }, [editTransactionData, dispatch, navigate]);
 
   const editModalData = (data, id) => {
     console.log("id==", id);
@@ -1054,16 +1026,158 @@ const Facility = ({ hendelCancel, hendelNext }) => {
 
   const DeleteCurrencyhedgedetails = (rowData) => {
     let DeleteCurrencyhedge = addCurrencyHedge.filter(
-      (ele, i) => i !== rowData.tableData.id
+      (ele, i) => i !== rowData.key
     );
     setAddCurrencyHedge(DeleteCurrencyhedge);
   };
   const DeleteSourceOfRepayment = (rowData) => {
     let DeleteRepaymentsource = sourceOfRepayment.filter(
-      (ele, i) => i !== rowData.tableData.id
+      (ele, i) => i !== rowData.key
     );
     setSourceOfRepayment(DeleteRepaymentsource);
   };
+
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'hedgingMethod', // Field access
+      key: 'hedgingMethod',
+    },
+    {
+      title: 'Label',
+      dataIndex: ['counterParty', 'label'], // Nested field access
+      key: 'counterPartyLabel',
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (text, record) => (
+        <>
+          {isView ? (
+            <Tooltip title="View Currency hedge details">
+              <Button
+                type="default"
+                shape="circle"
+                icon={<EyeOutlined />}
+                onClick={() => {
+                  setCurrencyHedgeDetailsModal(true);
+                  setEditRowData(record);
+                }}
+              />
+            </Tooltip>
+          ) : (
+            <>
+              <Tooltip title="Edit Currency hedge details">
+                <Button
+                  type="primary"
+                  shape="circle"
+                  icon={<EditOutlined />}
+                  onClick={() => {
+                    setCurrencyHedgeDetailsModal(true);
+                    setEditRowData(record);
+                  }}
+                  style={{ marginRight: 8 }}
+                />
+              </Tooltip>
+              <Tooltip title="View Currency hedge details">
+                <Button
+                  type="default"
+                  shape="circle"
+                  icon={<EyeOutlined />}
+                  onClick={() => {
+                    setCurrencyHedgeDetailsModal(true);
+                    setEditRowData(record);
+                  }}
+                  style={{ marginRight: 8 }}
+                />
+              </Tooltip>
+              <Tooltip title="Delete hedge details">
+                <Button
+                  type="danger"
+                  shape="circle"
+                  icon={<DeleteOutlined />}
+                  onClick={() => {
+                    DeleteCurrencyhedgedetails(record);
+                  }}
+                />
+              </Tooltip>
+            </>
+          )}
+        </>
+      ),
+    },
+  ];
+
+  const sourceOfRepaymentColumn = [
+    {
+      title: 'Name',
+      dataIndex: 'type',
+      key: 'type',
+    },
+    {
+      title: 'Instrument',
+      dataIndex: 'instrument',
+      key: 'instrument',
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (text, record) => (
+        <>
+          {isView ? (
+            <Tooltip title="View Source of Repayment">
+              <Button
+                type="default"
+                shape="circle"
+                icon={<EyeOutlined />}
+                onClick={() => {
+                  setAddSourceOfRepayment(true);
+                  setRowEditData(record);
+                  setView(isView);
+                }}
+              />
+            </Tooltip>
+          ) : (
+            <>
+              <Tooltip title="Edit Source of Repayment">
+                <Button
+                  type="primary"
+                  shape="circle"
+                  icon={<EditOutlined />}
+                  onClick={() => {
+                    setAddSourceOfRepayment(true);
+                    setRowEditData(record);
+                  }}
+                  style={{ marginRight: 8 }}
+                />
+              </Tooltip>
+              <Tooltip title="View Source of Repayment">
+                <Button
+                  type="default"
+                  shape="circle"
+                  icon={<EyeOutlined />}
+                  onClick={() => {
+                    setAddSourceOfRepayment(true);
+                    setRowEditData(record);
+                    setView(isView);
+                  }}
+                  style={{ marginRight: 8 }}
+                />
+              </Tooltip>
+              <Tooltip title="Delete Source of Repayment">
+                <Button
+                  type="danger"
+                  shape="circle"
+                  icon={<DeleteOutlined />}
+                  onClick={() => DeleteSourceOfRepayment(record._id)}
+                />
+              </Tooltip>
+            </>
+          )}
+        </>
+      ),
+    },
+  ];
 
   return (
     <>
@@ -1689,58 +1803,11 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                           <span className="fw-bold">Add</span>
                         </Button>
                       </div>
-                      <MaterialTable
-                        title=""
-                        columns={[
-                          { title: "Name", field: "hedgingMethod" },
-                          { title: "Label", field: "counterParty.label" },
-                        ]}
-                        data={addCurrencyHedge.length ? addCurrencyHedge : []}
-                        actions={
-                          isView
-                            ? [
-                              {
-                                icon: "preview",
-                                tooltip: "View Currency hedge details",
-                                onClick: (event, rowData) => {
-                                  setCurrencyHedgeDetailsModal(true);
-                                  setEditRowData(rowData);
-                                },
-                              },
-                            ]
-                            : [
-                              {
-                                icon: "edit",
-                                tooltip: "Edit Currency hedge details",
-                                onClick: (event, rowData) => {
-                                  setCurrencyHedgeDetailsModal(true);
-                                  setEditRowData(rowData);
-                                },
-                              },
-                              {
-                                icon: "preview",
-                                tooltip: "View Currency hedge details",
-                                onClick: (event, rowData) => {
-                                  setCurrencyHedgeDetailsModal(true);
-                                  setEditRowData(rowData);
-                                },
-                              },
-                              {
-                                icon: "delete",
-                                tooltip: "Delete hedge details",
-                                onClick: (event, rowData) => {
-                                  DeleteCurrencyhedgedetails(rowData);
-                                },
-                              },
-                            ]
-                        }
-                        options={{
-                          filtering: false,
-                          actionsColumnIndex: -1,
-                          sorting: false,
-                          pageSize: 10,
-                          search: false,
-                        }}
+                      <Table
+                        columns={columns}
+                        dataSource={addCurrencyHedge.length ? addCurrencyHedge : []}
+                        pagination={{ pageSize: 10 }}
+                        rowKey={(record) => record.id} // Ensure `id` exists or replace with unique field
                       />
                     </div>
                   </>
@@ -1873,68 +1940,14 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                   </Button>
                 </div>
                 {sourceOfRepayment.length ? (
-                  <MaterialTable
-                    title=""
-                    columns={[
-                      { title: "Name", field: "type" },
-                      // { title: "Evidence", field: "evidence" },
-                      { title: "Instrument", field: "instrument" },
-                      // { title: "Type", field: "type" },
-                    ]}
-                    // data={productGetData?.data}
-                    data={sourceOfRepayment.length ? sourceOfRepayment : []}
-                    actions={
-                      isView
-                        ? [
-                          {
-                            icon: "preview",
-                            tooltip: "View Source of Repayment",
-                            onClick: (event, rowData) => {
-                              setAddSourceOfRepayment(true);
-                              setRowEditData(rowData);
-                              setView(isView);
-                            },
-                            // onClick: (event, rowData) => navigate(`/edit-product?id=${rowData?._id}`, { state: { isView: true } })
-                          },
-                        ]
-                        : [
-                          {
-                            icon: "edit",
-                            tooltip: "Edit Source of Repayment",
-                            onClick: (event, rowData) => {
-                              setAddSourceOfRepayment(true);
-                              setRowEditData(rowData);
-                            },
-                          },
-                          {
-                            icon: "preview",
-                            tooltip: "View Source of Repayment",
-                            onClick: (event, rowData) => {
-                              setAddSourceOfRepayment(true);
-                              setRowEditData(rowData);
-                              setView(isView);
-                            },
-                            // onClick: (event, rowData) => navigate(`/edit-product?id=${rowData?._id}`, { state: { isView: true } })
-                          },
-                          {
-                            icon: "delete",
-                            tooltip: "Delete source of repayment",
-                            onClick: (event, rowData) => {
-                              DeleteSourceOfRepayment(rowData);
-                            },
-                          },
-                        ]
-                    }
-                    options={{
-                      filtering: false,
-                      actionsColumnIndex: -1,
-                      sorting: false,
-                      pageSize: 10,
-                      search: false,
-                    }}
+                  <Table
+                    columns={sourceOfRepaymentColumn}
+                    dataSource={sourceOfRepayment.length ? sourceOfRepayment : []}
+                    pagination={{ pageSize: 10 }}
+                    rowKey={(record) => record.id || record.key} // Ensure you have a unique `id` or `key` for each record
                   />
                 ) : (
-                  "No data found"
+                  'No data found'
                 )}
               </div>
             </div>
@@ -2430,66 +2443,3 @@ const Facility = ({ hendelCancel, hendelNext }) => {
 };
 
 export default Facility;
-
-const StyleSheet = {
-  container: {},
-  closeView: { display: "none" },
-  overall: {
-    width: "95%",
-    margin: "0 auto",
-    height: "30rem",
-    backgroundColor: "#fff",
-    position: "absolute",
-    border: "1px solid lightgrey",
-    top: "5rem",
-    left: 0,
-    right: 0,
-    overflowY: "auto",
-    display: "block",
-    zIndex: "3",
-  },
-  data: {
-    padding: "0.5rem",
-    fontSize: "0.8rem",
-    cursor: "pointer",
-  },
-  datashown: {
-    padding: "0.3rem",
-    borderBottom: "1px solid lightgrey",
-    cursor: "pointer",
-    backgroundColor: "lightgrey",
-    color: "white",
-  },
-  input: {
-    width: "100%",
-    border: "1px solid lightgrey",
-    padding: "1rem",
-  },
-  showRoom: {
-    display: "flex",
-    flexWrap: "wrap",
-    gap: 7,
-  },
-  roomItem: {
-    padding: "0.2rem 0.3rem",
-    border: "1px solid lightgrey",
-    borderRadius: "999px",
-    display: "flex",
-    alignItems: "center",
-    gap: 6,
-    fontSize: "0.7rem",
-    backgroundColor: "#00BCD4",
-    color: "white",
-  },
-  cancelButton: {
-    borderRadius: "999px",
-    // fontSize: "0.8rem",
-    backgroundColor: "#00BCD4",
-    color: "#dae4e5",
-    padding: "0.01rem 0.5rem",
-    cursor: "pointer",
-  },
-  fieldPadding: {
-    padding: "6px",
-  },
-};

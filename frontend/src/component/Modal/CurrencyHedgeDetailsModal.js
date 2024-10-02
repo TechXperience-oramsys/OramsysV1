@@ -1,10 +1,10 @@
-import { Backdrop, Modal, Fade, FormControl, InputLabel, Select, TextField } from '@material-ui/core'
+import { Backdrop, Modal, Fade, TextField, Autocomplete } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { DropzoneArea } from 'material-ui-dropzone';
 import { Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import { entityGetAction } from '../../redux/actions/entityAction';
-import Autocomplete from "@material-ui/lab/Autocomplete";
+// import Autocomplete from "@mui/lab";
 
 const CurrencyHedgeDetailsModal = ({ show, onHide, getModalData, editRowData,data }) => {
 

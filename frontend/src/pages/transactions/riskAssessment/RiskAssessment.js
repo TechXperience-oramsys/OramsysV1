@@ -1,7 +1,7 @@
-import { Box, Button, Step, StepLabel, Stepper, Typography } from '@material-ui/core'
+import { Box, Button, Step, StepLabel, Stepper, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import ExchangeRateRisk from './ExchangeRateRisk';
 import LoanPurposeRisk from './LoanPurposeRisk';
 import MarketPriceRisk from './MarketPriceRisk';
@@ -11,15 +11,15 @@ import PerformanceRisk from './PerformanceRisk';
 const steps = ['Loan purpose risk', 'Exchange rate risk', 'Payment/Buyer risk', 'Performance risk', 'Market/Price risk'];
 const RiskAssessment = () => {
 
-    const navigate = useNavigate()
-    const [page, setPage] = useState('Details')
-    const [details, setDetails] = useState({})
+    // const navigate = useNavigate()
+    // const [page, setPage] = useState('Details')
+    // const [details, setDetails] = useState({})
     const riskAssessment = useSelector(state => state.riskAssessmentData.riskAssessment)
     const [activeStep, setActiveStep] = useState(0);
 
-    const isStepOptional = (step) => {
-        return step === 1;
-    };
+    // const isStepOptional = (step) => {
+    //     return step === 1;
+    // };
 
     const handleNext = () => {
         console.log('Data ========= >', riskAssessment)

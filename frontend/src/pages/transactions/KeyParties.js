@@ -1,16 +1,17 @@
 
-import MaterialTable from 'material-table'
 import { DropzoneArea } from 'material-ui-dropzone'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { Button, Col, Form, Row } from 'react-bootstrap'
+import { Col, Form, Row } from 'react-bootstrap'
 import { useLocation, useNavigate } from 'react-router-dom'
 import PartiesEditModal from '../../component/Modal/PartiesEditModal'
 import { useDispatch, useSelector } from 'react-redux';
 import { transactionDataAction } from '../../redux/actions/transactionDataAction'
 import { entityGetAction } from '../../redux/actions/entityAction'
-import { tableDataAtom, rowEditDataAtom, relatedPartyDetailsAtom, keyPartiesAtom, relationAtom, partiesDataAtom, buyersAtom, namesAtom, apiFetchedAtom } from '../transactions/Helpers/atoms'
+import { tableDataAtom, rowEditDataAtom, relatedPartyDetailsAtom, keyPartiesAtom, partiesDataAtom, buyersAtom, namesAtom } from '../transactions/Helpers/atoms'
 import { useAtom } from 'jotai'
 import { OptionalSpan } from './Helpers/OptionalTags'
+import { Table, Button, Tooltip } from 'antd';
+import { EditOutlined, EyeOutlined } from '@ant-design/icons';
 
 const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingCompany, getCounterParty, pricingHedgingStatus, getWarehouseCompany, warehouseStatus, getLender, getBorrower }) => {
     const dispatch = useDispatch()
@@ -18,28 +19,28 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
     const location = useLocation()
     const isView = location?.state[2]?.isView
 
-    const [apiFetched, setApiFetched] = useAtom(apiFetchedAtom);
-    const [editMode, setEditMode] = useState(false);
-    const [relation, setRelation] = useAtom(relationAtom);
-    const [party, setParty] = useState({ name: "", type: "" })
+    // const [apiFetched, setApiFetched] = useAtom(apiFetchedAtom);
+    // const [editMode, setEditMode] = useState(false);
+    // const [relation, setRelation] = useAtom(relationAtom);
+    // const [party, setParty] = useState({ name: "", type: "" })
     const [showEditModal, setShowEditModal] = useState(false)
     const [tableData, setTableData] = useAtom(tableDataAtom)
     const [rowEditData, setRowEditData] = useAtom(rowEditDataAtom)
     const [editId, setEditId] = useState('')
     const [view, setView] = useState()
-    const [error, setError] = useState({})
+    // const [error, setError] = useState({})
     const [names, setNames] = useAtom(namesAtom)
-    const [buyers, setBuyer] = useAtom(buyersAtom)
+    const [ setBuyer] = useAtom(buyersAtom)
     const [partiesData, setpartiesData] = useAtom(partiesDataAtom)
     const [keyParties, setkeyParties] = useAtom(keyPartiesAtom)
     const [relatedPartyDetails, setRelatedPartyDetails] = useAtom(relatedPartyDetailsAtom)
 
-    const [borrower_Applicant, setBorrower_Applicant] = useState("")
-    const [lenders, setLenders] = useState("")
-    const [warehouseComp, setWarehouseComp] = useState("")
-    const [warehouses, setWarehouses] = useState([])
-    const [counterPart, setCounterPart] = useState("")
-    const [shippingComp, setShippingComp] = useState("")
+    // const [borrower_Applicant, setBorrower_Applicant] = useState("")
+    // const [lenders, setLenders] = useState("")
+    // const [warehouseComp, setWarehouseComp] = useState("")
+    // const [warehouses, setWarehouses] = useState([])
+    // const [counterPart, setCounterPart] = useState("")
+    // const [shippingComp, setShippingComp] = useState("")
     const parties = [
         "Subsidiary",
         "Owners",
@@ -54,7 +55,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
 
     useEffect(() => {
         dispatch(entityGetAction('all'))
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         if (getTransactionByIdData && getTransactionByIdData.data) {
@@ -66,12 +67,11 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
             }) || [];
 
             setTableData(keyPartiesData);
-            setApiFetched(true);
             setEditId(getTransactionByIdData.data.keyParties?.[0]?._id);
-            setBorrower_Applicant(getTransactionByIdData.data?.details?.pricingDetails?.pricingCounterParty?.details.name);
-            setLenders(getTransactionByIdData.data?.details?.lenders);
-            setCounterPart(getTransactionByIdData.data?.details?.counterParty?.details.name);
-            setShippingComp(getTransactionByIdData.data?.details?.shippingOptions?.shippingCompany?.details?.name);
+            // setBorrower_Applicant(getTransactionByIdData.data?.details?.pricingDetails?.pricingCounterParty?.details.name);
+            // setLenders(getTransactionByIdData.data?.details?.lenders);
+            // setCounterPart(getTransactionByIdData.data?.details?.counterParty?.details.name);
+            // setShippingComp(getTransactionByIdData.data?.details?.shippingOptions?.shippingCompany?.details?.name);
 
 
             // if (getTransactionByIdData.data.keyParties?.[0]?.relatedParties) {
@@ -79,24 +79,18 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
             //     setEditMode(true);
             // }
         }
-    }, [getTransactionByIdData]);
+    }, [getTransactionByIdData, setTableData]);
 
 
 
     useEffect(() => {
-        if (getTransactionByIdData.data?.keyParties[0].relatedParties != undefined && getTransactionByIdData.data?.keyParties[0].relatedParties.length > 0) {
+        if (getTransactionByIdData.data?.keyParties[0].relatedParties !== undefined && getTransactionByIdData.data?.keyParties[0].relatedParties.length > 0) {
             console.log('RELATEDPARTIES FROM API', relatedPartyDetails);
             setRelatedPartyDetails(getTransactionByIdData.data?.keyParties[0].relatedParties);
         }
-    }, [getTransactionByIdData])
+    }, [getTransactionByIdData, relatedPartyDetails, setRelatedPartyDetails])
 
-    // useEffect(() => {
-    //     if (relatedPartyDetails) {
-    //         console.log('RELATEDPARTIES useeffect 2', relatedPartyDetails);
-    //     }
-    // }, [relatedPartyDetails]);
-
-    let temp = keyParties;
+    // let temp = keyParties;
 
 
     const handleParties = (e, newValue, index, type) => {
@@ -169,7 +163,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
             console.log("GET RELATED PARTIES DATA-----", temp_names);
             setNames(temp_names);
         }
-    }, [nameOption]);
+    }, [nameOption, setNames]);
 
     const partiesEditData = (data, id) => {
         if (id !== undefined) {
@@ -187,29 +181,29 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
             setTableData([...tableData, data])
         }
     }
-    const validation = () => {
-        let flag = false
-        let error = {}
+    // const validation = () => {
+    //     let flag = false
+    //     let error = {}
 
-        // if (!relatedPartyDetails.buyer) {
-        //     flag = true
-        //     error.buyer = 'Please select a party'
-        // }
-        // if (!relatedPartyDetails.shipper) {
-        //     flag = true
-        //     error.shipper = 'Please select a party'
-        // }
-        // if (!relatedPartyDetails.party_relation) {
-        //     flag = true
-        //     error.party_relation = 'Please select a relation'
-        // }
-        // if (relatedPartyDetails.length < 1) {
-        //     flag = true
-        //     error.relatedPartyDetails = 'Please enter document remittance'
-        // }
-        setError(error)
-        return flag
-    }
+    //     if (!relatedPartyDetails.buyer) {
+    //         flag = true
+    //         error.buyer = 'Please select a party'
+    //     }
+    //     if (!relatedPartyDetails.shipper) {
+    //         flag = true
+    //         error.shipper = 'Please select a party'
+    //     }
+    //     if (!relatedPartyDetails.party_relation) {
+    //         flag = true
+    //         error.party_relation = 'Please select a relation'
+    //     }
+    //     if (relatedPartyDetails.length < 1) {
+    //         flag = true
+    //         error.relatedPartyDetails = 'Please enter document remittance'
+    //     }
+    //     setError(error)
+    //     return flag
+    // }
 
 
     const next = () => {
@@ -243,7 +237,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
         if (names) {
             names.forEach(element => {
                 element.roles.forEach(roleDetail => {
-                    if (roleDetail.roleId?.roleName == "Buyer") {
+                    if (roleDetail.roleId?.roleName === "Buyer") {
                         var temp = {
                             label: element.details.name != null ? element.details.name : element.details.givenName,
                             value: element.details.name != null ? element.details.name : element.details.givenName,
@@ -259,8 +253,8 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
             });
         }
         setBuyer(buyer_arr);
-        setWarehouses(warehouses);
-    }, [names])
+        // setWarehouses(warehouses);
+    }, [names, setBuyer])
 
 
     const tdata = useMemo(() => tableData.map(item => item?.name?.label), [tableData]);
@@ -273,10 +267,10 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
             warehouseCo,
             getCounterParty,
             ...tdata,
-        ].filter(item => item); // Filter out any undefined or null values
+        ].filter(item => item);
 
         setpartiesData(storeData);
-    }, [getBorrower, getLender, getShippingCompany, warehouseCo, getCounterParty, tdata]);
+    }, [getBorrower, getLender, getShippingCompany, warehouseCo, getCounterParty, tdata, setpartiesData]);
     console.log('Check for lender', getLender)
 
     console.log('warehouse company', getWarehouseCompany?.warehouses?.[0]?.warehouseCompany?.label)
@@ -285,6 +279,68 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
     useEffect(() => {
         AddUpParties()
     }, [AddUpParties])
+
+    const columns = [
+        {
+            title: 'Party',
+            dataIndex: ['name', 'label'], // Nested field access
+            key: 'party',
+        },
+        {
+            title: 'Role',
+            dataIndex: ['type', 'label'], // Nested field access
+            key: 'role',
+        },
+        {
+            title: 'Actions',
+            key: 'actions',
+            render: (text, record) => (
+                <>
+                    {isView ? (
+                        <Tooltip title="View Product">
+                            <Button
+                                type="default"
+                                shape="circle"
+                                icon={<EyeOutlined />}
+                                onClick={() => {
+                                    setShowEditModal(!showEditModal);
+                                    setRowEditData(record);
+                                    setView(isView);
+                                }}
+                            />
+                        </Tooltip>
+                    ) : (
+                        <>
+                            <Tooltip title="Edit Product">
+                                <Button
+                                    type="primary"
+                                    shape="circle"
+                                    icon={<EditOutlined />}
+                                    onClick={() => {
+                                        setRowEditData(record);
+                                        setShowEditModal(!showEditModal);
+                                        console.log('rowData ==', record);
+                                    }}
+                                    style={{ marginRight: 8 }}
+                                />
+                            </Tooltip>
+                            <Tooltip title="View Product">
+                                <Button
+                                    type="default"
+                                    shape="circle"
+                                    icon={<EyeOutlined />}
+                                    onClick={() => {
+                                        setShowEditModal(!showEditModal);
+                                        setRowEditData(record);
+                                    }}
+                                />
+                            </Tooltip>
+                        </>
+                    )}
+                </>
+            ),
+        },
+    ];
 
     return (
         <>
@@ -361,40 +417,11 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                         <span className='fw-bold'>Add</span>
                     </Button>
                 </div>
-                <MaterialTable
-                    title=""
-                    columns={[
-
-                        { title: 'Party', field: 'name.label' },
-                        { title: 'Role', field: 'type.label' },
-
-                    ]}
-                    data={tableData}
-
-                    actions={isView ? [{
-                        icon: 'preview',
-                        tooltip: 'View Product',
-                        onClick: (event, rowData) => { setShowEditModal(!showEditModal); setRowEditData(rowData); setView(isView) }
-                    }] : [
-                        {
-                            icon: 'edit',
-                            tooltip: 'Edit Product',
-                            onClick: (event, rowData) => { setRowEditData(rowData); setShowEditModal(!showEditModal); console.log('rowData ==', rowData) }
-                        },
-                        {
-                            icon: 'preview',
-                            tooltip: 'View Product',
-                            onClick: (event, rowData) => { setShowEditModal(!showEditModal); setRowEditData(rowData) }
-                        }
-                    ]}
-                    options={{
-                        filtering: false,
-                        actionsColumnIndex: -1,
-                        sorting: false,
-                        pageSize: 10,
-                        search: false,
-                        emptyRowsWhenPaging: false,
-                    }}
+                <Table
+                    columns={columns}
+                    dataSource={tableData}
+                    pagination={{ pageSize: 10 }}
+                    rowKey={(record) => record.id} // Assuming each record has a unique `id`
                 />
             </div>
             <div className='add-edit-product parties_main mb-4'>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { LineChart as LineChartIcon } from 'lucide-react';
-import { Table, Card, Row, Col } from 'antd';
+import { Card, Row, Col } from 'antd';
 import { RiseOutlined } from '@ant-design/icons';
 
 // Sample data

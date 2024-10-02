@@ -1,4 +1,3 @@
-import { TextField } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { Col, Form, Row } from 'react-bootstrap'
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -6,13 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { countrieAction } from '../../../../redux/actions/countrieAction';
 import { ratingAgencyGetByIdAction } from '../../../../redux/actions/ratingAgenciesAction';
 // import { toast } from 'react-hot-toast'
-import Autocomplete from "@material-ui/lab/Autocomplete";
 import { RATINGAGENCIES_GET_BY_ID } from '../../../../redux/types';
 import { RequiredSpan } from '../../../transactions/Helpers/OptionalTags';
 import Select from 'react-select';
 
 
-const Details = ({ hendelNext, hendelCancel, getData }) => {
+const Details = ({ hendelNext, getData }) => {
 
     const searchParams = new URLSearchParams(window.location.search)
     const id = searchParams.get('id')

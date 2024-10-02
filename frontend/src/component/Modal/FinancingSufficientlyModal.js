@@ -1,7 +1,7 @@
-import { Backdrop, Fade, Modal, TextField, InputAdornment } from '@material-ui/core';
+import { Backdrop, Fade, Modal, TextField, InputAdornment, Autocomplete } from '@mui/material';
 import React, { useState, useEffect } from 'react'
 import { Row, Col } from "react-bootstrap";
-import Autocomplete from "@material-ui/lab/Autocomplete";
+// import Autocomplete from "@mui/lab";
 import { useSelector } from 'react-redux'
 import { CurrencyOptions } from '../../helper/common';
 import { useLocation } from 'react-router-dom'

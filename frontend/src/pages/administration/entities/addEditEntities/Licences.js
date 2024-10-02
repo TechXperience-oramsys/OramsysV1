@@ -1,7 +1,5 @@
-import MaterialTable from 'material-table'
-import { TextField } from "@material-ui/core"
+// import { TextField, Autocomplete } from "@mui/material"
 import React, { useEffect, useState } from 'react'
-import Autocomplete from "@material-ui/lab/Autocomplete"
 import LicencesEditModal from '../../../../component/Modal/LicencesEditModal'
 import { useSelector, useDispatch } from 'react-redux'
 import { companydataAction } from '../../../../redux/actions/companydataAction'

@@ -1,18 +1,17 @@
-import { TextField, } from '@material-ui/core'
-import MaterialTable from 'material-table'
 import React, { useEffect, useState } from 'react'
-import { Button, Col, Form, Row } from 'react-bootstrap'
+import { Col, Form, Row } from 'react-bootstrap'
 import LCPartiesModal from '../../component/Modal/LCPartiesModal'
-import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextEditerModal from '../../component/Modal/TextEditerModal'
 import { useDispatch, useSelector } from 'react-redux';
 import { countrieAction } from '../../redux/actions/countrieAction'
 import { entityGetAction } from '../../redux/actions/entityAction'
 import { CurrencyOptions } from '../../helper/common'
 import { transactionDataAction } from '../../redux/actions/transactionDataAction'
-import { formatCurrency } from '../../helper/utils'
+// import { formatCurrency } from '../../helper/utils'
 import { useLocation } from 'react-router-dom'
 import { useAtom } from 'jotai'
+import { Table, Button, Tooltip } from 'antd';
+import { EditOutlined, EyeOutlined } from '@ant-design/icons';
 import { beneficiaryAtom, contractDetailAtom, countryAtom, editeRowDataAtom, fundFlowAtom, lettersOfCreditAtom, selectedNameAtom, showTextEditorAtom } from './Helpers/atoms';
 
 
@@ -23,8 +22,8 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
 
     const [fundFlow, setFundFlow] = useAtom(fundFlowAtom)
 
-    const [contractDetails, setContractDetails] = useAtom(contractDetailAtom)
-    const [selectedName, setSelectedName] = useAtom(selectedNameAtom)
+    const [ setContractDetails] = useAtom(contractDetailAtom)
+    const [selectedName] = useAtom(selectedNameAtom)
     const [country, setCountry] = useAtom(countryAtom)
     const [beneficiary, setbeneficiary] = useAtom(beneficiaryAtom)
     const [lettersOfCredit, setLettersOfCredit] = useAtom(lettersOfCreditAtom)
@@ -36,7 +35,7 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
     const isView = location?.state[2]?.isView
 
     const [showEditModal, setShowEditModal] = useState(false)
-    const [type, setType] = useState('')
+    const [type] = useState('')
 
     const [error, setError] = useState({})
 
@@ -48,7 +47,7 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
     useEffect(() => {
         dispatch(countrieAction('all'))
         dispatch(entityGetAction('Company'))
-    }, [])
+    }, [dispatch])
 
     // useEffect(() => {
     //     console.log('transactionData', transactionData)
@@ -99,12 +98,12 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                     reimbursingBank: { value: ele?.reimbursingBank?._id, label: ele?.reimbursingBank?.details?.name },
                 }
             }))
-            setContractDetails({
-                currency: getTrans.currency,
-                value: getTrans.value,
-            })
+            // setContractDetails({
+            //     currency: getTrans.currency,
+            //     value: getTrans.value,
+            // })
         }
-    }, [getTransactionByIdData])
+    }, [getTransactionByIdData, setContractDetails, setFundFlow, setLettersOfCredit])
 
     const handleChange = (event) => {
         setFundFlow({
@@ -113,12 +112,12 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
         });
     }
 
-    const handleChnages = (e) => {
-        setContractDetails({
-            ...contractDetails,
-            [e.target.name]: e.target.value,
-        })
-    }
+    // const handleChnages = (e) => {
+    //     setContractDetails({
+    //         ...contractDetails,
+    //         [e.target.name]: e.target.value,
+    //     })
+    // }
 
     const hadleChangeModal = (e) => {
         setFundFlow({
@@ -136,14 +135,14 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
         if (paymentOrigin && paymentOrigin.data) {
             setCountry(paymentOrigin?.data)
         }
-    }, [paymentOrigin])
+    }, [paymentOrigin, setCountry])
 
     useEffect(() => {
         if (beneficiaries && beneficiaries.data && beneficiaries.status === 200) {
             setbeneficiary(beneficiaries.data)
         }
         console.log('BENEFICIARIS', beneficiaries)
-    }, [beneficiaries])
+    }, [beneficiaries, setbeneficiary])
 
     const termsOptions = [
         'At sight',
@@ -311,6 +310,91 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
         }
     }
 
+    const columns = [
+        {
+            title: 'Name',
+            dataIndex: ['applicant', 'label'], // Nested field access
+            key: 'name',
+        },
+        {
+            title: 'Label',
+            dataIndex: ['issuingBank', 'label'],
+            key: 'label',
+        },
+        {
+            title: 'Countries',
+            dataIndex: ['beneficiary', 'label'],
+            key: 'countries',
+        },
+        {
+            title: 'Advising Bank',
+            dataIndex: ['advisingBank', 'label'],
+            key: 'advisingBank',
+        },
+        {
+            title: 'Conforming Bank',
+            dataIndex: ['conformingBank', 'label'],
+            key: 'conformingBank',
+        },
+        {
+            title: 'Negotiating Bank',
+            dataIndex: ['negotiatingBank', 'label'],
+            key: 'negotiatingBank',
+        },
+        {
+            title: 'Reimbursing Bank',
+            dataIndex: ['reimbursingBank', 'label'],
+            key: 'reimbursingBank',
+        },
+        {
+            title: 'Second Beneficiary',
+            dataIndex: ['secondBeneficiary', 'label'],
+            key: 'secondBeneficiary',
+        },
+        {
+            title: 'Actions',
+            key: 'actions',
+            render: (text, record) => (
+                <>
+                    {isView ? (
+                        <Tooltip title="View LC Party">
+                            <Button
+                                type="default"
+                                shape="circle"
+                                icon={<EyeOutlined />}
+                                onClick={() => setShowEditModal((prev) => !prev)}
+                            />
+                        </Tooltip>
+                    ) : (
+                        <>
+                            <Tooltip title="Edit LC Party">
+                                <Button
+                                    type="primary"
+                                    shape="circle"
+                                    icon={<EditOutlined />}
+                                    onClick={() => {
+                                        setShowEditModal((prev) => !prev);
+                                        setEditeRowData(record);
+                                    }}
+                                    style={{ marginRight: 8 }}
+                                />
+                            </Tooltip>
+                            <Tooltip title="View LC Party">
+                                <Button
+                                    type="default"
+                                    shape="circle"
+                                    icon={<EyeOutlined />}
+                                    onClick={() => setShowEditModal((prev) => !prev)}
+                                />
+                            </Tooltip>
+                        </>
+                    )}
+                </>
+            ),
+        },
+    ];
+
+
     return (
         <>
             <div className='add-edit-product'>
@@ -392,44 +476,16 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                                                     <span className='fw-bold'>Add</span>
                                                 </Button>
                                             </div>
-                                            {lettersOfCredit.length > 0 ? <MaterialTable
-                                                title="LC Parties"
-                                                columns={[
-                                                    { title: 'Name', field: 'applicant.label' },
-                                                    { title: 'Label', field: 'issuingBank.label' },
-                                                    { title: 'Courtries', field: 'beneficiary.label' },
-                                                    { title: 'advisingBank', field: 'advisingBank.label' },
-                                                    { title: 'conformingBank', field: 'conformingBank.label' },
-                                                    { title: 'negotiatingBank', field: 'negotiatingBank.label' },
-                                                    { title: 'reimbursingBank', field: 'reimbursingBank.label' },
-                                                    { title: 'secondBeneficiary', field: 'secondBeneficiary.label' },
-                                                ]}
-                                                data={lettersOfCredit}
-                                                actions={isView ? [{
-                                                    icon: 'preview',
-                                                    tooltip: 'View LC Party',
-                                                    onClick: (event, rowData) => setShowEditModal(!showEditModal)
-                                                }] : [
-                                                    {
-                                                        icon: 'edit',
-                                                        tooltip: 'Edit LC Party',
-                                                        onClick: (event, rowData) => { setShowEditModal(!showEditModal); setEditeRowData(rowData) }
-                                                    },
-                                                    {
-                                                        icon: 'preview',
-                                                        tooltip: 'View LC Party',
-                                                        onClick: (event, rowData) => setShowEditModal(!showEditModal)
-                                                    }
-                                                ]}
-                                                options={{
-                                                    filtering: true,
-                                                    actionsColumnIndex: -1,
-                                                    sorting: true,
-                                                    pageSize: 1,
-                                                    search: false,
-                                                    emptyRowsWhenPaging: false,
-                                                }}
-                                            /> : 'No data found'}
+                                            {lettersOfCredit.length > 0 ? (
+                                                <Table
+                                                    columns={columns}
+                                                    dataSource={lettersOfCredit}
+                                                    pagination={{ pageSize: 10 }} // You can adjust this as per requirement
+                                                    rowKey={(record) => record.id} // Assuming each record has a unique `id`
+                                                />
+                                            ) : (
+                                                'No data found'
+                                            )}
                                         </div>
                                     </>
                                 }

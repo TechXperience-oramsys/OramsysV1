@@ -1,7 +1,5 @@
-import { TextField } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { Col, Form, Row } from 'react-bootstrap'
-import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useDispatch, useSelector } from 'react-redux';
 import { transactionDataAction } from '../../redux/actions/transactionDataAction';
 import { useLocation } from 'react-router-dom';
@@ -35,7 +33,7 @@ const DocumentFlow = ({ hendelCancel, hendelNext }) => {
                 details: getTransactionByIdData.data?.documentFlow?.details,
             })
         }
-    }, [getTransactionByIdData])
+    }, [getTransactionByIdData, setdocumentFlow])
 
     const validation = () => {
         let flag = false

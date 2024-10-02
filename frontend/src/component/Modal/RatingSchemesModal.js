@@ -1,10 +1,10 @@
-import { Backdrop, Fade, TextField, Modal } from '@material-ui/core'
+import { Backdrop, Fade, TextField, Modal, Autocomplete } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { useLocation } from 'react-router-dom'
 import TextEditerModal from './TextEditerModal';
-import { useDispatch } from 'react-redux'
-import Autocomplete from "@material-ui/lab/Autocomplete";
+// import { useDispatch } from 'react-redux'
+// import Autocomplete from "@material-ui/lab/Autocomplete";
 
 const RatingSchemesModal = ({ onHide, show, getModalData, data, viewData }) => {
 
@@ -163,8 +163,10 @@ const RatingSchemesModal = ({ onHide, show, getModalData, data, viewData }) => {
                                             renderInput={(params) => (
                                                 <TextField {...params} label="Acceptable" variant="standard" />
                                             )}
-                                            value={(AcceptableOption.length > 0 && state.acceptable === true || state.acceptable === false) && AcceptableOption.find((ele) => ele.value === state.acceptable)}
-                                            disabled={isView}
+                                            value={(
+                                                AcceptableOption.length > 0 &&
+                                                (state.acceptable === true || state.acceptable === false)
+                                            ) && AcceptableOption.find((ele) => ele.value === state.acceptable)}                                            disabled={isView}
                                         />
                                         {error?.acceptable && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.acceptable}</span>}
                                     </Col>

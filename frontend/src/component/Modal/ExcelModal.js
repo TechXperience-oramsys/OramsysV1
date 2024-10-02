@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Backdrop, Fade, Modal, TextField } from '@material-ui/core'
+import { Backdrop, Fade, Modal, TextField } from '@mui/material'
 import { Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { termSheetAction } from '../../redux/actions/termSheetAction'
 // import { termSheetAction } from '../../redux/actions/termSheetAction'
 import { toast } from 'react-hot-toast'
 import { TERM_SHEET } from '../../redux/types'
-import Loader from '../../layout/loader/Loader'
 
 
 const ExcelModal = ({ show, onHide, getId, refreshpage }) => {

@@ -1,15 +1,10 @@
-import { TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { Row, Col, Form } from "react-bootstrap";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userGetByIdAction, userUpdateAction, } from "../../../redux/actions/userAction";
 import { toast } from "react-hot-toast";
 import { REGISTER, USER_GET_BY_ID, USER_UPDATE } from "../../../redux/types";
-import Autocomplete from "@material-ui/lab/Autocomplete";
 import { registerAction } from "../../../redux/actions/registerAction";
 import { RequiredSpan } from "../../transactions/Helpers/OptionalTags";
 
@@ -19,6 +14,8 @@ const Add_Edit_User = () => {
   const location = useLocation();
   const isView = location.state?.isView;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   let emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   const [state, setState] = React.useState({
     name: "",
@@ -46,7 +43,7 @@ const Add_Edit_User = () => {
       dispatch(userGetByIdAction(id));
     }
     // console.log('id=============', id)
-  }, [id]);
+  }, [id, dispatch]);
 
   useEffect(() => {
     return () => {
@@ -63,7 +60,7 @@ const Add_Edit_User = () => {
         payload: null,
       });
     };
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (userEdit?.data && id) {
@@ -76,7 +73,7 @@ const Add_Edit_User = () => {
         createdBy: localStorage.getItem("userId"),
       });
     }
-  }, [userEdit]);
+  }, [userEdit, id, state]);
 
   useEffect(() => {
     if (registeredData && registeredData.status === 200) {
@@ -91,15 +88,15 @@ const Add_Edit_User = () => {
         payload: null, // Or [] if it's an array, just ensure it's reset properly
       });
     }
-  }, [registeredData]);
+  }, [registeredData, dispatch, navigate]);
 
-  const handleChange = (event) => {
-    const name = event.target.name;
-    setState({
-      ...state,
-      [event.target.name]: event.target.value,
-    });
-  };
+  // const handleChange = (event) => {
+  //   const name = event.target.name;
+  //   setState({
+  //     ...state,
+  //     [event.target.name]: event.target.value,
+  //   });
+  // };
 
   useEffect(() => {
     if (userUpdate && userUpdate.status === 200) {
@@ -111,7 +108,7 @@ const Add_Edit_User = () => {
       navigate("/users");
     }
     console.log("userUpdate", userUpdate);
-  }, [userUpdate]);
+  }, [userUpdate, dispatch, navigate]);
 
   const validation = () => {
     let param = false;
@@ -168,18 +165,6 @@ const Add_Edit_User = () => {
     }
   };
 
-  const navigate = useNavigate();
-
-  const options = [
-    "Afghanistan",
-    "Albania",
-    "Algeria",
-    "Andorra",
-    "Angola",
-    "Antigua",
-    "Argentina",
-    "India",
-  ];
 
   const profileOption = ["User", "Admin", "Tester"];
 

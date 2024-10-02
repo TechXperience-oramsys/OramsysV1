@@ -76,7 +76,7 @@ const Add_Edit_Product = () => {
       navigate('/products')
       toast.success(productAddData.message)
     }
-  }, [dispatch, productAddData])
+  }, [dispatch, productAddData, navigate])
 
   // useEffect(() => {
   //   console.log('state', state)
@@ -151,7 +151,7 @@ const Add_Edit_Product = () => {
       })
       navigate('/products')
     }
-  }, [productUpdated])
+  }, [productUpdated, dispatch, navigate])
 
 
   const saveData = () => {
@@ -189,7 +189,7 @@ const Add_Edit_Product = () => {
   return (
     <>
       <div className='add-edit-product'>
-        <h5 className='text-gray mb-6'></h5>
+        {/* <h5 className='text-gray mb-6'></h5> */}
         <div className='form'>
           <h4 className='fw-bold fs-5 mb-3 title-admin'>DETAILS</h4>
           <div>

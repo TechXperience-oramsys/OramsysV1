@@ -1,4 +1,3 @@
-import { InputAdornment, TextField } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Form, InputGroup } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,8 +10,8 @@ const Financials = ({ handleNext, handleBack }) => {
 
     const dispatch = useDispatch()
     const location = useLocation()
-    const queryParams = new URLSearchParams(location.search)
-    const id = queryParams.get("id")
+    // const queryParams = new URLSearchParams(location.search)
+    // const id = queryParams.get("id")
     const isView = location.state[1]?.isView
 
     const companyData = useSelector((state) => state.companydata.companydata)

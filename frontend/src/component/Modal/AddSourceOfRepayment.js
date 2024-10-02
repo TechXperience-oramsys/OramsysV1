@@ -1,8 +1,8 @@
-import { Backdrop, Fade, FormControl, InputLabel, Modal, Select, TextField } from '@material-ui/core'
+import { Backdrop, Fade, Modal, TextField, Autocomplete } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { DropzoneArea } from 'material-ui-dropzone';
 import { Col, Row } from 'react-bootstrap';
-import Autocomplete from "@material-ui/lab/Autocomplete";
+// import { Autocomplete } from "@mui/lab";
 
 const AddSourceOfRepayment = ({ show, onHide, getModalData, data, getEditData, isView }) => {
 
@@ -140,7 +140,7 @@ const AddSourceOfRepayment = ({ show, onHide, getModalData, data, getEditData, i
                                         <Autocomplete
                                             // options={sourceOfRepayment.type ? options : [] || data.type && sourceOfRepayment.type}
                                             // options={sourceOfRepayment.type ? options : []}
-                                            options={ sourceOfRepayment.type === 'Primary' ? (options.splice(3, 2), options) : options }
+                                            options={sourceOfRepayment.type === 'Primary' ? (options.splice(3, 2), options) : options}
                                             getOptionLabel={(option) => option}
                                             id="disable-clearable"
                                             label="Instrument"
@@ -176,23 +176,23 @@ const AddSourceOfRepayment = ({ show, onHide, getModalData, data, getEditData, i
                                         {error && error.evidence && <span style={{ color: 'red' }}>{error.evidence}</span>}
                                     </Col> */}
                                     <Col lg={12}>
-                                    <div className='drag-and-drop'>
-                                                    <label>Upload Evidence</label>
-                                                    <DropzoneArea
-                                                        Icon="none"
-                                                        filesLimit={1}
-                                                        showPreviews={true}
-                                                        showPreviewsInDropzone={false}
-                                                        useChipsForPreview
-                                                        previewGridProps={{ container: { spacing: 1, } }}
-                                                        dropzoneText='Drop file here'
-                                                        previewText=""
-                                                        onChange={(file) => handleChangeFile(file[0])}
-                                                    />
-                                                </div>
-                                    {error && error.evidence && <span style={{ color: 'red' }}>{error.evidence}</span>}
+                                        <div className='drag-and-drop'>
+                                            <label>Upload Evidence</label>
+                                            <DropzoneArea
+                                                Icon="none"
+                                                filesLimit={1}
+                                                showPreviews={true}
+                                                showPreviewsInDropzone={false}
+                                                useChipsForPreview
+                                                previewGridProps={{ container: { spacing: 1, } }}
+                                                dropzoneText='Drop file here'
+                                                previewText=""
+                                                onChange={(file) => handleChangeFile(file[0])}
+                                            />
+                                        </div>
+                                        {error && error.evidence && <span style={{ color: 'red' }}>{error.evidence}</span>}
                                     </Col>
-                                       
+
                                 </Row>
                             </div>
                             <div className='d-flex justify-content-between mt-4'>

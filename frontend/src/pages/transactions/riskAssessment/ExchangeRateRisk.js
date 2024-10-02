@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+// import { useNavigate } from 'react-router-dom'
 import CurrencyHedgeModal from '../../../component/Modal/CurrencyHedgeModal'
 import FinancingSufficientlyModal from '../../../component/Modal/FinancingSufficientlyModal'
-import LoanPurposeRiskModal from '../../../component/Modal/LoanPurposeRiskModal'
-import { getRiskAssessment, riskAssessmentAction } from '../../../redux/actions/riskAssessmentAction'
+// import LoanPurposeRiskModal from '../../../component/Modal/LoanPurposeRiskModal'
+import { riskAssessmentAction } from '../../../redux/actions/riskAssessmentAction'
 
 const ExchangeRateRisk = ({ hendelNext, hendelCancel }) => {
 
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     // const [showModal, setshowModal] = useState(false)
     const [currencyHedgeModal, setcurrencyHedgeModal] = useState(false)
@@ -71,7 +70,7 @@ const ExchangeRateRisk = ({ hendelNext, hendelCancel }) => {
             //     name: type
             // }
         }
-    }, [getTransactionByIdData])
+    }, [getTransactionByIdData, data, dispatch, riskAssessment])
 
     console.log("data", data)
     useEffect(() => {
@@ -98,7 +97,7 @@ const ExchangeRateRisk = ({ hendelNext, hendelCancel }) => {
         <>
             <div className='add-edit-product'>
                 <div className='d-flex align-items-center justify-content-center error-info mb-3'>
-                    <img src={`../../../assets/img/about/${data?.currencyHedge || data?.marginFinancing ? "error-info-success.png" : "error-info.png"}`} className='me-3' />
+                    <img alt='icon' src={`../../../assets/img/about/${data?.currencyHedge || data?.marginFinancing ? "error-info-success.png" : "error-info.png"}`} className='me-3' />
                     {data?.currencyHedge || data?.marginFinancing ?
                         <p className='success'>Risks are acceptable due to mitigants</p> :
                         <p className='error'>The below risks require your attention</p>
@@ -111,11 +110,11 @@ const ExchangeRateRisk = ({ hendelNext, hendelCancel }) => {
                             {getTransactionByIdData?.data?.facility?.rePaymentCurrency !== getTransactionByIdData?.data?.details?.contractDetails?.currency &&
                                 <div className='risk-tab' onClick={() => { setcurrencyHedgeModal(true); setSelected("currencyHedge") }}>
                                     <h3>Enter a currency hedge</h3>
-                                    <img src={`../../../assets/img/about/${data?.currencyHedge?.counterparty || data?.currencyHedge?.hedgingMethod ? "correct-success.png" : "correct (1).png"}`} />
+                                    <img alt='icon' src={`../../../assets/img/about/${data?.currencyHedge?.counterparty || data?.currencyHedge?.hedgingMethod ? "correct-success.png" : "correct (1).png"}`} />
                                 </div>}
                             <div className='risk-tab' onClick={() => setfinancingSufficientlyModal(true)}>
                                 <h3>Margin the financing sufficiently</h3>
-                                <img src={`../../../assets/img/about/${data?.marginFinancing?.contractValue ? "correct-success.png" : "correct (1).png"}`} />
+                                <img alt='icon' src={`../../../assets/img/about/${data?.marginFinancing?.contractValue ? "correct-success.png" : "correct (1).png"}`} />
                             </div>
                         </div>
                     }

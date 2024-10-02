@@ -1,6 +1,6 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightLong, faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
 import { Carousel } from 'antd';
 import { ArrowRightOutlined, MailOutlined, PhoneOutlined, PlayCircleOutlined } from '@ant-design/icons'
 
@@ -46,8 +46,8 @@ const Home = () => {
                     {/* <h2>A bespoke engineering product</h2> */}
                     <p className='fs-6'>Unlock new opportunities with innovative trade finance solutions tailored for your business growth.</p>
                     <div>
-                      <a href="#" className="btn btn-danger mr-3">Read more<ArrowRightOutlined size={20} className='ml-2' /></a>
-                      <a href="#" className="btn btn-secondary"><PlayCircleOutlined size={20} className='mr-2 font-bold' />Contact us</a>
+                      <a href="/" className="btn btn-danger mr-3">Read more<ArrowRightOutlined size={20} className='ml-2' /></a>
+                      <a href="/" className="btn btn-secondary"><PlayCircleOutlined size={20} className='mr-2 font-bold' />Contact us</a>
                     </div>
                   </div>
                   <div>
@@ -62,8 +62,8 @@ const Home = () => {
                     {/* <h2>A bespoke engineering product</h2> */}
                     <p className='fs-6'>Streamline your trade operations with our cutting-edge technology and expert financial guidance.</p>
                     <div>
-                      <a href="#" className="btn btn-danger mr-3">Read more<ArrowRightOutlined size={20} className='ml-2' /></a>
-                      <a href="#" className="btn btn-secondary"><PlayCircleOutlined size={20} className='mr-2 font-bold' />Contact us</a>
+                      <a href="/" className="btn btn-danger mr-3">Read more<ArrowRightOutlined size={20} className='ml-2' /></a>
+                      <a href="/" className="btn btn-secondary"><PlayCircleOutlined size={20} className='mr-2 font-bold' />Contact us</a>
                     </div>
                   </div>
                   <div className="background-shape7">
@@ -78,8 +78,8 @@ const Home = () => {
                     {/* <h2>A bespoke engineering product</h2> */}
                     <p className='fs-6'>Connecting businesses across borders with secure and reliable trade finance services.</p>
                     <div>
-                      <a href="#" className="btn btn-danger mr-3">Read more<ArrowRightOutlined size={20} className='ml-2' /></a>
-                      <a href="#" className="btn btn-secondary"><PlayCircleOutlined size={20} className='mr-2 font-bold' />Contact us</a>
+                      <a href="/" className="btn btn-danger mr-3">Read more<ArrowRightOutlined size={20} className='ml-2' /></a>
+                      <a href="/" className="btn btn-secondary"><PlayCircleOutlined size={20} className='mr-2 font-bold' />Contact us</a>
                     </div>
                   </div>
                   <div>
@@ -94,8 +94,8 @@ const Home = () => {
                     <h2>What does it do?</h2>
                     <p className='fs-6'>Oramsys provides a compact flow for structured trade financing, streamlines and secures the process of obtaining financing for trade transactions, enabling businesses to manage and fund their supply chains efficiently. It provides tools for credit risk assessment, transaction monitoring, and documentation, ensuring transparency and compliance throughout the trade lifecycle.</p>
                     <div>
-                      <a href="#" className="btn btn-danger mr-3">Read more<ArrowRightOutlined size={20} className='ml-2' /></a>
-                      <a href="#" className="btn btn-secondary"><PlayCircleOutlined size={20} className='mr-2 font-bold' />Contact us</a>
+                      <a href="/" className="btn btn-danger mr-3">Read more<ArrowRightOutlined size={20} className='ml-2' /></a>
+                      <a href="/" className="btn btn-secondary"><PlayCircleOutlined size={20} className='mr-2 font-bold' />Contact us</a>
                     </div>
                   </div>
                   <div className="d-flex justify-content-center align-items-center">
@@ -110,8 +110,8 @@ const Home = () => {
                     <h2>Who is it for?</h2>
                     <p className='fs-6'>Our platform is designed for businesses and financial institutions engaged in structured trade financing, helping them streamline transactions, manage risks, and optimize cash flow.</p>
                     <div>
-                      <a href="#" className="btn btn-danger mr-3">Read more<ArrowRightOutlined size={20} className='ml-2' /></a>
-                      <a href="#" className="btn btn-secondary"><PlayCircleOutlined size={20} className='mr-2 font-bold' />Contact us</a>
+                      <a href="/" className="btn btn-danger mr-3">Read more<ArrowRightOutlined size={20} className='ml-2' /></a>
+                      <a href="/" className="btn btn-secondary"><PlayCircleOutlined size={20} className='mr-2 font-bold' />Contact us</a>
                     </div>
                   </div>
                   <div>
@@ -142,10 +142,10 @@ const Home = () => {
                     <img src="./assets/img/figure/figure41.png" alt="figure" height="45" width="47" />
                   </div>
                 </div>
-                <h2 className="heading-title"><a href="#" className="text-decoration-none">Tailored Financing Solutions</a></h2>
+                <h2 className="heading-title"><a href="/" className="text-decoration-none">Tailored Financing Solutions</a></h2>
                 <p>We provide customized financial instruments designed to meet the unique needs of your trade transactions </p>
                 <div className="item-button">
-                  <a href="#" className="item-btn text-decoration-none">+ <span>Read More</span></a>
+                  <a href="/" className="item-btn text-decoration-none">+ <span>Read More</span></a>
                 </div>
               </div>
             </div>
@@ -157,10 +157,10 @@ const Home = () => {
                     <img src="./assets/img/figure/figure42.png" alt="figure" height="41" width="45" />
                   </div>
                 </div>
-                <h2 className="heading-title"><a href="#">Global Trade Expertise</a></h2>
+                <h2 className="heading-title"><a href="/">Global Trade Expertise</a></h2>
                 <p>Our team of specialists leverages extensive industry experience with the use of tecnology to solve your international trade endeavors</p>
                 <div className="item-button">
-                  <a href="#" className="item-btn">+ <span>Read More</span></a>
+                  <a href="/" className="item-btn">+ <span>Read More</span></a>
                 </div>
               </div>
             </div>
@@ -172,10 +172,10 @@ const Home = () => {
                     <img src="./assets/img/figure/figure43.png" alt="figure" height="45" width="49" />
                   </div>
                 </div>
-                <h2 className="heading-title"><a href="#">Risk Management Excellence</a></h2>
+                <h2 className="heading-title"><a href="/">Risk Management Excellence</a></h2>
                 <p>Identify, transfer and mitigate trade risks with our comprehensive solutions, ensuring your business stays secure in a volatile market</p>
                 <div className="item-button">
-                  <a href="#" className="item-btn">+ <span>Read More</span></a>
+                  <a href="/" className="item-btn">+ <span>Read More</span></a>
                 </div>
               </div>
             </div>
@@ -205,7 +205,7 @@ const Home = () => {
                     <img src="./assets/img/figure/figure30.png" alt="figure" width="47" height="71" />
                   </div>
                   <div className="media-body">
-                    <h3 className="heading-title"><a href="#">Trade Management Solutions</a></h3>
+                    <h3 className="heading-title"><a href="/">Trade Management Solutions</a></h3>
                     <p>Access to a range of trade financing options tailored to  <br /> meet the specific needs of your business.</p>
                     {/* <p>Secure and efficient payment processing systems to facilitate smooth transactions.</p> */}
                     <p>Transparent, competitive and current trade financing <br /> rates to support your trade activities.</p>
@@ -216,7 +216,7 @@ const Home = () => {
                     <img src="./assets/img/figure/figure31.png" alt="figure" width="51" height="66" />
                   </div>
                   <div className="media-body">
-                    <h3 className="heading-title"><a href="#">Risk Management Services</a></h3>
+                    <h3 className="heading-title"><a href="/">Risk Management Services</a></h3>
                     <p>Advanced analytics and reporting tools to identify and mitigate potential risks.</p>
                     <p>Insurance options to protect your trade investments <br /> against unforeseen events.</p>
                   </div>
@@ -266,10 +266,10 @@ const Home = () => {
                         </div>
                       </div>
                       <div className="media-body">
-                        <h3 className="title-heading"><a href="#"> Financing Solutions</a></h3>
+                        <h3 className="title-heading"><a href="/"> Financing Solutions</a></h3>
                         <p>From pre-shipment to post-delivery, we offer financing solutions that cater to every stage of your trade cycle.</p>
                         <div className="item-button">
-                          <a href="#" className="item-btn">Read More
+                          <a href="/" className="item-btn">Read More
                             {/* <i className="fas fa-long-arrow-alt-right"></i> */}
                             <FontAwesomeIcon icon={faArrowRightLong} className="ms-3"></FontAwesomeIcon>
                           </a>
@@ -288,10 +288,10 @@ const Home = () => {
                         </div>
                       </div>
                       <div className="media-body">
-                        <h3 className="title-heading"><a href="#">Risk Mitigation</a></h3>
+                        <h3 className="title-heading"><a href="/">Risk Mitigation</a></h3>
                         <p>Our risk mitigation strategies protect your business from market volatility and unexpected disruptions.</p>
                         <div className="item-button">
-                          <a href="#" className="item-btn">Read More
+                          <a href="/" className="item-btn">Read More
                             {/* <i className="fas fa-long-arrow-alt-right"></i> */}
                             <FontAwesomeIcon icon={faArrowRightLong} className="ms-3"></FontAwesomeIcon>
                           </a>
@@ -310,10 +310,10 @@ const Home = () => {
                         </div>
                       </div>
                       <div className="media-body">
-                        <h3 className="title-heading"><a href="#">Advisory Services</a></h3>
+                        <h3 className="title-heading"><a href="/">Advisory Services</a></h3>
                         <p>Leverage our expertise with tailored advisory services that guide you through the complexities of global trade.</p>
                         <div className="item-button">
-                          <a href="#" className="item-btn">Read More
+                          <a href="/" className="item-btn">Read More
                             {/* <i className="fas fa-long-arrow-alt-right"></i> */}
                             <FontAwesomeIcon icon={faArrowRightLong} className="ms-3"></FontAwesomeIcon>
                           </a>
@@ -332,10 +332,10 @@ const Home = () => {
                         </div>
                       </div>
                       <div className="media-body">
-                        <h3 className="title-heading"><a href="#">Trade Facilitation</a></h3>
+                        <h3 className="title-heading"><a href="/">Trade Facilitation</a></h3>
                         <p>We facilitate smoother transactions with our advanced technology platforms and strategic partnerships.</p>
                         <div className="item-button">
-                          <a href="#" className="item-btn">Read More
+                          <a href="/" className="item-btn">Read More
                             {/* <i className="fas fa-long-arrow-alt-right"></i> */}
                             <FontAwesomeIcon icon={faArrowRightLong} className="ms-3"></FontAwesomeIcon>
                           </a>
@@ -358,7 +358,7 @@ const Home = () => {
                 <h2 className="section-title">Register Now </h2>
                 <p> All the tools required for a structured trade transaction in one placeful</p>
                 <div className="item-button">
-                  <a href="#" className="item-btn">Register and begin
+                  <a href="/" className="item-btn">Register and begin
                     <i className="fas fa-long-arrow-alt-right"></i>
                     <FontAwesomeIcon icon={faArrowRightLong} className="ms-3"></FontAwesomeIcon>
                   </a>
@@ -446,7 +446,7 @@ const Home = () => {
             <div className="col-lg-3 col-md-6 col-sm-6 p-0">
               <div className="portfolio-box1">
                 <div className="item-img">
-                  <a href="#">
+                  <a href="/">
                     {/* <!-- <img src="img/blog/blog5.jpg" alt="blog" width="570" height="650"> --> */}
                     <div className="blg-img"></div>
                   </a>
@@ -456,7 +456,7 @@ const Home = () => {
                     <h3 className="heading-title">Minimizing Credit Losses: </h3>
                     <p className="portfolio-para">The Oramsys platform has been designed to help financial institutions to minimize credit losses by improving the structure used for transactions. It achieves this through the knowledge that is embedded in the system as well as standardization of certain key processes that enhance decision-making.</p>
                     <div className="item-button">
-                      <a href="#" className="item-btn">+ <span>Read More</span></a>
+                      <a href="/" className="item-btn">+ <span>Read More</span></a>
                     </div>
                   </div>
                 </div>
@@ -465,7 +465,7 @@ const Home = () => {
             <div className="col-lg-3 col-md-6 col-sm-6 p-0">
               <div className="portfolio-box1">
                 <div className="item-img">
-                  <a href="#">
+                  <a href="/">
                     <div className="blg-img bg-2" ></div>
                   </a>
                   <div className="item-content">
@@ -474,7 +474,7 @@ const Home = () => {
                     <h3 className="heading-title">Improved staff productivity: </h3>
                     <p className="portfolio-para">The credit officers and other processing officers involved in structuring trade finance transactions will be more productive and efficient as they will have access to valuable insights and intelligence encoded into the system. It is also expected to reduce staffing costs across the credit value chain.</p>
                     <div className="item-button">
-                      <a href="#" className="item-btn">+ <span>Read More</span></a>
+                      <a href="/" className="item-btn">+ <span>Read More</span></a>
                     </div>
                   </div>
                 </div>
@@ -483,7 +483,7 @@ const Home = () => {
             <div className="col-lg-3 col-md-6 col-sm-6 p-0">
               <div className="portfolio-box1">
                 <div className="item-img">
-                  <a href="#">
+                  <a href="/">
                     <div className="blg-img bg-3"></div>
                   </a>
                   <div className="item-content">
@@ -492,7 +492,7 @@ const Home = () => {
                     <h3 className="heading-title">Access to trade counterparties </h3>
                     <p className="portfolio-para">Oramsys platform incorporates all stakeholders involved in completing a trade finance transaction. This includes locations of ports, airports, warehouses and logistics providers, enhancing transparency within the process. The platform ensures accurate documentation and adherence to regulatory requirements which minimizes errors and delays.</p>
                     <div className="item-button">
-                      <a href="#" className="item-btn">+ <span>Read More</span></a>
+                      <a href="/" className="item-btn">+ <span>Read More</span></a>
                     </div>
                   </div>
                 </div>
@@ -501,7 +501,7 @@ const Home = () => {
             <div className="col-lg-3 col-md-6 col-sm-6 p-0">
               <div className="portfolio-box1">
                 <div className="item-img">
-                  <a href="#">
+                  <a href="/">
                     <div className="blg-img bg-4"></div>
                   </a>
                   <div className="item-content">
@@ -510,7 +510,7 @@ const Home = () => {
                     <h3 className="heading-title">Data-Driven Decision-Making:</h3>
                     <p className="portfolio-para">The Oramsys platform enables the collection of comprehensive and accurate data, providing valuable insights that can inform decision- making processes. By harnessing the power of data analytics, financial institutions can optimize their operations and manage risks effectively.</p>
                     <div className="item-button">
-                      <a href="#" className="item-btn">+ <span>Read More</span></a>
+                      <a href="/" className="item-btn">+ <span>Read More</span></a>
                     </div>
                   </div>
                 </div>
@@ -530,7 +530,7 @@ const Home = () => {
                 <h4 className="section-title">Visualize Your Financial Path</h4>
                 <p>Our interactive finance graph provides insights into your financial health and trade opportunities, helping you make informed decisions.</p>
                 <div className="item-button">
-                  <a href="#" className="item-btn">Join Now<i className="fas fa-long-arrow-alt-right"></i></a>
+                  <a href="/" className="item-btn">Join Now<i className="fas fa-long-arrow-alt-right"></i></a>
                 </div>
               </div>
             </div>

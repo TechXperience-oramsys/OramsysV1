@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { loginAction } from "../../redux/actions/loginAction";
 import { useDispatch, useSelector } from "react-redux";
-import { useOktaAuth } from "@okta/okta-react";
-import { toast } from "react-hot-toast";
-import { LOGIN } from "../../redux/types";
-import svgIcon from "../../css/undraw_remotely_2j6y.svg";
+// import { useOktaAuth } from "@okta/okta-react";
+// import { toast } from "react-hot-toast";
+// import { LOGIN } from "../../redux/types";
+// import svgIcon from "../../css/undraw_remotely_2j6y.svg";
 import "../../css/login.css";
 import "../../css/bootstrap.min.css";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
@@ -34,7 +34,7 @@ const SignIn = () => {
         navigate("/dashboard");
       }
     }
-  }, [loginData]);
+  }, [loginData, navigate]);
 
   const handelChange = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
@@ -77,13 +77,13 @@ const SignIn = () => {
     }
   };
 
-  const { authState, oktaAuth } = useOktaAuth();
-  const loginWithRedirect = () =>
-    oktaAuth.signInWithRedirect({ originalUri: `/` });
-  const logOut = () => oktaAuth.signOut();
+  // const { authState, oktaAuth } = useOktaAuth();
+  // const loginWithRedirect = () =>
+  //   oktaAuth.signInWithRedirect({ originalUri: `/` });
+  // const logOut = () => oktaAuth.signOut();
 
-  const buttonText = authState?.isAuthenticated ? "Logout" : "Login";
-  const btnLogic = authState?.isAuthenticated ? logOut : loginWithRedirect;
+  // const buttonText = authState?.isAuthenticated ? "Logout" : "Login";
+  // const btnLogic = authState?.isAuthenticated ? logOut : loginWithRedirect;
 
   return (
     <div className="content">
@@ -99,9 +99,9 @@ const SignIn = () => {
                   <ol className="breadcrumb">
                     {/* <li className="breadcrumb-item"><a href="#">Home</a></li> */}
                     <li className="breadcrumb-item">
-                      <a href="#" onClick={() => navigate("/fa-login")}>
+                      <Link to="/fa-login">
                         Admin
-                      </a>
+                      </Link>
                     </li>
                   </ol>
                 </nav>
@@ -179,13 +179,9 @@ const SignIn = () => {
                                             </div> */}
                       <div className="col-12 text-center mt-4">
                         <span className="">
-                          <a
-                            to="#"
-                            className="mx-auto text-decoration-none forgot-pass"
-                            onClick={() => navigate("/user/forget")}
-                          >
+                          <Link to="/user/forget" className="mx-auto text-decoration-none forgot-pass">
                             Forgot Password?
-                          </a>
+                          </Link>
                         </span>
                       </div>
                     </div>

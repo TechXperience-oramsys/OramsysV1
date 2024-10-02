@@ -1,10 +1,9 @@
-import { Backdrop, Fade, Modal, TextField } from '@material-ui/core'
+import { Backdrop, Fade, Modal, TextField, Autocomplete } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import Autocomplete from "@material-ui/lab/Autocomplete";
+// import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Row, Col } from 'react-bootstrap'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { entityGetAction } from '../../redux/actions/entityAction';
-import { useSelector } from 'react-redux';
 
 const LocalCreditStandingModal = ({ show, onHide, getModalData ,data}) => {
 

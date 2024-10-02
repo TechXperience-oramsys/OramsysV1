@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import LoanPurposeRiskModal from '../../../component/Modal/LoanPurposeRiskModal'
 import { getRiskAssessment, riskAssessmentAction } from '../../../redux/actions/riskAssessmentAction'
 import { getTransactionById } from '../../../redux/actions/transactionDataAction'
 
-const LoanPurposeRisk = ({ hendelNext, hendelCancel }) => {
+const LoanPurposeRisk = ({ hendelNext }) => {
 
     const navigate = useNavigate()
     const [showModal, setshowModal] = useState(false)
-    const [cancel, setCancel] = useState(false)
+    const [setCancel] = useState(false)
     const [selected, setSelected] = useState('')
 
     const searchParams = new URLSearchParams(window.location.search)
@@ -44,7 +43,7 @@ const LoanPurposeRisk = ({ hendelNext, hendelCancel }) => {
             dispatch(getTransactionById(id))
             // }
         }
-    }, [riskAssessment])
+    }, [riskAssessment, id, data, dispatch])
 
     const nextStep = () => {
         let body = {
@@ -61,7 +60,7 @@ const LoanPurposeRisk = ({ hendelNext, hendelCancel }) => {
         <>
             <div className='add-edit-product'>
                 <div className='d-flex align-items-center justify-content-center error-info mb-3'>
-                    <img src={`../../../assets/img/about/${data.justification ? "error-info-success.png" : "error-info.png"}`} className='me-3' />
+                    <img alt='icon' src={`../../../assets/img/about/${data.justification ? "error-info-success.png" : "error-info.png"}`} className='me-3' />
                     {data.justification ?
                         <p className='success'>Risks are acceptable due to mitigants</p> :
                         <p className='error'>The below risks require your attention</p>
@@ -74,7 +73,7 @@ const LoanPurposeRisk = ({ hendelNext, hendelCancel }) => {
                             <p>No risk</p> :
                             <div className='risk-tab' onClick={() => { setshowModal(true); setSelected('justification') }}>
                                 <h3>No mitigant possible. Provide a justification</h3>
-                                <img src={`../../../assets/img/about/${data.justification ? "correct-success.png" : "correct (1).png"}`} />
+                                <img alt='icon' src={`../../../assets/img/about/${data.justification ? "correct-success.png" : "correct (1).png"}`} />
                             </div>
                     }
                 </div>

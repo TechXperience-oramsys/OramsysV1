@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { ApiGet } from "../../helper/API/ApiData";
 import { toast } from "react-hot-toast";
 
 function Profile() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const searchParams = new URLSearchParams(window.location.search);
   const id = searchParams.get("id");
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,7 @@ function Profile() {
       })
       .catch((error) => toast.error(error))
       .finally(() => setLoading(false));
-  }, []);
+  }, [id]);
   if (loading) return <div>Loading...</div>;
   return (
     <div className="product">

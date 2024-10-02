@@ -18,7 +18,7 @@ function UserForgetPassword() {
   const [confirPass, setConfirmPass] = useState("");
 
   const handleSendOTP = () => {
-    if (emailRegex.test(mail) == false) {
+    if (emailRegex.test(mail) === false) {
       toast.error("Please enter a valid E-mail.");
       return;
     }
@@ -45,7 +45,7 @@ function UserForgetPassword() {
       email: mail,
       otp: otp,
     };
-    if (otp.length == 0) {
+    if (otp.length === 0) {
       toast.error("Please enter OTP!");
       setLoading(false);
       return;
@@ -66,12 +66,12 @@ function UserForgetPassword() {
 
   const handelChangePassword = () => {
     setLoading(true);
-    if (passwordRegex.test(password) == false) {
+    if (passwordRegex.test(password) === false) {
       toast.warning("Password must contains 8 characters(A-Z,a-z,0-9,#@$%...)");
       setLoading(false);
       return false;
     }
-    if (password != confirPass) {
+    if (password !== confirPass) {
       toast.warning("Confirm Password must be same as Password!");
       setLoading(false);
       return false;

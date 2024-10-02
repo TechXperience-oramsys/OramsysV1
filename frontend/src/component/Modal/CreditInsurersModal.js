@@ -1,7 +1,7 @@
-import { Backdrop, Fade, Modal, TextField } from '@material-ui/core';
+import { Backdrop, Fade, Modal, TextField, Autocomplete } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { Row, Col } from 'react-bootstrap'
-import Autocomplete from "@material-ui/lab/Autocomplete";
+// import {Autocomplete }from "@mui/lab";
 import { DropzoneArea } from 'material-ui-dropzone';
 import TextEditerModal from './TextEditerModal';
 import { useDispatch } from 'react-redux';

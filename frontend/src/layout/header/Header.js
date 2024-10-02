@@ -1,38 +1,35 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
-import {
-  faArrowAltCircleRight,
-  faComments,
-  faHandPointRight,
-} from "@fortawesome/free-regular-svg-icons";
-import { useNavigate } from "react-router-dom";
-import { Badge, Button, Dropdown, Menu } from 'antd';
-import { CaretDownOutlined, GlobalOutlined, MenuOutlined } from '@ant-design/icons';
+// import {
+//   faArrowAltCircleRight,
+//   faComments,
+//   faHandPointRight,
+// } from "@fortawesome/free-regular-svg-icons";
+import { Link, useNavigate } from "react-router-dom";
+// import {  Menu } from 'antd';
+// import { CaretDownOutlined, GlobalOutlined, MenuOutlined } from '@ant-design/icons';
 
 const Header = () => {
   const navigate = useNavigate();
   // const [expanded, setExpanded] = useState(false);
 
-  const handleMenuClick = (e) => {
-    // Handle language change here
-    console.log('Selected language:', e.key);
-    // Example: navigate to different language route or update state
-  };
-  const menu = (
-    <Menu onClick={handleMenuClick}>
-      <Menu.Item key="en">
-        English
-      </Menu.Item>
-      <Menu.Item key="es">
-        Español
-      </Menu.Item>
-      <Menu.Item key="fr">
-        Français
-      </Menu.Item>
-      {/* Add more languages as needed */}
-    </Menu>
-  );
+  // const handleMenuClick = (e) => {
+  //   console.log('Selected language:', e.key);
+  // };
+  // const menu = (
+  //   <Menu onClick={handleMenuClick}>
+  //     <Menu.Item key="en">
+  //       English
+  //     </Menu.Item>
+  //     <Menu.Item key="es">
+  //       Español
+  //     </Menu.Item>
+  //     <Menu.Item key="fr">
+  //       Français
+  //     </Menu.Item>
+  //   </Menu>
+  // );
 
   return (
     <>
@@ -44,13 +41,13 @@ const Header = () => {
                 <div className="topbar-left">
                   <p className="item-paragraph">Not a User?</p>
                   <div className="header-button">
-                    <a href="/">
+                    <Link to="/">
                       You have to be registered under an institution{" "}
                       <FontAwesomeIcon
                         icon={faArrowRightLong}
                         style={{ color: "#da251e" }}
                       ></FontAwesomeIcon>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -59,7 +56,7 @@ const Header = () => {
                   {/* <ul>
                   <li className="topbar-social">
                     <div className="social-icon">
-                      <a href="/"><i className="fab fa-facebook-square"></i></a>
+                      <Link href="/"><i className="fab fa-facebook-square"></i></Link>
                       <a href="/"><i className="fab fa-twitter"></i></a>
                       <a href="/"><i className="fab fa-linkedin-in"></i></a>
                       <a href="/"><i className="fab fa-pinterest"></i></a>
@@ -68,8 +65,8 @@ const Header = () => {
                   </li>
                 </ul> */}
                   <div className="header-right-button">
-                    <a onClick={() => navigate("/signin")} className="header-btn"> Sign In </a>
-                    <a onClick={() => navigate("/admin-login")} className="header-btn s-up">Administration</a>
+                    <Link to="/signin"  className="header-btn"> Sign In </Link>
+                    <Link to="/admin-login"  className="header-btn s-up">Administration</Link>
                   </div>
                 </div>
               </div>
@@ -149,11 +146,11 @@ const Header = () => {
           <div className="container-fluid all-show">
             {/* <a className="navbar-brand" href="/">Penton <i className="fa fa-codepen"></i></a> */}
             <div className="logo-area">
-              <a href="/" className="temp-logo">
+              <Link to="/" className="temp-logo">
                 <div className="lgo-img">
                   <img src="./assets/img/lgo-red.png" alt="logo" />
                 </div>
-              </a>
+              </Link>
             </div>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
@@ -161,26 +158,26 @@ const Header = () => {
             <div className="collapse ms-6 navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto mb-2 text-dark mb-lg-0">
                 <li className="nav-item">
-                  <a className="nav-link active" aria-current="page" href="/">Home</a>
+                  <Link className="nav-link active" aria-current="page" href="/">Home</Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="#">About us</a>
+                  <Link className="nav-link"  href="/">About us</Link>
                 </li>
 
                 <li className="nav-item">
-                  <a className="nav-link" href="#">Services</a>
+                  <Link className="nav-link"  href="/">Services</Link>
                 </li>
 
                 {/* <li className="nav-item">
-                  <a className="nav-link" href="#">Events</a>
+                  <Link className="nav-link"  href="/">Events</Link>
                 </li> */}
 
                 <li className="nav-item">
-                  <a className="nav-link" href="#">contact</a>
+                  <Link className="nav-link"  href="/">contact</Link>
                 </li>
 
                 <li className="nav-item">
-                  <a className="nav-link" href="#"><i className="fa fa-search"></i></a>
+                  <Link className="nav-link"  href="/"><i className="fa fa-search"></i></Link>
                 </li>
 
 
@@ -206,19 +203,19 @@ const Header = () => {
 
       {/* <Navbar expanded={expanded} expand="lg" className="navbar-red navbar-dark">
         <Container fluid>
-          <Navbar.Brand href="#">Penton <i className="fa fa-codepen"></i></Navbar.Brand>
+          <Navbar.Brand  href="/">Penton <i className="fa fa-codepen"></i></Navbar.Brand>
           <Navbar.Toggle
             aria-controls="navbarSupportedContent"
             onClick={() => setExpanded(expanded ? false : "expanded")}
           />
           <Navbar.Collapse id="navbarSupportedContent">
             <Nav className="mr-auto mb-2 mb-lg-0">
-              <Nav.Link href="#" className="nav-link active">About us</Nav.Link>
-              <Nav.Link href="#">Products</Nav.Link>
-              <Nav.Link href="#">Services</Nav.Link>
-              <Nav.Link href="#">Events</Nav.Link>
-              <Nav.Link href="#">Contact</Nav.Link>
-              <Nav.Link href="#"><i className="fa fa-search"></i></Nav.Link>
+              <Nav.Link  href="/" className="nav-link active">About us</Nav.Link>
+              <Nav.Link  href="/">Products</Nav.Link>
+              <Nav.Link  href="/">Services</Nav.Link>
+              <Nav.Link  href="/">Events</Nav.Link>
+              <Nav.Link  href="/">Contact</Nav.Link>
+              <Nav.Link  href="/"><i className="fa fa-search"></i></Nav.Link>
             </Nav>
             <div className="d-flex flex-column sim">
               <span>1 item added to your quote</span>

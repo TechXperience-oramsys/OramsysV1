@@ -1,6 +1,6 @@
-import { ApiGet, ApiPost } from "../../helper/API/ApiData";
+import { ApiGet } from "../../helper/API/ApiData";
 import {
-  GET_ADMIN_BY_ID,
+  // GET_ADMIN_BY_ID,
   GET_ADMIN_BY_ID_ERROR,
   GET_ADMIN_BY_ID_LOADING,
   GET_ADMIN_DATA,

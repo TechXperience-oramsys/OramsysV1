@@ -1,9 +1,9 @@
 import Pages from "../pages";
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Security } from "@okta/okta-react";
 import { Toaster } from 'react-hot-toast';
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
 const CLIENT_ID = "0oa5hrixzgbpayfmA5d7";
 const CALLBACK_PATH = "http://localhost:3000/callback";
@@ -28,14 +28,14 @@ const oktaAuth = new OktaAuth(config);
 const Routes = () => {
   const navigate = useNavigate();
 
-  const useFindPath = () => {
-    const location = useLocation();
-    const [currentPath, setCurrentPath] = useState();
-    useEffect(() => {
-      setCurrentPath(location.pathname);
-    }, [location]);
-    return currentPath;
-  };
+  // const useFindPath = () => {
+  //   const location = useLocation();
+  //   const [currentPath, setCurrentPath] = useState();
+  //   useEffect(() => {
+  //     setCurrentPath(location.pathname);
+  //   }, [location]);
+  //   return currentPath;
+  // };
 
 
   const restoreOriginalUri = async (_oktaAuth, originalUri) => {

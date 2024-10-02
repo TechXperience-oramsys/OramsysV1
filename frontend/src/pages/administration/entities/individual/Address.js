@@ -1,12 +1,11 @@
-import { TextField } from '@material-ui/core'
+import { TextField, Autocomplete } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { countrieAction } from '../../../../redux/actions/countrieAction';
 import { editEntityAction, entityAddAction } from '../../../../redux/actions/entityAction';
-import { Autocomplete } from "@material-ui/lab";
-import { COMPANY_DATA, EDIT_ENTITY, ENTITY_ADD, ENTITY_GET_BY_ID } from '../../../../redux/types';
+import { EDIT_ENTITY, ENTITY_ADD } from '../../../../redux/types';
 import { toast } from 'react-hot-toast';
 
 const IndividualAddress = ({ handleNext, hendelCancel, sendDetailData, common }) => {
@@ -70,7 +69,7 @@ const IndividualAddress = ({ handleNext, hendelCancel, sendDetailData, common })
         } else {
             dispatch(countrieAction("all"))
         }
-    }, [country])
+    }, [country, dispatch])
 
     useEffect(() => {
         if (entityGetById && entityGetById.data && entityGetById.status === 200) {
@@ -297,7 +296,7 @@ const IndividualAddress = ({ handleNext, hendelCancel, sendDetailData, common })
             })
             toast.success(entityAddData.message);
         }
-    }, [entityAddData])
+    }, [entityAddData, dispatch, navigate])
 
     const edit = async () => {
         if (validation()) {
@@ -332,7 +331,7 @@ const IndividualAddress = ({ handleNext, hendelCancel, sendDetailData, common })
             // });
             toast.success(editEntityData.message);
         }
-    }, [editEntityData])
+    }, [editEntityData, dispatch, navigate])
 
     return (
         <>

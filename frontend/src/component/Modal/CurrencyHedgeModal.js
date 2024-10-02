@@ -1,13 +1,13 @@
-import { Backdrop, Fade, Modal, TextField } from '@material-ui/core';
+import { Backdrop, Fade, Modal, TextField, Autocomplete } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { Row, Col } from "react-bootstrap";
-import Autocomplete from "@material-ui/lab/Autocomplete";
+// import Autocomplete from "@mui/lab";
 import { useDispatch } from 'react-redux';
 import { entityGetAction } from '../../redux/actions/entityAction';
 import { useSelector } from 'react-redux';
 
 const CurrencyHedgeModal = ({ show, onHide, getModalData, type,data }) => {
-    const riskAssessment = useSelector(state => state.riskAssessmentData.riskAssessment)
+    // const riskAssessment = useSelector(state => state.riskAssessmentData.riskAssessment)
 
     const [currencyHedgeModal, setCurrencyHedgeModal] = useState({
         hedgingMethod: "",

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { Steps, Button, Typography } from 'antd';
 import Details from './Details'
 import Financials from './Financials'
@@ -7,17 +7,14 @@ import Licences from './Licences'
 import Ratings from './Ratings'
 import Warehouse from './Warehouse'
 import Roles from './Roles'
-import Box from '@material-ui/core/Box';
-import Stepper from '@material-ui/core/Stepper';
-// import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
+import {Box} from '@mui/material';
 import IndividualDetail from '../individual/Details'
 import IndividualAddress from '../individual/Address'
 import { useDispatch } from 'react-redux'
 import { entityGetByIdAction } from '../../../../redux/actions/entityAction'
 import { useSelector } from 'react-redux'
 import { companydataAction } from '../../../../redux/actions/companydataAction'
-import { FaCheckCircle, FaDollarSign, FaFileAlt, FaMoneyCheckAlt, FaTh, FaThLarge, FaUser, FaWarehouse } from 'react-icons/fa';
+import { FaCheckCircle,  FaMoneyCheckAlt, FaThLarge, FaWarehouse } from 'react-icons/fa';
 import { FaSheetPlastic } from "react-icons/fa6";
 import { FcRatings } from "react-icons/fc";
 
@@ -46,7 +43,7 @@ const Add_Edit_Entities = () => {
         if (id) {
             dispatch(entityGetByIdAction(id))
         }
-    }, [id])
+    }, [id, dispatch])
 
     useEffect(() => {
         console.log('entityType', entityType)

@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import Backdrop from '@material-ui/core/Backdrop';
-import Modal from '@material-ui/core/Modal';
-import Fade from '@material-ui/core/Fade';
 import { Col, Row } from 'react-bootstrap';
-import { toast } from 'react-hot-toast'
+// import { toast } from 'react-hot-toast'
 import { DropzoneArea } from 'material-ui-dropzone';
-import { TextField } from '@material-ui/core';
+import { TextField, Backdrop, Modal, Fade, Autocomplete } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { countrieAction } from '../../redux/actions/countrieAction';
 import { companydataAction } from '../../redux/actions/companydataAction';
-import Autocomplete from "@material-ui/lab/Autocomplete";
+// import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useLocation } from 'react-router-dom';
 import moment from 'moment';
 
@@ -18,7 +15,7 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
   const dispatch = useDispatch()
   const location = useLocation()
   const queryParams = new URLSearchParams(location.search)
-  const id = queryParams.get("id")
+  // const id = queryParams.get("id")
 
   const [licence, setLicence] = useState({
     _id: '',

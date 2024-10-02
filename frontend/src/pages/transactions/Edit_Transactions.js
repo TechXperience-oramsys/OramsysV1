@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { LoadingOutlined, SmileOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icons';
 import { Steps, Button, Typography } from 'antd';
-import Box from '@material-ui/core/Box';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-// import Button from '@material-ui/core/Button';
-// import Typography from '@material-ui/core/Typography';
+import {Box,} from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import DetailsTransaction from './DetailsTransaction';
 import KeyParties from './KeyParties';
@@ -34,7 +28,7 @@ const Edit_Transactions = () => {
 
     const transactionType = location.state?.[0]?.type ?? null;
     const productNature = location.state?.[1]?.type ?? null;
-    const isView = location.state?.[2]?.isView ?? null;
+    // const isView = location.state?.[2]?.isView ?? null;
 
     const [getTrans, setGetTrans] = useState({})
     const [transId, setTransId] = useState("");
@@ -64,7 +58,7 @@ const Edit_Transactions = () => {
             localStorage.setItem('details', JSON.stringify(transdata))
 
         }
-    }, [id])
+    }, [id, dispatch, getTransactionId.data?.details?.contractDetails?.currency, getTransactionId.data?.details?.contractDetails?.value])
 
     const signalContract = (values) => {
         setGetTrans(values)

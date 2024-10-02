@@ -17,7 +17,7 @@ function EditAdmin() {
   const searchParams = new URLSearchParams(window.location.search);
   const id = searchParams.get("id");
   const adminData = useSelector((state) => state.adminData?.getAdminId);
-  const adminUpdate = useSelector((state) => state.adminData?.adminUpdate);
+  // const adminUpdate = useSelector((state) => state.adminData?.adminUpdate);
   const [loading, setLoading] = useState(true);
   console.log("Admin Data", adminData);
 
@@ -40,7 +40,7 @@ function EditAdmin() {
       })
       .catch((error) => toast.error(error))
       .finally(() => setLoading(false));
-  }, []);
+  }, [id]);
 
   const handleFormChange = (changedValues) => {
     setFormData((prevState) => ({

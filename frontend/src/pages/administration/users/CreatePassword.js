@@ -7,7 +7,7 @@ import '../../../css/login.css'
 import '../../../css/bootstrap.min.css'
 import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
 
-export const Create_new_password = () => {
+export const CreateNewPassword = () => {
   const [otp, setOtp] = useState(null);
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState("");
@@ -25,7 +25,7 @@ export const Create_new_password = () => {
   const navigate = useNavigate();
 
   const handleChange = (event) => {
-    const name = event.target.name;
+    // const name = event.target.name;
     setState({
       ...state,
       [event.target.name]: event.target.value,

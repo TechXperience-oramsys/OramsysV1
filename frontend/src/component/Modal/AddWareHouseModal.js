@@ -1,12 +1,9 @@
-import Fade from '@material-ui/core/Fade';
 import React, { useEffect, useState } from 'react'
-import Backdrop from '@material-ui/core/Backdrop';
-import Modal from '@material-ui/core/Modal';
+import{ Modal, TextField, Backdrop, Fade, Autocomplete }from '@mui/material';
 import { Col, Row } from 'react-bootstrap';
-import { FormControl, InputLabel, Select, TextField } from '@material-ui/core';
 import { entityGetAction } from '../../redux/actions/entityAction';
 import { useDispatch, useSelector } from 'react-redux';
-import Autocomplete from "@material-ui/lab/Autocomplete";
+// import {Autocomplete} from "@mui/lab";
 
 const AddWareHouseModal = ({ onHide, show, wareHouseData, wareHouseId }) => {
 

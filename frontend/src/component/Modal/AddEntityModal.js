@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap';
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import { Backdrop, Fade, Modal, TextField } from '@material-ui/core';
+import { Backdrop, Fade, Modal, TextField } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { entityAddAction } from '../../redux/actions/entityAction';
 
@@ -54,7 +53,7 @@ const AddEntityModal = ({ show, onHide, getModalData, isView, editData }) => {
                     <div className='modal-content'>
                         <div className='d-flex justify-content-end'>
                             {/* <h2 id="transition-modal-title" className='modal-title'>Edit Licence</h2> */}
-                            <img src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                            <img alt='icon' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                         </div>
                         <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                             <div className='form'>

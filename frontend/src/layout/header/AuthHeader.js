@@ -3,45 +3,45 @@ import { HiOutlineLogout } from "react-icons/hi";
 import LogoutModal from '../../component/Modal/LogoutModal'
 import AuthStorage from '../../helper/AuthStorage'
 import STORAGEKEY from '../../config/APP/app.config'
-import { CaretDownOutlined, GlobalOutlined, MenuOutlined } from '@ant-design/icons';
-import { Badge, Button, Dropdown, Menu } from 'antd';
-import { useTranslation } from 'react-i18next';
+// import { CaretDownOutlined, GlobalOutlined, MenuOutlined } from '@ant-design/icons';
+import { Badge } from 'antd';
+// import { useTranslation } from 'react-i18next';
 
 
 const AuthHeader = ({ showSidebar, setSidebar }) => {
-  const [showspan, setShowspan] = useState(false);
-  const [showSubData, setShowSubData] = useState(false);
+  // const [showspan, setShowspan] = useState(false);
+  // const [showSubData, setShowSubData] = useState(false);
   const [showModal, setshowModal] = useState(false);
   const [userData, setUserData] = useState("");
 
   useEffect(() => {
-    setUserData(JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData)) ?? {});
-  }, [AuthStorage.getStorageData(STORAGEKEY.userData)]);
+    const userDataFromStorage = AuthStorage.getStorageData(STORAGEKEY.userData);
+    setUserData(JSON.parse(userDataFromStorage) ?? {});
+}, []); 
 
-  const { i18n, t } = useTranslation();
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-  };
+  // const { i18n, } = useTranslation();
+  // const changeLanguage = (lng) => {
+  //   i18n.changeLanguage(lng);
+  // };
 
-  const handleMenuClick = (e) => {
-    console.log('Selected language:', e.key);
-    changeLanguage(e.key); // Change language based on the selected menu item
-  };
+  // const handleMenuClick = (e) => {
+  //   console.log('Selected language:', e.key);
+  //   changeLanguage(e.key); // Change language based on the selected menu item
+  // };
 
-  const menu = (
-    <Menu onClick={handleMenuClick}>
-      <Menu.Item key="en">
-        English
-      </Menu.Item>
-      <Menu.Item key="es">
-        Español
-      </Menu.Item>
-      <Menu.Item key="fr">
-        Français
-      </Menu.Item>
-      {/* Add more languages as needed */}
-    </Menu>
-  );
+  // const menu = (
+  //   <Menu onClick={handleMenuClick}>
+  //     <Menu.Item key="en">
+  //       English
+  //     </Menu.Item>
+  //     <Menu.Item key="es">
+  //       Español
+  //     </Menu.Item>
+  //     <Menu.Item key="fr">
+  //       Français
+  //     </Menu.Item>
+  //   </Menu>
+  // );
 
   return (
     <>

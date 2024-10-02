@@ -1,10 +1,9 @@
-import { FormControl, InputLabel, Select, TextField } from '@material-ui/core'
+import { InputLabel, TextField, Autocomplete } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { countrieAction } from '../../../../redux/actions/countrieAction';
-import Autocomplete from "@material-ui/lab/Autocomplete";
 import moment from 'moment'
 
 
@@ -13,8 +12,8 @@ const IndividualDetail = ({ hendelNext, getDetailData, entityType, getCommonData
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const location = useLocation()
-    const queryParams = new URLSearchParams(location.search)
-    const id = queryParams.get("id")
+    // const queryParams = new URLSearchParams(location.search)
+    // const id = queryParams.get("id")
     const isView = location.state?.[1]?.isView ?? false;
 
     const country = useSelector(state => state.countryData.country)
@@ -42,7 +41,7 @@ const IndividualDetail = ({ hendelNext, getDetailData, entityType, getCommonData
 
     useEffect(() => {
         dispatch(countrieAction("all"))
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         console.log('isView', isView)
@@ -68,7 +67,7 @@ const IndividualDetail = ({ hendelNext, getDetailData, entityType, getCommonData
                 password: entityGetById.data.password,
             })
         }
-    }, [entityGetById])
+    }, [entityGetById, common])
 
     useEffect(() => {
         if (country && country.data) {

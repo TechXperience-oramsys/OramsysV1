@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import Details from './Details';
 import Ratingschemes from './Ratingschemes';
 import { Steps, Button, Typography } from 'antd';
-import Box from '@material-ui/core/Box';
+import {Box} from '@mui/material';
 
 const { Step } = Steps;
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 
 const steps = ['Details', 'Rating agencies'];
 
 const RatingAgenciesEdit = () => {
-    const navigate = useNavigate();
-    const [page, setPage] = useState('Details');
+    // const navigate = useNavigate();
+    // const [page, setPage] = useState('Details');
     const [details, setDetails] = useState({});
     const [activeStep, setActiveStep] = useState(0);
 

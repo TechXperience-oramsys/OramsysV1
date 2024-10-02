@@ -1,11 +1,10 @@
-import { Backdrop, Fade, FormControl, InputLabel, Modal, Select, TextField } from '@material-ui/core';
+import { Backdrop, Fade,  Modal, TextField, Autocomplete } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
-import Autocomplete from "@material-ui/lab/Autocomplete";
+// import Autocomplete from "@mui/lab";
 import { entityGetAction } from '../../redux/actions/entityAction';
 import { useSelector, useDispatch } from 'react-redux';
-import { CurrencyOptions } from "../../helper/common"
 
 
 const LCPartiesModal = ({ show, onHide, addParties, data }) => {

@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import Backdrop from '@material-ui/core/Backdrop';
-import Modal from '@material-ui/core/Modal';
-import Fade from '@material-ui/core/Fade';
 import { Col, Row } from 'react-bootstrap';
-import { toast } from 'react-hot-toast'
-import { TextField } from '@material-ui/core';
+// import { toast } from 'react-hot-toast'
+import { TextField, Fade, Modal, Backdrop,  } from '@mui/material';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useDispatch, useSelector } from 'react-redux';
 import { ratingAgenciesAction } from '../../redux/actions/ratingAgenciesAction';
 import { companydataAction } from '../../redux/actions/companydataAction';
-import { getRatingAgenciesById } from '../../redux/actions/entityAction';
+// import { getRatingAgenciesById } from '../../redux/actions/entityAction';
 import { useLocation } from 'react-router-dom';
 import moment from 'moment';
 

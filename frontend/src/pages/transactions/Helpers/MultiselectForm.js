@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Form, Col, Row } from 'react-bootstrap';
+import { Form, Col } from 'react-bootstrap';
 import { OptionalSpan } from './OptionalTags';
 
 export const MultiSelectForm = ({ facility, setFacility, error, options, propertyName, label }) => {
