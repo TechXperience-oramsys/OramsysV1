@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 // import { toast } from 'react-hot-toast'
-import { TextField, Fade, Modal, Backdrop,  } from '@mui/material';
-import Autocomplete from "@material-ui/lab/Autocomplete";
+import { TextField, Fade, Modal, Backdrop, Autocomplete  } from '@mui/material';
+// import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useDispatch, useSelector } from 'react-redux';
 import { ratingAgenciesAction } from '../../redux/actions/ratingAgenciesAction';
 import { companydataAction } from '../../redux/actions/companydataAction';
 // import { getRatingAgenciesById } from '../../redux/actions/entityAction';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 import moment from 'moment';
 
-const RatingModal = ({ onHide, show, mode, editData }) => {
+const RatingModal = ({ onHide, show, mode, editData }) => { 
 
     const dispatch = useDispatch()
-    const location = useLocation()
-    const queryParams = new URLSearchParams(location.search)
-    const id = queryParams.get("id")
+    // const location = useLocation()
+    // const queryParams = new URLSearchParams(location.search)
+    // const id = queryParams.get("id")
 
     const [agency, setAgency] = useState([])
     const [error, setError] = useState()
@@ -34,7 +34,7 @@ const RatingModal = ({ onHide, show, mode, editData }) => {
 
     useEffect(() => {
         dispatch(ratingAgenciesAction())
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         if (rating?.agency && agency) {
@@ -44,8 +44,8 @@ const RatingModal = ({ onHide, show, mode, editData }) => {
 
     useEffect(() => {
         console.log('editData', editData)
-        if (mode === "Edit" || mode === "View" && companyData.ratings) {
-            let temp = companyData.ratings?.find((e, i) => i == editData)
+        if ((mode === "Edit" || mode === "View") && companyData.ratings) {
+            let temp = companyData.ratings?.find((e, i) => i === editData)
             setRating({
                 _id: temp?._id,
                 agency: temp?.agency,
@@ -120,7 +120,7 @@ const RatingModal = ({ onHide, show, mode, editData }) => {
         }
         const body = {
             ...companyData,
-            ratings: companyData.ratings?.map((ele, i) => i == editData ? rating : ele)
+            ratings: companyData.ratings?.map((ele, i) => i === editData ? rating : ele)
         }
         dispatch(companydataAction(body))
         onHide()
@@ -144,7 +144,7 @@ const RatingModal = ({ onHide, show, mode, editData }) => {
                     <div className='modal-content'>
                         <div className='d-flex justify-content-between'>
                             <h2 id="transition-modal-title" className='modal-title'>{mode} Rating</h2>
-                            <img src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                            <img alt='props' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                         </div>
                         <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                             <div className='form'>

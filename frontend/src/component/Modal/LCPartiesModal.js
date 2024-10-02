@@ -12,7 +12,7 @@ const LCPartiesModal = ({ show, onHide, addParties, data }) => {
     let numberReg = /^[1-7]\d{0,7}$/
 
     const location = useLocation()
-    const isView = location.state[2]?.isView
+    // const isView = location.state[2]?.isView
 
     const [lcParties, setLcParties] = useState({
         applicant: "",
@@ -38,16 +38,16 @@ const LCPartiesModal = ({ show, onHide, addParties, data }) => {
         }
     }, [applicants])
 
-    const handleChange = (e, name, type) => {
-        if (type === "lcParties") {
-            if (name === "valueOfcurrency") {
+    // const handleChange = (e, name, type) => {
+    //     if (type === "lcParties") {
+    //         if (name === "valueOfcurrency") {
               
-              if (e.target.value === "" || numberReg.test(e.target.value)) {
-                setLcParties({ ...lcParties, [e.target.name]: e.target.value })
-            }
-            }
-        }
-    }
+    //           if (e.target.value === "" || numberReg.test(e.target.value)) {
+    //             setLcParties({ ...lcParties, [e.target.name]: e.target.value })
+    //         }
+    //         }
+    //     }
+    // }
 
     useEffect(() => {
         if (data) {
@@ -68,7 +68,7 @@ const LCPartiesModal = ({ show, onHide, addParties, data }) => {
 
     useEffect(() => {
         dispatch(entityGetAction('Company'))
-    }, [])
+    }, [dispatch])
 
     const saveData = () => {
         addParties(lcParties)
@@ -94,7 +94,7 @@ const LCPartiesModal = ({ show, onHide, addParties, data }) => {
                         <div className='modal-content'>
                             <div className='d-flex justify-content-between'>
                                 <h2 id="transition-modal-title" className='modal-title'>Add letter of credit</h2>
-                                <img src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                                <img alt='props' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                             </div>
                             <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                                 <div className='form pt-2'>

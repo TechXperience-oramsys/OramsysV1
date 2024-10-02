@@ -23,7 +23,7 @@ const CounterpartiesModal = ({ show, onHide, getModalData, type, modalOption ,da
     console.log('data', data)
     useEffect(() => {
         setCounterparties(data[type])
-      }, [data])
+      }, [data, type])
 
     const save = (data) => {
         let newData = {
@@ -62,7 +62,7 @@ const CounterpartiesModal = ({ show, onHide, getModalData, type, modalOption ,da
                     <div className='modal-content'>
                         <div className='d-flex justify-content-between'>
                         <h2 id="transition-modal-title" className='modal-title'>Enter a Mitigant</h2>
-                            <img src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                            <img alt='props' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                         </div>
                         <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                             <div className='form'>

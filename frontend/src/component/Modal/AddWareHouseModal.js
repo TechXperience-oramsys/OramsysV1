@@ -20,23 +20,24 @@ const AddWareHouseModal = ({ onHide, show, wareHouseData, wareHouseId }) => {
 
     useEffect(() => {
         dispatch(entityGetAction("Company"))
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         let entityDetails = []
         if (entityData && entityData.data) {
             console.log('Entity DATA', entityData)
 
-            entityData.data.map((ele) => {
+            entityData.data.forEach((ele) => {
                 ele.roles.map(roleDetail => {
-                    if (roleDetail.roleId?.roleName == "Warehouse Company") {
-                        var temp = {
+                    let temp;
+                    if (roleDetail.roleId?.roleName === "Warehouse Company") {
+                        temp = {
                             label: ele?.details?.name,
                             value: ele._id
                         }
                         entityDetails.push(temp)
                     } else {
-                        var temp = {
+                        temp = {
                             label: ele?.details?.givenName,
                             value: ele._id
                         }
@@ -75,7 +76,7 @@ const AddWareHouseModal = ({ onHide, show, wareHouseData, wareHouseId }) => {
         }
 
         console.log('addWarehouse', addWarehouse);
-    }, [addWarehouse.warehouseCompany])
+    }, [addWarehouse.warehouseCompany, addWarehouse, entityData.data])
 
 
     useEffect(() => {
@@ -128,7 +129,7 @@ const AddWareHouseModal = ({ onHide, show, wareHouseData, wareHouseId }) => {
                         <div className='modal-content'>
                             <div className='d-flex justify-content-between'>
                                 <h2 id="transition-modal-title" className='modal-title'>Add Warehouse</h2>
-                                <img src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                                <img alt='props' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                             </div>
                             <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                                 <div className='form'>

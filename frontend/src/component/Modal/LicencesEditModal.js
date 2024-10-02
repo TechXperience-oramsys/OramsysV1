@@ -7,14 +7,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { countrieAction } from '../../redux/actions/countrieAction';
 import { companydataAction } from '../../redux/actions/companydataAction';
 // import Autocomplete from "@material-ui/lab/Autocomplete";
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 import moment from 'moment';
 
 const LicencesEditModal = ({ onHide, show, mode, editData }) => {
 
   const dispatch = useDispatch()
-  const location = useLocation()
-  const queryParams = new URLSearchParams(location.search)
+  // const location = useLocation()
+  // const queryParams = new URLSearchParams(location.search)
   // const id = queryParams.get("id")
 
   const [licence, setLicence] = useState({
@@ -44,11 +44,11 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
 
   useEffect(() => {
     dispatch(countrieAction("all"))
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
-    if (mode === "Edit" || mode === "View" && companyData.licenses) {
-      let temp = companyData?.licenses?.find((e, i) => i == editData)
+    if ((mode === "Edit" || mode === "View") && companyData.licenses) {
+      let temp = companyData?.licenses?.find((e, i) => i === editData)
       setLicence({
         _id: temp?._id,
         type: temp?.type,
@@ -163,7 +163,7 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
     }
     const body = {
       ...companyData,
-      licenses: companyData.licenses.map((e, i) => i == editData ? licence : e)
+      licenses: companyData.licenses.map((e, i) => i === editData ? licence : e)
     }
     dispatch(companydataAction(body))
     onHide()
@@ -187,7 +187,7 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
           <div className='modal-content'>
             <div className='d-flex justify-content-between'>
               <h2 id="transition-modal-title" className='modal-title'>{mode} Licence</h2>
-              <img src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+              <img alt='props' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
             </div>
             <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
               <div className='form'>

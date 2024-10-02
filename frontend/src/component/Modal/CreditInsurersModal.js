@@ -32,7 +32,7 @@ const CreditInsurersModal = ({ show, onHide, getModalData ,data}) => {
     // }
 
     const [commentModal, setCommentModal] = useState(false)
-    const [selectedName, setSelectedName] = useState('')
+    const [selectedName] = useState('')
     const dispatch = useDispatch()
     const [options, setOptions] = useState([])
 
@@ -45,7 +45,7 @@ const CreditInsurersModal = ({ show, onHide, getModalData ,data}) => {
 
     useEffect(() => {
         dispatch(entityGetAction('Company'))
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         setCreaditInsurers(data)
@@ -55,9 +55,9 @@ const CreditInsurersModal = ({ show, onHide, getModalData ,data}) => {
         'Secondary',
         'Tertiary',
     ]
-    const EvidenceOptions = [
-        "Guarantees"
-    ]
+    // const EvidenceOptions = [
+    //     "Guarantees"
+    // ]
 
     const handleChangeNumber = (e, name) => {
         let numberReg = /^[0-9\b]+$/;
@@ -113,7 +113,7 @@ const CreditInsurersModal = ({ show, onHide, getModalData ,data}) => {
                     <div className='modal-content'>
                     <div className='d-flex justify-content-between'>
                         <h2 id="transition-modal-title" className='modal-title'>Use credit insurance issued by acceptable credit insurers</h2>
-                            <img src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                            <img alt='props' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                         </div>
                         <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                             <div className='form'>

@@ -15,9 +15,9 @@ const FinancingSufficientlyModal = ({ show, onHide, getModalData, data }) => {
   });
 
   const location = useLocation();
-  const isView = location.state?.isView;
+  // const isView = location.state?.isView;
   const queryParams = new URLSearchParams(location.search);
-  const id = queryParams.get("id");
+  // const id = queryParams.get("id");
 
   const getTransactionByIdData = useSelector((state) => state.transactionData.getTransactionById);
 

@@ -1,4 +1,4 @@
-import { Backdrop, Fade, FormControl, InputLabel, Modal, Select, TextField, Autocomplete } from '@mui/material'
+import { Backdrop, Fade, Modal} from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Col, Form, Row } from 'react-bootstrap'
 // import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -27,7 +27,7 @@ const PartiesEditModal = ({ show, onHide, getModalData, isView, editData }) => {
     useEffect(() => {
         dispatch(entitiesRoleAction())
         dispatch(entityGetAction('all'))
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         if (typeOptions?.data) {
@@ -128,7 +128,7 @@ const PartiesEditModal = ({ show, onHide, getModalData, isView, editData }) => {
                     <div className='modal-content'>
                         <div className='d-flex justify-content-end'>
                             {/* <h2 id="transition-modal-title" className='modal-title'>Edit Licence</h2> */}
-                            <img src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                            <img alt='props' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                         </div>
                         <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                             <div className=''>

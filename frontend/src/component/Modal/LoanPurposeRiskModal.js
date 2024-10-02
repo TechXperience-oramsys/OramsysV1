@@ -13,8 +13,8 @@ const LoanPurposeRiskModal = ({ show, onHide, getModalData, types, data }) => {
     })
 
     const [commentModal, setCommentModal] = useState(false)
-    const [type, setType] = useState('')
-    const [selectedName, setSelectedName] = useState('')
+    const [type] = useState('')
+    const [selectedName] = useState('')
     const [checkedval, setcheckedval] = useState(false)
 
 
@@ -71,7 +71,7 @@ const LoanPurposeRiskModal = ({ show, onHide, getModalData, types, data }) => {
                     <div className='modal-content'>
                         <div className='d-flex justify-content-between'>
                             <h2 id="transition-modal-title" className='modal-title'>Provide a Justification</h2>
-                            <img src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                            <img alt='props' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                         </div>
                         <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                             <div className='form'>

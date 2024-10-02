@@ -6,12 +6,12 @@ import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
 //   faComments,
 //   faHandPointRight,
 // } from "@fortawesome/free-regular-svg-icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 // import {  Menu } from 'antd';
 // import { CaretDownOutlined, GlobalOutlined, MenuOutlined } from '@ant-design/icons';
 
 const Header = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // const [expanded, setExpanded] = useState(false);
 
   // const handleMenuClick = (e) => {
