@@ -1,30 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import RichTextEditor from 'react-rte';
+import ReactQuill from 'react-quill';
 import { Modal, Fade } from '@mui/material';
+import 'react-quill/dist/quill.snow.css';
 
 const TextEditerModal = ({ onHide, show, commentDone, data, type, inputName }) => {
     const [state, setState] = useState({
-        comment: RichTextEditor.createEmptyValue(),
+        comment: '',
     });
 
-    const handleChange = (e, name) => {
+    const handleChange = (value, name) => {
         setState({
             ...state,
-            [name]: e,
+            [name]: value,
         });
     };
 
     useEffect(() => {
         if (data) {
             setState({
-                comment: RichTextEditor.createValueFromString(data, 'html'),
+                comment: data, // Use data directly if it's HTML content
             });
         }
     }, [data]);
 
     const handleDone = (data) => {
         const newData = {
-            value: data.comment.toString('markdown'), // Convert to plain text
+            value: data.comment, // Quill uses HTML string by default
             name: inputName,
         };
         commentDone(newData);
@@ -57,10 +58,10 @@ const TextEditerModal = ({ onHide, show, commentDone, data, type, inputName }) =
                                 style={{ cursor: 'pointer', width: '24px', height: '24px' }}
                             />
                         </div>
-                        <RichTextEditor
+                        <ReactQuill
                             name="comment"
                             value={state.comment}
-                            onChange={(e) => handleChange(e, 'comment')}
+                            onChange={(value) => handleChange(value, 'comment')}
                         />
                         <div className="position-fixed" style={{ bottom: '115px' }}>
                             <button onClick={() => handleDone(state)} className="footer_next_btn">
