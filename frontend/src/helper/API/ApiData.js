@@ -1,10 +1,11 @@
 import AuthStorage from '../AuthStorage';
 import { API } from '../../config/API/api.config';
+import axios from 'axios'
 
 export const BaseURL = API;
 
 
-const axios = require('axios').default;
+// const axios = require('axios').default;
 
 const defaultHeaders = {
     isAuth: true,
