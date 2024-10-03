@@ -7,7 +7,6 @@ import { editEntityAction, entityAddAction } from '../../../../redux/actions/ent
 import { EDIT_ENTITY, ENTITY_ADD } from '../../../../redux/types';
 import { toast } from 'react-hot-toast'
 import { useLocation, useNavigate } from 'react-router-dom';
-// import ReactHtmlParser from 'react-html-parser';
 import { entitiesRoleAction } from '../../../../redux/actions/entitiesRoleAction';
 import { Button, Space, Table } from 'antd';
 import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';

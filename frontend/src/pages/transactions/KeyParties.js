@@ -149,7 +149,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
             };
         }
     };
-    
+
     const handleFileChange = (info, index) => { // Accept index as an argument
         const newFileList = info.fileList.slice(-1); // Only keep the last file
         setFileList(newFileList); // Update local file list state
@@ -169,7 +169,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                 temp_names.push(element);
             });
             console.log("GET RELATED PARTIES DATA-----", temp_names);
-            setNames(temp_names);  // This is an actual function call
+            setNames(temp_names);
         }
     }, [nameOption, setNames]);
 
@@ -497,7 +497,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                                     <Col lg={2}>
 
                                         <AntdForm>
-                                            <AntdForm.Item label="Upload Evidence" name="upload_evidence"  valuePropName="file"
+                                            <AntdForm.Item label="Upload Evidence" name="upload_evidence" valuePropName="file"
                                                 rules={[{ required: true, message: "Please upload a logo!" }]}>
                                                 <Dragger
                                                     fileList={fileList} // Controlled file list
@@ -513,7 +513,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                                             {fileList.length > 0 && (
                                                 <div style={{ marginTop: 16 }}>
                                                     <p>Preview:</p>
-                                                    <img src={URL.createObjectURL(fileList[0].originFileObj)} alt="Preview" style={{ width: '100px' }}/>
+                                                    <img src={URL.createObjectURL(fileList[0].originFileObj)} alt="Preview" style={{ width: '100px' }} />
                                                 </div>
                                             )}
                                         </AntdForm>

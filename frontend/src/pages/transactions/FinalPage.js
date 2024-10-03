@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import Lottie from 'react-lottie';
-import { Lottie, useLottie } from 'lottie-react';
+import {
+    // Lottie,
+    useLottie
+} from 'lottie-react';
 import animationData from '../../helper/lottie/success.json'
 
 

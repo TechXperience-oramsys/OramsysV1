@@ -1,3 +1,4 @@
+import React from 'react'
 import Pages from "../pages";
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { useNavigate } from "react-router-dom";

@@ -2670,52 +2670,52 @@ ul {
 }
 
 .consulting-service3 {
-  background-image: url(../public/assets/img/my-img/ser.png);
+  background-image: url(../src/assets/img/my-img/ser.png);
 }
 
 .rgt-img {
   /* style="background-image:url(img/my-img/comp.jpg)" */
-  background-image: url(../public/assets/img/my-img/comp.jpg);
+  background-image: url(../src/assets/img/my-img/comp.jpg);
   /* width:960px;
     height:555px; */
 }
 
 .btm-img {
   /* style="background-image:url(img/my-img/bot-bld.jpg)" */
-  background-image: url(../public/assets/img/my-img/bot-bld.jpg);
+  background-image: url(../src/assets/img/my-img/bot-bld.jpg);
 }
 
 .blg-img {
   /* style="background-image:url(img/my-img/blg1.jpg)" */
-  background-image: url(../public/assets/img/my-img/blg1.jpg);
+  background-image: url(../src/assets/img/my-img/blg1.jpg);
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 .blg-img.bg-2 {
   /* style="background-image:url(img/my-img/blg1.jpg)" */
-  background-image: url(../public/assets/img/my-img/blg2.jpg);
+  background-image: url(../src/assets/img/my-img/blg2.jpg);
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 .blg-img.bg-3 {
   /* style="background-image:url(img/my-img/blg1.jpg)" */
-  background-image: url(../public/assets/img/my-img/blg3.jpg);
+  background-image: url(../src/assets/img/my-img/blg3.jpg);
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 .blg-img.bg-4 {
   /* style="background-image:url(img/my-img/blg1.jpg)" */
-  background-image: url(../public/assets/img/my-img/blg4.jpg);
+  background-image: url(../src/assets/img/my-img/blg4.jpg);
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 .computer-bg {
   /* style="background-image:url(img/my-img/computer.png)" */
-  background-image: url(../public/assets/img/my-img/computer.png);
+  background-image: url(../src/assets/img/my-img/computer.png);
 }
 
 /* product <========================= */

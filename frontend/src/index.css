@@ -749,7 +749,7 @@ section.login .social-container a {
   }
 }
 
-
+/*# sourceMappingURL=my-style.css.map */
 
 html {
   height: 100%;
@@ -9328,7 +9328,7 @@ div#wrapper.open > .offcanvas-mask {
 /*------------------- 5.10 Consulting -------------------*/
 .consulting-service-wrap1 {
   /* "../img/figure/figure16.png" */
-  background-image: url(../public/assets/img/figure/figure16.png);
+  background-image: url(../src/assets/img/figure/figure16.png);
   background-repeat: no-repeat;
   background-size: cover;
   padding: 130px 0px 100px 0px;
@@ -11710,7 +11710,7 @@ div#wrapper.open > .offcanvas-mask {
   padding: 240px 0px 260px 0px;
   position: relative;
   /* background-image: url("../img/figure/figure8.png"); */
-  background-image: url(../public/assets/img/figure/figure8.png);
+  background-image: url(../src/assets/img/figure/figure8.png);
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -13163,7 +13163,7 @@ div#wrapper.open > .offcanvas-mask {
 
 .progress-bar-box1 {
   /* background-image: url("../img/figure/figure36.png"); */
-  background-image: url(../public/assets/img/figure/figure36.png);
+  background-image: url(../src/assets/img/figure/figure36.png);
   background-repeat: no-repeat;
   background-size: cover;
   padding-bottom: 94px;
