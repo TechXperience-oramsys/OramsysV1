@@ -11,7 +11,7 @@ import { ApiGet } from "../../helper/API/ApiData";
 import { GET_TRANSACTION_BY_ID } from "../../redux/types";
 import { CiSearch } from "react-icons/ci";
 // import Paginate from "./Pagination";
-import Fade from "react-reveal/Fade";
+// import Fade from "react-reveal/Fade";
 import {
   Table,
   Dropdown as AntDropdown,
@@ -435,7 +435,7 @@ const Transactions = () => {
             </div>
           </header>
 
-          <Fade>
+          
             <main className="py-2">
               <div className="container-fluid">
                 <div className="row g-6 mb-4"></div>
@@ -499,7 +499,7 @@ const Transactions = () => {
                 </div>
               </div>
             </main>
-          </Fade>
+          
         </div>
       </div>
 

@@ -16,7 +16,7 @@ import { entityGetAction } from "../../redux/actions/entityAction";
 import { userGetAction } from "../../redux/actions/userAction";
 import { ratingAgenciesAction } from "../../redux/actions/ratingAgenciesAction";
 import { ApiGet } from "../../helper/API/ApiData";
-import Slide from "react-reveal/Slide";
+// import Slide from "react-reveal/Slide";
 import {
   BankOutlined,
   SearchOutlined,
@@ -342,7 +342,7 @@ const Dashboard = () => {
           <div>
             <div className="container-fluid">
               <div className="row g-6 mb-6">
-                <Slide down>
+                
                   {AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin" &&
                     superAdminCard.map((card, i) => (
                       <div className='col-xl-4 mb-3 col-sm-6 col-12' key={i}>
@@ -412,7 +412,7 @@ const Dashboard = () => {
                       </div>
                     ))
                   }
-                </Slide>
+              
 
                 {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" && userCard.map((card, i) => (
                   <>
@@ -585,7 +585,7 @@ const Dashboard = () => {
 
               </div>
 
-              <Slide up>
+              
                 <div className="card shadow border-0 mb-7">
                   <div className="card-header">
                     <div className="input-group w-50 ">
@@ -686,7 +686,7 @@ const Dashboard = () => {
                     </div>
                   </div>
                 </div>
-              </Slide>
+              
             </div>
           </div>
         );
