@@ -60,25 +60,19 @@ const CreateAdmin = () => {
     message.error("Please correct the errors in the form.");
   };
 
+  
   const handleFileChange = async (info) => {
     console.log("File info:", info.file); // Log the entire file object to see its structure
 
-    // Check if the file is there
     if (info.file) {
       // Directly use info.file if originFileObj is not available
       const file = info.file.originFileObj || info.file; // Fallback to info.file
-
-      console.log("Using file:", file);
-
       // Create FormData to send file
       const formData = new FormData();
       formData.append("file", file);
-
       try {
-        const response = await axios.post(
-          "https://backend.oramsysdev.com/file/upload-file",
-          formData,
-          {
+        const response = await axios.post("https://backend.oramsysdev.com/file/upload-file",
+          formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
@@ -216,17 +210,10 @@ const CreateAdmin = () => {
           </div>
 
           <div className="col-md-6">
-            <Form.Item
-              label="Logo"
-              name="logo"
-              valuePropName="file"
-              rules={[{ required: true, message: "Please upload a logo!" }]}
-            >
-              <Dragger
-                beforeUpload={() => false} // Prevent automatic upload
+            <Form.Item label="Logo" name="logo" valuePropName="file" rules={[{ required: true, message: "Please upload a logo!" }]}>
+              <Dragger beforeUpload={() => false} // Prevent automatic upload
                 onChange={handleFileChange} // Handle file change
-                className="upload"
-              >
+                className="upload">
                 <p className="ant-upload-drag-icon">
                   <InboxOutlined />
                 </p>

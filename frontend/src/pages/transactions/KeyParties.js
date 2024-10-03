@@ -1,5 +1,4 @@
 
-import { DropzoneArea } from 'material-ui-dropzone'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Col, Form, Row } from 'react-bootstrap'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -10,8 +9,10 @@ import { entityGetAction } from '../../redux/actions/entityAction'
 import { tableDataAtom, rowEditDataAtom, relatedPartyDetailsAtom, keyPartiesAtom, partiesDataAtom, buyersAtom, namesAtom } from '../transactions/Helpers/atoms'
 import { useAtom } from 'jotai'
 import { OptionalSpan } from './Helpers/OptionalTags'
-import { Table, Button, Tooltip } from 'antd';
-import { EditOutlined, EyeOutlined } from '@ant-design/icons';
+import { EditOutlined, EyeOutlined, InboxOutlined } from '@ant-design/icons';
+import { Table, Button, Form as AntdForm, Tooltip, Upload } from 'antd';
+
+const { Dragger } = Upload;
 
 const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingCompany, getCounterParty, pricingHedgingStatus, getWarehouseCompany, warehouseStatus, getLender, getBorrower }) => {
     const dispatch = useDispatch()
@@ -30,7 +31,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
     const [view, setView] = useState()
     // const [error, setError] = useState({})
     const [names, setNames] = useAtom(namesAtom)
-    const [ setBuyer] = useAtom(buyersAtom)
+    const [setBuyer] = useAtom(buyersAtom)
     const [partiesData, setpartiesData] = useAtom(partiesDataAtom)
     const [keyParties, setkeyParties] = useAtom(keyPartiesAtom)
     const [relatedPartyDetails, setRelatedPartyDetails] = useAtom(relatedPartyDetailsAtom)
@@ -135,7 +136,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
         ));
         setRelatedPartyDetails(updatedRelatedPartyDetails);
     };
-
+    const [fileList, setFileList] = useState([]);
     const handleChangeFile = (file, index) => {
         if (file) {
             const reader = new FileReader();
@@ -146,6 +147,14 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                 console.log('Updated Key Parties:', updatedKeyParties);
                 setkeyParties(updatedKeyParties);
             };
+        }
+    };
+    
+    const handleFileChange = (info, index) => { // Accept index as an argument
+        const newFileList = info.fileList.slice(-1); // Only keep the last file
+        setFileList(newFileList); // Update local file list state
+        if (newFileList.length > 0) {
+            handleChangeFile(newFileList[0], index); // Pass index to handleChangeFile
         }
     };
 
@@ -487,7 +496,29 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                                     </Form.Group>
 
                                     <Col lg={2}>
-                                        <div className='drag-and-drop'>
+
+                                        <AntdForm>
+                                            <AntdForm.Item label="Upload Evidence" name="upload_evidence"  valuePropName="file"
+                                                rules={[{ required: true, message: "Please upload a logo!" }]}>
+                                                <Dragger
+                                                    fileList={fileList} // Controlled file list
+                                                    beforeUpload={() => false} // Prevent automatic upload
+                                                    onChange={handleFileChange} // Handle file change event
+                                                    onRemove={() => setFileList([])} // Reset file list when removing
+                                                    className="upload"
+                                                    maxCount={1}>
+                                                    <p className="ant-upload-drag-icon"> <InboxOutlined /> </p>
+                                                    <p className="ant-upload-text">Upload Relationship Evidence</p>
+                                                </Dragger>
+                                            </AntdForm.Item>
+                                            {fileList.length > 0 && (
+                                                <div style={{ marginTop: 16 }}>
+                                                    <p>Preview:</p>
+                                                    <img src={URL.createObjectURL(fileList[0].originFileObj)} alt="Preview" style={{ width: '100px' }}/>
+                                                </div>
+                                            )}
+                                        </AntdForm>
+                                        {/* <div className='drag-and-drop'>
                                             <DropzoneArea
                                                 filesLimit={1}
                                                 showPreviews={true}
@@ -498,7 +529,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                                                 onChange={(files) => handleChangeFile(files[0], index)}
                                                 disabled={!party.buyer || !party.shipper || !party.party_relation}
                                             />
-                                        </div>
+                                        </div> */}
                                     </Col>
                                 </Row>
                             ))}

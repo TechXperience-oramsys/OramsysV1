@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 // import { toast } from 'react-hot-toast'
-import { DropzoneArea } from 'material-ui-dropzone';
 import { TextField, Backdrop, Modal, Fade, Autocomplete } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { countrieAction } from '../../redux/actions/countrieAction';
@@ -9,6 +8,10 @@ import { companydataAction } from '../../redux/actions/companydataAction';
 // import Autocomplete from "@material-ui/lab/Autocomplete";
 // import { useLocation } from 'react-router-dom';
 import moment from 'moment';
+import { Form, Upload } from 'antd';
+import { InboxOutlined } from '@ant-design/icons';
+
+const { Dragger } = Upload;
 
 const LicencesEditModal = ({ onHide, show, mode, editData }) => {
 
@@ -69,6 +72,7 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
     }
   }, [countryData])
 
+  const [fileList, setFileList] = useState([]);
   const handleChangeFile = (file) => {
     if (file) {
       new Promise((resolve, reject) => {
@@ -79,6 +83,14 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
       }).then((res) => setLicence({ ...licence, evidence: res }));
     }
   }
+  // Handle file selection and limit to 1 file
+  const handleFileChange = (info) => {
+    const newFileList = info.fileList.slice(-1); // Limit to 1 file
+    setFileList(newFileList);
+    if (newFileList.length > 0) {
+      handleChangeFile(newFileList[0].originFileObj); // Call the file processing function
+    }
+  };
 
   const handleChange = (e, name) => {
     if (name === 'type' || name === 'country') {
@@ -302,7 +314,18 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
               <Row>
                 <Col>
                   <div className='drag-and-drop add-evidence'>
-                    <DropzoneArea
+                    <Form.Item label="Logo" name="logo" valuePropName="file" rules={[{ required: true, message: "Please upload a logo!" }]}>
+                      <Dragger
+                        fileList={fileList}
+                        beforeUpload={() => false} // Prevent automatic upload
+                        onChange={handleFileChange} // Handle file change
+                        maxCount={1} // Limit to 1 file
+                        className="upload">
+                        <p className="ant-upload-drag-icon"><InboxOutlined /></p>
+                        <p className="ant-upload-text">Upload Evidence</p>
+                      </Dragger>
+                    </Form.Item>
+                    {/* <DropzoneArea
                       Icon="none"
                       filesLimit={1}
                       showPreviews={true}
@@ -313,7 +336,7 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
                       previewText=""
                       onChange={(e) => handleChangeFile(e[0])}
                       dropzoneProps={{ disabled: mode === "View" }}
-                    />
+                    /> */}
                     {formErrors && formErrors?.evidence && <span style={{ color: 'red' }}>{formErrors.evidence}</span>}
                   </div>
                 </Col>

@@ -2,14 +2,18 @@ import { Backdrop, Fade, Modal, TextField, Autocomplete } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { Row, Col } from 'react-bootstrap'
 // import {Autocomplete }from "@mui/lab";
-import { DropzoneArea } from 'material-ui-dropzone';
 import TextEditerModal from './TextEditerModal';
 import { useDispatch } from 'react-redux';
 import { entityGetAction } from '../../redux/actions/entityAction';
 import { useSelector } from 'react-redux';
 import { CurrencyOptions } from '../../helper/common';
+import { InboxOutlined } from '@ant-design/icons';
+import { Upload } from 'antd';
 
-const CreditInsurersModal = ({ show, onHide, getModalData ,data}) => {
+const { Dragger } = Upload;
+
+
+const CreditInsurersModal = ({ show, onHide, getModalData, data }) => {
 
     const [creaditInsurers, setCreaditInsurers] = useState({
         type: "",
@@ -21,7 +25,7 @@ const CreditInsurersModal = ({ show, onHide, getModalData ,data}) => {
         value: "",
         clauses: "",
         evidence: "",
-        underwriter:""
+        underwriter: ""
     })
 
     // const hadleChange = (e) => {
@@ -72,16 +76,30 @@ const CreditInsurersModal = ({ show, onHide, getModalData ,data}) => {
         setCreaditInsurers({ ...creaditInsurers, clauses: e.value })
     }
 
-    const handleChangeFile = (file) => {
+    // const handleChangeFile = (file) => {
+    //     if (file) {
+    //         new Promise((resolve, reject) => {
+    //             const reader = new FileReader();
+    //             reader.readAsDataURL(file);
+    //             reader.onload = () => resolve(reader.result);
+    //             reader.onerror = error => reject(error);
+    //         }).then((res) => setCreaditInsurers({ ...creaditInsurers, evidence: res }));
+    //     }
+    // }
+    const handleFileChange = (info) => {
+        const file = info.fileList[0];
         if (file) {
             new Promise((resolve, reject) => {
                 const reader = new FileReader();
-                reader.readAsDataURL(file);
+                reader.readAsDataURL(file.originFileObj);
                 reader.onload = () => resolve(reader.result);
                 reader.onerror = error => reject(error);
-            }).then((res) => setCreaditInsurers({ ...creaditInsurers, evidence: res }));
+            }).then((res) => {
+                // Update your state here, e.g.
+                setCreaditInsurers({ ...creaditInsurers, evidence: res });
+            });
         }
-    }
+    };
 
     const save = (data) => {
         console.log('data', data)
@@ -111,8 +129,8 @@ const CreditInsurersModal = ({ show, onHide, getModalData ,data}) => {
             >
                 <Fade in={show}>
                     <div className='modal-content'>
-                    <div className='d-flex justify-content-between'>
-                        <h2 id="transition-modal-title" className='modal-title'>Use credit insurance issued by acceptable credit insurers</h2>
+                        <div className='d-flex justify-content-between'>
+                            <h2 id="transition-modal-title" className='modal-title'>Use credit insurance issued by acceptable credit insurers</h2>
                             <img alt='props' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                         </div>
                         <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
@@ -275,7 +293,15 @@ const CreditInsurersModal = ({ show, onHide, getModalData ,data}) => {
                                     <Col lg={6}>
                                         <div className='drag-and-drop'>
                                             <label>Upload Evidence</label>
-                                            <DropzoneArea
+                                            <Dragger beforeUpload={() => false} onChange={handleFileChange} className="upload">
+                                                <p className="ant-upload-drag-icon">
+                                                    <InboxOutlined />
+                                                </p>
+                                                <p className="ant-upload-text">
+                                                    Click or drag file to this area to upload
+                                                </p>
+                                            </Dragger>
+                                            {/* <DropzoneArea
                                                 Icon="none"
                                                 filesLimit={1}
                                                 showPreviews={true}
@@ -285,7 +311,7 @@ const CreditInsurersModal = ({ show, onHide, getModalData ,data}) => {
                                                 dropzoneText='Drop file here'
                                                 previewText=""
                                                 onChange={(file) => handleChangeFile(file[0])}
-                                            />
+                                            /> */}
                                         </div>
                                     </Col>
                                 </Row>

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import {Fade, Modal, Backdrop, TextField, Autocomplete} from '@mui/material'
 import { Col, Row } from 'react-bootstrap';
 // import { toast } from 'react-hot-toast'
-import { DropzoneArea } from 'material-ui-dropzone';
+
 
 const AddInsuranceModal = ({ onHide, show }) => {
 
@@ -309,7 +309,7 @@ const AddInsuranceModal = ({ onHide, show }) => {
                                         <Col lg={3}>
                                             <div className='drag-and-drop'>
                                                 <label>Upload Evidence</label>
-                                                <DropzoneArea
+                                                {/* <DropzoneArea
                                                     Icon="none"
                                                     filesLimit={1}
                                                     showPreviews={true}
@@ -319,7 +319,7 @@ const AddInsuranceModal = ({ onHide, show }) => {
                                                     dropzoneText='Drop file here'
                                                     previewText=""
                                                     onChange={(files) => console.log('Files:', files)}
-                                                />
+                                                /> */}
                                             </div>
                                         </Col>
                                         <Col lg={3}>

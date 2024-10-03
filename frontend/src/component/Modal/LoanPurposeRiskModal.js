@@ -1,9 +1,12 @@
 import { Backdrop, Fade, Modal, TextField } from '@mui/material'
-import { DropzoneArea } from 'material-ui-dropzone';
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { Row, Col } from "react-bootstrap";
 import TextEditerModal from './TextEditerModal';
+import { InboxOutlined } from '@ant-design/icons';
+import { Form, Upload } from 'antd';
+
+const { Dragger } = Upload;
 
 const LoanPurposeRiskModal = ({ show, onHide, getModalData, types, data }) => {
 
@@ -43,16 +46,29 @@ const LoanPurposeRiskModal = ({ show, onHide, getModalData, types, data }) => {
         setLoanPurposeRisk(data)
     }, [data])
 
+    const [fileList, setFileList] = useState([]);
+    // Function to handle file reading and state update
     const handleChangeFile = (file) => {
         if (file) {
             new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-            }).then((res) => setLoanPurposeRisk({ ...loanPurposeRisk, evidence: res }));
+                reader.onerror = (error) => reject(error);
+            }).then((res) => {
+                setLoanPurposeRisk({ ...loanPurposeRisk, evidence: res });
+            });
         }
-    }
+    };
+
+    // Handle file selection and limit to 1 file
+    const handleFileChange = (info) => {
+        const newFileList = info.fileList.slice(-1); // Limit to 1 file
+        setFileList(newFileList);
+        if (newFileList.length > 0) {
+            handleChangeFile(newFileList[0].originFileObj); // Call the file processing function
+        }
+    };
     return (
         <div>
             <Modal
@@ -94,20 +110,32 @@ const LoanPurposeRiskModal = ({ show, onHide, getModalData, types, data }) => {
                                                 <input type="checkbox" onChange={() => checkedval ? setcheckedval(false) : setcheckedval(true)}></input><span style={{ padding: "10px" }}>Marketable Assets</span>
                                             </div>
                                             <div className='w-50'>
-                                                {checkedval === true ? <div className='drag-and-drop'>
-                                                    <label>Upload Evidence</label>
-                                                    <DropzoneArea
-                                                        Icon="none"
-                                                        filesLimit={1}
-                                                        showPreviews={true}
-                                                        showPreviewsInDropzone={false}
-                                                        useChipsForPreview
-                                                        previewGridProps={{ container: { spacing: 1, } }}
-                                                        dropzoneText='Drop file here'
-                                                        previewText=""
-                                                        onChange={(file) => handleChangeFile(file[0])}
-                                                    />
-                                                </div> : ''}
+                                                {checkedval === true ?
+                                                    <div className='drag-and-drop'>
+                                                        <label>Upload Evidence</label>
+                                                        <Form.Item label="Logo" name="logo" valuePropName="file" rules={[{ required: true, message: "Please upload a logo!" }]}>
+                                                            <Dragger
+                                                                fileList={fileList}
+                                                                beforeUpload={() => false} // Prevent automatic upload
+                                                                onChange={handleFileChange} // Handle file change
+                                                                maxCount={1} // Limit to 1 file
+                                                                className="upload">
+                                                                <p className="ant-upload-drag-icon"><InboxOutlined /></p>
+                                                                <p className="ant-upload-text">Upload Evidence</p>
+                                                            </Dragger>
+                                                        </Form.Item>
+                                                        {/* <DropzoneArea
+                                                            Icon="none"
+                                                            filesLimit={1}
+                                                            showPreviews={true}
+                                                            showPreviewsInDropzone={false}
+                                                            useChipsForPreview
+                                                            previewGridProps={{ container: { spacing: 1, } }}
+                                                            dropzoneText='Drop file here'
+                                                            previewText=""
+                                                            onChange={(file) => handleChangeFile(file[0])}
+                                                        /> */}
+                                                    </div> : ''}
                                             </div>
                                         </div> : ''}
                                     </Col>

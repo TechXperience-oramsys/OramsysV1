@@ -14,6 +14,7 @@ window.onbeforeunload = function () {
 
 function App() {
 
+  
   // useEffect(() => {
 
   //   // Load float.js dynamically from public folder

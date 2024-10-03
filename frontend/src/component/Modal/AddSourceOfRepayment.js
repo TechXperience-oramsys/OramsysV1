@@ -1,9 +1,10 @@
 import { Backdrop, Fade, Modal, TextField, Autocomplete } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { DropzoneArea } from 'material-ui-dropzone';
 import { Col, Row } from 'react-bootstrap';
-// import { Autocomplete } from "@mui/lab";
+import { InboxOutlined } from '@ant-design/icons';
+import { Upload } from 'antd';
 
+const { Dragger } = Upload;
 const AddSourceOfRepayment = ({ show, onHide, getModalData, data, getEditData, isView }) => {
 
     const [sourceOfRepayment, setSourceOfRepayment] = useState({
@@ -65,16 +66,32 @@ const AddSourceOfRepayment = ({ show, onHide, getModalData, data, getEditData, i
         return flag
 
     }
-    const handleChangeFile = (file) => {
+    // const handleChangeFile = (file) => {
+    //     if (file) {
+    //         new Promise((resolve, reject) => {
+    //             const reader = new FileReader();
+    //             reader.readAsDataURL(file);
+    //             reader.onload = () => resolve(reader.result);
+    //             reader.onerror = error => reject(error);
+    //         }).then((res) => setSourceOfRepayment({ ...sourceOfRepayment, evidence: res }));
+    //     }
+    // }
+
+    const handleFileChange = (info) => {
+        const file = info.fileList[0];
         if (file) {
             new Promise((resolve, reject) => {
                 const reader = new FileReader();
-                reader.readAsDataURL(file);
+                reader.readAsDataURL(file.originFileObj);
                 reader.onload = () => resolve(reader.result);
                 reader.onerror = error => reject(error);
-            }).then((res) => setSourceOfRepayment({ ...sourceOfRepayment, evidence: res }));
+            }).then((res) => {
+                // Update your state here, e.g.
+                setSourceOfRepayment({ ...sourceOfRepayment, evidence: res });
+            });
         }
-    }
+    };
+
 
 
     const saveData = () => {
@@ -178,7 +195,15 @@ const AddSourceOfRepayment = ({ show, onHide, getModalData, data, getEditData, i
                                     <Col lg={12}>
                                         <div className='drag-and-drop'>
                                             <label>Upload Evidence</label>
-                                            <DropzoneArea
+                                            <Dragger beforeUpload={() => false} onChange={handleFileChange} className="upload">
+                                                <p className="ant-upload-drag-icon">
+                                                    <InboxOutlined />
+                                                </p>
+                                                <p className="ant-upload-text">
+                                                    Click or drag file to this area to upload
+                                                </p>
+                                            </Dragger>
+                                            {/* <DropzoneArea
                                                 Icon="none"
                                                 filesLimit={1}
                                                 showPreviews={true}
@@ -188,7 +213,7 @@ const AddSourceOfRepayment = ({ show, onHide, getModalData, data, getEditData, i
                                                 dropzoneText='Drop file here'
                                                 previewText=""
                                                 onChange={(file) => handleChangeFile(file[0])}
-                                            />
+                                            /> */}
                                         </div>
                                         {error && error.evidence && <span style={{ color: 'red' }}>{error.evidence}</span>}
                                     </Col>

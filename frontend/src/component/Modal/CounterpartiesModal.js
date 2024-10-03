@@ -1,10 +1,12 @@
 import { Backdrop, Fade, Modal, TextField, Autocomplete } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { DropzoneArea } from 'material-ui-dropzone';
 import { Row, Col } from 'react-bootstrap'
-// import {Autocomplete} from "@mui/lab";
+import { InboxOutlined } from '@ant-design/icons';
+import { Upload } from 'antd';
 
-const CounterpartiesModal = ({ show, onHide, getModalData, type, modalOption ,data}) => {
+const { Dragger } = Upload;
+
+const CounterpartiesModal = ({ show, onHide, getModalData, type, modalOption, data }) => {
 
     const [counterparties, setCounterparties] = useState({
         type: "",
@@ -18,12 +20,12 @@ const CounterpartiesModal = ({ show, onHide, getModalData, type, modalOption ,da
     ]
 
     useEffect(() => {
-      console.log('modalOptions', modalOption)
+        console.log('modalOptions', modalOption)
     }, [modalOption])
     console.log('data', data)
     useEffect(() => {
         setCounterparties(data[type])
-      }, [data, type])
+    }, [data, type])
 
     const save = (data) => {
         let newData = {
@@ -34,16 +36,31 @@ const CounterpartiesModal = ({ show, onHide, getModalData, type, modalOption ,da
         onHide()
     }
 
-    const handleChangeFile = (file) => {
+    // const handleChangeFile = (file) => {
+    //     if (file) {
+    //         new Promise((resolve, reject) => {
+    //             const reader = new FileReader();
+    //             reader.readAsDataURL(file);
+    //             reader.onload = () => resolve(reader.result);
+    //             reader.onerror = error => reject(error);
+    //         }).then((res) => setCounterparties({ ...counterparties, evidence: res }));
+    //     }
+    // }
+    const handleFileChange = (info) => {
+        const file = info.fileList[0];
         if (file) {
             new Promise((resolve, reject) => {
                 const reader = new FileReader();
-                reader.readAsDataURL(file);
+                reader.readAsDataURL(file.originFileObj);
                 reader.onload = () => resolve(reader.result);
                 reader.onerror = error => reject(error);
-            }).then((res) => setCounterparties({ ...counterparties, evidence: res }));
+            }).then((res) => {
+                // Update your state here, e.g.
+                setCounterparties({ ...counterparties, evidence: res });
+            });
         }
-    }
+    };
+
     return (
         <div>
             <Modal
@@ -61,7 +78,7 @@ const CounterpartiesModal = ({ show, onHide, getModalData, type, modalOption ,da
                 <Fade in={show}>
                     <div className='modal-content'>
                         <div className='d-flex justify-content-between'>
-                        <h2 id="transition-modal-title" className='modal-title'>Enter a Mitigant</h2>
+                            <h2 id="transition-modal-title" className='modal-title'>Enter a Mitigant</h2>
                             <img alt='props' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                         </div>
                         <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
@@ -122,20 +139,28 @@ const CounterpartiesModal = ({ show, onHide, getModalData, type, modalOption ,da
                                         {error && error?.justification && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error.justification}</span>}
                                     </Col> */}
                                     <Col lg={12}>
-                                    <div className='drag-and-drop'>
-                                                    <label>Upload Evidence</label>
-                                                    <DropzoneArea
-                                                        Icon="none"
-                                                        filesLimit={1}
-                                                        showPreviews={true}
-                                                        showPreviewsInDropzone={false}
-                                                        useChipsForPreview
-                                                        previewGridProps={{ container: { spacing: 1, } }}
-                                                        dropzoneText='Drop file here'
-                                                        previewText=""
-                                                        onChange={(file) => handleChangeFile(file[0])}
-                                                    />
-                                                </div>
+                                        <div className='drag-and-drop'>
+                                            <label>Upload Evidence</label>
+                                            <Dragger beforeUpload={() => false} onChange={handleFileChange} className="upload">
+                                                <p className="ant-upload-drag-icon">
+                                                    <InboxOutlined />
+                                                </p>
+                                                <p className="ant-upload-text">
+                                                    Click or drag file to this area to upload
+                                                </p>
+                                            </Dragger>
+                                            {/* <DropzoneArea
+                                                Icon="none"
+                                                filesLimit={1}
+                                                showPreviews={true}
+                                                showPreviewsInDropzone={false}
+                                                useChipsForPreview
+                                                previewGridProps={{ container: { spacing: 1, } }}
+                                                dropzoneText='Drop file here'
+                                                previewText=""
+                                                onChange={(file) => handleChangeFile(file[0])}
+                                            /> */}
+                                        </div>
                                     </Col>
                                 </Row>
                             </div>
