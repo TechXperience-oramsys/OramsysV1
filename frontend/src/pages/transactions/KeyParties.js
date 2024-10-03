@@ -162,15 +162,14 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
 
     useEffect(() => {
         if (nameOption?.data) {
-            // console.log(nameOption?.data);
-            var temp_names = [];
-            nameOption?.data?.forEach((element, index) => {
-                // Assign the correct name back to element.details.name
-                element.details.name = element.details?.name !== null ? element.details?.name : element.details?.givenName;
+            let temp_names = [];
+            nameOption?.data?.forEach((element) => {
+                // Ensure name is correctly assigned
+                element.details.name = element.details?.name || element.details?.givenName;
                 temp_names.push(element);
             });
             console.log("GET RELATED PARTIES DATA-----", temp_names);
-            setNames(temp_names);
+            setNames(temp_names);  // This is an actual function call
         }
     }, [nameOption, setNames]);
 
