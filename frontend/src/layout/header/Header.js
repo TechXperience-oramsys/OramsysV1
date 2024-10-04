@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
+import logo from '../../assets/img/lgo-red.png'
 // import {
 //   faArrowAltCircleRight,
 //   faComments,
@@ -148,7 +149,7 @@ const Header = () => {
             <div className="logo-area">
               <Link to="/" className="temp-logo">
                 <div className="lgo-img">
-                  <img src="./assets/img/lgo-red.png" alt="logo" />
+                  <img src={logo} alt="logo" />
                 </div>
               </Link>
             </div>

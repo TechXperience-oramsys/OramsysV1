@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import Lottie from 'react-lottie';
 import {
     // Lottie,
     useLottie
@@ -29,13 +28,15 @@ const FinalPage = () => {
     return (
         <>
 
-            <div class="">
-                <div class="row align-items-center vh-100">
-                    <div class="col-6 mx-auto">
-                        <div class="card shadow border">
-                            <div class="card-body d-flex flex-column align-items-center">
-                                <p class="card-text">
-                                    <View style={{ size: '30px' }} className='img-fluid' />
+            <div className="">
+                <div className="row align-items-center vh-100">
+                    <div className="col-6 mx-auto">
+                        <div className="card shadow border">
+                            <div className="card-body d-flex flex-column align-items-center">
+                                <p className="card-text">
+                                    <div style={{ width: '100px', height: '100px' }}>
+                                        {View}
+                                    </div>
                                 </p>
                                 <h3 className='text-center'>Transaction Completed</h3>
                                 <p>Redirecting...</p>

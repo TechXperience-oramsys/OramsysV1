@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
 import { Carousel } from 'antd';
 import { ArrowRightOutlined, MailOutlined, PhoneOutlined, PlayCircleOutlined } from '@ant-design/icons'
+import { homeImages  } from '../../assets/assests'
 
 
 const Home = () => {
@@ -27,7 +28,7 @@ const Home = () => {
     <>
       <section className="">
         <div className="background-shape6">
-          <img src="./assets/img/figure/figure32.png" alt="figure" width="404" height="216" />
+          <img src={homeImages.img1} alt="figure" width="404" height="216" />
         </div>
         <div className="container my-5">
           <div className="slider-area slider-layout1">
@@ -35,7 +36,7 @@ const Home = () => {
               <img src="./assets/img/figure/figure96.png" alt="figure" />
             </div> */}
             <div className="slider-bg-img2">
-              <img src="./assets/img/figure/figure97.png" alt="figure" data-sal="slide-up" data-sal-duration="1300" data-sal-delay="700" />
+              <img src={homeImages.img2} alt="figure" data-sal="slide-up" data-sal-duration="1300" data-sal-delay="700" />
             </div>
 
             <Carousel autoplay>
@@ -51,7 +52,7 @@ const Home = () => {
                     </div>
                   </div>
                   <div>
-                    <img src="./assets/img/slider/slider2.png" alt="slider" width="960" height="720" />
+                    <img src={homeImages.img3} alt="slider" width="960" height="720" />
                   </div>
                 </div>
               </div>
@@ -67,7 +68,7 @@ const Home = () => {
                     </div>
                   </div>
                   <div className="background-shape7">
-                    <img src="./assets/img/my-img/bn.png" alt="slider" width="960" height="720" />
+                    <img src={homeImages.img4} alt="slider" width="960" height="720" />
                   </div>
                 </div>
               </div>
@@ -83,7 +84,7 @@ const Home = () => {
                     </div>
                   </div>
                   <div>
-                    <img src="./assets/img/my-img/bn.png" alt="slider" width="960" height="720" />
+                  <img src={homeImages.img4} alt="slider" width="960" height="720" />
                   </div>
                 </div>
               </div>
@@ -99,7 +100,7 @@ const Home = () => {
                     </div>
                   </div>
                   <div className="d-flex justify-content-center align-items-center">
-                    <img src="./assets/img/slider/slider2.png" alt="slider" style={imageStyle} />
+                    <img src={homeImages.img6} alt="slider" style={imageStyle} />
                   </div>
                 </div>
               </div>
@@ -115,7 +116,7 @@ const Home = () => {
                     </div>
                   </div>
                   <div>
-                    <img src="./assets/img/slider/slider1.png" alt="slider" style={imageStyle} />
+                    <img src={homeImages.img7} alt="slider" style={imageStyle} />
                   </div>
                 </div>
               </div>
@@ -123,7 +124,7 @@ const Home = () => {
           </div>
         </div>
         <div className="background-shape7">
-          <img src="./assets/img/figure/figure29.png" alt="figure" width="747" height="256" />
+          <img src={homeImages.img8} alt="figure" width="747" height="256" />
         </div>
         {/* <div className="background-shape8">
           <img src="./assets/img/my-img/figure33.png" alt="figure" width="783" height="439" />
@@ -137,9 +138,9 @@ const Home = () => {
             <div className="col-lg-4 col-md-6">
               <div className="financo-activities-box1">
                 <div className="item-img-round">
-                  <img src="./assets/img/figure/figure39.png" alt="figure" height="81" width="81" />
+                  <img src={homeImages.img9} alt="figure" height="81" width="81" />
                   <div className="item-img">
-                    <img src="./assets/img/figure/figure41.png" alt="figure" height="45" width="47" />
+                    <img src={homeImages.img10} alt="figure" height="45" width="47" />
                   </div>
                 </div>
                 <h2 className="heading-title"><a href="/" className="text-decoration-none">Tailored Financing Solutions</a></h2>
@@ -152,9 +153,9 @@ const Home = () => {
             <div className="col-lg-4 col-md-6">
               <div className="financo-activities-box1">
                 <div className="item-img-round">
-                  <img src="./assets/img/figure/figure39.png" alt="figure" height="81" width="81" />
+                  <img src={homeImages.img9} alt="figure" height="81" width="81" />
                   <div className="item-img">
-                    <img src="./assets/img/figure/figure42.png" alt="figure" height="41" width="45" />
+                    <img src={homeImages.img11} alt="figure" height="41" width="45" />
                   </div>
                 </div>
                 <h2 className="heading-title"><a href="/">Global Trade Expertise</a></h2>
@@ -167,9 +168,9 @@ const Home = () => {
             <div className="col-lg-4 col-md-6">
               <div className="financo-activities-box1 financo-activities-box3">
                 <div className="item-img-round">
-                  <img src="./assets/img/figure/figure39.png" alt="figure" height="81" width="81" />
+                  <img src={homeImages.img9} alt="figure" height="81" width="81" />
                   <div className="item-img">
-                    <img src="./assets/img/figure/figure43.png" alt="figure" height="45" width="49" />
+                    <img src={homeImages.img12} alt="figure" height="45" width="49" />
                   </div>
                 </div>
                 <h2 className="heading-title"><a href="/">Risk Management Excellence</a></h2>
@@ -185,13 +186,13 @@ const Home = () => {
 
       <section className="about-finnaco-wrap1">
         <div className="background-shape6">
-          <img src="./assets/img/figure/figure32.png" alt="figure" width="404" height="216" />
+          <img src={homeImages.img13} alt="figure" width="404" height="216" />
         </div>
         <div className="background-shape7">
-          <img src="./assets/img/figure/figure29.png" alt="figure" width="747" height="256" />
+          <img src={homeImages.img8} alt="figure" width="747" height="256" />
         </div>
         <div className="background-shape8">
-          <img src="./assets/img/my-img/figure33.png" alt="figure" width="783" height="439" />
+          <img src={homeImages.img14} alt="figure" width="783" height="439" />
         </div>
         <div className="container">
           <div className="row">
@@ -202,7 +203,7 @@ const Home = () => {
                 <p>Oramsys is a leading platform specifically designed to facilitate structured trade, providing businesses with robust tools and solutions to manage and streamline their trade processes efficiently. Our platform caters to various industries, offering a comprehensive suite of services that enhance trade operations and promote growth across board.</p>
                 <div className="media d-flex">
                   <div className="item-img">
-                    <img src="./assets/img/figure/figure30.png" alt="figure" width="47" height="71" />
+                    <img src={homeImages.img15} alt="figure" width="47" height="71" />
                   </div>
                   <div className="media-body">
                     <h3 className="heading-title"><a href="/">Trade Management Solutions</a></h3>
@@ -213,7 +214,7 @@ const Home = () => {
                 </div>
                 <div className="media d-flex">
                   <div className="item-img">
-                    <img src="./assets/img/figure/figure31.png" alt="figure" width="51" height="66" />
+                    <img src={homeImages.img16} alt="figure" width="51" height="66" />
                   </div>
                   <div className="media-body">
                     <h3 className="heading-title"><a href="/">Risk Management Services</a></h3>
@@ -260,9 +261,9 @@ const Home = () => {
                   >
                     <div className="media d-flex">
                       <div className="item-img">
-                        <img src="./assets/img/figure/figure18.png" alt="figure" width="87" height="95" />
+                        <img src={homeImages.img17} alt="figure" width="87" height="95" />
                         <div className="service-img">
-                          <img src="./assets/img/figure/figure46.png" alt="service" width="86" height="94" />
+                          <img src={homeImages.img18} alt="service" width="86" height="94" />
                         </div>
                       </div>
                       <div className="media-body">
@@ -282,9 +283,9 @@ const Home = () => {
                   <div className="consulting-service3" data-bg-image="img/my-img/ser.png" width="555" height="299">
                     <div className="media d-flex">
                       <div className="item-img">
-                        <img src="./assets/img/figure/figure21.png" alt="figure" width="76" height="93" />
+                        <img src={homeImages.img19} alt="figure" width="76" height="93" />
                         <div className="service-img service-img2">
-                          <img src="./assets/img/figure/figure47.png" alt="service" width="76" height="93" />
+                          <img src={homeImages.img20} alt="service" width="76" height="93" />
                         </div>
                       </div>
                       <div className="media-body">
@@ -304,9 +305,9 @@ const Home = () => {
                   <div className="consulting-service3" data-bg-image="img/my-img/ser.png" width="555" height="299">
                     <div className="media d-flex">
                       <div className="item-img">
-                        <img src="./assets/img/figure/figure21.png" alt="figure" width="76" height="93" />
+                        <img src={homeImages.img31} alt="figure" width="76" height="93" />
                         <div className="service-img service-img3">
-                          <img src="./assets/img/figure/figure47.png" alt="service" width="76" height="93" />
+                          <img src={homeImages.img20} alt="service" width="76" height="93" />
                         </div>
                       </div>
                       <div className="media-body">
@@ -326,9 +327,9 @@ const Home = () => {
                   <div className="consulting-service3" data-bg-image="img/my-img/ser.png" width="555" height="299">
                     <div className="media d-flex">
                       <div className="item-img">
-                        <img src="./assets/img/figure/figure20.png" alt="figure" width="78" height="94" />
+                        <img src={homeImages.img21} alt="figure" width="78" height="94" />
                         <div className="service-img service-img4">
-                          <img src="./assets/img/figure/figure49.png" alt="service" width="78" height="94" />
+                          <img src={homeImages.img22} alt="service" width="78" height="94" />
                         </div>
                       </div>
                       <div className="media-body">
@@ -537,7 +538,7 @@ const Home = () => {
             <div className="col-lg-7 col-md-12">
               <div className="company-profit-box2">
                 <div className="item-img">
-                  <img src="./assets/img/figure/figure13.png" alt="figure" width="586" height="283" />
+                  <img src={homeImages.img23} alt="figure" width="586" height="283" />
                 </div>
               </div>
             </div>
@@ -576,9 +577,9 @@ const Home = () => {
             <div className="col-lg-7 col-md-12">
               <div className="call-back-box2">
                 <div className="item-img">
-                  <img src="./assets/img/blog/blog4.jpg" alt="blog" width="690" height="582" />
+                  <img src={homeImages.img24} alt="blog" width="690" height="582" />
                   <div className="call-img">
-                    <img src="./assets/img/figure/figure11.png" alt="figure" width="145" height="295" />
+                    <img src={homeImages.img25} alt="figure" width="145" height="295" />
                   </div>
                 </div>
               </div>
@@ -635,7 +636,7 @@ const Home = () => {
               <div className="slick-slide">
                 <div className="media">
                   <div className="item-img">
-                    <img src="./assets/img/blog/blog3.jpg" alt="blog" width="285" height="276" />
+                    <img src={homeImages.img26} alt="blog" width="285" height="276" />
                     <div className="shape-box">Robert Smith CEO</div>
                   </div>
                   <div className="media-body">
@@ -647,7 +648,7 @@ const Home = () => {
               <div className="slick-slide">
                 <div className="media">
                   <div className="item-img">
-                    <img src="./assets/img/blog/blog37.jpg" alt="blog" width="285" height="276" />
+                    <img src={homeImages.img37} alt="blog" width="285" height="276" />
                     <div className="shape-box">Robert Smith CEO</div>
                   </div>
                   <div className="media-body">
@@ -659,7 +660,7 @@ const Home = () => {
               <div className="slick-slide">
                 <div className="media">
                   <div className="item-img">
-                    <img src="./assets/img/blog/blog38.jpg" alt="blog" width="285" height="276" />
+                    <img src={homeImages.img28} alt="blog" width="285" height="276" />
                     <div className="shape-box">Robert Smith CEO</div>
                   </div>
                   <div className="media-body">
@@ -731,10 +732,10 @@ const Home = () => {
           </div>
         </div>
         <div className="figure-img1">
-          <img src="./assets/img/figure/figure5.png" alt="figure" width="872" height="724" />
+          <img src={homeImages.img29} alt="figure" width="872" height="724" />
         </div>
         <div className="figure-img2">
-          <img src="./assets/img/figure/figure6.png" alt="figure" width="487" height="269" />
+          <img src={homeImages.img30} alt="figure" width="487" height="269" />
         </div>
       </section>
     </>

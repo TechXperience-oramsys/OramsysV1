@@ -28,7 +28,7 @@ const AddWareHouseModal = ({ onHide, show, wareHouseData, wareHouseId }) => {
             console.log('Entity DATA', entityData)
 
             entityData.data.forEach((ele) => {
-                ele.roles.forEach(roleDetail => { // Changed map to forEach
+                ele.roles.forEach(roleDetail => {
                     let temp;
                     if (roleDetail.roleId?.roleName === "Warehouse Company") {
                         temp = {
@@ -41,10 +41,9 @@ const AddWareHouseModal = ({ onHide, show, wareHouseData, wareHouseId }) => {
                             label: ele?.details?.givenName,
                             value: ele._id
                         }
-                        entityDetails.push(temp); // You need to push temp here as well
                     }
-                });
-            });
+                })
+            })
         }
         setWareHouseCompanyOption(entityDetails)
         // if (entityData && entityData.data) {
@@ -77,7 +76,7 @@ const AddWareHouseModal = ({ onHide, show, wareHouseData, wareHouseId }) => {
         }
 
         console.log('addWarehouse', addWarehouse);
-    }, [addWarehouse.warehouseCompany, addWarehouse, entityData.data])
+    }, [addWarehouse, entityData.data])
 
 
     useEffect(() => {
@@ -138,39 +137,40 @@ const AddWareHouseModal = ({ onHide, show, wareHouseData, wareHouseId }) => {
                                         <Col lg={6}>
                                             <Autocomplete
                                                 options={wareHouseCompanyOption}
-                                                getOptionLabel={(option) => option.label}
+                                                getOptionLabel={(option) => option.label || ''}
                                                 id="disable-clearable"
                                                 label="Warehouse company"
                                                 renderInput={(params) => (
                                                     <TextField {...params} label="Warehouse company" variant="standard" />
                                                 )}
                                                 onChange={(event, newValue) => {
-
-
-                                                    setAddWarehouse({ ...addWarehouse, warehouseCompany: newValue })
+                                                    setAddWarehouse({ ...addWarehouse, warehouseCompany: newValue });
                                                 }}
-                                                value={(wareHouseCompanyOption && addWarehouse.warehouseCompany) && wareHouseCompanyOption.find((ele) => ele.value === addWarehouse.warehouseCompany?.value)}
+                                                value={
+                                                    addWarehouse.warehouseCompany
+                                                        ? wareHouseCompanyOption.find((ele) => ele.value === addWarehouse.warehouseCompany?.value)
+                                                        : null
+                                                }
                                                 disableClearable
                                             />
                                         </Col>
                                         <Col lg={6}>
                                             <Autocomplete
                                                 options={wareHouseOption}
-                                                getOptionLabel={(option) => option.label}
+                                                getOptionLabel={(option) => option.label || ''}
                                                 id="disable-clearable"
                                                 label="Warehouse"
                                                 renderInput={(params) => (
                                                     <TextField {...params} label="Warehouse" variant="standard" />
                                                 )}
                                                 onChange={(event, newValue) => {
-                                                    console.log(newValue);
-                                                    console.log('test 1  ', addWarehouse.warehouseCompany);
-                                                    wareHouseOption.forEach((ele) => {
-                                                        console.log(ele);
-                                                    });
-                                                    setAddWarehouse({ ...addWarehouse, warehouse: newValue })
+                                                    setAddWarehouse({ ...addWarehouse, warehouse: newValue });
                                                 }}
-                                                value={(wareHouseOption && addWarehouse.warehouse) && wareHouseOption.find((ele) => ele.value === addWarehouse.warehouse?.value)}
+                                                value={
+                                                    addWarehouse.warehouse
+                                                        ? wareHouseOption.find((ele) => ele.value === addWarehouse.warehouse?.value)
+                                                        : null
+                                                }
                                                 disableClearable
                                             />
                                         </Col>
@@ -188,5 +188,4 @@ const AddWareHouseModal = ({ onHide, show, wareHouseData, wareHouseId }) => {
         </>
     )
 }
-
 export default AddWareHouseModal    

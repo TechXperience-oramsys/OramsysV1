@@ -237,7 +237,8 @@ const Facility = ({ hendelCancel, hendelNext }) => {
         currency: transactionData.details.contractDetails.currency,
       });
     }
-  }, [getTransactionByIdData, facility, setAddCurrencyHedge, setFacility, setSourceOfRepayment, transactionData.details.contractDetails.currency]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getTransactionByIdData, setAddCurrencyHedge, setFacility, setSourceOfRepayment, transactionData.details.contractDetails.currency]);
 
   const counterpartyOptions = useSelector((state) => state.entityData.entity);
 

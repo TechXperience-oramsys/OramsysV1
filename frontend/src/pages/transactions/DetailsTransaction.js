@@ -150,7 +150,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         }
         // setActiveOnChange('origin');
         // setApiCalled(false);
-    }, [shippingOptions.shipmentMode, dispatch]); 
+    }, [shippingOptions.shipmentMode, dispatch]);
 
     // const setDestinationPorts = (country) => {
     //     if (shippingOptions.shipmentMode === "SEA") {
@@ -333,11 +333,11 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
     useEffect(() => {
         // let bankRole = [];
         const storedLoginData = JSON.parse(AuthStorage.getStorageData(STORAGEKEY.userData));
-        console.log('first', storedLoginData)
+        // console.log('first', storedLoginData)
 
         if (storedLoginData && storedLoginData.admin) {
             const adminId = storedLoginData?.admin.corporationName;
-            console.log('second', adminId)
+            // console.log('second', adminId)
 
             setLenders(adminId);
         } else {
@@ -390,24 +390,28 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
 
 
     useEffect(() => {
-        if (productType === "Physical") {
-            setProductDetails({ ...productDetails, nature: "Physical" })
-        } else {
-            setProductDetails({ ...productDetails, nature: "Non-Physical" })
-        }
-    }, [productType, productDetails, setProductDetails])
+        setProductDetails(prevDetails => ({
+            ...prevDetails,
+            nature: productType === "Physical" ? "Physical" : "Non-Physical"
+        }));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [productType]);
 
 
 
     useEffect(() => {
         if (productName.length > 0 && productDetails.name) {
-            setProductDetails({
-                ...productDetails,
-                metric: productName.find((ele) => ele._id === productDetails.name)?.matric,
-                unit: productName.find((ele) => ele._id === productDetails.name)?.unit
-            })
+            const matchedProduct = productName.find((ele) => ele._id === productDetails.name);
+            if (matchedProduct) {
+                setProductDetails(prevDetails => ({
+                    ...prevDetails,
+                    metric: matchedProduct.matric,
+                    unit: matchedProduct.unit
+                }));
+            }
         }
-    }, [productDetails.name, productName, productDetails, setProductDetails])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [productDetails.name, productName]);
 
     useEffect(() => {
         if (country && country.data) {
@@ -604,7 +608,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                 .catch((error) => {
                     console.log(error);
                 })
-                setIsLoading(false)
+            setIsLoading(false)
         }
     }, [productData, setBorrower_Applicant, setContractDetails, setEditId, setHedgingParty, setHedgingStatus, setLenders, setPricingDetails, setProductDetails, setProductName, setShippingCompany, setShippingOptions, setTransShipmentOptions, setWarehouseStatus])
 
@@ -620,7 +624,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         if (productDetails.commoditySubType !== undefined) {
             let product = []
             productData?.data?.forEach((item) => {
-                
+
                 if (item.category === productDetails.commodityType) {
                     product.push(item);
                 }
@@ -1290,7 +1294,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                         disabled={isView}
                                         value={borrower_Applicant}
                                     >
-                                        <option value="" disabled selected>Choose...</option>
+                                        <option value="" disabled defaultValue>Choose...</option>
                                         {borrowerOption.map((item, i) => (
                                             <option key={i} value={item.label}>{item.label}</option>
                                         ))}
@@ -1327,7 +1331,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                         }}
                                         disabled={isView}
                                         value={lenders}>
-                                        <option value="" disabled selected>Choose...</option>
+                                        <option value="" disabled defaultValue>Choose...</option>
                                         {lenderOption.map((item) => (
                                             <option value={item.label}>{item.label}</option>
                                         ))}
@@ -1390,7 +1394,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             value={productDetails.type || "Commodity"}
                                             disabled={true}
                                         >
-                                            <option value="" disabled selected>Choose...</option>
+                                            <option value="" disabled defaultValue>Choose...</option>
                                             {productTypesOption.map((item, i) => (
                                                 <option key={i} value={item}>{item}</option>
                                             ))}
@@ -1419,7 +1423,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             disabled={isView}
                                             value={productDetails.commodityType}>
 
-                                            <option value="" disabled selected>Choose...</option>
+                                            <option value="" disabled defaultValue>Choose...</option>
                                             {commodityTypeOption.map((item, i) => (
                                                 <option key={i} value={item}>{item}</option>
                                             ))}
@@ -1435,7 +1439,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             }
                                             disabled={isView}
                                             value={productDetails.commoditySubType}>
-                                            <option value="" disabled selected>Choose...</option>
+                                            <option value="" disabled defaultValue>Choose...</option>
                                             {commoditySubTypeOption.map((item) => (
                                                 <option key={item} value={item}>{item}</option>
                                             ))}
@@ -1480,7 +1484,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             }}
                                             disabled={isView}
                                             value={productDetails.name}>
-                                            <option value="" disabled selected>Choose...</option>
+                                            <option value="" disabled defaultValue>Choose...</option>
                                             {productName.map((item, i) => (
                                                 <option key={i} value={item._id}>{item.name}</option>
                                             ))}
@@ -1539,7 +1543,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             }}
                                             disabled={isView}
                                             value={productDetails.quality}>
-                                            <option value="" disabled selected>Choose...</option>
+                                            <option value="" disabled defaultValue>Choose...</option>
                                             {productQualityOption.map((item) => (
                                                 <option value={item}>{item}</option>
                                             ))}
@@ -1583,7 +1587,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             value={contractDetails.currency}
                                             disabled={isView}
                                         >
-                                            <option value="" disabled selected>Choose...</option>
+                                            <option value="" disabled defaultValue>Choose...</option>
                                             {CurrencyOptions.map((item, i) => (
                                                 <option key={i} value={item.label}>{item.label}</option>
                                             ))}
@@ -1692,7 +1696,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             }
                                             disabled={isView}
                                             value={shippingOptions.shippingCompany}>
-                                            <option value="" disabled selected>Choose...</option>
+                                            <option value="" disabled defaultValue>Choose...</option>
                                             {shippingCompanyOption.map((item, i) => (
                                                 <option key={i} value={item.value}>{item.label}</option>
                                             ))}
@@ -1717,7 +1721,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             onChange={(e, newVal) => setShippingOptions({ ...shippingOptions, shipmentMode: e.target.value })}
                                             disabled={isView}
                                             value={shippingOptions.shipmentMode}>
-                                            <option value="" disabled selected>Choose...</option>
+                                            <option value="" disabled defaultValue>Choose...</option>
                                             {shipmentModeOptions.map((item, i) => (
                                                 <option key={i} value={item}>{item}</option>
                                             ))}
@@ -1743,7 +1747,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             }}
                                             disabled={isView}
                                             value={shippingOptions.countryOfOrigin}>
-                                            <option value="" disabled selected>Choose...</option>
+                                            <option value="" disabled defaultValue>Choose...</option>
                                             {countries.map((item) => (
                                                 <option key={item._id} value={item._id}>{item.name}</option>
                                             ))}
@@ -1831,7 +1835,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                 (shippingOptions.shipmentMode === "SEA" && shippingOptions.portOfOrigin) ||
                                                 (shippingOptions.shipmentMode === "AIR" && shippingOptions.airbaseOfOrigin)
                                             }>
-                                            <option value="" disabled selected>Choose...</option>
+                                            <option value="" disabled defaultValue>Choose...</option>
                                             {originCountry.map((item, i) => (
                                                 <option key={i} value={item._id}>{item.name}</option>
                                             ))}
@@ -1910,7 +1914,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             }}
                                             disabled={isView}
                                             value={shippingOptions.destinationCountry}>
-                                            <option value="" disabled selected>Choose...</option>
+                                            <option value="" disabled defaultValue>Choose...</option>
                                             {countries.map((item) => (
                                                 <option key={item._id} value={item._id}>{item.name}</option>
                                             ))}
@@ -1965,7 +1969,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                 (shippingOptions.shipmentMode === "SEA" && shippingOptions.destinationPort) ||
                                                 (shippingOptions.shipmentMode === "AIR" && shippingOptions.destinationAirbase)
                                             }>
-                                            <option value="" disabled selected>Choose...</option>
+                                            <option value="" disabled defaultValue>Choose...</option>
                                             {portsOptions.map((item, i) => (
                                                 <option key={i} value={item._id}>{item.name}</option>
                                             ))}
@@ -1985,7 +1989,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             disabled={isView}
 
                                             value={shippingOptions.shipmentFrequency}>
-                                            <option value="" disabled selected>Choose...</option>
+                                            <option value="" disabled defaultValue>Choose...</option>
                                             {shipmentFrequencyOptions.map((item, i) => (
                                                 <option key={i} value={item}>{item}</option>
                                             ))}
@@ -2016,7 +2020,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             }}
                                             disabled={isView}
                                             value={shippingOptions.warehouseRequired.toString()}>
-                                            <option value="" disabled selected>Choose...</option>
+                                            <option value="" disabled defaultValue>Choose...</option>
                                             {warehouseRequiredOptions.map((item, i) => (
                                                 <option key={i} value={item.value}>{item.label}</option>
                                             ))}
@@ -2029,8 +2033,8 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                     <div className='product p-0'>
                                         <div className='d-flex justify-content-between mt-5 mb-3 align-items-center'>
                                             <h2 className='m-0 fw-bold title-admin fs-5'>WAREHOUSE</h2>
-                                            <Button onClick={() => { setAddWarehouseModal(true) }} class='btn d-inline-flex btn-md btn-light border-base mx-1 me-3'>
-                                                <span class=' pe-2'><i class="bi bi-plus pe-2 "></i></span>
+                                            <Button onClick={() => { setAddWarehouseModal(true) }} className='btn d-inline-flex btn-md btn-light border-base mx-1 me-3'>
+                                                <span className=' pe-2'><i className="bi bi-plus pe-2 "></i></span>
                                                 <span className='fw-bold'>Add</span>
                                             </Button>
                                         </div>
@@ -2073,7 +2077,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             }}
                                             disabled={isView}
                                             value={transShipmentOptions.tranShipmentRequired.toString()}>
-                                            <option value="" disabled selected>Choose...</option>
+                                            <option value="" disabled defaultValue>Choose...</option>
                                             {options.map((item, i) => (
                                                 <option key={i} value={item.value}>{item.label}</option>
                                             ))}
@@ -2117,7 +2121,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                     }
                                                     disabled={isView}
                                                     value={transShipmentOptions.country}>
-                                                    <option value="" disabled selected>Choose...</option>
+                                                    <option value="" disabled defaultValue>Choose...</option>
                                                     {countries.map((item, i) => (
                                                         <option key={i} value={item._id}>{item.name}</option>
                                                     ))}
@@ -2187,7 +2191,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             }
                                             disabled={isView}
                                             value={pricingDetails.pricingType}>
-                                            <option value="" disabled selected>Choose...</option>
+                                            <option value="" disabled defaultValue>Choose...</option>
                                             {pricingTypeOption.map((item, i) => (
                                                 <option key={i} value={item}>{item}</option>
                                             ))}
@@ -2252,7 +2256,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                     }
                                                     disabled={isView}
                                                     value={pricingDetails.pricingFormula}>
-                                                    <option value="" disabled selected>Choose...</option>
+                                                    <option value="" disabled defaultValue>Choose...</option>
                                                     {pricingFormulaOption.map((item, i) => (
                                                         <option key={i} value={item}>{item}</option>
                                                     ))}
@@ -2273,7 +2277,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                     disabled={isView}
 
                                                     value={pricingDetails.pricingHedgingStatus.toString()}>
-                                                    <option value="" disabled selected>Choose...</option>
+                                                    <option value="" disabled defaultValue>Choose...</option>
                                                     {warehouseRequiredOptions.map((item, i) => (
                                                         <option key={i} value={item.value}>{item.label}</option>
                                                     ))}
@@ -2292,7 +2296,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                                 onChange={(e, newVal) => setPricingDetails({ ...pricingDetails, pricingHedgingMethod: e.target.value })}
                                                                 disabled={isView}
                                                                 value={pricingDetails.pricingHedgingMethod}>
-                                                                <option value="" disabled selected>Choose...</option>
+                                                                <option value="" disabled defaultValue>Choose...</option>
                                                                 {hedgingMethodOption.map((item, i) => (
                                                                     <option key={i} value={item}>{item}</option>
                                                                 ))}
@@ -2310,7 +2314,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                                 }}
                                                                 disabled={isView}
                                                                 value={pricingDetails.pricingCounterParty}>
-                                                                <option value="" disabled selected>Choose...</option>
+                                                                <option value="" disabled defaultValue>Choose...</option>
                                                                 {counterPartyOption.map((item, i) => (
                                                                     <option key={i} value={item.value}>{item.label}</option>
                                                                 ))}

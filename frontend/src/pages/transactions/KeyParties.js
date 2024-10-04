@@ -31,7 +31,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
     const [view, setView] = useState()
     // const [error, setError] = useState({})
     const [names, setNames] = useAtom(namesAtom)
-    const [setBuyer] = useAtom(buyersAtom)
+    const [buyer, setBuyer] = useAtom(buyersAtom)
     const [partiesData, setpartiesData] = useAtom(partiesDataAtom)
     const [keyParties, setkeyParties] = useAtom(keyPartiesAtom)
     const [relatedPartyDetails, setRelatedPartyDetails] = useAtom(relatedPartyDetailsAtom)
@@ -39,7 +39,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
     // const [borrower_Applicant, setBorrower_Applicant] = useState("")
     // const [lenders, setLenders] = useState("")
     // const [warehouseComp, setWarehouseComp] = useState("")
-    // const [warehouses, setWarehouses] = useState([])
+    const [warehouses, setWarehouses] = useState([])
     // const [counterPart, setCounterPart] = useState("")
     // const [shippingComp, setShippingComp] = useState("")
     const parties = [
@@ -86,7 +86,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
 
     useEffect(() => {
         if (getTransactionByIdData.data?.keyParties[0].relatedParties !== undefined && getTransactionByIdData.data?.keyParties[0].relatedParties.length > 0) {
-            console.log('RELATEDPARTIES FROM API', relatedPartyDetails);
+            // console.log('RELATEDPARTIES FROM API', relatedPartyDetails);
             setRelatedPartyDetails(getTransactionByIdData.data?.keyParties[0].relatedParties);
         }
     }, [getTransactionByIdData, relatedPartyDetails, setRelatedPartyDetails])
@@ -144,7 +144,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
             reader.onload = () => {
                 const updatedKeyParties = [...keyParties];
                 updatedKeyParties[index].upload_evidence = [{ type: 'img', name: file.name, file: reader.result }];
-                console.log('Updated Key Parties:', updatedKeyParties);
+                // console.log('Updated Key Parties:', updatedKeyParties);
                 setkeyParties(updatedKeyParties);
             };
         }
@@ -168,7 +168,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                 element.details.name = element.details?.name || element.details?.givenName;
                 temp_names.push(element);
             });
-            console.log("GET RELATED PARTIES DATA-----", temp_names);
+            // console.log("GET RELATED PARTIES DATA-----", temp_names);
             setNames(temp_names);
         }
     }, [nameOption, setNames]);
@@ -238,7 +238,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
         dispatch(transactionDataAction(body))
         hendelNext()
     }
-    console.log('TAbLE dATa', tableData)
+    // console.log('TAbLE dATa', tableData)
     useEffect(() => {
         let buyer_arr = [];
         let warehouses = [];
@@ -261,7 +261,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
             });
         }
         setBuyer(buyer_arr);
-        // setWarehouses(warehouses);
+        setWarehouses(warehouses);
     }, [names, setBuyer])
 
 
@@ -279,10 +279,10 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
 
         setpartiesData(storeData);
     }, [getBorrower, getLender, getShippingCompany, warehouseCo, getCounterParty, tdata, setpartiesData]);
-    console.log('Check for lender', getLender)
+    // console.log('Check for lender', getLender)
 
-    console.log('warehouse company', getWarehouseCompany?.warehouses?.[0]?.warehouseCompany?.label)
-    console.log('Shipping company', getShippingCompany)
+    // console.log('warehouse company', getWarehouseCompany?.warehouses?.[0]?.warehouseCompany?.label)
+    // console.log('Shipping company', getShippingCompany)
     // console.log('Hedging Counterparty', getCounterParty.pricingCounterParty?.details?.name)
     useEffect(() => {
         AddUpParties()
@@ -327,7 +327,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                                     onClick={() => {
                                         setRowEditData(record);
                                         setShowEditModal(!showEditModal);
-                                        console.log('rowData ==', record);
+                                        // console.log('rowData ==', record);
                                     }}
                                     style={{ marginRight: 8 }}
                                 />
@@ -497,19 +497,21 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                                     <Col lg={2}>
 
                                         <AntdForm>
-                                            <AntdForm.Item label="Upload Evidence" name="upload_evidence" valuePropName="file"
-                                                rules={[{ required: true, message: "Please upload a logo!" }]}>
-                                                <Dragger
-                                                    fileList={fileList} // Controlled file list
-                                                    beforeUpload={() => false} // Prevent automatic upload
-                                                    onChange={handleFileChange} // Handle file change event
-                                                    onRemove={() => setFileList([])} // Reset file list when removing
-                                                    className="upload"
-                                                    maxCount={1}>
-                                                    <p className="ant-upload-drag-icon"> <InboxOutlined /> </p>
-                                                    <p className="ant-upload-text">Upload Relationship Evidence</p>
-                                                </Dragger>
-                                            </AntdForm.Item>
+
+                                            <Dragger
+                                                fileList={fileList} // Controlled file list
+                                                beforeUpload={() => false} // Prevent automatic upload
+                                                onChange={handleFileChange} // Handle file change event
+                                                onRemove={() => setFileList([])} // Reset file list when removing
+                                                className="upload"
+                                                maxCount={1}
+                                                style={{ width: '10rem', height: '10rem', border: '2px dashed #1890ff' }}
+                                            >
+
+                                                <p className="ant-upload-drag-icon"> <InboxOutlined /> </p>
+                                                <p className="ant-upload-text text-center">Upload Relationship Evidence</p>
+                                            </Dragger>
+
                                             {fileList.length > 0 && (
                                                 <div style={{ marginTop: 16 }}>
                                                     <p>Preview:</p>

@@ -16,13 +16,13 @@ import { beneficiaryAtom, contractDetailAtom, countryAtom, editeRowDataAtom, fun
 
 
 const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
-    console.log(getTrans)
+    // console.log(getTrans)
 
     const dispatch = useDispatch()
 
     const [fundFlow, setFundFlow] = useAtom(fundFlowAtom)
 
-    const [ setContractDetails] = useAtom(contractDetailAtom)
+    const [setContractDetails] = useAtom(contractDetailAtom)
     const [selectedName] = useAtom(selectedNameAtom)
     const [country, setCountry] = useAtom(countryAtom)
     const [beneficiary, setbeneficiary] = useAtom(beneficiaryAtom)
@@ -127,7 +127,7 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
     }
 
     const setdata = (data) => {
-        console.log("data====", data)
+        // console.log("data====", data)
         setLettersOfCredit([data])
     }
 
@@ -141,7 +141,7 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
         if (beneficiaries && beneficiaries.data && beneficiaries.status === 200) {
             setbeneficiary(beneficiaries.data)
         }
-        console.log('BENEFICIARIS', beneficiaries)
+        // console.log('BENEFICIARIS', beneficiaries)
     }, [beneficiaries, setbeneficiary])
 
     const termsOptions = [
@@ -503,7 +503,7 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                                 type="date"
                                 name="paymentDate"
                                 placeholder="dd-mm-yyyy"
-                                min={transactionData.details.contractDetails.contractDate ? new Date(transactionData.details.contractDetails.contractDate).toISOString().split("T")[0] : ""}
+                                min={transactionData.details?.contractDetails?.contractDate ? new Date(transactionData.details.contractDetails.contractDate).toISOString().split("T")[0] : ""}
                                 value={fundFlow.paymentDate}
                                 onChange={handleChange}
                                 required

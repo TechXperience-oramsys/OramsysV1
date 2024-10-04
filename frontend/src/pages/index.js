@@ -272,12 +272,12 @@ const Index = () => {
 
   if (AuthStorage.getStorageData(STORAGEKEY.roles) === "user") {
     primaryLinks = userRoutes;
-    console.log(primaryLinks);
+    // console.log(primaryLinks);
   } else if (AuthStorage.getStorageData(STORAGEKEY.roles) === "admin") {
     primaryLinks = AdminRoutes;
   } else if (AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin") {
     primaryLinks = superAdminRoutes;
-    console.log(primaryLinks);
+    // console.log(primaryLinks);
   }
 
   return (

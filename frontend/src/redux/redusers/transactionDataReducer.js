@@ -20,7 +20,7 @@ export const transactionDataReducer = (state = initialState, action) => {
     switch (action.type) {
         case TRANSACTION_DATA:
 
-            console.log('at redux',action.payload);
+            // console.log('at redux',action.payload);
             return {
                 ...state,
                 transactionData: action.payload,

@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { footerImages } from '../../assets/assests';
 
 import React from 'react'
 
@@ -7,10 +8,10 @@ const Footer = () => {
   return (
     <footer className="footer-area1">
       <div className="footer-bottom-img">
-        <img src="./assets/img/figure/figure1.png" alt="figure" width="309" height="235" />
+        <img src={footerImages.footer1} alt="figure" width="309" height="235" />
       </div>
       <div className="footer-top-img">
-        <img src="./assets/img/figure/figure2.png" alt="figure" width="369" height="225" />
+        <img src={footerImages.footer2} alt="figure" width="369" height="225" />
       </div>
       <div className="container">
         <div className="row">
@@ -21,7 +22,7 @@ const Footer = () => {
                   {/* <div className="lgo-img-t" style="background-image:url(img/my-img/lgo-red.png)"></div> */}
                   {/* <div className="lgo-img-t" ></div> */}
                   <div className="lgo-img">
-                    <img src="./assets/img/my-img/lgo-red.png" alt="logo" />
+                    <img src={footerImages.footer3} alt="logo" />
                   </div>
                 </a>
               </div>
@@ -74,10 +75,10 @@ const Footer = () => {
               <div className="copyright-area">
                 <p> © OramSys 2024. All Rights Reserved </p>
                 <div className="copyright-img1">
-                  <img src="./assets/img/figure/figure4.png" alt="figure" width="20" height="20" />
+                  <img src={footerImages.footer4} alt="figure" width="20" height="20" />
                 </div>
                 <div className="copyright-img2">
-                  <img src="./assets/img/figure/figure4.png" alt="figure" width="20" height="20" />
+                  <img src={footerImages.footer4} alt="figure" width="20" height="20" />
                 </div>
               </div>
             </div>
