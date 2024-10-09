@@ -12,6 +12,46 @@ const port = process.env.PORT || 5002
 //     credentials: true,
 //     exposedHeaders: 'Authorization'
 // };
+
+// Cross-domain JavaScript Source File Inclusion
+app.use((req, res, next) => {
+    res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' https://trusted-cdn.com");
+    next();
+});
+
+// X-Content-Type-Options Header Missing
+app.use((req, res, next) => {
+    res.setHeader("X-Content-Type-Options", "nosniff");
+    next();
+});
+
+// Server Leaks Version Information via "Server" HTTP Response Header Field
+app.disable('x-powered-by'); // Disables "X-Powered-By" header (Express-specific)
+
+app.use((req, res, next) => {
+    res.removeHeader("Server"); // Completely removes the "Server" header
+    next();
+});
+
+// Strict-Transport-Security Header Not Set
+app.use((req, res, next) => {
+    res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+    next();
+});
+
+// Missing Anti-Clickjacking Header
+app.use((req, res, next) => {
+    res.setHeader("X-Frame-Options", "DENY"); // Prevent clickjacking
+    next();
+});
+
+// Content Security Policy (CSP) Header Not Set
+app.use((req, res, next) => {
+    res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' https://trusted-cdn.com; style-src 'self'; img-src 'self';");
+    next();
+});
+
+
 app.use(cors());
 app.use(express.json({ limit: '50mb' }))
 app.use(express.static('files'))
