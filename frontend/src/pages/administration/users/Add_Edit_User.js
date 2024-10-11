@@ -149,21 +149,21 @@ const Add_Edit_User = () => {
   };
   const addUser = () => {
     if (validation()) {
-      return;
+        return
     }
     // if (id) {
-    state.createdBy = localStorage.getItem("userId");
-    dispatch(registerAction(state));
+        dispatch(registerAction(state))
     // }
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (id) {
-      editUser();
-    } else {
-      addUser();
-    }
-  };
+}
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   if (id) {
+  //     editUser();
+  //   } else {
+  //     addUser();
+  //   }
+  // };
 
 
   const profileOption = ["User", "Admin", "Tester"];
@@ -245,8 +245,8 @@ const Add_Edit_User = () => {
                 value={state.department} // Ensure state.department is updated correctly
               >
                 <option value="" disabled>Choose...</option>
-                {departmentOption.map((item) => (
-                  <option key={item} value={item}>{item}</option>
+                {departmentOption.map((item, i) => (
+                  <option key={i} value={item}>{item}</option>
                 ))}
               </Form.Select>
               {error?.department && (<span style={{ color: "#da251e", width: "100%", textAlign: "start", }}>{error?.department}</span>)}
@@ -260,8 +260,8 @@ const Add_Edit_User = () => {
                   setIsActive(true);
                 }}
                 disabled={isView} value={state.profile}  >
-                <option value="" disabled selected> Choose...</option>
-                {profileOption.map((item) => (<option value={item}>{item}</option>))}
+                <option value="" disabled defaultValue> Choose...</option>
+                {profileOption.map((item, i) => (<option key={i} value={item}>{item}</option>))}
               </Form.Select>
               {error?.profile && (<span style={{ color: "#da251e", width: "100%", textAlign: "start", }}>{error?.profile} </span>)}
             </Form.Group>
@@ -272,9 +272,8 @@ const Add_Edit_User = () => {
           <button onClick={() => navigate("/users")} className="footer_cancel_btn" >
             {isActive ? "Cancel" : "Back"}
           </button>
-          <button onClick={handleSubmit} className={`footer_next_btn ${isView ? "d-none" : "d-block"}`} disabled={!isActive}>
-            Save
-          </button>
+          <button onClick={() => { !id ? addUser() : editUser() }} className={`footer_next_btn ${isView ? 'd-none' : 'd-block'}`}>Save</button>
+
         </div>
       </div>
     </>

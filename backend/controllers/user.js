@@ -196,7 +196,7 @@ class UserController {
       if (e.code === 11000) {
         return res
           .status(httpStatus.BAD_REQUEST)
-          .send({ message: "user is already exist" });
+          .send({ message: "user already exists" });
       } else {
         return res
           .status(httpStatus.INTERNAL_SERVER_ERROR)

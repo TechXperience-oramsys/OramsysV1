@@ -3,8 +3,6 @@ import { IS_LOADING, REGISTER, REGISTER_ERROR, REGISTER_LOADING } from '../types
 
 export const registerAction = (body) => async (dispatch) => {
     try {
-
-        console.log(1);
         dispatch({
             type: IS_LOADING,
             payload: true
