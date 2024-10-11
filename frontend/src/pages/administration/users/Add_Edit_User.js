@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Form } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { userGetByIdAction, userUpdateAction, } from "../../../redux/actions/userAction";
+import {
+  userGetByIdAction,
+  userUpdateAction,
+} from "../../../redux/actions/userAction";
 import { toast } from "react-hot-toast";
 import { REGISTER, USER_GET_BY_ID, USER_UPDATE } from "../../../redux/types";
 import { registerAction } from "../../../redux/actions/registerAction";
@@ -37,7 +40,7 @@ const Add_Edit_User = () => {
         email: "",
         department: "",
         profile: "",
-        createdBy: "",
+        createdBy: localStorage.getItem("userId"),
       });
     } else {
       dispatch(userGetByIdAction(id));
@@ -149,12 +152,12 @@ const Add_Edit_User = () => {
   };
   const addUser = () => {
     if (validation()) {
-        return
+      return;
     }
     // if (id) {
-        dispatch(registerAction(state))
+    dispatch(registerAction(state));
     // }
-}
+  };
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
@@ -164,7 +167,6 @@ const Add_Edit_User = () => {
   //     addUser();
   //   }
   // };
-
 
   const profileOption = ["User", "Admin", "Tester"];
 
@@ -189,7 +191,8 @@ const Add_Edit_User = () => {
               <Form.Label>
                 Name <RequiredSpan />
               </Form.Label>
-              <Form.Control className=""
+              <Form.Control
+                className=""
                 value={state.name}
                 onChange={(e) => {
                   setState({ ...state, name: e.target.value });
@@ -235,7 +238,10 @@ const Add_Edit_User = () => {
             </Form.Group>
 
             <Form.Group as={Col} controlId="formGridZip">
-              <Form.Label> Department <RequiredSpan /> </Form.Label>
+              <Form.Label>
+                {" "}
+                Department <RequiredSpan />{" "}
+              </Form.Label>
               <Form.Select
                 onChange={(e) => {
                   setState({ ...state, department: e.target.value });
@@ -244,36 +250,82 @@ const Add_Edit_User = () => {
                 disabled={isView}
                 value={state.department} // Ensure state.department is updated correctly
               >
-                <option value="" disabled>Choose...</option>
+                <option value="" disabled>
+                  Choose...
+                </option>
                 {departmentOption.map((item, i) => (
-                  <option key={i} value={item}>{item}</option>
+                  <option key={i} value={item}>
+                    {item}
+                  </option>
                 ))}
               </Form.Select>
-              {error?.department && (<span style={{ color: "#da251e", width: "100%", textAlign: "start", }}>{error?.department}</span>)}
+              {error?.department && (
+                <span
+                  style={{
+                    color: "#da251e",
+                    width: "100%",
+                    textAlign: "start",
+                  }}
+                >
+                  {error?.department}
+                </span>
+              )}
             </Form.Group>
 
             <Form.Group as={Col} controlId="formGridZip">
-              <Form.Label> Profile <RequiredSpan /></Form.Label>
-              <Form.Select className=""
+              <Form.Label>
+                {" "}
+                Profile <RequiredSpan />
+              </Form.Label>
+              <Form.Select
+                className=""
                 onChange={(e, newVal) => {
                   setState({ ...state, profile: e.target.value });
                   setIsActive(true);
                 }}
-                disabled={isView} value={state.profile}  >
-                <option value="" disabled defaultValue> Choose...</option>
-                {profileOption.map((item, i) => (<option key={i} value={item}>{item}</option>))}
+                disabled={isView}
+                value={state.profile}
+              >
+                <option value="" disabled defaultValue>
+                  {" "}
+                  Choose...
+                </option>
+                {profileOption.map((item, i) => (
+                  <option key={i} value={item}>
+                    {item}
+                  </option>
+                ))}
               </Form.Select>
-              {error?.profile && (<span style={{ color: "#da251e", width: "100%", textAlign: "start", }}>{error?.profile} </span>)}
+              {error?.profile && (
+                <span
+                  style={{
+                    color: "#da251e",
+                    width: "100%",
+                    textAlign: "start",
+                  }}
+                >
+                  {error?.profile}{" "}
+                </span>
+              )}
             </Form.Group>
           </Row>
         </div>
 
         <div className="footer_">
-          <button onClick={() => navigate("/users")} className="footer_cancel_btn" >
+          <button
+            onClick={() => navigate("/users")}
+            className="footer_cancel_btn"
+          >
             {isActive ? "Cancel" : "Back"}
           </button>
-          <button onClick={() => { !id ? addUser() : editUser() }} className={`footer_next_btn ${isView ? 'd-none' : 'd-block'}`}>Save</button>
-
+          <button
+            onClick={() => {
+              !id ? addUser() : editUser();
+            }}
+            className={`footer_next_btn ${isView ? "d-none" : "d-block"}`}
+          >
+            Save
+          </button>
         </div>
       </div>
     </>
