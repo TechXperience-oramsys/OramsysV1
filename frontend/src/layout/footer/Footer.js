@@ -73,7 +73,7 @@ const Footer = () => {
           <div className="row justify-content-center">
             <div className="col-lg-12">
               <div className="copyright-area">
-                <p> © OramSys 2024. All Rights Reserved </p>
+                <p> © Oramsys 2024. All Rights Reserved </p>
                 <div className="copyright-img1">
                   <img src={footerImages.footer4} alt="figure" width="20" height="20" />
                 </div>
