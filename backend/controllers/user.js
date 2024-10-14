@@ -145,13 +145,13 @@ class UserController {
           host: "c116604.sgvps.net",
           port: 465,
           auth: {
-            user: "notification@techxperience.ng",
-            pass: "0ramsys!@#",
+            user: "notification@oramsysdev.com",
+            pass: "N0tifica7ion0ramsys",
           },
         });
         // Email content
         const mailOptions = {
-          from: "notification@techxperience.ng",
+          from: "notification@oramsysdev.com",
           to: body.email,
           subject: "OTP from Oramsys",
           text: "User created successfully",
@@ -161,7 +161,7 @@ class UserController {
               <p styyle="font-size: 12px">You have been onboarded on the Oramsys platform. Click on the link below to enter the OTP and create a password.</p>
               <p style="font-weight: bold; font-size: 20px;">OTP: ${otp}</p>
               <p>
-                <a href="https://oramsysdev.com/verify-user" style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">
+                <a href="http://localhost:3000/verify-user" style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">
                   Verify Account
                 </a>
               </p>
@@ -472,13 +472,13 @@ class UserController {
             host: "c116604.sgvps.net",
             port: 465,
             auth: {
-              user: "notification@techxperience.ng",
-              pass: "0ramsys!@#",
+              user: "notification@oramsysdev.com",
+              pass: "N0tifica7ion0ramsys",
             },
           });
 
           const mailOptions = {
-            from: "notification@techxperience.ng",
+            from: "notification@oramsysdev.com",
             to: user?.email,
             subject: "OTP Verification",
             text: "OTP Recieved for Password",

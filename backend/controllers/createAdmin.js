@@ -113,14 +113,14 @@ const createAdmin = () => async (req, res) => {
         host: "c116604.sgvps.net",
         port: 465,
         auth: {
-          user: "notification@techxperience.ng",
-          pass: "0ramsys!@#",
+          user: "notification@oramsysdev.com",
+          pass: "N0tifica7ion0ramsys",
         },
       });
       // Email content
       const id = newCorporation._id.toString(); // Convert ObjectId to string if necessary
       const mailOptions = {
-        from: "notification@techxperience.ng",
+        from: "notification@oramsysdev.com",
         to: req.body.businessEmail,
         subject: "OTP from Oramsys",
         text: "User created successfully",

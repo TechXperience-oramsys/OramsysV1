@@ -20,13 +20,13 @@ const resetAdminPassword = () => async (req, res) => {
           host: "c116604.sgvps.net",
           port: 465,
           auth: {
-            user: "notification@techxperience.ng",
-            pass: "0ramsys!@#",
+            user: "notification@oramsysdev.com",
+            pass: "N0tifica7ion0ramsys",
           },
         });
 
         const mailOptions = {
-          from: "notification@techxperience.ng",
+          from: "notification@oramsysdev.com",
           to: resData.businessEmail,
           subject: "Password reset",
           text: "Password reset successfully",
