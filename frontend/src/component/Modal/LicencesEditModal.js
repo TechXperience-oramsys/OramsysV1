@@ -215,7 +215,7 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
                       renderInput={(params) => (
                         <TextField {...params} label="Type" variant="standard" />
                       )}
-                      value={(typeData.length && licence.type) ? typeData.find(item => item === licence?.type) : {}}
+                      value={(typeData.length && licence.type) ? typeData.find(item => item === licence?.type) : null}
                       disabled={mode === "View"}
                     />
                     {formErrors && formErrors?.type && <span style={{ color: 'red' }}>{formErrors.type}</span>}
@@ -272,7 +272,7 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
                       renderInput={(params) => (
                         <TextField {...params} label="Country" variant="standard" />
                       )}
-                      value={(country.length && licence.country) ? country.find(item => item._id === licence?.country) : {}}
+                      value={(country.length && licence.country) ? country.find(item => item._id === licence?.country) : null}
                       disabled={mode === "View"}
                     />
                     {formErrors && formErrors?.country && <span style={{ color: 'red' }}>{formErrors.country}</span>}
@@ -314,7 +314,7 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
               <Row>
                 <Col>
                   <div className='drag-and-drop add-evidence'>
-                    <Form.Item label="Logo" name="logo" valuePropName="file" rules={[{ required: true, message: "Please upload a logo!" }]}>
+                    <Form.Item label="" name="logo" valuePropName="file" rules={[{ required: true, message: "Please upload a logo!" }]}>
                       <Dragger
                         fileList={fileList}
                         beforeUpload={() => false} // Prevent automatic upload
@@ -322,7 +322,7 @@ const LicencesEditModal = ({ onHide, show, mode, editData }) => {
                         maxCount={1} // Limit to 1 file
                         className="upload">
                         <p className="ant-upload-drag-icon"><InboxOutlined /></p>
-                        <p className="ant-upload-text">Upload Evidence</p>
+                        <p className="ant-upload-text">Upload Liscence</p>
                       </Dragger>
                     </Form.Item>
                     {/* <DropzoneArea
