@@ -111,56 +111,29 @@ const SignIn = () => {
 
                 <div className="form">
                   <div className="form-floating mb-3">
-                    <input
-                      type="email"
-                      name="email"
-                      onChange={(e) => handelChange(e)}
-                      onKeyDown={handleKeyPress}
-                      className="form-control"
-                      id="floatingInput"
-                      placeholder="Email"
-                    />
+                    <input type="email"  name="email" onChange={(e) => handelChange(e)} onKeyDown={handleKeyPress} className="form-control" id="floatingInput" placeholder="Email" />
                     <label htmlFor="floatingInputValue">Email address</label>
                     {loginFormError.email && (
-                      <span
-                        style={{
-                          color: "#da251e",
-                          width: "100%",
-                          textAlign: "start",
-                        }}
-                      >
+                      <span style={{ color: "#da251e", width: "100%", textAlign: "start"}}>
                         {loginFormError.email}
                       </span>
                     )}
                   </div>
 
                   <div className="position-relative form-floating mb-4">
-                    <input
-                      type={passwordVisible ? "text" : "password"}
-                      onChange={(e) => handelChange(e)}
-                      onKeyDown={handleKeyPress}
+                    <input type={passwordVisible ? "text" : "password"} onChange={(e) => handelChange(e)} onKeyDown={handleKeyPress}
                       name="password"
                       className="form-control"
                       id="floatingPassword"
-                      placeholder="Password"
-                    />
+                      placeholder="Password" />
                     <label htmlFor="floatingInputValue">Password</label>
                     {loginFormError.password && (
-                      <span
-                        style={{
-                          color: "#da251e",
-                          width: "100%",
-                          textAlign: "start",
-                        }}
-                      >
+                      <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>
                         {loginFormError.password}
                       </span>
                     )}
 
-                    <span
-                      className="position-absolute end-0 top-50 text-lg translate-middle-y me-3 cursor-pointer"
-                      onClick={togglePasswordVisibility}
-                    >
+                    <span className="position-absolute end-0 top-50 text-lg translate-middle-y me-3 cursor-pointer" onClick={togglePasswordVisibility}>
                       {passwordVisible ? (
                         <EyeInvisibleOutlined />
                       ) : (

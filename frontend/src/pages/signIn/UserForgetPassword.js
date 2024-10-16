@@ -63,19 +63,57 @@ function UserForgetPassword() {
       })
       .finally(() => setLoading(false));
   };
+  const [error, setError] = useState({})
+
+  const validation = () => {
+    let flag = false;
+    let error = {};
+
+    // Validate Password
+    if (!password) {
+      flag = true;
+      error.password = "Please enter a password";
+      toast.error(error.password);
+    } else if (passwordRegex.test(password) === false) {
+      flag = true;
+      error.password = "Password must contain 8 characters (A-Z, a-z, 0-9, #@$%...)";
+      toast.error(error.password);
+    }
+
+    // Validate Confirm Password
+    if (!confirPass) {
+      flag = true;
+      error.confirPass = "Please confirm your password";
+      toast.error(error.confirPass);
+    } else if (password !== confirPass) {
+      flag = true;
+      error.confirPass = "Passwords do not match";
+      toast.error(error.confirPass);
+    } else if (passwordRegex.test(confirPass) === false) {
+      flag = true;
+      error.confirPass = "Password must contain 8 characters (A-Z, a-z, 0-9, #@$%...)";
+      toast.error(error.confirPass);
+    }
+
+    setError(error);
+    return flag;
+  };
 
   const handelChangePassword = () => {
+    if (validation()) {
+      return
+    }
     setLoading(true);
-    if (passwordRegex.test(password) === false) {
-      toast.warning("Password must contains 8 characters(A-Z,a-z,0-9,#@$%...)");
-      setLoading(false);
-      return false;
-    }
-    if (password !== confirPass) {
-      toast.warning("Confirm Password must be same as Password!");
-      setLoading(false);
-      return false;
-    }
+    // if (passwordRegex.test(password) === false) {
+    //   toast.error("Password must contains 8 characters(A-Z,a-z,0-9,#@$%...)");
+    //   setLoading(false);
+    //   return false;
+    // }
+    // if (password !== confirPass) {
+    //   toast.error("Confirm Password must be same as Password!");
+    //   setLoading(false);
+    //   return false;
+    // }
 
     const data = {
       email: mail,
@@ -94,86 +132,123 @@ function UserForgetPassword() {
       })
       .finally(() => setLoading(false));
   };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSendOTP(); // Trigger the Login function
+    }
+  };
+
   return (
-    <div class="container d-flex justify-content-center align-items-center my-2">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="text-center">Forget Password</h4>
+    <div className="container d-flex justify-content-center align-items-center" style={{ marginTop: '8rem', marginBottom: '10rem' }}>
+      <div className="col-md-6 col-sm-12">
+        <div className="card">
+          <div className="card-body">
+            <h4 className="text-center mb-4">{isSent && !isVerified ? 'Verify OTP' : isVerified ? 'Set Password' : 'Forget Password'}</h4>
+
             {!isSent && (
-              <div class="mb-3">
-                <label htmlFor="email" class="form-label">
-                  E-mail
-                </label>
-                <div class="input-group">
-                  <input
-                    type="email"
-                    class="form-control"
-                    placeholder="Enter your E-mail"
-                    onChange={(e) => setMail(e.target.value)}
-                  />
+              <>
+                {/* <div className="mb-3">
+                  <label htmlFor="email" className="form-label">E-mail</label>
+                  <div className="input-group">
+                    <input type="email" className="form-control" placeholder="Enter your E-mail" onChange={(e) => setMail(e.target.value)} />
+                  </div>
+                  <button className="btn btn-primary w-100 mt-3" onClick={() => handleSendOTP()}>
+                    Send OTP {loading && <Spinner size="sm" />}
+                  </button>
+                </div> */}
+
+                <div className="form-floating mb-3">
+                  <input type="email" name="email" onChange={(e) => setMail(e.target.value)} onKeyDown={handleKeyPress} className="form-control" id="floatingInput" placeholder="Email" />
+                  <label htmlFor="floatingInputValue">Email address</label>
+
+                  <button className="btn btn-primary w-100 mt-3" onClick={() => handleSendOTP()}>
+                    Send OTP {loading && <Spinner size="sm" />}
+                  </button>
                 </div>
-                <button
-                  className="btn btn-primary my-2"
-                  onClick={() => handleSendOTP()}
-                >
-                  Send OTP {loading && <Spinner size="sm" />}
-                </button>
-              </div>
+
+              </>
             )}
+
             {isSent && !isVerified && (
-              <div class="mb-3">
-                <label htmlFor="otp" class="form-label">
-                  OTP
-                </label>
-                <div class="input-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter OTP"
-                    onChange={(e) => setOtp(e.target.value)}
-                  />
+              <>
+                <div className="form-floating mb-3">
+                  <input type="email" name="email" onChange={(e) => setOtp(e.target.value)} onKeyDown={handleKeyPress} className="form-control" id="floatingInput" placeholder="OTP" />
+                  <label htmlFor="floatingInputValue">Enter OTP</label>
+
+                  <button className="btn btn-primary w-100 mt-3" onClick={() => handleVerifyOTP()}>
+                    Confirm {loading && <Spinner size="sm" />}
+                  </button>
                 </div>
-                <button
-                  className="btn btn-primary my-2"
-                  onClick={() => handleVerifyOTP()}
-                >
-                  Verify OTP {loading && <Spinner size="sm" />}
-                </button>
-              </div>
-            )}
-            {isVerified && (
-              <div class="mb-3">
-                <label htmlFor="password" class="form-label">
-                  Password
-                </label>
-                <div class="input-group">
-                  <input
-                    type={show ? "text" : "password"}
-                    class="form-control"
-                    placeholder="Enter Password"
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <span
-                    className="position-absolute end-0 top-50 text-lg translate-middle-y me-3 cursor-pointer"
-                    onClick={() => setShow((prev) => !prev)}
+
+                {/* <div className="mb-3">
+                  <label htmlFor="otp" className="form-label">
+                    OTP
+                  </label>
+                  <div className="input-group">
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Enter OTP"
+                      onChange={(e) => setOtp(e.target.value)}
+                    />
+                  </div>
+                  <button
+                    className="btn btn-primary w-100 mt-3"
+                    onClick={() => handleVerifyOTP()}
                   >
-                    {show ? <EyeInvisibleOutlined /> : <EyeOutlined />}
-                  </span>
+                    Verify OTP {loading && <Spinner size="sm" />}
+                  </button>
+                </div> */}
+              </>
+            )}
+
+            {isVerified && (
+              <div>
+                <div className="mb-3">
+                  <label htmlFor="password" className="form-label">
+                    New password
+                  </label>
+                  <div className="input-group position-relative">
+                    <input
+                      type={show ? "text" : "password"}
+                      className="form-control"
+                      placeholder=""
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <span
+                      className="position-absolute end-0 top-50 translate-middle-y me-3 cursor-pointer"
+                      onClick={() => setShow((prev) => !prev)}
+                    >
+                      {show ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                    </span>
+                  </div>
+                  {error && error?.password && <span style={{ color: 'red' }}>{error.password}</span>}
                 </div>
-                <label htmlFor="password" class="form-label">
-                  Confirm Password
-                </label>
-                <div class="input-group">
-                  <input
-                    type="password"
-                    class="form-control"
-                    placeholder="Confirm Password must same as password"
-                    onChange={(e) => setConfirmPass(e.target.value)}
-                  />
+
+                <div className="mb-3">
+                  <label htmlFor="confirm_password" className="form-label">
+                    Confirm new password
+                  </label>
+                  <div className="input-group">
+                    <input
+                      type={show ? "text" : "password"}
+                      className="form-control"
+                      placeholder=""
+                      onChange={(e) => setConfirmPass(e.target.value)}
+                    />
+                     <span
+                      className="position-absolute end-0 top-50 translate-middle-y me-3 cursor-pointer"
+                      onClick={() => setShow((prev) => !prev)}
+                    >
+                      {show ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                    </span>
+                  </div>
+                  {error && error?.confirPass && <span style={{ color: 'red' }}>{error.confirPass}</span>}
                 </div>
+
                 <button
-                  className="btn btn-primary my-2"
+                  className="btn btn-primary w-100 mt-3"
                   onClick={() => handelChangePassword()}
                 >
                   Submit {loading && <Spinner size="sm" />}
@@ -184,6 +259,7 @@ function UserForgetPassword() {
         </div>
       </div>
     </div>
+
   );
 }
 

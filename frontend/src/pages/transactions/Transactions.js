@@ -221,6 +221,7 @@ const Transactions = () => {
       render: (createdAt) =>
         new Date(createdAt).toLocaleDateString("en-US", DATE_OPTIONS),
       className: "hide-on-md",
+      align: "center",
     },
     // {
     //   title: "Created by",
@@ -239,6 +240,7 @@ const Transactions = () => {
       title: "Borrower",
       dataIndex: "borrower_Applicant",
       key: "borrower_Applicant",
+      align: "center",
     },
     {
       title: "Lender",
@@ -281,30 +283,26 @@ const Transactions = () => {
       key: "termSheet",
       className: "hide-on-md",
       render: (termSheet, record) => (
-        <div
-          className={`${termSheet === "Not Signed" ? "bg-red-100" : "bg-green-100"
-            } text-center cursor-pointer`}
-        >
-          <p
-            onClick={() => {
-              if (termSheet === "Not Signed") {
-                setShowExcelModal(true);
-                setSendId(record._id);
-              }
-            }}
-          >
+        <div className={`${termSheet === "Not Signed" ? "bg-red-100 text-danger" : "bg-green-100 text-success"} rounded-pill text-center cursor-pointer`}>
+          <p onClick={() => {
+            if (termSheet === "Not Signed") {
+              setShowExcelModal(true);
+              setSendId(record._id);
+            }
+          }}>
             {termSheet}
             {termSheet === "Signed" ? (
-              <DownloadOutlined
-                className="ms-3"
-                onClick={() => {
-                  downloadTermSheet(record._id);
-                }}
-              />
+              <DownloadOutlined className="ms-3" onClick={() => { downloadTermSheet(record._id) }} />
             ) : null}
           </p>
         </div>
       ),
+    },
+    {
+      title: "Transaction Status",
+      dataIndex: ["details", "productDetails", "name", "name"],
+      key: "product",
+      align: "center",
     },
     {
       title: "Actions",
@@ -315,20 +313,20 @@ const Transactions = () => {
             <Menu>
               {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" && (
                 <Menu.Item
-                onClick={() => { 
-                  navigate(`/edit-transactions?id=${record._id}`,
-                    {
-                      state: [{ type: record.type },
-                      { type: record?.details?.productDetails?.nature ? record.details.productDetails.nature : "" },
-                      { isView: false },
-                      ],
-                    });
-                }}
-              >
-                <EditOutlined /> Edit
-              </Menu.Item>
+                  onClick={() => {
+                    navigate(`/edit-transactions?id=${record._id}`,
+                      {
+                        state: [{ type: record.type },
+                        { type: record?.details?.productDetails?.nature ? record.details.productDetails.nature : "" },
+                        { isView: false },
+                        ],
+                      });
+                  }}
+                >
+                  <EditOutlined /> Edit
+                </Menu.Item>
               )}
-              
+
 
               <Menu.Item
                 onClick={() => {
@@ -435,55 +433,55 @@ const Transactions = () => {
             </div>
           </header>
 
-          
-            <main className="py-2">
-              <div className="container-fluid">
-                <div className="row g-6 mb-4"></div>
 
-                <div className="container mx-auto">
-                  <div className="mb-2 d-flex justify-content-start align-items-center">
-                    <div className="position-relative">
-                      <span className="position-absolute search">
-                        <CiSearch size={25} />
-                      </span>
-                      <input
-                        type="text"
-                        id="search"
-                        onKeyUp={(e) => checkSearch(e)}
-                        onChange={(e) => setSearch(e.target.value)}
-                        className="form-control w-100 ps-5 fw-light border-none"
-                        placeholder="Search transaction..."
-                      />
-                    </div>
+          <main className="py-2">
+            <div className="container-fluid">
+              <div className="row g-6 mb-4"></div>
 
-                    {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" ? (
-                      <AntDropdown overlay={menu} trigger={["click"]}>
-                        <AntButton
-                          className="btn d-inline-flex btn-md btn-light mx-1 py-2 me-3"
-                          id="dropdown-autoclose-outside"
-                        >
-                          <span className="">Create transaction</span>
-                        </AntButton>
-                      </AntDropdown>
-                    ) : (
-                      <></>
-                    )}
-                  </div>
-                  <div className="mt-10 table-responsive form ">
-                    <Table
-                      columns={columns}
-                      dataSource={currentTrans}
-                      pagination={{
-                        total: getAlltransactionData?.data?.length,
-                        pageSize: postsPerPage,
-                        current: currentPage,
-                        onChange: paginate,
-                      }}
-                      loading={!currentTrans}
-                      rowKey={(record) => record._id}
+              <div className="container mx-auto">
+                <div className="mb-2 d-flex justify-content-start align-items-center">
+                  <div className="position-relative">
+                    <span className="position-absolute search">
+                      <CiSearch size={25} />
+                    </span>
+                    <input
+                      type="text"
+                      id="search"
+                      onKeyUp={(e) => checkSearch(e)}
+                      onChange={(e) => setSearch(e.target.value)}
+                      className="form-control w-100 ps-5 fw-light border-none"
+                      placeholder="Search transaction..."
                     />
                   </div>
-                  {/* <div className=" border-0 mb-0">
+
+                  {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" ? (
+                    <AntDropdown overlay={menu} trigger={["click"]}>
+                      <AntButton
+                        className="btn d-inline-flex btn-md btn-light mx-1 py-2 me-3"
+                        id="dropdown-autoclose-outside"
+                      >
+                        <span className="">Create transaction</span>
+                      </AntButton>
+                    </AntDropdown>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <div className="mt-10 table-responsive form ">
+                  <Table
+                    columns={columns}
+                    dataSource={currentTrans}
+                    pagination={{
+                      total: getAlltransactionData?.data?.length,
+                      pageSize: postsPerPage,
+                      current: currentPage,
+                      onChange: paginate,
+                    }}
+                    loading={!currentTrans}
+                    rowKey={(record) => record._id}
+                  />
+                </div>
+                {/* <div className=" border-0 mb-0">
                     <span className="text-muted text-sm">
                       <Paginate
                         postsPerPage={postsPerPage}
@@ -496,10 +494,10 @@ const Transactions = () => {
                       />
                     </span>
                   </div> */}
-                </div>
               </div>
-            </main>
-          
+            </div>
+          </main>
+
         </div>
       </div>
 

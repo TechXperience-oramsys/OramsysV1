@@ -94,52 +94,39 @@ function ForgetPassword() {
       .finally(() => setLoading(false));
   };
   return (
-    <div class="container d-flex justify-content-center align-items-center my-2">
-      <div class="col-md-8">
+    <div className="container d-flex justify-content-center align-items-center" style={{ marginTop: '8rem', marginBottom: '10rem' }}>
+      <div className="col-md-6 col-sm-12">
         <div class="card">
           <div class="card-body">
-            <h4 class="text-center">Forget Password</h4>
+            <h4 className="text-center mb-4">{isSent && !isVerified ? 'Verify OTP' : isVerified ? 'Set Password' : 'Forget Password'}</h4>
             {!isSent && (
-              <div class="mb-3">
-                <label htmlFor="email" class="form-label">
-                  E-mail
-                </label>
-                <div class="input-group">
-                  <input
-                    type="email"
-                    class="form-control"
-                    placeholder="Enter your E-mail"
-                    onChange={(e) => setMail(e.target.value)}
-                  />
+              <>
+                <div className="form-floating mb-3">
+                  <input type="email" name="email" onChange={(e) => setMail(e.target.value)} className="form-control" id="floatingInput" placeholder="Email" />
+                  <label htmlFor="floatingInputValue">Email address</label>
+
+                  <button className="btn btn-primary w-100 mt-3" onClick={() => handleSendOTP()}>
+                    Send OTP {loading && <Spinner size="sm" />}
+                  </button>
                 </div>
-                <button
-                  className="btn btn-primary my-2"
-                  onClick={() => handleSendOTP()}
-                >
-                  Send OTP {loading && <Spinner size="sm" />}
-                </button>
-              </div>
+
+
+
+              </>
             )}
             {isSent && !isVerified && (
-              <div class="mb-3">
-                <label htmlFor="otp" class="form-label">
-                  OTP
-                </label>
-                <div class="input-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter OTP"
-                    onChange={(e) => setOtp(e.target.value)}
-                  />
+              <>
+                <div className="form-floating mb-3">
+                  <input type="email" name="email" onChange={(e) => setOtp(e.target.value)} className="form-control" id="floatingInput" placeholder="OTP" />
+                  <label htmlFor="floatingInputValue">Enter OTP</label>
+
+                  <button className="btn btn-primary w-100 mt-3" onClick={() => handleVerifyOTP()}>
+                    Confirm {loading && <Spinner size="sm" />}
+                  </button>
                 </div>
-                <button
-                  className="btn btn-primary my-2"
-                  onClick={() => handleVerifyOTP()}
-                >
-                  Verify OTP {loading && <Spinner size="sm" />}
-                </button>
-              </div>
+
+
+              </>
             )}
             {isVerified && (
               <div class="mb-3">

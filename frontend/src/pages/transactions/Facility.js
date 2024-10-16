@@ -1563,30 +1563,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
         </div>
 
         <div>
-          <div className="form">
-            <h4 className="fs-5 fw-bold mb-4">Loan to Collateral Value</h4>
-            <Row>
-              <Form.Group as={Col} lg={3} controlId="formGridZip">
-                <Form.Label><span className='text-danger text-red fw-lighter fst-italic'>This field is not editable</span></Form.Label>
-                <InputGroup>
-                  <Form.Control
-                    name=""
-                    value={(
-                      (parseInt(facility.amount) /
-                        parseInt(
-                          transactionData?.details?.contractDetails?.value?.replace(
-                            /,/g,
-                            ""
-                          )
-                        ) || 0) * 100
-                    ).toFixed(2)}
-                    disabled={isView}
-                  />
-                  <InputGroup.Text>%</InputGroup.Text>
-                </InputGroup>
-              </Form.Group>
-            </Row>
-          </div>
+          
 
           <div className="form">
             <h6 className="fs-5 fw-bold mb-4">FACILITY DETAILS</h6>
@@ -1815,6 +1792,31 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                 )}
             </div>
           </div>
+
+          <div className="form">
+            <h4 className="fs-5 fw-bold mb-4">LOAN TO COLLATERAL VALUE</h4>
+            <Row>
+              <Form.Group as={Col} lg={3} controlId="formGridZip">
+                <Form.Label><span className='text-danger text-red fw-lighter fst-italic'>This field is not editable</span></Form.Label>
+                <InputGroup>
+                  <Form.Control
+                    name=""
+                    value={(
+                      (parseInt(facility.amount) /
+                        parseInt(
+                          transactionData?.details?.contractDetails?.value?.replace(
+                            /,/g,
+                            ""
+                          )
+                        ) || 0) * 100
+                    ).toFixed(2)}
+                    disabled={isView}
+                  />
+                  <InputGroup.Text>%</InputGroup.Text>
+                </InputGroup>
+              </Form.Group>
+            </Row>
+          </div>
         </div>
 
         <div className="add-edit-product p-0">
@@ -1926,7 +1928,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
             <div className="product p-0">
               <div className="mb-5">
                 <div className="mb-3 d-flex justify-content-between align-items-center">
-                  <h6 className="fs-5 fw-bold">Source of Repayment</h6>
+                  <h6 className="fs-5 fw-bold">SOURCE OF REPAYMENT</h6>
 
                   <Button
                     onClick={() => {
@@ -1959,7 +1961,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
 
         <div className="form">
           <div className="">
-            <h4 className="fw-bold mb-3">Terms</h4>
+            <h4 className="fs-5 fw-bold mb-3">TERMS</h4>
 
             <div>
               {/* <div className="mb-3"> */}

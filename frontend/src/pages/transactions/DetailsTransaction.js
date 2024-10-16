@@ -428,6 +428,9 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                     // console.log('CHECK ALL DATA', getTransactionByIdData.data)
                     // console.log(respProductDetails, 'prductings')
 
+
+                    console.log('data', getTransactionByIdData.data?.details?.shippingOptions?.warehouses)
+
                     // console.log('frm borooowed', getTransactionByIdData.data?.borrower_Applicant)
                     if (getTransactionByIdData && getTransactionByIdData.data) {
                         setEditId(getTransactionByIdData.data?.details?._id)
@@ -518,7 +521,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                             shippingCompany: getTransactionByIdData.data?.details?.shippingOptions
                                 ?.shippingCompany?._id,
                             warehouses:
-                                getTransactionByIdData.data?.details?.shippingOptions?.warehouses?.forEach(
+                                getTransactionByIdData.data?.details?.shippingOptions?.warehouses?.map(
                                     (item) => {
                                         return {
                                             warehouse: {
@@ -1137,7 +1140,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
             type: transactionType,
         }
 
-        console.log(body.shipping_company, 'WAHALA')
+        console.log(body, 'WAHALA')
 
         dispatch(transactionDataAction(body))
         toast.success("Details added successfully!");
@@ -1276,6 +1279,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         },
     ];
 
+    // console.log('Table data', shippingOptions)
     return (
         <>
             {isLoading && productDetails.length > 0 ? <LoadingSpinner /> :

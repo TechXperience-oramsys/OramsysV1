@@ -160,7 +160,7 @@ const Dashboard = () => {
   const getAllEntities = useSelector((state) => state.entityData.entity);
   const ratingAgenciesDatas = useSelector((state) => state.ratingAgenciesData?.ratingAgencies);
   const adminDatas = useSelector((state) => state.adminData?.getAdminData);
-  console.log('admin data', adminDatas)
+  // console.log('admin data', adminDatas)
 
   const totalValue = useMemo(() => {
     if (!getAlltransactionData?.data) return "0";

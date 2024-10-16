@@ -350,6 +350,8 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
         },
     ];
 
+    console.log('shipping company', getShippingCompany)
+
     return (
         <>
             <div className='product'>

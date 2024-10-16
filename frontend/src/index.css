@@ -1,10 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet");
+@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"rel="stylesheet");
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Figtree", "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Figtree", "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -13,8 +13,7 @@ body::-webkit-scrollbar {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Figtree",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Figtree", monospace;
 }
 #dash::-webkit-scrollbar {
   width: 0;
@@ -748,7 +747,6 @@ section.login .social-container a {
     width: 100%;
   }
 }
-
 
 html {
   height: 100%;
@@ -15846,40 +15844,42 @@ div#wrapper.open > .offcanvas-mask {
   background: lightgrey;
 }
 
- .custom-input, .custom-button {
-    height: 40px; /* Adjust height */
-    width: 40px;  /* Adjust width */
-    border: none;
-    outline: none;
-    border-radius: 0; /* Make it square */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-  }
+.custom-input,
+.custom-button {
+  height: 40px; /* Adjust height */
+  width: 40px; /* Adjust width */
+  border: none;
+  outline: none;
+  border-radius: 0; /* Make it square */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
 
-  .custom-input {
-    padding-left: 5px; /* Add some padding if needed */
-  }
+.custom-input {
+  padding-left: 5px; /* Add some padding if needed */
+}
 
-  .custom-button {
-    background-color: transparent; /* Make button flat */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
+.custom-button {
+  background-color: transparent; /* Make button flat */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  .custom-button span {
-    display: none; /* Hide text inside the button */
-  }
+.custom-button span {
+  display: none; /* Hide text inside the button */
+}
 
-  .custom-input::placeholder {
-    font-weight: lighter;
-  }
+.custom-input::placeholder {
+  font-weight: lighter;
+}
 
-  .custom-input:focus, .custom-button:focus {
-    box-shadow: none;
-  }
+.custom-input:focus,
+.custom-button:focus {
+  box-shadow: none;
+}
 
 /* .sidebar_responsive {
   position: unset;
@@ -16452,5 +16452,42 @@ div#wrapper.open > .offcanvas-mask {
   }
 }
 .custom-table-background {
-  background-color: #FAFAFA;
+  background-color: #fafafa;
+}
+
+/* Center the content on the page */
+.content {
+  min-height: 50vh;
+}
+
+/* Style the OTP input boxes */
+.otp-input-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* Space between the input boxes */
+}
+
+.otp-input-box {
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  font-size: 24px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Make the form responsive */
+@media (max-width: 576px) {
+  .otp-input-box {
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+  }
+}
+
+/* Additional spacing for mobile */
+@media (max-width: 768px) {
+  .otp-input-wrapper {
+    gap: 8px;
+  }
 }

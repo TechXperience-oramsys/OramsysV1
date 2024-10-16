@@ -77,6 +77,7 @@ const Edit_Transactions = () => {
         return setGetCounterParty(values)
     }
     const signalShippingCompany = (values) => {
+        console.log('val', values)
         return setGetShippingCompany(values)
     }
     const signalPricingHedgingStatus = (values) => {
