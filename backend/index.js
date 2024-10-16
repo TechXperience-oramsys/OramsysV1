@@ -59,7 +59,7 @@ app.use(express.static('files'))
 app.all("*", function (req, res, next) {
     res.setHeader(
         "Access-Control-Allow-Origin", 
-        "https://www.oramsysdev.com/" // Replace '*' with your frontend domain in production
+        "*" // Replace '*' with your frontend domain in production
     );
     res.setHeader("Access-Control-Allow-Credentials", "true");
     res.setHeader(
