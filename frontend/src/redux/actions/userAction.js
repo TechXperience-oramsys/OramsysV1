@@ -2,55 +2,32 @@ import { ApiGet, ApiPost } from '../../helper/API/ApiData'
 import { GET_USER_DATA, GET_USER_DATA_ERROR, GET_USER_DATA_LOADING, IS_LOADING, USER_GET_BY_ID, USER_GET_BY_ID_ERROR, USER_UPDATE, USER_UPDATE_ERROR } from '../types'
 
 export const userGetAction = () => async (dispatch) => {
+    // Set initial loading states
+    dispatch({ type: IS_LOADING, payload: true });
+    dispatch({ type: GET_USER_DATA_LOADING, payload: true });
+  
     try {
-        dispatch({
-            type: IS_LOADING,
-            payload: true
-        })
-        dispatch({
-            type: GET_USER_DATA_LOADING,
-            payload: true
-        })
-
-        let id = localStorage.getItem('userId');
-        let role = localStorage.getItem('roles')
-
-        await ApiGet(`user/get?id=${id}&role=${role}`)
-            .then((res) => {
-                dispatch({
-                    type: GET_USER_DATA,
-                    payload: res
-                })
-            }).catch((error) => {
-                console.log(error);
-            })
-        dispatch({
-            type: GET_USER_DATA_LOADING,
-            payload: false
-        })
-
-        dispatch({
-            type: IS_LOADING,
-            payload: false
-        })
+      // Get user ID and role from local storage
+      const id = localStorage.getItem('userId');
+      const role = localStorage.getItem('roles');
+  
+      // Fetch user data from the API
+      const response = await ApiGet(`user/get?id=${id}&role=${role}`);
+      
+      // Dispatch the user data to the store
+      dispatch({ type: GET_USER_DATA, payload: response });
+      
+    } catch (error) {
+      // Dispatch the error to the store
+      console.error('Error fetching user data:', error);
+      dispatch({ type: GET_USER_DATA_ERROR, payload: error });
+  
+    } finally {
+      // Reset loading states
+      dispatch({ type: GET_USER_DATA_LOADING, payload: false });
+      dispatch({ type: IS_LOADING, payload: false });
     }
-    catch (err) {
-        dispatch({
-            type: GET_USER_DATA_ERROR,
-            payload: err
-        })
-
-        dispatch({
-            type: GET_USER_DATA_LOADING,
-            payload: false
-        })
-
-        dispatch({
-            type: IS_LOADING,
-            payload: false
-        })
-    }
-}
+  };
 
 
 export const userGetByIdAction = (id) => async (dispatch) => {

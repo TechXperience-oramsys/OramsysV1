@@ -5,7 +5,6 @@ import AuthStorage from '../../helper/AuthStorage'
 import STORAGEKEY from '../../config/APP/app.config'
 // import { CaretDownOutlined, GlobalOutlined, MenuOutlined } from '@ant-design/icons';
 import { Badge } from 'antd';
-import { useSelector } from "react-redux";
 // import { useTranslation } from 'react-i18next';
 
 
@@ -14,9 +13,6 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
   // const [showSubData, setShowSubData] = useState(false);
   const [showModal, setshowModal] = useState(false);
   const [userData, setUserData] = useState("");
-  const getAllUsers = useSelector((state) => state.userData.getUserData);
-
-  console.log("user data", getAllUsers)
 
   useEffect(() => {
     const userDataFromStorage = AuthStorage.getStorageData(STORAGEKEY.userData);
