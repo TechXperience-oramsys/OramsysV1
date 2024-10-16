@@ -17,7 +17,9 @@ const Entities = () => {
   const [showSubData, setShowSubData] = useState(false)
   // const [entitySearch, setEntitySearch] = useState([])
   const [entityTableData, setEntityTableData] = useState([])
-  const [setSearch] = useState('')
+  const [originalEntityTableData, setOriginalEntityTableData] = useState([]); // Store the initial data
+
+  // const [setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [postsPerPage] = useState(10)
   const navigate = useNavigate()
@@ -64,8 +66,9 @@ const Entities = () => {
           country: item?.details?.country?.name,
         }
       }))
+      setOriginalEntityTableData(entityData.data);
 
-      // setEntitySearch(entityData.data?.map(item => {
+      // setOriginalEntityTableData(entityData.data?.map(item => {
       //   return {
       //     ...item,
       //     name: item?.details?.name ?? item?.details?.givenName,
@@ -183,22 +186,47 @@ const Entities = () => {
     </Menu>
   );
 
+  // const checkSearch = (e) => {
+  //   const filtered = entityTableData?.filter((item) => {
+  //     // Check if item.details.productDetails.name is an object and contains the property 'name'
+  //     if (typeof item.details.name === 'object' && item.details.name !== null && 'name' in item.details.name) {
+  //       // Convert item.details.name to lowercase if it's a string
+  //       const productName = item.details.name.name.toLowerCase();
+  //       // Check if productName includes the search value
+  //       return productName.includes(e.target.value.toLowerCase());
+  //     }
+
+  //     return false;
+  //   });
+
+  //   setEntityTableData(filtered);
+  // };
+
   const checkSearch = (e) => {
-    const filtered = entityTableData?.filter((item) => {
-      // Check if item.details.productDetails.name is an object and contains the property 'name'
-      if (typeof item.details.name === 'object' && item.details.name !== null && 'name' in item.details.name) {
-        // Convert item.details.name to lowercase if it's a string
-        const productName = item.details.name.name.toLowerCase();
-        // Check if productName includes the search value
-        return productName.includes(e.target.value.toLowerCase());
+    const searchValue = e.target.value.toLowerCase();
+    
+    if (!searchValue) {
+      // If the search field is cleared, reset to the original data
+      setEntityTableData(originalEntityTableData);
+      return;
+    }
+  
+    const filtered = originalEntityTableData.filter((item) => {
+      // Handle name structure in item.details
+      let productName = '';
+  
+      if (typeof item?.details?.name === 'string') {
+        productName = item.details.name.toLowerCase();
+      } else if (typeof item?.details?.givenName === 'string') {
+        productName = item.details.givenName.toLowerCase();
       }
-
-      return false;
+  
+      return productName.includes(searchValue);
     });
-
+  
     setEntityTableData(filtered);
   };
-
+  
 
   return (
     <>
@@ -241,7 +269,9 @@ const Entities = () => {
           <div class="mb-2 d-flex justify-content-start align-items-center">
             <div class="position-relative">
               <span class="position-absolute search"><CiSearch size={25} /></span>
-              {userId ? '' : <input type="text" id='search' onKeyUp={e => checkSearch(e)} onChange={(e) => setSearch(e.target.value)} className="form-control rounded-0 w-100 ps-5 fw-light border-none" placeholder="Search Entity..." />}
+              {userId ? '' : <input type="text" id='search' onChange={e => checkSearch(e)}
+                // onChange={(e) => setSearch(e.target.value)}
+                className="form-control rounded-0 w-100 ps-5 fw-light border-none" placeholder="Search Entity..." />}
             </div>
           </div>
           <div class='row g-6 mb-4'></div>
