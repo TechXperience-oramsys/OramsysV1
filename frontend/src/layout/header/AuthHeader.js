@@ -86,7 +86,7 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
         </div>
 
         <div className="d-flex align-items-center">
-          <Badge className="font-semibold me-4" size={30} status="success" text={superAdminRole ? 'Super Admin' : adminRole ? "Admin" : <>Department: {userData?.department} </> } /> {/* Added some right margin */}
+          <Badge className="font-semibold me-4" size={30} status="success" text={superAdminRole ? 'Super Admin' : adminRole ? "Admin" : <span><span className='fw-bold'>Department:</span> {userData?.department} </span> } /> {/* Added some right margin */}
 
           {/* <Dropdown overlay={menu} className="me-3" trigger={['click']}>
             <Button
