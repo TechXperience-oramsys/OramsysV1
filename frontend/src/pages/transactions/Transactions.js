@@ -291,7 +291,7 @@ const Transactions = () => {
             }
           }}>
             {termSheet}
-            {termSheet === "Signed" ? (
+            {record.termSheet === "Signed" ? (
               <DownloadOutlined className="ms-3" onClick={() => { downloadTermSheet(record._id) }} />
             ) : null}
           </p>
