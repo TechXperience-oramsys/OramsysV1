@@ -9,6 +9,8 @@ const makeTermSheet = async (doc, transaction) => {
     let leftPosition = 50;
     // draw some text
     // console.log(EntityRoles)
+    const finalMaturityDate = moment(transaction.facility.finalMaturity, moment.ISO_8601, true); 
+
 
     doc.font("Times-Bold", 20).text(`${transaction.termSheet === 'Signed' ? 'FACILITY TERMSHEET' : 'PRELIMINARY TERMSHEET'}`, leftPosition + 150, topPosition += 50);
 
@@ -56,7 +58,17 @@ const makeTermSheet = async (doc, transaction) => {
     doc.font('Times-Roman', 14).text("name", leftPosition + 55, topPosition).moveDown();
 
     doc.font('Times-Bold', 14).text('Final Maturity Date and repayment period: ', leftPosition, topPosition += 25).moveDown();
-    doc.font('Times-Roman', 14).text(`${moment(transaction.facility.finalMaturity).format("YYYY/MM/DD")}`, leftPosition + 265, topPosition).moveDown();
+    if (finalMaturityDate.isValid()) {
+        doc.font('Times-Roman', 14)
+           .text(`${finalMaturityDate.format("YYYY/MM/DD")}`, leftPosition + 265, topPosition)
+           .moveDown();
+      } else {
+        // Handle the invalid date case (you can display a message or use a default value)
+        doc.font('Times-Roman', 14)
+           .text('Invalid Date', leftPosition + 265, topPosition)
+           .moveDown();
+      }
+    // doc.font('Times-Roman', 14).text(`${moment(transaction.facility.finalMaturity).format("YYYY/MM/DD")}`, leftPosition + 265, topPosition).moveDown();
 
     doc.font('Times-Bold', 14).text('Availability Period: ', leftPosition, topPosition += 25).moveDown();
     doc.font('Times-Roman', 14).text(`${transaction.facility.availabilityPeriod}`, leftPosition + 120, topPosition).moveDown();

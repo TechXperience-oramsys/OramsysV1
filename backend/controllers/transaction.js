@@ -713,6 +713,10 @@ class transactionController {
       const finedTransaction = await transaction.getById(id);
       if (finedTransaction && finedTransaction.termSheetURL) {
         data = finedTransaction.termSheetURL;
+
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
+
         return res
           .status(httpStatus.OK)
           .json(
@@ -747,6 +751,11 @@ class transactionController {
                     return content;
                   }
                 );
+
+                // Set the correct headers for downloading the file
+                res.setHeader('Content-Type', 'application/pdf');
+                res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
+
                 return res
                   .status(httpStatus.OK)
                   .json(
