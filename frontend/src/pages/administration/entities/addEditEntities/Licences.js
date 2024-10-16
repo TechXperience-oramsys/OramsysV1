@@ -139,7 +139,7 @@ const Licences = ({ handleNext, handleBack }) => {
     ];
     const entityData = useSelector(state => state.entityData.entity)
 
-    console.log('SHOW DATA', entityData?.data[0])
+    // console.log('SHOW DATA', entityData?.data[0])
 
     return (
         <>

@@ -145,6 +145,7 @@ const Financials = ({ handleNext, handleBack }) => {
                                         name='netProfitMargin'
                                         value={financials.netProfitMargin}
                                         onChange={(e) => handleChange(e, "netProfitMargin")}
+                                        disabled={isView}
                                     />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
@@ -158,6 +159,7 @@ const Financials = ({ handleNext, handleBack }) => {
                                     <Form.Control
                                         value={financials.ROE}
                                         onChange={(e) => handleChange(e, "ROE")}
+                                        disabled={isView}
                                     />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
@@ -170,6 +172,7 @@ const Financials = ({ handleNext, handleBack }) => {
                                     <Form.Control
                                         value={financials.ROA}
                                         onChange={(e) => handleChange(e, "ROA")}
+                                        disabled={isView}
                                     />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
@@ -182,6 +185,7 @@ const Financials = ({ handleNext, handleBack }) => {
                                     <Form.Control
                                         value={financials.operatingCashFlow}
                                         onChange={(e) => handleChange(e, "operatingCashFlow")}
+                                        disabled={isView}
                                     />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
@@ -209,6 +213,7 @@ const Financials = ({ handleNext, handleBack }) => {
                                     <Form.Control
                                         value={financials.interestCoverageRatio}
                                         onChange={(e) => handleChange(e, "interestCoverageRatio")}
+                                        disabled={isView}
                                     />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
@@ -221,6 +226,7 @@ const Financials = ({ handleNext, handleBack }) => {
                                     <Form.Control
                                         value={financials.netGearingRatio}
                                         onChange={(e) => handleChange(e, "netGearingRatio")}
+                                        disabled={isView}
                                     />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
@@ -233,6 +239,7 @@ const Financials = ({ handleNext, handleBack }) => {
                                     <Form.Control
                                         value={financials.totalDebtToTotalCapital}
                                         onChange={(e) => handleChange(e, "totalDebtToTotalCapital")}
+                                        disabled={isView}
                                     />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
@@ -247,6 +254,7 @@ const Financials = ({ handleNext, handleBack }) => {
                                     <Form.Control
                                         value={financials.currentRatio}
                                         onChange={(e) => handleChange(e, "currentRatio")}
+                                        disabled={isView}
                                     />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
@@ -259,6 +267,7 @@ const Financials = ({ handleNext, handleBack }) => {
                                     <Form.Control
                                         value={financials.quickRatio}
                                         onChange={(e) => handleChange(e, "quickRatio")}
+                                        disabled={isView}
                                     />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>
@@ -271,6 +280,7 @@ const Financials = ({ handleNext, handleBack }) => {
                                     <Form.Control
                                         value={financials.cashFlowBeforeFinancingSales}
                                         onChange={(e) => handleChange(e, "cashFlowBeforeFinancingSales")}
+                                        disabled={isView}
                                     />
                                     <InputGroup.Text>%</InputGroup.Text>
                                 </InputGroup>

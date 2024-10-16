@@ -79,6 +79,14 @@ const Index = () => {
       component: RiskAssessment,
     },
     {
+      path: "/entities",
+      component: Entities,
+    },
+    {
+      path: "/add-edit-entities",
+      component: Add_Edit_Entities,
+    },
+    {
       path: "/final-page",
       component: FinalPage,
     },

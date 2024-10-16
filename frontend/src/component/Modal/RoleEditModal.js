@@ -137,7 +137,7 @@ const RoleEditModal = ({ onHide, show, mode, editData }) => {
                                             renderInput={(params) => (
                                                 <TextField {...params} label="Role" variant="standard" />
                                             )}
-                                            value={(roleOption.length && roles.roles) ? roleOption.find(item => item._id === roles?.roles) : {}}
+                                            value={(roleOption.length && roles.roles) ? roleOption.find(item => item._id === roles?.roles) : null}
                                             disabled={mode === "View"}
                                         />
                                         {error && error?.roles && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error.roles}</span>}

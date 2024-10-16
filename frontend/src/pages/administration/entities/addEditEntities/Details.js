@@ -52,8 +52,8 @@ const Details = ({ handleNext, entityType }) => {
     // const entityData = useSelector(state => state.entityData.entity)
     const country = useSelector((state) => state.countryData.country)
     const sectorData = useSelector((state) => state.sectorData.sector)
-    console.log('sectors', sectorData)
-    console.log('countries', country)
+    // console.log('sectors', sectorData)
+    // console.log('countries', country)
 
     useEffect(() => {
         dispatch(countrieAction("all"))
@@ -113,7 +113,7 @@ const Details = ({ handleNext, entityType }) => {
                 fax: tempShipingData?.fax,
                 email: tempShipingData?.email,
             })
-            console.log('country code', companyData)
+            // console.log('country code', companyData)
         }
     }, [companyData, id, setBilingAddress, setDetails, setShippingAddress])
 
@@ -228,8 +228,8 @@ const Details = ({ handleNext, entityType }) => {
         //     flag = true
         // }
 
-        console.log('Company data', companyData.addresses, error)
-        console.log('Company data', bilingAddress.type)
+        // console.log('Company data', companyData.addresses, error)
+        // console.log('Company data', bilingAddress.type)
 
         if (!bilingAddress?.flatNumber) {
             error.Biling.flatNumber = "Please enter flat number!"

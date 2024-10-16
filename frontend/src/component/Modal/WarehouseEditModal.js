@@ -193,7 +193,7 @@ const WarehouseEditModal = ({ onHide, show, mode, editData }) => {
                                             renderInput={(params) => (
                                                 <TextField {...params} label="Nature" variant="standard" />
                                             )}
-                                            value={(getNatureoption.length && warehouse.nature) ? getNatureoption.find(item => item === warehouse?.nature) : {}}
+                                            value={(getNatureoption.length && warehouse.nature) ? getNatureoption.find(item => item === warehouse?.nature) : null}
                                             disabled={mode === "View"}
                                         />
                                         {error && error?.nature && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error.nature}</span>}
@@ -221,7 +221,7 @@ const WarehouseEditModal = ({ onHide, show, mode, editData }) => {
                                             renderInput={(params) => (
                                                 <TextField {...params} label="Type" variant="standard" />
                                             )}
-                                            value={(getoptions.length && warehouse.type) ? getoptions.find(item => item === warehouse?.type) : {}}
+                                            value={(getoptions.length && warehouse.type) ? getoptions.find(item => item === warehouse?.type) : null}
                                             disabled={mode === "View"}
                                         />
                                         {error && error.type && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error.type}</span>}
@@ -249,7 +249,7 @@ const WarehouseEditModal = ({ onHide, show, mode, editData }) => {
                                             renderInput={(params) => (
                                                 <TextField {...params} label="Country" variant="standard" />
                                             )}
-                                            value={(countryData.length && warehouse.country) ? countryData.find(item => item._id === warehouse?.country) : {}}
+                                            value={(countryData.length && warehouse.country) ? countryData.find(item => item._id === warehouse?.country) : null}
                                             disabled={mode === "View"}
                                         />
                                         {error && error.country && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error.country}</span>}
@@ -265,7 +265,7 @@ const WarehouseEditModal = ({ onHide, show, mode, editData }) => {
                                             renderInput={(params) => (
                                                 <TextField {...params} label="Type of warehouse document issued" variant="standard" />
                                             )}
-                                            value={(getGoverningLawOption.length && warehouse.governingLaw) ? getGoverningLawOption.find(item => item === warehouse?.governingLaw) : {}}
+                                            value={(getGoverningLawOption.length && warehouse.governingLaw) ? getGoverningLawOption.find(item => item === warehouse?.governingLaw) : null}
                                             disabled={mode === "View"}
                                         />
                                         {error && error.governingLaw && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error.governingLaw}</span>}
@@ -281,7 +281,7 @@ const WarehouseEditModal = ({ onHide, show, mode, editData }) => {
                                             renderInput={(params) => (
                                                 <TextField {...params} label="Type of Waherhouse Document" variant="standard" />
                                             )}
-                                            value={(typeOfDocumentOptions.length && warehouse.typeOfDoc) ? typeOfDocumentOptions.find(item => item === warehouse?.typeOfDoc) : {}}
+                                            value={(typeOfDocumentOptions.length && warehouse.typeOfDoc) ? typeOfDocumentOptions.find(item => item === warehouse?.typeOfDoc) : null}
                                             disabled={mode === "View"}
                                         />
                                         {error && error.typeOfDoc && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error.typeOfDoc}</span>}

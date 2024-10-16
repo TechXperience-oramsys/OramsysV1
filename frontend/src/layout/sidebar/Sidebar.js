@@ -168,6 +168,12 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
     },
     {
       key: "2",
+      icon: <FaUsersLine size={20} />,
+      label: "Entities",
+      path: "entities",
+    },
+    {
+      key: "3",
       icon: <FaMoneyBillTransfer />,
       label: "Transactions",
       path: "transactions",

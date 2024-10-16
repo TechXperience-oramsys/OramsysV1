@@ -298,12 +298,12 @@ const Transactions = () => {
         </div>
       ),
     },
-    {
-      title: "Transaction Status",
-      dataIndex: ["details", "productDetails", "name", "name"],
-      key: "product",
-      align: "center",
-    },
+    // {
+    //   title: "Transaction Status",
+    //   dataIndex: ["details", "productDetails", "name", "name"],
+    //   key: "product",
+    //   align: "center",
+    // },
     {
       title: "Actions",
       key: "actions",
@@ -333,18 +333,17 @@ const Transactions = () => {
                   navigate(`/edit-transactions?id=${record._id}`, {
                     state: [
                       { type: record.type },
-                      {
-                        type: record?.details?.productDetails?.nature
+                      { type: record?.details?.productDetails?.nature
                           ? record.details.productDetails.nature
                           : "",
                       },
                       { isView: true },
                     ],
                   });
-                }}
-              >
+                }}>
                 <EyeOutlined /> Preview
               </Menu.Item>
+              
               {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" && (
                 <Menu.Item
                   onClick={() => {

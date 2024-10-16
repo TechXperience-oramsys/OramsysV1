@@ -17,15 +17,18 @@ const Entities = () => {
   const [showSubData, setShowSubData] = useState(false)
   // const [entitySearch, setEntitySearch] = useState([])
   const [entityTableData, setEntityTableData] = useState([])
-  const [ setSearch] = useState('')
+  const [setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [postsPerPage] = useState(10)
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const entityData = useSelector(state => state.entityData.entity)
-  console.log('GET ALL ENTITY', entityData)
+  // console.log('GET ALL ENTITY', entityData)
   let userId = AuthStorage.getStorageData(STORAGEKEY.roles) === 'admin' ? AuthStorage.getStorageData(STORAGEKEY.userId) : ""
+  // let userRoleId = AuthStorage.getStorageData(STORAGEKEY.roles) === "user" ? AuthStorage.getStorageData(STORAGEKEY.userId) : ""
+  const userRole = AuthStorage.getStorageData(STORAGEKEY.roles) === "user"
+  const superAdminRole = AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin"
 
   useEffect(() => {
     if (userId) {
@@ -133,16 +136,18 @@ const Entities = () => {
       render: (text, record) => (
         <Dropdown overlay={(
           <Menu>
-            <Menu.Item onClick={() => {
-              companydataAction(record);
-              navigate(`/add-edit-entities?id=${record._id}`, { state: [{ type: `${record.type}` }, { isView: false }], })
-            }}>
-              <EditOutlined /> Edit
-            </Menu.Item>
-            <Menu.Item onClick={() => {
+            {superAdminRole && (
+              <Menu.Item onClick={() => {
+                companydataAction(record);
+                navigate(`/add-edit-entities?id=${record._id}`, { state: [{ type: `${record.type}` }, { isView: false }], })
+              }}>
+                <EditOutlined /> Edit
+              </Menu.Item>
+            )}
 
+            <Menu.Item onClick={() => {
               navigate(`/add-edit-entities?id=${record._id}`, {
-                state: [{ type: `${record.type}` }, { isView: false }],
+                state: [{ type: `${record.type}` }, { isView: true }],
               });
             }}>
               <EyeOutlined /> Preview
@@ -215,7 +220,7 @@ const Entities = () => {
                       {userId ? '' : <input type="text" id='search' onKeyUp={e => checkSearch(e)} onChange={(e) => setSearch(e.target.value)} className="form-control rounded-0 w-100 ps-5 fw-light border-none" placeholder="Search Entity..." />}
                     </div> */}
 
-                    {AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin" ? (
+                    {AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin" || userRole ? (
                       <Dropdown overlay={menu} className='rounded-0 px-5' trigger={['click']}>
                         <Button class='btn d-inline-flex btn-md btn-light border-base p-2' id="dropdown-autoclose-outside">
                           <span className='fw-bold'>Add Entity</span>
