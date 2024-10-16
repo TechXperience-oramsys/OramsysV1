@@ -13,9 +13,12 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
   // const [showSubData, setShowSubData] = useState(false);
   const [showModal, setshowModal] = useState(false);
   const [userData, setUserData] = useState("");
+  const superAdminRole = AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin"
+  const adminRole = AuthStorage.getStorageData(STORAGEKEY.roles) === "admin"
 
   useEffect(() => {
     const userDataFromStorage = AuthStorage.getStorageData(STORAGEKEY.userData);
+    // console.log('data', userDataFromStorage )
     setUserData(JSON.parse(userDataFromStorage) ?? {});
 }, []); 
 
@@ -83,7 +86,7 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
         </div>
 
         <div className="d-flex align-items-center">
-          <Badge className="font-semibold me-4" size={30} status="success" text={userData?.name} /> {/* Added some right margin */}
+          <Badge className="font-semibold me-4" size={30} status="success" text={superAdminRole ? 'Super Admin' : adminRole ? "Admin" : <>Department: {userData?.department} </> } /> {/* Added some right margin */}
 
           {/* <Dropdown overlay={menu} className="me-3" trigger={['click']}>
             <Button
