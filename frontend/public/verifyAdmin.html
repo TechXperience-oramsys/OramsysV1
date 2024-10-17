@@ -169,7 +169,7 @@
                   let resData = await response.json(); // Parse the JSON response
                   console.log("Password updated successfully");
                   this.resetInput();
-                  window.location.href = "https://oramsysdev.com/signin";
+                  window.location.href = "https://oramsysdev.com/fa-login";
                 } else {
                   let errorData = await response.json();
                   this.errors.apiError = errorData.message;

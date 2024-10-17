@@ -44,6 +44,7 @@ import ForgetPassword from "./functionalAdmin/ForgetPassword";
 import UserForgetPassword from "./signIn/UserForgetPassword";
 import EditAdmin from "./functionalAdmin/EditAdmin";
 import profile from "./functionalAdmin/profile";
+import SetAdminPassword  from "./functionalAdmin/CreateAdminPassword";
 
 const pathForLayout = [
   "/",
@@ -54,6 +55,7 @@ const pathForLayout = [
   "/verify-user",
   "/forget-password",
   "/user/forget",
+  "/verify-admin",
 ];
 const Index = () => {
   const location = useLocation();
@@ -302,6 +304,7 @@ const Index = () => {
               <Route path="/verify-user" element={<CreateNewPassword />} />
               <Route path="/forget-password" element={<ForgetPassword />} />
               <Route path="/user/forget" element={<UserForgetPassword />} />
+              <Route path="/verify-admin" element={<SetAdminPassword />} />
             </Routes>
           </Layout>
         )}

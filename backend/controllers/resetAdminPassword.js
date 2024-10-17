@@ -21,7 +21,7 @@ const resetAdminPassword = () => async (req, res) => {
           port: 465,
           auth: {
             user: "notification@techxperience.ng",
-            pass: "Oramsys!@#",
+            pass: "0ramsys!@#",
           },
         });
 

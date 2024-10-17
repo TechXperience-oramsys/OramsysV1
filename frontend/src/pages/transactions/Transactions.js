@@ -308,7 +308,7 @@ const Transactions = () => {
       title: "Actions",
       key: "actions",
       render: (record) => (
-        <AntDropdown
+        <AntDropdown placement="bottomRight"
           overlay={
             <Menu>
               {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" && (
@@ -323,7 +323,7 @@ const Transactions = () => {
                       });
                   }}
                 >
-                  <EditOutlined /> Edit
+                  <EditOutlined className='pe-2' /> Edit
                 </Menu.Item>
               )}
 
@@ -333,7 +333,8 @@ const Transactions = () => {
                   navigate(`/edit-transactions?id=${record._id}`, {
                     state: [
                       { type: record.type },
-                      { type: record?.details?.productDetails?.nature
+                      {
+                        type: record?.details?.productDetails?.nature
                           ? record.details.productDetails.nature
                           : "",
                       },
@@ -341,9 +342,9 @@ const Transactions = () => {
                     ],
                   });
                 }}>
-                <EyeOutlined /> Preview
+                <EyeOutlined className='pe-2' /> Preview
               </Menu.Item>
-              
+
               {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" && (
                 <Menu.Item
                   onClick={() => {
@@ -351,7 +352,7 @@ const Transactions = () => {
                     setSelected(record._id);
                   }}
                 >
-                  <FormOutlined /> Risk Assessment
+                  <FormOutlined className='pe-2' /> Risk Assessment
                 </Menu.Item>
               )}
               <Menu.Item
@@ -361,7 +362,7 @@ const Transactions = () => {
                     : ViewRiskAssessment();
                 }}
               >
-                <EyeOutlined /> View Termsheet
+                <EyeOutlined className='pe-2' /> View Termsheet
               </Menu.Item>
               <Menu.Item
                 onClick={() => {
@@ -370,7 +371,7 @@ const Transactions = () => {
                     : converBase64toBlob(record.termSheetUrl);
                 }}
               >
-                <DownloadOutlined /> Download Termsheet
+                <DownloadOutlined className='pe-2' /> Download Termsheet
               </Menu.Item>
             </Menu>
           }
@@ -388,10 +389,7 @@ const Transactions = () => {
       <Menu.Item key="import" onClick={() => handleItemClick("Import")}>
         Import
       </Menu.Item>
-      <Menu.SubMenu
-        title="Export"
-        onTitleClick={() => setShowSubData(!showSubData)}
-      >
+      <Menu.SubMenu title="Export" onTitleClick={() => setShowSubData(!showSubData)}>
         <Menu.Item key="Physical" onClick={handleRefresh}>
           Physical commodities
         </Menu.Item>
@@ -446,8 +444,8 @@ const Transactions = () => {
                     <input
                       type="text"
                       id="search"
-                      onKeyUp={(e) => checkSearch(e)}
-                      onChange={(e) => setSearch(e.target.value)}
+                      onChange={(e) => checkSearch(e)}
+                      // onChange={(e) => setSearch(e.target.value)}
                       className="form-control w-100 ps-5 fw-light border-none"
                       placeholder="Search transaction..."
                     />
@@ -468,6 +466,7 @@ const Transactions = () => {
                 </div>
                 <div className="mt-10 table-responsive form ">
                   <Table
+                    className="custom-header"
                     columns={columns}
                     dataSource={currentTrans}
                     pagination={{

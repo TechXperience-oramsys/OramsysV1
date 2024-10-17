@@ -111,10 +111,10 @@ const SignIn = () => {
 
                 <div className="form">
                   <div className="form-floating mb-3">
-                    <input type="email"  name="email" onChange={(e) => handelChange(e)} onKeyDown={handleKeyPress} className="form-control" id="floatingInput" placeholder="Email" />
+                    <input type="email" name="email" onChange={(e) => handelChange(e)} onKeyDown={handleKeyPress} className="form-control" id="floatingInput" placeholder="Email" />
                     <label htmlFor="floatingInputValue">Email address</label>
                     {loginFormError.email && (
-                      <span style={{ color: "#da251e", width: "100%", textAlign: "start"}}>
+                      <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>
                         {loginFormError.email}
                       </span>
                     )}
@@ -142,7 +142,7 @@ const SignIn = () => {
                     </span>
                   </div>
 
-                  <div className="d-flex mb-5 align-items-center">
+                  <div className="d-flex mb-4 align-items-center">
                     <div className="mx-auto">
                       {/* <div className='col-12 text-center'>
                                                 <label className="control control--checkbox mb-0">
@@ -150,7 +150,7 @@ const SignIn = () => {
                                                         <a className='fw-semibold' onClick={() => navigate('/signup')}>Register here{" "}<FontAwesomeIcon icon={faArrowRightLong} style={{ color: "#da251e" }}></FontAwesomeIcon></a></span>
                                                 </label>
                                             </div> */}
-                      <div className="col-12 text-center mt-4">
+                      <div className="col-12 text-center mt-2">
                         <span className="">
                           <Link to="/user/forget" className="mx-auto text-decoration-none forgot-pass">
                             Forgot Password?

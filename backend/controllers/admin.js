@@ -28,7 +28,7 @@ const login = () => async (req, res) => {
 
         return res
           .status(httpStatus.OK)
-          .json(new APIResponse(newAdmin, "Login successfully", httpStatus.OK));
+          .json(new APIResponse(newAdmin, "Login Successful", httpStatus.OK));
       }
       return res
         .status(httpStatus.OK)

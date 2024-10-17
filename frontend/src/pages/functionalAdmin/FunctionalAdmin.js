@@ -72,18 +72,18 @@ const FunctionalAdmin = () => {
   };
   const Login = async (e) => {
     e.preventDefault();
-  
+
     if (validation()) {
       return;
     }
-  
+
     let data = {
       email: login.email,
       password: login.password,
     };
-  
+
     setLoading(true); // Start loading spinner
-  
+
     admin
       .adminLogin(data)
       .then((res) => {
@@ -91,7 +91,7 @@ const FunctionalAdmin = () => {
           type: LOGIN,
           payload: { res: res.data, is_loggedin: true },
         });
-  
+
         if (res.data.status === 200 && res.data.data.token) {
           toast.success(res.data.message);
           navigate("/dashboard");
@@ -115,7 +115,7 @@ const FunctionalAdmin = () => {
         setLoading(false); // Stop loading spinner
       });
   };
-  
+
   // const { oktaAuth } = useOktaAuth();
   // const loginWithRedirect = () =>
   //   oktaAuth.signInWithRedirect({ originalUri: `/` });
@@ -130,7 +130,7 @@ const FunctionalAdmin = () => {
           <div className="row">
             <div className=" contents">
               <div className="row justify-content-center">
-                <div className="col-md-4">
+                <div className="col-md-4" style={{ marginBottom: "5rem" }}>
                   <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                       {/* <li className="breadcrumb-item"><a href="#">Home</a></li> */}
@@ -150,7 +150,7 @@ const FunctionalAdmin = () => {
                   </div>
 
                   <div className="form">
-                    <div className="form-floating mb-3">
+                    <div className="form-floating mb-4">
                       <input
                         type="email"
                         name="email"
@@ -174,7 +174,7 @@ const FunctionalAdmin = () => {
                       )}
                     </div>
 
-                    <div className="position-relative form-floating mb-4">
+                    <div className="position-relative form-floating mb-2">
                       <input
                         type={passwordVisible ? "text" : "password"}
                         onChange={handelChange}
@@ -197,10 +197,7 @@ const FunctionalAdmin = () => {
                         </span>
                       )}
 
-                      <span
-                        className="position-absolute end-0 top-50 text-lg translate-middle-y me-3 cursor-pointer"
-                        onClick={togglePasswordVisibility}
-                      >
+                      <span className="position-absolute end-0 top-50 text-lg translate-middle-y me-3 cursor-pointer" onClick={togglePasswordVisibility}>
                         {passwordVisible ? (
                           <EyeInvisibleOutlined />
                         ) : (
@@ -208,32 +205,23 @@ const FunctionalAdmin = () => {
                         )}
                       </span>
                     </div>
-                    <div className="d-flex mb-5 align-items-center">
+                    <div className="d-flex mt-3 mb-4 align-items-center">
                       <div className="mx-auto">
-                        <div className="col-12 text-center mt-4">
+                        <div className="col-12 text-center">
                           <span className="">
-                            <Link to="/forget-password"
-                            
-                              className="mx-auto text-decoration-none forgot-pass"
-                            >
+                            <Link to="/verify-admin" className="mx-auto text-decoration-none forgot-pass">
                               Forgot Password?
                             </Link>
                           </span>
                         </div>
                       </div>
                     </div>
-                    <button
-                      onClick={(e) => Login(e)}
-                      className="btn btn-block btn-primary"
-                    >
+                    <button onClick={(e) => Login(e)} className="btn btn-block btn-primary">
                       {!loading ? "Log In" : ""}
                       {loading && (
                         <div className="d-flex justify-content-center">
                           <strong className="me-2">Logging in...</strong>
-                          <div
-                            className="spinner-border spinner-border-sm mt-1"
-                            role="status"
-                          >
+                          <div className="spinner-border spinner-border-sm mt-1" role="status">
                             <span className="visually-hidden">Loading...</span>
                           </div>
                         </div>

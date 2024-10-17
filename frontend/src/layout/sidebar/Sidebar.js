@@ -290,7 +290,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
             )}
           </div> */}
           <Menu
-            className="fs-6 mt-10 bg-gray-100"
+            className="fs-6 fw-semibold mt-10 bg-gray-100"
             // theme="dark"
             mode="inline"
             defaultSelectedKeys={["1"]}
@@ -334,9 +334,9 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
               type="text"
               icon={
                 collapsed ? (
-                  <MenuUnfoldOutlined style={{ fontSize: 25 }} />
+                  <MenuUnfoldOutlined style={{ fontSize: 18 }} />
                 ) : (
-                  <MenuFoldOutlined style={{ fontSize: 20 }} />
+                  <MenuFoldOutlined style={{ fontSize: 18 }} />
                 )
               }
               onClick={() => setCollapsed(!collapsed)}

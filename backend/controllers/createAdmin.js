@@ -1,6 +1,7 @@
 const { body, validationResult } = require("express-validator");
 const Corporation = require("../models/userAdmins/userAdmin");
 const APIResponse = require("../helpers/APIResponse");
+const mjml = require('mjml');
 
 // Middleware for validation
 const validateCorporationData = [
@@ -32,141 +33,105 @@ const createAdmin = () => async (req, res) => {
   }
 
   function generateRandomPassword(length = 12) {
-    // Define character sets
     const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const lowercase = "abcdefghijklmnopqrstuvwxyz";
     const numbers = "0123456789";
     const specialChars = "!@#$%^&*()-_=+[]{}|;:,.<>?";
 
-    // Combine all character sets
     const allChars = uppercase + lowercase + numbers + specialChars;
-
-    // Ensure the password contains at least one character from each set
     const getRandomChar = (chars) =>
       chars.charAt(Math.floor(Math.random() * chars.length));
 
     let password = "";
-
-    // Add at least one character from each set to ensure complexity
     password += getRandomChar(uppercase);
     password += getRandomChar(lowercase);
     password += getRandomChar(numbers);
     password += getRandomChar(specialChars);
 
-    // Fill the remaining length with random characters from all character sets
     for (let i = 4; i < length; i++) {
       password += getRandomChar(allChars);
     }
 
-    // Shuffle the password to avoid predictable patterns
-    password = password
-      .split("")
-      .sort(() => 0.5 - Math.random())
-      .join("");
-
+    password = password.split("").sort(() => 0.5 - Math.random()).join("");
     return password;
   }
 
   try {
-    // Extract data from the request body
     const {
-      corporationName,
-      businessEmail,
-      registrationNumber,
-      phone,
-      address1,
-      address2,
-      buildingNumber,
-      branch,
-      logo,
-      adminName,
-      code,
+      corporationName, businessEmail, registrationNumber, phone, address1,
+      address2, buildingNumber, branch, logo, adminName, code,
     } = req.body;
 
     const password = generateRandomPassword(12);
-
     const corporationData = {
-      corporationName,
-      businessEmail,
-      registrationNumber,
-      phone,
-      address1,
-      address2,
-      buildingNumber,
-      branch,
-      logo,
-      adminName,
-      code,
-      password,
+      corporationName, businessEmail, registrationNumber, phone, address1,
+      address2, buildingNumber, branch, logo, adminName, code, password,
     };
 
-    // Create and save the new corporation
     const newCorporation = await Corporation.createCorporation(corporationData);
     console.log("Corporation created:", newCorporation);
+
     const nodemailer = require("nodemailer");
+    const id = newCorporation._id.toString();
 
-    console.log(newCorporation, "newCorporation");
+    const mjmlTemplate = `
+      <mjml>
+        <mj-body background-color="#f5f5f5">
+          <mj-section>
+            <mj-column>
+              <mj-text font-size="16px" font-weight="semibold" color="#333">Hi, ${adminName}</mj-text>
+              <mj-text font-size="15px" color="#333">
+                You have been onboarded as an Administrator on the Oramsys platform. 
+                Click the link below to create your password.
+              </mj-text>
+              <mj-text font-size="14px" font-weight="bold">
+                Your current password is <strong style="margin-left: 5px; color: #3C0412; font-weight: bold; font-size: 20px;">${password}</strong>
+                
+              </mj-text>
+              <mj-button href="https://www.oramsysdev.com/verify-admin?id=${id}" background-color="#0070E0" margin="auto color="white" font-weight="bold">
+                Reset password and login
+              </mj-button>
+            </mj-column>
+          </mj-section>
+        </mj-body>
+      </mjml>
+    `;
 
-    if (newCorporation) {
-      // Replace with your actual credentials (avoid hardcoding in production)
-      const transporter = nodemailer.createTransport({
-        host: "c116604.sgvps.net",
-        port: 465,
-        auth: {
-          user: "notification@techxperience.ng",
-          pass: "Oramsys!@#",
-        },
-      });
-      // Email content
-      const id = newCorporation._id.toString(); // Convert ObjectId to string if necessary
-      const mailOptions = {
-        from: "notification@techxperience.ng",
-        to: req.body.businessEmail,
-        subject: "OTP from Oramsys",
-        text: "User created successfully",
-        html: `
-          <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
-            <p style="font-size: 16px;">Hi, ${req?.body?.adminName}</p>
-             <p style="font-size: 12px;">You have been onboarded as an Administrator on the Oramsys platform. Click on the link below to create your password.</p>
-            <p style="font-size: 12px; font-weight: bold">Your current password is <strong>${password}</strong>.</p>
-            <p>
-              <a href="https://oramsysdev.com/verifyAdmin.html?id=${id}" style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">
-             Reset password and login
-              </a>
-            </p>
-          </div>
-        `,
-      };
+    const htmlOutput = mjml(mjmlTemplate).html;
 
-      // Send the email
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.error("Error sending email:", error);
-        } else {
-          console.log("Email sent successfully:", info.response);
-        }
-      });
-      // Send back the created corporation data as a response
-      res.status(201).json(newCorporation);
-    }
+    const transporter = nodemailer.createTransport({
+      host: "c116604.sgvps.net",
+      port: 465,
+      auth: {
+        user: "notification@techxperience.ng",
+        pass: "0ramsys!@#",
+      },
+    });
+
+    const mailOptions = {
+      from: "notification@techxperience.ng",
+      to: businessEmail,
+      subject: "OTP from Oramsys",
+      html: htmlOutput,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Error sending email:", error);
+      } else {
+        console.log("Email sent successfully:", info.response);
+      }
+    });
+
+    res.status(201).json(newCorporation);
   } catch (error) {
-    // Handle specific error types
     if (error.name === "ValidationError") {
-      // Mongoose validation error
-      res
-        .status(400)
-        .json({ message: "Validation error", errors: error.errors });
+      res.status(400).json({ message: "Validation error", errors: error.errors });
     } else if (error.code && error.code === 11000) {
-      // MongoDB duplicate key error
-      res
-        .status(409)
-        .json({ message: "Duplicate key error", error: error.message });
+      res.status(409).json({ message: "Duplicate key error", error: error.message });
     } else {
-      // General server error
       console.error("Unexpected error:", error);
-      res
-        .status(500)
-        .json({ message: "Internal Server Error", error: error.message });
+      res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
   }
 };

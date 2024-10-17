@@ -14,7 +14,7 @@ const AuthLayOut = ({ children, ...props }) => {
           <Sidebar showSidebar={showSidebar} setSidebar={setSidebar} />
         )}
         {/* <Sidebar /> */}
-        <div style={{ width: "100%" }}>
+        <div style={{ width: "100%", background: '#F8FBFB' }}>
           <AuthHeader showSidebar={showSidebar} setSidebar={setSidebar} />
           <div
             className=""

@@ -5,6 +5,7 @@ import { toast } from "react-hot-toast";
 import { emailRegex, passwordRegex } from "../../helper/utils";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+
 function ForgetPassword() {
   const navigate = useNavigate();
   const [isSent, setIsSent] = useState(false);

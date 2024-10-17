@@ -16491,3 +16491,9 @@ div#wrapper.open > .offcanvas-mask {
     gap: 8px;
   }
 }
+.custom-header .ant-table-thead > tr > th {
+  background-color: #F0F0F0;
+  color: #000;
+  font-weight: bold;
+  text-align: center; /* Optional */
+}

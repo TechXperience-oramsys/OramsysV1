@@ -35,6 +35,7 @@
     "http-status": "^1.5.2",
     "joi": "^17.6.0",
     "jsonwebtoken": "^9.0.2",
+    "mjml": "^4.15.3",
     "moment": "^2.29.4",
     "mongodb": "^4.7.0",
     "mongoose": "^6.4.1",

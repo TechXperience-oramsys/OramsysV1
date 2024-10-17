@@ -80,7 +80,7 @@ const AuthHeader = ({ showSidebar, setSidebar }) => {
           </div>
         </div>
       </div> */}
-      <div className="open-sidebar d-flex align-items-center justify-content-between" style={{ padding: "15px" }}>
+      <div className="open-sidebar d-flex align-items-center justify-content-between" style={{ background: 'white', padding: "15px" }}>
         <div className="d-flex align-items-center">
           {/* <Badge className="font-semibold me-4" size={30} status="success" text={userData?.name} />  */}
         </div>
