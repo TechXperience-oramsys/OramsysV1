@@ -1,16 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const {
-  createAdmin,
-  validateCorporationData,
-  updateAdmin,
-} = require("../controllers/createAdmin");
+const { createAdmin,  validateCorporationData, updateAdmin } = require("../controllers/createAdmin");
 const { resetAdminPassword } = require("../controllers/resetAdminPassword");
-const {
-  sendOtp,
-  verifyOtp,
-  setPassword,
-} = require("../controllers/forgetAdminPassword");
+const { sendOtp, verifyOtp, setPassword } = require("../controllers/forgotPassword");
 const { login, getAllAdmins, getAdminById } = require("../controllers/admin");
 const httpStatus = require("http-status");
 const Joi = require("joi");

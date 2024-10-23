@@ -86,7 +86,6 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
 
     useEffect(() => {
         if (getTransactionByIdData.data?.keyParties[0].relatedParties !== undefined && getTransactionByIdData.data?.keyParties[0].relatedParties.length > 0) {
-            // console.log('RELATEDPARTIES FROM API', relatedPartyDetails);
             setRelatedPartyDetails(getTransactionByIdData.data?.keyParties[0].relatedParties);
         }
     }, [getTransactionByIdData, relatedPartyDetails, setRelatedPartyDetails])
@@ -126,7 +125,10 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
         setRelatedPartyDetails(updatedRelatedPartyDetails);
     };
     const handleRelatedParties = () => {
-        setRelatedPartyDetails([...relatedPartyDetails, { buyer: '', shipper: '', party_relation: '', upload_evidence: '' }]);
+        setRelatedPartyDetails(prevDetails => [
+            ...prevDetails, 
+            { buyer: '', shipper: '', party_relation: '', upload_evidence: [{}] }  // Added correct structure
+        ]);
     };
 
     const handleRelationChange = (e, index) => {
@@ -350,7 +352,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
         },
     ];
 
-    console.log('shipping company', getShippingCompany)
+    // console.log('shipping company', getShippingCompany)
 
     return (
         <>

@@ -5,6 +5,8 @@ import CurrencyHedgeModal from '../../../component/Modal/CurrencyHedgeModal'
 import FinancingSufficientlyModal from '../../../component/Modal/FinancingSufficientlyModal'
 // import LoanPurposeRiskModal from '../../../component/Modal/LoanPurposeRiskModal'
 import { riskAssessmentAction } from '../../../redux/actions/riskAssessmentAction'
+import { PiWarningCircleLight } from "react-icons/pi";
+import { FaRegCheckCircle } from "react-icons/fa";
 
 const ExchangeRateRisk = ({ hendelNext, hendelCancel }) => {
 
@@ -96,8 +98,10 @@ const ExchangeRateRisk = ({ hendelNext, hendelCancel }) => {
     return (
         <>
             <div className='add-edit-product'>
-                <div className='d-flex align-items-center justify-content-center error-info mb-3'>
-                    <img alt='icon' src={`../../../assets/img/about/${data?.currencyHedge || data?.marginFinancing ? "error-info-success.png" : "error-info.png"}`} className='me-3' />
+                <div className='d-flex align-items-center justify-content-center error-info mt-5 mb-5'>
+                    {/* <img alt='icon' src={`../../../assets/img/about/${data?.currencyHedge || data?.marginFinancing ? "error-info-success.png" : "error-info.png"}`} className='me-3' /> */}
+                    {data?.currencyHedge || data?.marginFinancing ? <FaRegCheckCircle className='text-success fs-4 me-3' /> : <PiWarningCircleLight className='text-danger fs-5 me-3' />}
+
                     {data?.currencyHedge || data?.marginFinancing ?
                         <p className='success'>Risks are acceptable due to mitigants</p> :
                         <p className='error'>The below risks require your attention</p>

@@ -1,5 +1,5 @@
 import React from 'react'
-import Pages from "../pages";
+import Index from "../pages/index";
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { useNavigate } from "react-router-dom";
 import { Security } from "@okta/okta-react";
@@ -45,7 +45,7 @@ const Routes = () => {
   return (
     <Security restoreOriginalUri={restoreOriginalUri} oktaAuth={oktaAuth}>
       <Toaster />
-      <Pages />
+      <Index />
     </Security>
   );
 };

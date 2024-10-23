@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import LoanPurposeRiskModal from '../../../component/Modal/LoanPurposeRiskModal'
 import { getRiskAssessment, riskAssessmentAction } from '../../../redux/actions/riskAssessmentAction'
 import { getTransactionById } from '../../../redux/actions/transactionDataAction'
+import { riskImages } from '../../../assets/assests'
 
 const LoanPurposeRisk = ({ hendelNext }) => {
 
@@ -59,8 +60,8 @@ const LoanPurposeRisk = ({ hendelNext }) => {
     return (
         <>
             <div className='add-edit-product'>
-                <div className='d-flex align-items-center justify-content-center error-info mb-3'>
-                    <img alt='icon' src={`../../../assets/img/about/${data.justification ? "error-info-success.png" : "error-info.png"}`} className='me-3' />
+                <div className='d-flex align-items-center justify-content-center error-info mt-5 mb-3'>
+                    <img alt='icon' src={`${data.justification ? riskImages.risk1 : riskImages.risk2}`} className='me-3' />
                     {data.justification ?
                         <p className='success'>Risks are acceptable due to mitigants</p> :
                         <p className='error'>The below risks require your attention</p>
@@ -73,7 +74,7 @@ const LoanPurposeRisk = ({ hendelNext }) => {
                             <p>No risk</p> :
                             <div className='risk-tab' onClick={() => { setshowModal(true); setSelected('justification') }}>
                                 <h3>No mitigant possible. Provide a justification</h3>
-                                <img alt='icon' src={`../../../assets/img/about/${data.justification ? "correct-success.png" : "correct (1).png"}`} />
+                                <img alt='icon' src={`${data.justification ? riskImages.risk3 : riskImages.risk4}`} />
                             </div>
                     }
                 </div>

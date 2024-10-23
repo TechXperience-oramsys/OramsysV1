@@ -209,7 +209,7 @@ const FunctionalAdmin = () => {
                       <div className="mx-auto">
                         <div className="col-12 text-center">
                           <span className="">
-                            <Link to="/verify-admin" className="mx-auto text-decoration-none forgot-pass">
+                            <Link to="/forget-password" className="mx-auto text-decoration-none forgot-pass">
                               Forgot Password?
                             </Link>
                           </span>

@@ -8,6 +8,8 @@ const APIResponse = require("../helpers/APIResponse");
 
 const userController = require("../controllers/user");
 const { decodeToken } = require("../utils/jwt.helper");
+const { sendOtp, verifyOtp, setPassword } = require("../controllers/forgotPassword");
+
 
 const createValidation = Joi.object({
   name: Joi.string().error(new Error("Please enter valid name")),
@@ -49,9 +51,9 @@ router.post("/edit/:id", editValidate, userController.editUser);
 router.delete("/remove/:id", Validate, userController.deleteUser);
 router.post("/verifyOtp", userController.verifyOtp);
 router.put("/updatePassword/:id", userController.updatePassword);
-router.post("/send-otp", userController.sendOtp);
-router.post("/verify-otp", userController.verifyUserOtp);
-router.post("/set-password", userController.setPassword);
+router.post("/send-otp", sendOtp());
+router.post("/verify-otp", verifyOtp());
+router.post("/set-password", setPassword());
 function signUpValidate(req, res, next) {
   const Data = req.body;
   console.log(Data, "data");

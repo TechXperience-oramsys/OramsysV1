@@ -35,6 +35,11 @@ import footer2 from './img/figure/figure2.png'
 import footer3 from './img/my-img/lgo-red.png'
 import footer4 from './img/figure/figure4.png'
 
+import risk1 from './img/about/error-info-success.png'
+import risk2 from './img/about/error-info.png'
+import risk3 from './img/about/correct-success.png'
+import risk4 from './img/about/correct (1).png'
+
 export const homeImages = {
     img1,
     img2,
@@ -74,4 +79,8 @@ export const footerImages = {
     footer2,
     footer3,
     footer4
+}
+
+export const riskImages = {
+    risk1, risk2, risk3, risk4
 }
