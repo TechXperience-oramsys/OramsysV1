@@ -66,8 +66,8 @@ const Header = () => {
                   </li>
                 </ul> */}
                   <div className="header-right-button">
-                    <Link to="/signin"  className="header-btn"> Sign In </Link>
-                    <Link to="/admin-login"  className="header-btn s-up">Administration</Link>
+                    <Link to="/signin"  className="header-btn"> Login </Link>
+                    {/* <Link to="/admin-login"  className="header-btn s-up">Administration</Link> */}
                   </div>
                 </div>
               </div>
@@ -159,14 +159,14 @@ const Header = () => {
             <div className="collapse ms-6 navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto mb-2 text-dark mb-lg-0">
                 <li className="nav-item">
-                  <Link className="nav-link active" aria-current="page" href="/">Home</Link>
+                  <Link className="nav-link active" aria-current="page" to="/">Home</Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link"  href="/">About us</Link>
+                  <Link className="nav-link"  to="/">About us</Link>
                 </li>
 
                 <li className="nav-item">
-                  <Link className="nav-link"  href="/">Services</Link>
+                  <Link className="nav-link"  to="/">Services</Link>
                 </li>
 
                 {/* <li className="nav-item">
@@ -174,11 +174,11 @@ const Header = () => {
                 </li> */}
 
                 <li className="nav-item">
-                  <Link className="nav-link"  href="/">contact</Link>
+                  <Link className="nav-link"  to="/">contact</Link>
                 </li>
 
                 <li className="nav-item">
-                  <Link className="nav-link"  href="/"><i className="fa fa-search"></i></Link>
+                  <Link className="nav-link"  to="/"><i className="fa fa-search"></i></Link>
                 </li>
 
 

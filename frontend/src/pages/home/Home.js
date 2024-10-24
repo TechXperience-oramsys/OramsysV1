@@ -521,6 +521,7 @@ const Home = () => {
         </div>
       </section>
 
+      {/* JOIN US */}
 
       <section className="company-profit-wrap1">
         <div className="container">
@@ -531,7 +532,7 @@ const Home = () => {
                 <h4 className="section-title">Visualize Your Financial Path</h4>
                 <p>Our interactive finance graph provides insights into your financial health and trade opportunities, helping you make informed decisions.</p>
                 <div className="item-button">
-                  <a href="/" className="item-btn">Join Now<i className="fas fa-long-arrow-alt-right"></i></a>
+                  <a href="/signin" className="item-btn">Join Now<i className="fas fa-long-arrow-alt-right"></i></a>
                 </div>
               </div>
             </div>

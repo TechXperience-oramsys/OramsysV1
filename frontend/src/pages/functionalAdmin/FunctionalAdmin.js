@@ -134,9 +134,9 @@ const FunctionalAdmin = () => {
                   <nav aria-label="breadcrumb">
                     <ol className="breadcrumb">
                       {/* <li className="breadcrumb-item"><a href="#">Home</a></li> */}
-                      <li className="breadcrumb-item">
-                        <Link to="/signin">
-                          Staff Login
+                      <li className="breadcrumb-item bg-gray-200 underline-none p-3 text-black">
+                        <Link style={{ textDecoration: 'none' }} to="/signin">
+                          Login as User
                         </Link>
                       </li>
                     </ol>
@@ -145,7 +145,7 @@ const FunctionalAdmin = () => {
                     <h3 className="title-admin">Admin Login</h3>
                     <p className="mb-4">
                       This is the admin login portal, if you are not an admin
-                      you cannot have access. Please go to the staff login
+                      you cannot have access. Click on the user login above to login as a user
                     </p>
                   </div>
 

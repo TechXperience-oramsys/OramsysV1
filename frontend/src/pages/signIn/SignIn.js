@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { loginAction } from "../../redux/actions/loginAction";
 import { useDispatch, useSelector } from "react-redux";
-// import { useOktaAuth } from "@okta/okta-react";
-// import { toast } from "react-hot-toast";
-// import { LOGIN } from "../../redux/types";
-// import svgIcon from "../../css/undraw_remotely_2j6y.svg";
 import "../../css/login.css";
 import "../../css/bootstrap.min.css";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
@@ -98,9 +92,9 @@ const SignIn = () => {
                 <nav aria-label="breadcrumb">
                   <ol className="breadcrumb">
                     {/* <li className="breadcrumb-item"><a href="#">Home</a></li> */}
-                    <li className="breadcrumb-item">
-                      <Link to="/fa-login">
-                        Admin
+                    <li className="breadcrumb-item bg-gray-200 underline-none p-3 text-dark">
+                      <Link style={{ textDecoration: 'none' }} to="/fa-login">
+                        Login as Corporate Admin
                       </Link>
                     </li>
                   </ol>
