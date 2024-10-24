@@ -51,9 +51,9 @@ router.post("/edit/:id", editValidate, userController.editUser);
 router.delete("/remove/:id", Validate, userController.deleteUser);
 router.post("/verifyOtp", userController.verifyOtp);
 router.put("/updatePassword/:id", userController.updatePassword);
-router.post("/send-otp", sendOtp());
-router.post("/verify-otp", verifyOtp());
-router.post("/set-password", setPassword());
+router.post("/send-otp", userController.sendOtp);
+router.post("/verify-otp", userController.verifyUserOtp);
+router.post("/set-password", userController.setPassword);
 function signUpValidate(req, res, next) {
   const Data = req.body;
   console.log(Data, "data");

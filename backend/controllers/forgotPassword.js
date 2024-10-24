@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 
 const sendOtp = async (req, res) => {
   try {
-    const { email, type } = req.body; // 'type' differentiates user from corporation
+    const { email, type } = req.body; // Ensure req.body is correctly passed
 
     const Model = type === "corporation" ? Corporation : User;
     const userData = await Model.findOne(type === "corporation" ? { businessEmail: email } : { email });
@@ -35,7 +35,7 @@ const sendOtp = async (req, res) => {
         html: `
           <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
             <p style="font-size: 16px;">Hi, ${type === "corporation" ? userData.adminName : userData.name}</p>
-            <p style="font-size: 12px;">Your OTP is here <strong>${otp}</strong></p>
+            <p style="font-size: 12px;">Your OTP is:  <strong>${otp}</strong></p>
           </div>
         `,
       };
@@ -93,7 +93,7 @@ const setPassword = async (req, res) => {
   }
 };
 
-// Error handling function to avoid code repetition
+// Error handling function
 const handleError = (error, res) => {
   if (error.name === "ValidationError") {
     res.status(400).json({ message: "Validation error", errors: error.errors });

@@ -458,143 +458,143 @@ class UserController {
         );
     }
   }
-  // async sendOtp(req, res, next) {
-  //   try {
-  //     const user = await User.findOne({ email: req?.body?.email });
-  //     if (!user) {
-  //       res.status(401).json({ message: "Enter a registred email!" });
-  //     } else {
-  //       const otp = Math.floor(Math.random() * 999999);
-  //       const resData = await User.findByIdAndUpdate(user._id, {
-  //         $set: { otp: otp },
-  //       });
-  //       if (resData) {
-  //         const transporter = nodemailer.createTransport({
-  //           host: "c116604.sgvps.net",
-  //           port: 465,
-  //           auth: {
-  //             user: "notification@techxperience.ng",
-  //             pass: "0ramsys!@#",
-  //           },
-  //         });
+  async sendOtp(req, res, next) {
+    try {
+      const user = await User.findOne({ email: req?.body?.email });
+      if (!user) {
+        res.status(401).json({ message: "Enter a registred email!" });
+      } else {
+        const otp = Math.floor(Math.random() * 999999);
+        const resData = await User.findByIdAndUpdate(user._id, {
+          $set: { otp: otp },
+        });
+        if (resData) {
+          const transporter = nodemailer.createTransport({
+            host: "c116604.sgvps.net",
+            port: 465,
+            auth: {
+              user: "notification@techxperience.ng",
+              pass: "0ramsys!@#",
+            },
+          });
 
-  //         const mailOptions = {
-  //           from: "notification@techxperience.ng",
-  //           to: user?.email,
-  //           subject: "OTP Verification",
-  //           text: "OTP Recieved for Password",
-  //           html: `
-  //           <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
-  //             <p style="font-size: 16px;">Hi, ${user?.name}</p>
-  //             <p style="font-size: 12px;">Your OTP is here <strong>${otp}<strong>.</p>
-  //           </div>
-  //         `,
-  //         };
+          const mailOptions = {
+            from: "notification@techxperience.ng",
+            to: user?.email,
+            subject: "OTP Verification",
+            text: "OTP Recieved for Password",
+            html: `
+            <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
+              <p style="font-size: 16px;">Hi, ${user?.name}</p>
+              <p style="font-size: 12px;">Your OTP is here <strong>${otp}<strong>.</p>
+            </div>
+          `,
+          };
 
-  //         // Send the email
-  //         transporter.sendMail(mailOptions, (error, info) => {
-  //           if (error) {
-  //             console.error("Error sending email:", error);
-  //           } else {
-  //             console.log("Email sent successfully:", info.response);
-  //           }
-  //         });
-  //         res.status(201).json({ message: "OTP sent on your mail." });
-  //       }
-  //     }
-  //   } catch (error) {
-  //     // Handle specific error types
-  //     if (error.name === "ValidationError") {
-  //       // Mongoose validation error
-  //       res
-  //         .status(400)
-  //         .json({ message: "Validation error", errors: error.errors });
-  //     } else if (error.code && error.code === 11000) {
-  //       // MongoDB duplicate key error
-  //       res
-  //         .status(409)
-  //         .json({ message: "Duplicate key error", error: error.message });
-  //     } else {
-  //       // General server error
-  //       console.error("Unexpected error:", error);
-  //       res
-  //         .status(500)
-  //         .json({ message: "Internal Server Error", error: error.message });
-  //     }
-  //   }
-  // }
+          // Send the email
+          transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              console.error("Error sending email:", error);
+            } else {
+              console.log("Email sent successfully:", info.response);
+            }
+          });
+          res.status(201).json({ message: "OTP sent on your mail." });
+        }
+      }
+    } catch (error) {
+      // Handle specific error types
+      if (error.name === "ValidationError") {
+        // Mongoose validation error
+        res
+          .status(400)
+          .json({ message: "Validation error", errors: error.errors });
+      } else if (error.code && error.code === 11000) {
+        // MongoDB duplicate key error
+        res
+          .status(409)
+          .json({ message: "Duplicate key error", error: error.message });
+      } else {
+        // General server error
+        console.error("Unexpected error:", error);
+        res
+          .status(500)
+          .json({ message: "Internal Server Error", error: error.message });
+      }
+    }
+  }
 
-  // async verifyUserOtp(req, res, next) {
-  //   try {
-  //     const body = req.body;
-  //     const userData = await User.findOne({ email: body.email });
-  //     if (userData) {
-  //       if (userData.otp == body.otp) {
-  //         res.status(201).json({ message: "OTP Verified" });
-  //       } else {
-  //         res.status(401).json({ message: "OTP not verified!" });
-  //       }
-  //     } else {
-  //       res.status(401).json({ message: "OTP not verified!" });
-  //     }
-  //   } catch (error) {
-  //     // Handle specific error types
-  //     if (error.name === "ValidationError") {
-  //       // Mongoose validation error
-  //       res
-  //         .status(400)
-  //         .json({ message: "Validation error", errors: error.errors });
-  //     } else if (error.code && error.code === 11000) {
-  //       // MongoDB duplicate key error
-  //       res
-  //         .status(409)
-  //         .json({ message: "Duplicate key error", error: error.message });
-  //     } else {
-  //       // General server error
-  //       console.error("Unexpected error:", error);
-  //       res
-  //         .status(500)
-  //         .json({ message: "Internal Server Error", error: error.message });
-  //     }
-  //   }
-  // }
+  async verifyUserOtp(req, res, next) {
+    try {
+      const body = req.body;
+      const userData = await User.findOne({ email: body.email });
+      if (userData) {
+        if (userData.otp == body.otp) {
+          res.status(201).json({ message: "OTP Verified" });
+        } else {
+          res.status(401).json({ message: "OTP not verified!" });
+        }
+      } else {
+        res.status(401).json({ message: "OTP not verified!" });
+      }
+    } catch (error) {
+      // Handle specific error types
+      if (error.name === "ValidationError") {
+        // Mongoose validation error
+        res
+          .status(400)
+          .json({ message: "Validation error", errors: error.errors });
+      } else if (error.code && error.code === 11000) {
+        // MongoDB duplicate key error
+        res
+          .status(409)
+          .json({ message: "Duplicate key error", error: error.message });
+      } else {
+        // General server error
+        console.error("Unexpected error:", error);
+        res
+          .status(500)
+          .json({ message: "Internal Server Error", error: error.message });
+      }
+    }
+  }
 
-  // async setPassword(req, res, next) {
-  //   try {
-  //     const body = req.body;
-  //     const userData = await User.findOne({ email: body.email });
-  //     if (userData) {
-  //       let hashedPassword = await hashPassword(body.password, 10);
-  //       const resData = await User.findByIdAndUpdate(userData._id, {
-  //         $set: { password: hashedPassword },
-  //       });
-  //       if (resData) {
-  //         res.status(201).json({
-  //           message: "Password Changed Successfully!",
-  //         });
-  //       }
-  //     }
-  //   } catch (error) {
-  //     // Handle specific error types
-  //     if (error.name === "ValidationError") {
-  //       // Mongoose validation error
-  //       res
-  //         .status(400)
-  //         .json({ message: "Validation error", errors: error.errors });
-  //     } else if (error.code && error.code === 11000) {
-  //       // MongoDB duplicate key error
-  //       res
-  //         .status(409)
-  //         .json({ message: "Duplicate key error", error: error.message });
-  //     } else {
-  //       // General server error
-  //       console.error("Unexpected error:", error);
-  //       res
-  //         .status(500)
-  //         .json({ message: "Internal Server Error", error: error.message });
-  //     }
-  //   }
-  // }
+  async setPassword(req, res, next) {
+    try {
+      const body = req.body;
+      const userData = await User.findOne({ email: body.email });
+      if (userData) {
+        let hashedPassword = await hashPassword(body.password, 10);
+        const resData = await User.findByIdAndUpdate(userData._id, {
+          $set: { password: hashedPassword },
+        });
+        if (resData) {
+          res.status(201).json({
+            message: "Password Changed Successfully!",
+          });
+        }
+      }
+    } catch (error) {
+      // Handle specific error types
+      if (error.name === "ValidationError") {
+        // Mongoose validation error
+        res
+          .status(400)
+          .json({ message: "Validation error", errors: error.errors });
+      } else if (error.code && error.code === 11000) {
+        // MongoDB duplicate key error
+        res
+          .status(409)
+          .json({ message: "Duplicate key error", error: error.message });
+      } else {
+        // General server error
+        console.error("Unexpected error:", error);
+        res
+          .status(500)
+          .json({ message: "Internal Server Error", error: error.message });
+      }
+    }
+  }
 }
 
 var exports = (module.exports = new UserController());
