@@ -55,18 +55,18 @@ const Header = () => {
               <div className="col-lg-6 d-flex justify-content-end">
                 <div className="topbar-right">
                   {/* <ul>
-                  <li className="topbar-social">
-                    <div className="social-icon">
-                      <Link href="/"><i className="fab fa-facebook-square"></i></Link>
-                      <a href="/"><i className="fab fa-twitter"></i></a>
-                      <a href="/"><i className="fab fa-linkedin-in"></i></a>
-                      <a href="/"><i className="fab fa-pinterest"></i></a>
-                      <a href="/"><i className="fab fa-skype"></i></a>
-                    </div>
-                  </li>
-                </ul> */}
+                    <li className="topbar-social">
+                      <div className="social-icon">
+                        <Link href="/"><i className="fab fa-facebook-square"></i></Link>
+                        <a href="/"><i className="fab fa-twitter"></i></a>
+                        <a href="/"><i className="fab fa-linkedin-in"></i></a>
+                        <a href="/"><i className="fab fa-pinterest"></i></a>
+                        <a href="/"><i className="fab fa-skype"></i></a>
+                      </div>
+                    </li>
+                  </ul> */}
                   <div className="header-right-button">
-                    <Link to="/signin"  className="header-btn"> Login </Link>
+                    <Link to="/signin" className="header-btn"> Login </Link>
                     {/* <Link to="/admin-login"  className="header-btn s-up">Administration</Link> */}
                   </div>
                 </div>
@@ -78,67 +78,67 @@ const Header = () => {
 
 
         {/* <div id="header-menu" className="header-menu menu-layout1">
-        <div className="container">
-          <div className="row m-0 p-0 d-flex align-items-center">
-            <div className="col-xl-2 col-lg-2">
-              <div className="logo-area">
-                <a href="/" className="temp-logo">
-                  <div className="lgo-img">
-                    <img src="./assets/img/my-img/lgo-red.png" alt="logo" />
-                  </div>
-                </a>
-              </div>
-            </div>
-            <div className="col-xl-7 col-lg-7 d-flex justify-content-center position-static">
-              <nav id="dropdown" className="template-main-menu">
-                <ul>
-                  <li>
-                    <a href="/">Home</a>
-                  </li>
-                  <li>
-                    <a href="/">About Us</a>
-                  </li>
-                  <li>
-                    <a href="/">Contact</a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-            <div className="col-xl-3 col-lg-3 d-flex justify-content-end">
-              <div className="header-action-layout1">
-                <ul>
-                  <li className="header-number">
-                    <div className="media d-flex">
-                      <div className="item-icon">
-                        <FontAwesomeIcon
-                          icon={faComments}
-                          style={{ color: "#da251e" }}
-                        ></FontAwesomeIcon>
-                      </div>
-                      <div className="media-body">
-                        <div className="item-label">Hotline Number</div>
-                        <div className="item-number">0904567987</div>
-                      </div>
+          <div className="container">
+            <div className="row m-0 p-0 d-flex align-items-center">
+              <div className="col-xl-2 col-lg-2">
+                <div className="logo-area">
+                  <a href="/" className="temp-logo">
+                    <div className="lgo-img">
+                      <img src="./assets/img/my-img/lgo-red.png" alt="logo" />
                     </div>
-                  </li>
-                  <li className="offcanvas-menu-trigger-wrap">
-                    <button
-                      type="button"
-                      className="offcanvas-menu-btn menu-status-open"
-                    >
-                      <span className="btn-icon-wrap">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                      </span>
-                    </button>
-                  </li>
-                </ul>
+                  </a>
+                </div>
+              </div>
+              <div className="col-xl-7 col-lg-7 d-flex justify-content-center position-static">
+                <nav id="dropdown" className="template-main-menu">
+                  <ul>
+                    <li>
+                      <a href="/">Home</a>
+                    </li>
+                    <li>
+                      <a href="/">About Us</a>
+                    </li>
+                    <li>
+                      <a href="/">Contact</a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+              <div className="col-xl-3 col-lg-3 d-flex justify-content-end">
+                <div className="header-action-layout1">
+                  <ul>
+                    <li className="header-number">
+                      <div className="media d-flex">
+                        <div className="item-icon">
+                          <FontAwesomeIcon
+                            icon={faComments}
+                            style={{ color: "#da251e" }}
+                          ></FontAwesomeIcon>
+                        </div>
+                        <div className="media-body">
+                          <div className="item-label">Hotline Number</div>
+                          <div className="item-number">0904567987</div>
+                        </div>
+                      </div>
+                    </li>
+                    <li className="offcanvas-menu-trigger-wrap">
+                      <button
+                        type="button"
+                        className="offcanvas-menu-btn menu-status-open"
+                      >
+                        <span className="btn-icon-wrap">
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                        </span>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div> */}
+        </div> */}
 
         <nav className="navbar navbar-expand-lg navbar-white text-black navbar-dark">
           <div className="wrapper">
@@ -159,44 +159,46 @@ const Header = () => {
             <div className="collapse ms-6 navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto mb-2 text-dark mb-lg-0">
                 <li className="nav-item">
-                  <Link className="nav-link active" aria-current="page" to="/">Home</Link>
+                  <a className="nav-link active" aria-current="page" to="#home">Home</a>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link"  to="/">About us</Link>
-                </li>
-
-                <li className="nav-item">
-                  <Link className="nav-link"  to="/">Services</Link>
-                </li>
-
-                {/* <li className="nav-item">
-                  <Link className="nav-link"  href="/">Events</Link>
-                </li> */}
-
-                <li className="nav-item">
-                  <Link className="nav-link"  to="/">contact</Link>
+                  <a className="nav-link" href="#aboutUs">About us</a>
                 </li>
 
                 <li className="nav-item">
-                  <Link className="nav-link"  to="/"><i className="fa fa-search"></i></Link>
+                  <a className="nav-link" href="#services">Services</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#insight">Insight</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="#help">Help</a>
+                </li>
+
+                <li className="nav-item">
+                  <a className="nav-link" href="#contact">contact</a>
+                </li>
+
+                <li className="nav-item">
+                  <a className="nav-link" href="/"><i className="fa fa-search"></i></a>
                 </li>
 
 
               </ul>
               {/* <div className="d-flex flex-column sim">
 
-                <Dropdown overlay={menu} className="me-3" trigger={['click']}>
-                  <Button
-                    icon={<GlobalOutlined style={{ fontSize: '24px', color: 'white' }} />} // Increased the icon size
-                    shape="square"
-                    style={{ width: 'auto', height: '30px', background: "#000" }} // Ensure the button adjusts with text
-                  >
-                    <span style={{ marginLeft: '8px' }}><CaretDownOutlined className="text-white" /></span>
-                  </Button>
-                </Dropdown>
+                  <Dropdown overlay={menu} className="me-3" trigger={['click']}>
+                    <Button
+                      icon={<GlobalOutlined style={{ fontSize: '24px', color: 'white' }} />} // Increased the icon size
+                      shape="square"
+                      style={{ width: 'auto', height: '30px', background: "#000" }} // Ensure the button adjusts with text
+                    >
+                      <span style={{ marginLeft: '8px' }}><CaretDownOutlined className="text-white" /></span>
+                    </Button>
+                  </Dropdown>
 
 
-              </div> */}
+                </div> */}
             </div>
           </div>
         </nav>

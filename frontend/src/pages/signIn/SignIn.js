@@ -100,7 +100,10 @@ const SignIn = () => {
                   </ol>
                 </nav>
                 <div className="mb-4">
-                  <h3 className="title">Sign In</h3>
+                  <h3 className="title">User Login</h3>
+                  <p className="mb-4">
+                    This is the user login portal
+                  </p>
                 </div>
 
                 <div className="form">

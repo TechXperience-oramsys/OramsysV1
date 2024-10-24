@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
 import { Carousel } from 'antd';
 import { ArrowRightOutlined, MailOutlined, PhoneOutlined, PlayCircleOutlined } from '@ant-design/icons'
-import { homeImages  } from '../../assets/assests'
+import { homeImages } from '../../assets/assests'
 
 
 const Home = () => {
@@ -26,7 +26,7 @@ const Home = () => {
 
   return (
     <>
-      <section className="">
+      <section id='home' className="">
         <div className="background-shape6">
           <img src={homeImages.img1} alt="figure" width="404" height="216" />
         </div>
@@ -84,7 +84,7 @@ const Home = () => {
                     </div>
                   </div>
                   <div>
-                  <img src={homeImages.img4} alt="slider" width="960" height="720" />
+                    <img src={homeImages.img4} alt="slider" width="960" height="720" />
                   </div>
                 </div>
               </div>
@@ -184,7 +184,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="about-finnaco-wrap1">
+      <section id='aboutUs' className="about-finnaco-wrap1">
         <div className="background-shape6">
           <img src={homeImages.img13} alt="figure" width="404" height="216" />
         </div>
@@ -236,7 +236,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="consulting-service-wrap1">
+      <section id='services' className="consulting-service-wrap1">
         <div className="container">
           <p className="section-subtitle">What We Do</p>
           <div className="row">
@@ -391,42 +391,9 @@ const Home = () => {
       </section> */}
 
 
-      <section className="banner-wrap1">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="banner-box1">
-                <div className="item-img">
-                  {/* <!-- <img src="img/my-img/bot-bld.jpg" alt="blog" width="586" height="195"> --> */}
-                  <div className="btm-img"></div>
-                </div>
-                <div className="bannar-details">
-                  <h3 className="heading-title">Need Any Help?</h3>
-                  <div className="contact-box2">
-                    <div className="item-icon-box">
-                      <div className="item-icon"><PhoneOutlined /></div>
-                      <div className="banner-content">
-                        <div className="item-hotline">Hotline</div>
-                        <div className="item-number">001234 6789</div>
-                      </div>
-                    </div>
-                    <div className="item-icon-box item-icon-box2">
-                      <div className="item-icon"><MailOutlined /></div>
-                      <div className="banner-content">
-                        <div className="item-hotline">Send Us Email</div>
-                        <div className="item-number">info@oramsys.com</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
 
-      <section className="project-wrap-layout1">
+      <section id='insight' className="project-wrap-layout1">
         <div className="container">
           <p className="section-subtitle">What do we offer?</p>
           <div className="row">
@@ -548,7 +515,41 @@ const Home = () => {
       </section>
 
 
-      <section className="call-back-wrap">
+      <section id='help' className="banner-wrap1" style={{ marginTop: '10rem' }}>
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="banner-box1">
+                <div className="item-img">
+                  {/* <!-- <img src="img/my-img/bot-bld.jpg" alt="blog" width="586" height="195"> --> */}
+                  <div className="btm-img"></div>
+                </div>
+                <div className="bannar-details">
+                  <h3 className="heading-title">Need Any Help?</h3>
+                  <div className="contact-box2">
+                    <div className="item-icon-box">
+                      <div className="item-icon"><PhoneOutlined /></div>
+                      <div className="banner-content">
+                        <div className="item-hotline">Hotline</div>
+                        <div className="item-number">001234 6789</div>
+                      </div>
+                    </div>
+                    <div className="item-icon-box item-icon-box2">
+                      <div className="item-icon"><MailOutlined /></div>
+                      <div className="banner-content">
+                        <div className="item-hotline">Send Us Email</div>
+                        <div className="item-number">info@oramsys.com</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id='contact' className="call-back-wrap" style={{ marginBottom: '15rem'}}>
         <div className="container">
           <div className="row no-gutters">
             <div className="col-lg-5 col-md-12">
@@ -630,7 +631,7 @@ const Home = () => {
         </div>
       </section> */}
 
-      <section className="testimonial-wrap1">
+      {/* <section className="testimonial-wrap1">
         <div className="container">
           <div className="testimonial-box1">
             <div className="slick-carousel slick-slider" data-slick='{"arrows": true, "slidesToShow": 1, "autoplay": false, "vertical": true}'>
@@ -673,10 +674,10 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
 
-      <section className="personal-info-wrap1">
+      {/* <section className="personal-info-wrap1" style={{ marginTop: '15rem' }}>
         <div className="container-fluid">
           <div className="row align-items-center" style={{ justifyContent: "space-between" }}>
             <div className="col-xl-4 col-lg-8">
@@ -738,7 +739,7 @@ const Home = () => {
         <div className="figure-img2">
           <img src={homeImages.img30} alt="figure" width="487" height="269" />
         </div>
-      </section>
+      </section> */}
     </>
   )
 }

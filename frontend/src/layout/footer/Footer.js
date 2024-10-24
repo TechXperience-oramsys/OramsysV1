@@ -35,16 +35,16 @@ const Footer = () => {
               <div className="row mt-4">
                 <div className="col-lg-6 col-md-12">
                   <ul className="footer-list">
-                    <li><a href="/"><FontAwesomeIcon icon={faAngleRight} className="me-2"></FontAwesomeIcon>Sign In</a></li>
-                    <li><a href="/"><FontAwesomeIcon icon={faAngleRight} className="me-2"></FontAwesomeIcon>About us</a></li>
+                    <li><a href="/signin"><FontAwesomeIcon icon={faAngleRight} className="me-2"></FontAwesomeIcon>Sign In</a></li>
+                    <li><a href="#aboutUs"><FontAwesomeIcon icon={faAngleRight} className="me-2"></FontAwesomeIcon>About us</a></li>
                     {/* <li><a href="/"><FontAwesomeIcon icon={faAngleRight} className="me-2"></FontAwesomeIcon>ipsum dolor</a></li>
                     <li><a href="/"><FontAwesomeIcon icon={faAngleRight} className="me-2"></FontAwesomeIcon>ipsum dolor</a></li> */}
                   </ul>
                 </div>
                 <div className="col-lg-6 col-md-12">
                   <ul className="footer-list2">
-                    <li><a href="/"><FontAwesomeIcon icon={faAngleRight} className="me-2"></FontAwesomeIcon>Q&As</a></li>
-                    <li><a href="/"><FontAwesomeIcon icon={faAngleRight} className="me-2"></FontAwesomeIcon>Register</a></li>
+                    <li><a href="#help"><FontAwesomeIcon icon={faAngleRight} className="me-2"></FontAwesomeIcon>Q&As</a></li>
+                    {/* <li><a href="/"><FontAwesomeIcon icon={faAngleRight} className="me-2"></FontAwesomeIcon>Register</a></li> */}
                     {/* <li><a href="/"><FontAwesomeIcon icon={faAngleRight} className="me-2"></FontAwesomeIcon></a></li> */}
                   </ul>
                 </div>
@@ -61,7 +61,7 @@ const Footer = () => {
                   <button className="btn btn-outline-secondary" type="button" id="button-addon2">
                     {/* <i className="fas fa-angle-right"></i> */}
                     <FontAwesomeIcon icon={faAngleRight}></FontAwesomeIcon>
-                    </button>
+                  </button>
                 </div>
               </div>
             </div>
