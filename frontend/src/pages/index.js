@@ -29,6 +29,7 @@ import Transactions from "./transactions/Transactions";
 import Add_Edit_Entities from "./administration/entities/addEditEntities/Add_Edit_Entities";
 import Edit_Transactions from "./transactions/Edit_Transactions";
 import FinalPage from "./transactions/FinalPage";
+import Workflow from "./transactions/WorkFlow";
 import AdminLogin from "./admin/AdminLogin";
 import FunctionalAdmin from "./functionalAdmin/FunctionalAdmin";
 import EntitiesRole from "./administration/EntitiesRole";
@@ -139,6 +140,11 @@ const Index = () => {
       path: "/final-page",
       component: FinalPage,
     },
+
+    {
+      path: "/workflow",
+      component: Workflow,
+    },
   ];
   const superAdminRoutes = [
     {
@@ -233,6 +239,7 @@ const Index = () => {
       path: "/final-page",
       component: FinalPage,
     },
+   
   ];
 
   let primaryLinks = [];

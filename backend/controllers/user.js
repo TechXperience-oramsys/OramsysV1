@@ -595,6 +595,20 @@ class UserController {
       }
     }
   }
+
+  async getUsersByAdmin(req, res, next) {
+    // try {
+    const user = await User.getByAdminId(req.query.id);
+
+    if (user) {
+      return res
+        .status(httpStatus.OK)
+        .json(new APIResponse(user, "User get successfully.", httpStatus.OK));
+    }
+    return res
+      .status(httpStatus.BAD_REQUEST)
+      .send({ message: "No users found" });
+  }
 }
 
 var exports = (module.exports = new UserController());
