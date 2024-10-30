@@ -1,10 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Card, Container, Row, Col, Form, Badge } from 'react-bootstrap';
 import { Formik, FieldArray, Form as FormikForm, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { API } from '../../config/API/api.config';
 
 const Workflow = () => {
   const [showForm, setShowForm] = useState(false);
+
+    const BaseURL = API;
+    console.log(BaseURL , 'baseul');
+    
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Define the async function to call the API
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch(`${BaseURL}user/getUsersByAdmin?id=66d7ffd34f536624285360c7`);
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+        const data = await response.json();
+
+        console.log(data?.data , 'all users heree');
+        
+
+        setUsers(data?.data);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    // Call the function
+    fetchUsers();
+  }, []); // Empty dependency array to run only once on component mount
+
+
+
+
+
 
   // Validation schema for each step
   const validationSchema = Yup.object().shape({

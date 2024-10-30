@@ -44,7 +44,6 @@ const Transactions = () => {
   const getAlltransactionData = useSelector(
     (state) => state.transactionData.getAllTransaction
   );
-  console.log('get all transactins', getAlltransactionData)
 
   const riskAssessment = useSelector(
     (state) => state.riskAssessmentData.getRiskAssessment
