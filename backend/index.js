@@ -54,7 +54,9 @@ app.use((req, res, next) => {
 
 // app.use(cors('https://www.oramsysdev.com'));
 app.use(cors({
-    origin: ["https://www.oramsysdev.com"]
+    origin: ["https://www.oramsysdev.com"],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
 }))
 app.use(express.json({ limit: '50mb' }))
 app.use(express.static('files'))
