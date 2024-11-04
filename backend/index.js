@@ -44,15 +44,30 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(cors('https://www.oramsysdev.com/'))
+app.use(cors())
 app.use(express.json({ limit: '50mb' }))
 app.use(express.static('files'))
 
 app.all("*", function (req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", "https://www.oramsysdev.com/");
+    res.setHeader(
+        "Access-Control-Allow-Origin", 
+        "*" // Replace '*' with your frontend domain in production
+    );
     res.setHeader("Access-Control-Allow-Credentials", "true");
-    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Authorization, Accept");
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+    res.setHeader(
+        "Content-Security-Policy",
+        "default-src 'self'; frame-src 'self' data:; script-src 'self';"
+      );
+      
+    res.setHeader(
+        "Access-Control-Allow-Headers", 
+        "X-Requested-With, Content-Type, Authorization, Accept"
+    );
+    res.setHeader(
+        "Access-Control-Allow-Methods", 
+        "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+    );
+    res.setHeader("Access-Control-Expose-Headers", "Authorization");
     next();
 });
 
