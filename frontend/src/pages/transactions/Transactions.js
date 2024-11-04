@@ -25,7 +25,6 @@ import {
   FormOutlined,
   EllipsisOutlined,
 } from "@ant-design/icons";
-import axios from "axios";
 
 const Transactions = () => {
   const dispatch = useDispatch();
@@ -120,53 +119,37 @@ const Transactions = () => {
     }
   }, [riskAssessment, selected, navigate]);
 
-  // const downloadTermSheet = async (id) => {
-  //   try {
-  //     const response = await ApiGet(`transaction/termSheet/${id}`, {
-  //       responseType: 'blob', // Important to receive the file as a blob
-  //     });
-
-  //     const blob = new Blob([response.data], { type: 'application/pdf' });
-  //     const downloadUrl = URL.createObjectURL(blob);
-  //     const downloadLink = document.createElement("a");
-  //     downloadLink.href = downloadUrl;
-  //     downloadLink.download = "TermSheet.pdf";
-  //     downloadLink.click();
-
-  //     // Clean up
-  //     URL.revokeObjectURL(downloadUrl);
-  //   } catch (error) {
-  //     console.error("Error downloading the PDF:", error);
-  //   }
+  // const downloadTermSheet = (id, name) => {
+  //   ApiGet(`transaction/termSheet/${id}`)
+  //     .then((res) => {
+  //       let data = res.data.data;
+  //       if (name === "view") {
+  //         ViewRiskAssessment(data);
+  //       } else if (name === "download") {
+  //         converBase64toBlob(data);
+  //       }
+  //     })
+  //     .catch((e) => console.log(e));
   // };
 
-  const downloadTermSheet = (id, action) => {
-    axios
-      .get(`https://backend.oramsysdev.com/transaction/termSheet/${id}`, {
-        responseType: "blob",  // Handle binary data directly
-      })
-      .then((response) => {
-        const blob = new Blob([response.data], { type: "application/pdf" });
-        const url = URL.createObjectURL(blob);
+  const downloadTermSheet = (id, name) => {
+    ApiGet(`transaction/termSheet/${id}`, { responseType: 'arraybuffer' }) // Set response type to arraybuffer
+      .then((res) => {
+        const blob = new Blob([res.data], { type: 'application/pdf' });
+        const fileURL = URL.createObjectURL(blob);
   
-        if (action === "view") {
-          // Open PDF in a new browser tab for viewing
-          window.open(url);
-        } else if (action === "download") {
-          // Trigger download if 'download' is specified
+        if (name === "view") {
+          window.open(fileURL); // View the PDF in a new tab
+        } else if (name === "download") {
           const downloadLink = document.createElement("a");
-          downloadLink.href = url;
+          downloadLink.href = fileURL;
           downloadLink.download = "TermSheet.pdf";
-          document.body.appendChild(downloadLink);
           downloadLink.click();
-          document.body.removeChild(downloadLink);  // Clean up link
         }
-  
-        // Clean up the object URL to release memory
-        URL.revokeObjectURL(url);
       })
-      .catch((error) => console.error("Error fetching TermSheet:", error));
+      .catch((e) => console.error("Error downloading TermSheet:", e));
   };
+  
 
   const converBase64toBlob = (content, contentType) => {
     const linkSource = `data:application/pdf;base64,${content}`;

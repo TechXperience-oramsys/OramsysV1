@@ -706,46 +706,133 @@ class transactionController {
     }
   }
 
+  // async download(req, res, next) {
+  //   try {
+  //     let id = req.params.id;
+  //     let data;
+  //     const finedTransaction = await transaction.getById(id);
+  //     if (finedTransaction && finedTransaction.termSheetURL) {
+  //       data = finedTransaction.termSheetURL;
+
+  //       res.setHeader('Content-Type', 'application/pdf');
+  //       res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
+
+  //       return res
+  //         .status(httpStatus.OK)
+  //         .json(
+  //           new APIResponse(
+  //             { data: data },
+  //             "TermSheet downloaded successfully.",
+  //             httpStatus.OK
+  //           )
+  //         );
+  //     } else {
+  //       // const User = await user.getById(finedTransaction.userId)
+  //       // const SuperAdmin = await superAdmin.getById(finedTransaction.userId)
+  //       // const financer = User.name ?? SuperAdmin.name
+  //       let doc = new PDFDocument({ bufferPages: true });
+  //       let buffers = [];
+  //       doc.on("data", buffers.push.bind(buffers));
+  //       makeTermSheet(doc, finedTransaction);
+  //       // makeTermSheet(doc, finedTransaction,financer)
+  //       doc.on("end", async () => {
+  //         let pdfData = Buffer.concat(buffers);
+  //         const filePath = `files/TermSheet-${id}.pdf`;
+  //         fs.writeFile(filePath, pdfData, async function (err) {
+  //           if (err) {
+  //             console.log(err);
+  //           } else {
+  //             try {
+  //               console.log("File Created");
+  //               data = fs.readFileSync(
+  //                 path.join(__dirname, `../files/TermSheet-${id}.pdf`),
+  //                 "base64",
+  //                 function (err, content) {
+  //                   return content;
+  //                 }
+  //               );
+
+  //               // Set the correct headers for downloading the file
+  //               res.setHeader('Content-Type', 'application/pdf');
+  //               res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
+
+  //               return res
+  //                 .status(httpStatus.OK)
+  //                 .json(
+  //                   new APIResponse(
+  //                     { data: data },
+  //                     "TermSheet downloaded successfully.",
+  //                     httpStatus.OK
+  //                   )
+  //                 );
+  //             } catch (e) {
+  //               console.log(e);
+  //             }
+  //           }
+  //         });
+  //       });
+  //     }
+  //   } catch (e) {
+  //     console.log(
+  //       "-----------------------catch-------------------------------------",
+  //       e
+  //     );
+  //     return res
+  //       .status(httpStatus.INTERNAL_SERVER_ERROR)
+  //       .json(
+  //         new APIResponse(
+  //           {},
+  //           "Error in downloading TermSheet",
+  //           httpStatus.INTERNAL_SERVER_ERROR,
+  //           e
+  //         )
+  //       );
+  //   }
+  // }
+
   async download(req, res, next) {
     try {
-      let id = req.params.id;
+      const id = req.params.id;
       const finedTransaction = await transaction.getById(id);
   
       if (finedTransaction && finedTransaction.termSheetURL) {
-        // Directly return the file content without encoding in JSON
+        // If the PDF is already generated, read and send it
+        const pdfPath = path.join(__dirname, `../files/TermSheet-${id}.pdf`);
+        const pdfData = fs.readFileSync(pdfPath);
+  
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-  
-        return res.sendFile(path.join(__dirname, `../files/${finedTransaction.termSheetURL}`));
+        return res.send(pdfData);
       } else {
-        // Generate the PDF if it doesn’t already exist
-        let doc = new PDFDocument({ bufferPages: true });
-        let buffers = [];
-        doc.on("data", buffers.push.bind(buffers));
-        makeTermSheet(doc, finedTransaction);  // Adjust to your custom term sheet function
-        doc.on("end", async () => {
-          let pdfData = Buffer.concat(buffers);
-          const filePath = path.join(__dirname, `../files/TermSheet-${id}.pdf`);
+        // Generate a new PDF and send it in the response
+        const doc = new PDFDocument();
+        const buffers = [];
+  
+        doc.on("data", (chunk) => buffers.push(chunk)); // Collect chunks of the PDF
+        doc.on("end", () => {
+          // Send the PDF file after generation
+          const pdfData = Buffer.concat(buffers);
           
-          fs.writeFile(filePath, pdfData, (err) => {
-            if (err) {
-              console.log(err);
-              return res.status(httpStatus.INTERNAL_SERVER_ERROR).send("Failed to generate PDF");
-            } else {
-              res.setHeader('Content-Type', 'application/pdf');
-              res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-              res.sendFile(filePath);
-            }
-          });
+          res.setHeader('Content-Type', 'application/pdf');
+          res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
+          res.send(pdfData);
         });
+  
+        // Generate the PDF content using `makeTermSheet`
+        makeTermSheet(doc, finedTransaction);
+  
+        // End the document to trigger the 'end' event
+        doc.end();
       }
     } catch (e) {
-      console.log("Error downloading TermSheet:", e);
-      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
-        message: "Error in downloading TermSheet",
-      });
+      console.error("Error in downloading TermSheet:", e);
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(
+        new APIResponse({}, "Error in downloading TermSheet", httpStatus.INTERNAL_SERVER_ERROR, e)
+      );
     }
   }
+  
+  
   async uploadTermSheet(req, res, next) {
     try {
       let body = req.body;
