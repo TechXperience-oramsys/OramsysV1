@@ -237,7 +237,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
         currency: transactionData.details.contractDetails.currency,
       });
     }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getTransactionByIdData, setAddCurrencyHedge, setFacility, setSourceOfRepayment, transactionData.details.contractDetails.currency]);
 
   const counterpartyOptions = useSelector((state) => state.entityData.entity);
@@ -335,49 +335,55 @@ const Facility = ({ hendelCancel, hendelNext }) => {
   ];
 
   const precedentOptions = [
+    "authorisations",
+    "compliance with laws",
+    "environmental compliance",
+    "environmental claims",
     "Status",
     "Binding obligations",
     "non conflict with other obligations",
     "no reduction of capital",
-    "iuiffyhggtions",
-    "No iuewfi2q2",
-    "No iuerguyrrr",
   ];
   const subsequentOptions = [
+    "shares",
+    "intellectual property",
+    "Group Structure Chart",
+    "pari passu ranking",
     "Status",
     "Binding obligations",
     "non conflict with other obligations",
     "no reduction of capital",
-    "iuiffyhggtions",
-    "No iuewfi2q2",
-    "No iuerguyrrr",
   ];
   const bacovOptions = [
+    "taxation compliance and no tax claims",
+    "sanctions; anti-bribery and corruption",
+    "centre of main interests and establishments",
     "Status",
     "Binding obligations",
     "non conflict with other obligations",
     "no reduction of capital",
-    "iuiffyhggtions",
-    "No iuewfi2q2",
-    "No iuerguyrrr",
   ];
   const fincovOptions = [
+    "financial statements",
+    "accounting reference date",
+    "no proceedings pending or threatened",
+    "no breach of laws",
+    "security and financial indebtedness",
     "Status",
     "Binding obligations",
     "non conflict with other obligations",
     "no reduction of capital",
-    "iuiffyhggtions",
-    "No iuewfi2q2",
-    "No iuerguyrrr",
   ];
   const infcovOptions = [
     "Status",
     "Binding obligations",
     "non conflict with other obligations",
     "no reduction of capital",
-    "iuiffyhggtions",
-    "No iuewfi2q2",
-    "No iuerguyrrr",
+    "power and authority",
+    "validity and admissibility in evidence",
+    "governing law and enforcement",
+    "insolvency",
+    "no deduction of tax",
   ];
 
   let currencyHedgeOptions = [
@@ -1563,7 +1569,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
         </div>
 
         <div>
-          
+
 
           <div className="form">
             <h6 className="fs-5 fw-bold mb-4">FACILITY DETAILS</h6>

@@ -1,12 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Routes,
-  Route,
-  useLocation,
-  useNavigate,
-  // Navigate,
-  // Outlet,
-} from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import AuthStorage from "../helper/AuthStorage";
 import AuthLayOut from "../layout/AuthLayOut";
 import Layout from "../layout/Layout";
@@ -14,9 +7,6 @@ import Home from "./home/Home";
 import Dashboard from "./home/Dashboard";
 import SignIn from "./signIn/SignIn";
 import SignUp from "./signUp/SignUp";
-// import { useDispatch } from "react-redux";
-// import { changeLoginState } from "../redux/actions/loginAction";
-// import Product from './product/Product';
 import Add_Edit_Product from "./administration/masterData/products/Add_Edit_Product";
 import Products from "./administration/masterData/products/Products";
 import Entities from "./administration/entities/Entities";
@@ -43,8 +33,7 @@ import Admin from "./functionalAdmin/AdminTable";
 import ForgetPassword from "./functionalAdmin/ForgetPassword";
 import UserForgetPassword from "./signIn/UserForgetPassword";
 import EditAdmin from "./functionalAdmin/EditAdmin";
-import profile from "./functionalAdmin/profile";
-import SetAdminPassword  from "./functionalAdmin/CreateAdminPassword";
+import SetAdminPassword from "./functionalAdmin/CreateAdminPassword";
 
 const pathForLayout = [
   "/",
@@ -59,8 +48,6 @@ const pathForLayout = [
 ];
 const Index = () => {
   const location = useLocation();
-  // const token = AuthStorage.getToken();
-  // const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const userRoutes = [
@@ -111,10 +98,7 @@ const Index = () => {
       path: "/admin-edit",
       component: EditAdmin,
     },
-    {
-      path: "/profile",
-      component: profile,
-    },
+   
     {
       path: "/transactions",
       component: Transactions,
@@ -181,10 +165,7 @@ const Index = () => {
       path: "/admin-edit",
       component: EditAdmin,
     },
-    {
-      path: "/profile",
-      component: profile,
-    },
+   
     {
       path: "/transactions",
       component: Transactions,
@@ -287,7 +268,6 @@ const Index = () => {
     primaryLinks = AdminRoutes;
   } else if (AuthStorage.getStorageData(STORAGEKEY.roles) === "superAdmin") {
     primaryLinks = superAdminRoutes;
-    // console.log(primaryLinks);
   }
 
   return (
@@ -328,42 +308,3 @@ const Index = () => {
 };
 
 export default Index;
-
-// const RouteProtecter = () => {
-//   const isAuthenticated = AuthStorage.isUserAuthenticated();
-//   return !isAuthenticated ? (
-//     <Navigate to={"/"} />
-//   ) : (
-//     <AuthLayOut>
-//       <Outlet />
-//     </AuthLayOut>
-//   );
-// };
-
-// const PublicRoutes = () => {
-//   const isAuthenticated = AuthStorage.isUserAuthenticated();
-//   const navigate = useNavigate();
-//   const location = useLocation();
-
-//   useEffect(() => {
-//     !isAuthenticated ? (
-//       pathForLayout.includes(location.pathname) ? (
-//         <Navigate to={location} />
-//       ) : (
-//         <Navigate to="/" />
-//       )
-//     ) : pathForLayout.includes(location.pathname) ? (
-//       navigate(-1)
-//     ) : location.pathname === "/" ? (
-//       navigate("/products")
-//     ) : (
-//       navigate("/")
-//     );
-//   }, [isAuthenticated]);
-
-//   return (
-//     <Layout>
-//       <Outlet />
-//     </Layout>
-//   );
-// };

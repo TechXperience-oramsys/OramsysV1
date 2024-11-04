@@ -3,11 +3,13 @@ import ReactDOM from "react-dom/client"
 import "./App.css"
 import "./index.css"
 import App from "./App"
-import {Toaster} from "react-hot-toast"
+import { Toaster } from "react-hot-toast"
 import reportWebVitals from "./reportWebVitals"
 import "@fortawesome/fontawesome-svg-core/styles.css"
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import "slick-carousel/slick/slick.css"
+import { MantineProvider } from '@mantine/core';
+import '@mantine/core/styles.css';
 // import "slick-carousel/slick/slick-theme.css"
 // import 'react-loading-skeleton/dist/skeleton.css'
 // import 'react-tooltip/dist/react-tooltip.css'
@@ -16,9 +18,10 @@ import "slick-carousel/slick/slick.css"
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <React.StrictMode>
-    <App />
-    <Toaster 
-      />
+    <MantineProvider withGlobalStyles withNormalizeCSS>
+      <App />
+      <Toaster toastOptions={{ duration: 3000 }} />
+    </MantineProvider>
   </React.StrictMode>
 )
 

@@ -486,7 +486,7 @@ class UserController {
             html: `
             <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
               <p style="font-size: 16px;">Hi, ${user?.name}</p>
-              <p style="font-size: 12px;">Your OTP is here <strong>${otp}<strong>.</p>
+              <p style="font-size: 12px;">Your OTP to reset your password is: <strong>${otp}<strong></p>
             </div>
           `,
           };

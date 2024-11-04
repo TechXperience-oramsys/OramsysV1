@@ -330,21 +330,13 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
 
         <Layout>
           <Header style={{ padding: 0, outline: "none" }}>
-            <Button
-              type="text"
-              icon={
-                collapsed ? (
+            <Button type="text"
+              icon={collapsed ? (
                   <MenuUnfoldOutlined style={{ fontSize: 18 }} />
                 ) : (
                   <MenuFoldOutlined style={{ fontSize: 18 }} />
                 )
-              }
-              onClick={() => setCollapsed(!collapsed)}
-              style={{
-                fontSize: "16px",
-                width: 64,
-                height: 64,
-              }}
+              } onClick={() => setCollapsed(!collapsed)} style={{fontSize: "16px", width: 64,  height: 64 }}
             />
           </Header>
           <Content
