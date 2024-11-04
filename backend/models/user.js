@@ -106,4 +106,11 @@ Schema.statics.getUserByRole = async function (Role) {
     .exec();
 };
 
+
+Schema.statics.getByAdminId = async function (id) {
+  return await this.find({ isDeleted: false, createdBy: id })
+    .sort({ name: 1 })
+    .exec();
+};
+
 module.exports = mongoose.model("User", Schema);

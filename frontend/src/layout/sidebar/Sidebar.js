@@ -13,7 +13,7 @@ import STORAGEKEY from "../../config/APP/app.config";
 import AuthStorage from "../../helper/AuthStorage";
 import LogoutModal from "../../component/Modal/LogoutModal";
 import { GrUserAdmin } from "react-icons/gr";
-import { FaBoxOpen, FaUserCircle } from "react-icons/fa";
+import { FaBoxOpen, FaOutdent, FaUserCircle } from "react-icons/fa";
 import { HiOutlineLogout, HiOutlineUsers } from "react-icons/hi";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { FaMoneyBillTransfer, FaUsersLine } from "react-icons/fa6";
@@ -154,6 +154,13 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
           icon: <FaMoneyBillTransfer />,
           label: "Transactions",
           path: "transactions",
+        },
+
+        {
+          key: "1-5",
+          icon: <FaOutdent />,
+          label: "Workflow",
+          path: "workflow",
         },
       ],
     },
