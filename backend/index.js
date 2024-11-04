@@ -52,7 +52,7 @@ app.use((req, res, next) => {
 });
 
 
-app.use(cors());
+app.use(cors('https://www.oramsysdev.com'));
 app.use(express.json({ limit: '50mb' }))
 app.use(express.static('files'))
 
