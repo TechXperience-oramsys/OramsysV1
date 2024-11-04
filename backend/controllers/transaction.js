@@ -792,11 +792,11 @@ class transactionController {
 
   async download(req, res, next) {
     try {
-      const id = req.params.id;
+      let id = req.params.id;
       const finedTransaction = await transaction.getById(id);
   
       if (finedTransaction && finedTransaction.termSheetURL) {
-        // If the PDF is already generated, read and send it
+        // Read PDF file directly and send as binary data
         const pdfPath = path.join(__dirname, `../files/TermSheet-${id}.pdf`);
         const pdfData = fs.readFileSync(pdfPath);
   
@@ -804,24 +804,18 @@ class transactionController {
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
         return res.send(pdfData);
       } else {
-        // Generate a new PDF and send it in the response
-        const doc = new PDFDocument();
-        const buffers = [];
+        let doc = new PDFDocument({ bufferPages: true });
+        let buffers = [];
+        doc.on("data", buffers.push.bind(buffers));
   
-        doc.on("data", (chunk) => buffers.push(chunk)); // Collect chunks of the PDF
+        makeTermSheet(doc, finedTransaction);
         doc.on("end", () => {
-          // Send the PDF file after generation
           const pdfData = Buffer.concat(buffers);
-          
+  
           res.setHeader('Content-Type', 'application/pdf');
           res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
           res.send(pdfData);
         });
-  
-        // Generate the PDF content using `makeTermSheet`
-        makeTermSheet(doc, finedTransaction);
-  
-        // End the document to trigger the 'end' event
         doc.end();
       }
     } catch (e) {
@@ -831,7 +825,6 @@ class transactionController {
       );
     }
   }
-  
   
   async uploadTermSheet(req, res, next) {
     try {

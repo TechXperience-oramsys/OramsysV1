@@ -44,16 +44,12 @@ app.use((req, res, next) => {
     next();
 });
 
-const corsOptions = {
-    origin: ["https://www.oramsysdev.com", "http://localhost:3000"], // Use your exact frontend URL
-    credentials: true,
-  };
-app.use(cors(corsOptions))
+app.use(cors('https://www.oramsysdev.com/'))
 app.use(express.json({ limit: '50mb' }))
 app.use(express.static('files'))
 
 app.all("*", function (req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", "https://www.oramsysdev.com");
+    res.setHeader("Access-Control-Allow-Origin", "https://www.oramsysdev.com/");
     res.setHeader("Access-Control-Allow-Credentials", "true");
     res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Authorization, Accept");
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
