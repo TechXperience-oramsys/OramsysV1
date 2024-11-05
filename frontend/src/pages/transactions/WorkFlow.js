@@ -7,9 +7,9 @@ import { API } from '../../config/API/api.config';
 const Workflow = () => {
   const [showForm, setShowForm] = useState(false);
 
-    const BaseURL = API;
-    console.log(BaseURL , 'baseul');
-    
+  const BaseURL = API;
+  console.log(BaseURL, 'baseul');
+
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
 
@@ -23,8 +23,8 @@ const Workflow = () => {
         }
         const data = await response.json();
 
-        console.log(data?.data , 'all users heree');
-        
+        console.log(data?.data, 'all users heree');
+
 
         setUsers(data?.data);
       } catch (error) {
@@ -74,7 +74,7 @@ const Workflow = () => {
   };
 
   return (
-    <Container className="mt-4">
+    <Container style={{ transform: 'none', transition: 'none !important' }} className=" card container mt-4">
       {/* Top-right button to create a workflow */}
       {!showForm && (
         <div className="d-flex justify-content-end">
@@ -114,16 +114,15 @@ const Workflow = () => {
                                     type="text"
                                     name={`steps[${index}].stepName`}
                                     placeholder="Enter step name"
-                                    className={`form-control ${
-                                      touched.steps &&
-                                      touched.steps[index] &&
-                                      touched.steps[index].stepName &&
-                                      errors.steps &&
-                                      errors.steps[index] &&
-                                      errors.steps[index].stepName
+                                    className={`form-control ${touched.steps &&
+                                        touched.steps[index] &&
+                                        touched.steps[index].stepName &&
+                                        errors.steps &&
+                                        errors.steps[index] &&
+                                        errors.steps[index].stepName
                                         ? 'is-invalid'
                                         : ''
-                                    }`}
+                                      }`}
                                   />
                                   <ErrorMessage
                                     name={`steps[${index}].stepName`}
@@ -139,16 +138,15 @@ const Workflow = () => {
                                     type="text"
                                     name={`steps[${index}].assignedUser`}
                                     placeholder="Enter user name"
-                                    className={`form-control ${
-                                      touched.steps &&
-                                      touched.steps[index] &&
-                                      touched.steps[index].assignedUser &&
-                                      errors.steps &&
-                                      errors.steps[index] &&
-                                      errors.steps[index].assignedUser
+                                    className={`form-control ${touched.steps &&
+                                        touched.steps[index] &&
+                                        touched.steps[index].assignedUser &&
+                                        errors.steps &&
+                                        errors.steps[index] &&
+                                        errors.steps[index].assignedUser
                                         ? 'is-invalid'
                                         : ''
-                                    }`}
+                                      }`}
                                   />
                                   <ErrorMessage
                                     name={`steps[${index}].assignedUser`}
@@ -164,16 +162,15 @@ const Workflow = () => {
                                     type="text"
                                     name={`steps[${index}].userRole`}
                                     placeholder="Enter user role"
-                                    className={`form-control ${
-                                      touched.steps &&
-                                      touched.steps[index] &&
-                                      touched.steps[index].userRole &&
-                                      errors.steps &&
-                                      errors.steps[index] &&
-                                      errors.steps[index].userRole
+                                    className={`form-control ${touched.steps &&
+                                        touched.steps[index] &&
+                                        touched.steps[index].userRole &&
+                                        errors.steps &&
+                                        errors.steps[index] &&
+                                        errors.steps[index].userRole
                                         ? 'is-invalid'
                                         : ''
-                                    }`}
+                                      }`}
                                   />
                                   <ErrorMessage
                                     name={`steps[${index}].userRole`}

@@ -168,7 +168,7 @@ export const CreateNewPassword = () => {
                 </>
               ) : (
                 <form className="form" onSubmit={handleSubmit}>
-                  <div className=" mb-4 position-relative">
+                  <div className="form-floating mb-4 position-relative">
                     <input
                       type={passwordVisible ? 'text' : 'password'}
                       onChange={handleChange}
@@ -185,7 +185,7 @@ export const CreateNewPassword = () => {
                     </span>
                   </div>
 
-                  <div className=" mb-4 position-relative">
+                  <div className="form-floating mb-4 position-relative">
                     <input
                       type={passwordVisible ? 'text' : 'password'}
                       onChange={handleChange}

@@ -5,6 +5,13 @@ var database = require("./database/database");
 const cors = require('cors');
 const port = process.env.PORT || 5002
 
+// const corsOptions = {
+//     origin: ['https://oramsysdev.com', 'http://localhost:3001', 'https://oramsys.com'], // Adjust this to the specific origin(s) you want to allow
+//     methods: 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
+//     allowedHeaders: 'X-Requested-With, content-type, Authorization, Accept',
+//     credentials: true,
+//     exposedHeaders: 'Authorization'
+// };
 
 // Cross-domain JavaScript Source File Inclusion
 app.use((req, res, next) => {
@@ -44,32 +51,40 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(cors())
+
+app.use(cors(
+    { origin: ['https://www.oramsysdev.com', 'https://oramsysdev.com', 'http://localhost:3000'] }
+));
 app.use(express.json({ limit: '50mb' }))
 app.use(express.static('files'))
 
 app.all("*", function (req, res, next) {
     res.setHeader(
-        "Access-Control-Allow-Origin", 
-        "*" // Replace '*' with your frontend domain in production
+        "Access-Control-Allow-Origin",
+        ['https://www.oramsysdev.com', 'https://oramsysdev.com', 'http://localhost:3000'] // Replace '*' with your frontend domain in production
     );
     res.setHeader("Access-Control-Allow-Credentials", "true");
     res.setHeader(
         "Content-Security-Policy",
         "default-src 'self'; frame-src 'self' data:; script-src 'self';"
-      );
-      
+    );
+
     res.setHeader(
-        "Access-Control-Allow-Headers", 
+        "Access-Control-Allow-Headers",
         "X-Requested-With, Content-Type, Authorization, Accept"
     );
     res.setHeader(
-        "Access-Control-Allow-Methods", 
+        "Access-Control-Allow-Methods",
         "GET, POST, OPTIONS, PUT, PATCH, DELETE"
     );
     res.setHeader("Access-Control-Expose-Headers", "Authorization");
     next();
 });
+
+
+
+
+
 
 function setupRoutes() {
     const routes = require("./routes/index")

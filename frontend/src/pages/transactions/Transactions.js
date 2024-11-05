@@ -119,47 +119,70 @@ const Transactions = () => {
     }
   }, [riskAssessment, selected, navigate]);
 
-  // const downloadTermSheet = (id, name) => {
-  //   ApiGet(`transaction/termSheet/${id}`)
-  //     .then((res) => {
-  //       let data = res.data.data;
-  //       if (name === "view") {
-  //         ViewRiskAssessment(data);
-  //       } else if (name === "download") {
-  //         converBase64toBlob(data);
-  //       }
-  //     })
-  //     .catch((e) => console.log(e));
-  // };
-
   const downloadTermSheet = (id, name) => {
-    ApiGet(`transaction/termSheet/${id}`, { responseType: 'arraybuffer' }) // Set response type to arraybuffer
+    ApiGet(`transaction/termSheet/${id}`)
       .then((res) => {
-        const blob = new Blob([res.data], { type: 'application/pdf' });
-        const fileURL = URL.createObjectURL(blob);
-  
+        let data = res.data.data;
         if (name === "view") {
-          window.open(fileURL); // View the PDF in a new tab
+          ViewRiskAssessment(data);
         } else if (name === "download") {
-          const downloadLink = document.createElement("a");
-          downloadLink.href = fileURL;
-          downloadLink.download = "TermSheet.pdf";
-          downloadLink.click();
+          converBase64toBlob(data);
         }
       })
-      .catch((e) => console.error("Error downloading TermSheet:", e));
+      .catch((e) => console.log(e));
   };
+
+  // const downloadTermSheet = (id, name) => {
+  //   ApiGet(`transaction/termSheet/${id}`, { responseType: 'arraybuffer' }) // Set response type to arraybuffer
+  //     .then((res) => {
+  //       const blob = new Blob([res.data], { type: 'application/pdf' });
+  //       const fileURL = URL.createObjectURL(blob);
+  
+  //       if (name === "view") {
+  //         window.open(fileURL); // View the PDF in a new tab
+  //       } else if (name === "download") {
+  //         const downloadLink = document.createElement("a");
+  //         downloadLink.href = fileURL;
+  //         downloadLink.download = "TermSheet.pdf";
+  //         downloadLink.click();
+  //       }
+  //     })
+  //     .catch((e) => console.error("Error downloading TermSheet:", e));
+  // };
   
 
-  const converBase64toBlob = (content, contentType) => {
-    const linkSource = `data:application/pdf;base64,${content}`;
-    const downloadLink = document.createElement("a");
-    const fileName = "TermSheet.pdf";
+  // const converBase64toBlob = (content, contentType) => {
+  //   const linkSource = `data:application/pdf;base64,${content}`;
+  //   const downloadLink = document.createElement("a");
+  //   const fileName = "TermSheet.pdf";
 
-    downloadLink.href = linkSource;
-    downloadLink.download = fileName;
-    downloadLink.click();
-  };
+  //   downloadLink.href = linkSource;
+  //   downloadLink.download = fileName;
+  //   downloadLink.click();
+  // };
+  const converBase64toBlob = (content, contentType = "application/pdf") => {
+    const byteCharacters = atob(content);
+    const byteArrays = [];
+    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+        const slice = byteCharacters.slice(offset, offset + 512);
+        const byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+    }
+    const blob = new Blob(byteArrays, { type: contentType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "TermSheet.pdf";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+};
+
   const ViewRiskAssessment = (contents) => {
     const linkSources = `data:application/pdf;base64,${contents}`;
     let pdfWindow = window.open("");
