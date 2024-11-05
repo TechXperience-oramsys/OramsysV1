@@ -53,7 +53,7 @@ const resetAdminPassword = () => async (req, res) => {
                 <h2 style="color: #4a5568; font-size: 1.5rem;">Bravo ${resData?.adminName},</h2>
                
                 <p style="font-weight: bold; font-size: 20px;">Your password has been changed succesfully!</p>
-                <a href='https://oramsys.com/fa-login' style="display: inline-block; padding: 10px 20px; margin-top: 20px; font-size: 0.875rem; font-weight: 500; color: #ffffff; background-color: #3182ce; border-radius: 8px; text-align: center; text-decoration: none;">Visist Oramsys
+                <a href='https://www.oramsysdev.com/fa-login' style="display: inline-block; padding: 10px 20px; margin-top: 20px; font-size: 0.875rem; font-weight: 500; color: #ffffff; background-color: #3182ce; border-radius: 8px; text-align: center; text-decoration: none;">Visist Oramsys
                 </a>
                 <p style="color: #718096; font-size: 14px; margin-top: 20px;">
                   Thanks, <br> Oramsys Pilot team

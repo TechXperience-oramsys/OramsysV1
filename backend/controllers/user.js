@@ -189,7 +189,7 @@ class UserController {
                 Click on the link below to enter the OTP and create a password
                 </p>
                 <p style="font-weight: bold; font-size: 20px;">OTP: ${otp}</p>
-                <a href="http://localhost:3000/verify-user" style="display: inline-block; padding: 10px 20px; margin-top: 20px; font-size: 0.875rem; font-weight: 500; color: #ffffff; background-color: #3182ce; border-radius: 8px; text-align: center; text-decoration: none;">
+                <a href="https://www.oramsysdev.com/verify-user" style="display: inline-block; padding: 10px 20px; margin-top: 20px; font-size: 0.875rem; font-weight: 500; color: #ffffff; background-color: #3182ce; border-radius: 8px; text-align: center; text-decoration: none;">
                   Accept the invite
                 </a>
                 <p style="color: #718096; font-size: 14px; margin-top: 20px;">
@@ -536,9 +536,7 @@ class UserController {
                   <p style="color: #718096; font-size: 14px;">
                   Your OTP to reset your password is <strong>${otp}</strong>
                   </p>
-                  <a href="#" style="display: inline-block; padding: 10px 20px; margin-top: 20px; font-size: 0.875rem; font-weight: 500; color: #ffffff; background-color: #3182ce; border-radius: 8px; text-align: center; text-decoration: none;">
-                    Accept the invite
-                  </a>
+                 
                   <p style="color: #718096; font-size: 14px; margin-top: 20px;">
                     Thanks, <br> Oramsys Pilot team
                   </p>
