@@ -44,7 +44,7 @@ const resetAdminPassword = () => async (req, res) => {
           subject: "Password reset successful",
           text: "Password reset successfull",
           html: `
-            <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; color: #333;">
+            <div style="max-width: 600px; margin: 0 auto; background-color: #F4F8F8; padding: 20px; color: #333;">
               <!-- Header -->
               
         
@@ -56,7 +56,7 @@ const resetAdminPassword = () => async (req, res) => {
                 <a href='https://www.oramsysdev.com/fa-login' style="display: inline-block; padding: 10px 20px; margin-top: 20px; font-size: 0.875rem; font-weight: 500; color: #ffffff; background-color: #3182ce; border-radius: 8px; text-align: center; text-decoration: none;">Visist Oramsys
                 </a>
                 <p style="color: #718096; font-size: 14px; margin-top: 20px;">
-                  Thanks, <br> Oramsys Pilot team
+                  Thanks, <br> Oramsys team
                 </p>
               </div>
         

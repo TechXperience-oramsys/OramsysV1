@@ -175,7 +175,7 @@ class UserController {
           to: body?.email,
           subject: "Invitation to Join Oramsys",
           html: `
-            <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; color: #333;">
+            <div style="max-width: 600px; margin: 0 auto; background-color: #F4F8F8; padding: 20px; color: #333;">
               <!-- Header -->
               
         
@@ -190,10 +190,10 @@ class UserController {
                 </p>
                 <p style="font-weight: bold; font-size: 20px;">OTP: ${otp}</p>
                 <a href="https://www.oramsysdev.com/verify-user" style="display: inline-block; padding: 10px 20px; margin-top: 20px; font-size: 0.875rem; font-weight: 500; color: #ffffff; background-color: #3182ce; border-radius: 8px; text-align: center; text-decoration: none;">
-                  Accept the invite
+                  Accept & continue
                 </a>
                 <p style="color: #718096; font-size: 14px; margin-top: 20px;">
-                  Thanks, <br> Oramsys Pilot team
+                  Thanks, <br> Oramsys team
                 </p>
               </div>
         
@@ -526,7 +526,7 @@ class UserController {
             to: user?.email,
             subject: "OTP for Password Reset",
             html: `
-              <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; color: #333;">
+              <div style="max-width: 600px; margin: 0 auto; background-color: #F4F8F8; padding: 20px; color: #333;">
                 <!-- Header -->
                 
           
@@ -534,11 +534,11 @@ class UserController {
                 <div style="font-family: Arial, sans-serif; line-height: 1.5;">
                   <h2 style="color: #4a5568; font-size: 1.5rem;">Hi ${user?.name},</h2>
                   <p style="color: #718096; font-size: 14px;">
-                  Your OTP to reset your password is <strong>${otp}</strong>
+                  OTP to reset your password is <strong>${otp}</strong>
                   </p>
                  
                   <p style="color: #718096; font-size: 14px; margin-top: 20px;">
-                    Thanks, <br> Oramsys Pilot team
+                    Thanks, <br> Oramsys team
                   </p>
                 </div>
           

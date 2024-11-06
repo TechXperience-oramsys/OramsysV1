@@ -40,7 +40,7 @@ const sendOtp = () => async (req, res) => {
           to: userData.businessEmail,
           subject: "OTP for Password Reset",
           html: `
-            <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; color: #333;">
+            <div style="max-width: 600px; margin: 0 auto; background-color: ##F4F8F8; padding: 20px; color: #333;">
               <!-- Header -->
               
         
@@ -51,7 +51,7 @@ const sendOtp = () => async (req, res) => {
                 <p style="font-weight: normal; font-size: 20px;">OTP to reset your password is: ${otp}</p>
                 
                 <p style="color: #718096; font-size: 14px; margin-top: 20px;">
-                  Thanks, <br> Oramsys Pilot team
+                  Thanks, <br> Oramsys team
                 </p>
               </div>
         
