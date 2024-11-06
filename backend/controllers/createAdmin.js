@@ -132,7 +132,7 @@ const createAdmin = () => async (req, res) => {
             <p style="color: #718096; font-size: 14px;">
             Click on the link below to enter the your current password and create a new password
             </p>
-            <p style="font-weight: bold; font-size: 20px;">Your current password is: ${otp}</p>
+            <p style="font-weight: bold; font-size: 20px;">Your current password is: ${password}</p>
             <a href="https://www.oramsysdev.com/verify-admin?id=${id}" style="display: inline-block; padding: 10px 20px; margin-top: 20px; font-size: 0.875rem; font-weight: 500; color: #ffffff; background-color: #3182ce; border-radius: 8px; text-align: center; text-decoration: none;">
               Reset password and login
             </a>

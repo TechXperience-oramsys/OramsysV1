@@ -100,7 +100,7 @@ const SetAdminPassword = () => {
                     toast.success("Password updated successfully")
                     console.log('Password updated successfully');
                     resetInput();
-                    window.location.href = 'https://oramsysdev.com/fa-login';
+                    window.location.href = 'https://www.oramsysdev.com/fa-login';
                 } else {
                     const errorData = await response.json();
                     setErrors((prevErrors) => ({
