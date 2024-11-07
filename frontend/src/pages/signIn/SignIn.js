@@ -22,7 +22,6 @@ const SignIn = () => {
 
   useEffect(() => {
     if (loginData) {
-      console.log("loginData", loginData);
       if (loginData.status === 200 && loginData?.data?.token) {
         // toast.success(loginData.message);
         navigate("/dashboard");
