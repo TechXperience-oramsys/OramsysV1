@@ -19,6 +19,7 @@ exports.setup = function (app) {
     var airBase = require("./airBase");
     var uploadFile = require('./uploadFile');
     var createAdmin = require('./createAdmin')
+    var workflow = require('./workflow')
 
 
     app.use('/superAdmin',superAdmin)
@@ -33,6 +34,7 @@ exports.setup = function (app) {
     app.use('/airBase',airBase)
     app.use('/file',uploadFile)
     app.use('/admin' , createAdmin)
+    app.use('/api/workFlow' , workflow)
 };
 
 
