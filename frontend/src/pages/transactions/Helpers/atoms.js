@@ -86,7 +86,7 @@ export const originCountryAtom = atom([])
 export const tableDataAtom = atom([])
 export const rowEditDataAtom = atom('')
 export const relatedPartyDetailsAtom = atom([{
-    'party_relation': '', 'buyer': '', 'shipper': '', 'upload_evidence': [{}]
+    'party_relation': '', 'buyer': '', 'shipper': '', 'upload_evidence':  [{}]
 }])
 export const keyPartiesAtom = atom([{
     'party_relation': '', 'buyer': '', 'shipper': '', 'upload_evidence': [{}]
@@ -274,4 +274,4 @@ export const userAtom = atom({
     department: "",
     profile: "",
     createdBy: "",
-  });
+});

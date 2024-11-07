@@ -121,17 +121,7 @@ const RatingAgencies = () => {
   return (
     <>
       <div className='product'>
-        {/* <div className='mb-3 d-flex justify-content-between align-items-center'>
-          <h2 className='m-0'>Rating agencies</h2>
-          <button
-            className='add_btn me-3'
-            onClick={() => navigate("/rating-agencies-edit")}
-          >
-            {" "}
-            <img src='../../assets/img/about/plus.png' alt="like" className='me-2' />
-            Add
-          </button>
-        </div> */}
+       
         <div class='container-fluid'>
           <div id='dash' class='mb-npx'>
             <header class='bg-surface-primary pt-6'>
@@ -174,28 +164,7 @@ const RatingAgencies = () => {
               }}
               loading={!getAgencies && { indicator: <Spin /> }}
             />
-            {/* {!getAgencies && (
-              <div className="d-flex justify-content-center mx-auto container py-5 my-5 m-5">
-                <Spin size="large" />
-              </div>
-            )}
-            {ratingData?.length < 1 && (
-              <div className="text-center mx-auto container py-5 my-5 m-5">
-                No records were found
-              </div>
-            )} */}
-            {/* <div className="card-footer border-0 py-2 mb-5">
-              <span className="text-muted text-sm">
-                <Paginate
-                  postsPerPage={postsPerPage}
-                  totalPosts={totalPosts}
-                  paginate={paginate}
-                  prevPagefunc={() => setCurrentPage((prev) => prev - 1)}
-                  nextPagefunc={() => setCurrentPage((prev) => prev + 1)}
-                  currentPage={currentPage}
-                />
-              </span>
-            </div> */}
+          
           </div>
         </div>
        

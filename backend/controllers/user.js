@@ -151,24 +151,66 @@ class UserController {
           },
         });
         // Email content
+        // const mailOptions = {
+        //   from: "notification@techxperience.ng",
+        //   to: body.email,
+        //   subject: "OTP from Oramsys",
+        //   text: "User created successfully",
+        //   html: `
+        //     <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
+        //       <p styyle="font-size: 16px">Hi, ${body.name}</p>
+        //       <p styyle="font-size: 12px">You have been onboarded on the Oramsys platform. Click on the link below to enter the OTP and create a password.</p>
+        //       <p style="font-weight: bold; font-size: 20px;">OTP: ${otp}</p>
+        //       <p>
+        //         <a href="https://oramsysdev.com/verify-user" style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">
+        //           Verify Account
+        //         </a>
+        //       </p>
+        //     </div>
+        //   `,
+        // };
+
         const mailOptions = {
           from: "notification@techxperience.ng",
-          to: body.email,
-          subject: "OTP from Oramsys",
-          text: "User created successfully",
+          to: body?.email,
+          subject: "Invitation to Join Oramsys",
           html: `
-            <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
-              <p styyle="font-size: 16px">Hi, ${body.name}</p>
-              <p styyle="font-size: 12px">You have been onboarded on the Oramsys platform. Click on the link below to enter the OTP and create a password.</p>
-              <p style="font-weight: bold; font-size: 20px;">OTP: ${otp}</p>
-              <p>
-                <a href="https://oramsysdev.com/verify-user" style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">
-                  Verify Account
+            <div style="max-width: 600px; margin: 0 auto; background-color: #F4F8F8; padding: 20px; color: #333;">
+              <!-- Header -->
+              
+        
+              <!-- Main Content -->
+              <div style="font-family: Arial, sans-serif; line-height: 1.5;">
+                <h2 style="color: #4a5568; font-size: 1.5rem;">Hi ${body.name},</h2>
+                <p style="color: #718096; font-size: 14px;">
+                You have been onboarded on the Oramsys platform.
+                </p>
+                <p style="color: #718096; font-size: 14px;">
+                Click on the link below to enter the OTP and create a password
+                </p>
+                <p style="font-weight: bold; font-size: 20px;">OTP: ${otp}</p>
+                <a href="https://www.oramsysdev.com/verify-user" style="display: inline-block; padding: 10px 20px; margin-top: 20px; font-size: 0.875rem; font-weight: 500; color: #ffffff; background-color: #3182ce; border-radius: 8px; text-align: center; text-decoration: none;">
+                  Accept & continue
                 </a>
-              </p>
+                <p style="color: #718096; font-size: 14px; margin-top: 20px;">
+                  Thanks, <br> Oramsys team
+                </p>
+              </div>
+        
+              <!-- Footer -->
+              <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #a0aec0; font-size: 0.875rem; margin-top: 20px;">
+                <p>
+                  This email was sent to ${body?.email} 
+                  If you'd rather not receive this kind of email, you can 
+                  <a href="#" style="color: #3182ce; text-decoration: none;">unsubscribe</a> or 
+                  <a href="#" style="color: #3182ce; text-decoration: none;">manage your email preferences</a>.
+                </p>
+                <p style="margin-top: 10px;">© ${new Date().getFullYear()} Oramsys. All Rights Reserved.</p>
+              </div>
             </div>
           `,
         };
+
 
         // Send the email
         transporter.sendMail(mailOptions, (error, info) => {
@@ -478,19 +520,42 @@ class UserController {
             },
           });
 
+        
           const mailOptions = {
             from: "notification@techxperience.ng",
             to: user?.email,
-            subject: "OTP Verification",
-            text: "OTP Recieved for Password",
+            subject: "OTP for Password Reset",
             html: `
-            <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
-              <p style="font-size: 16px;">Hi, ${user?.name}</p>
-              <p style="font-size: 12px;">Your OTP is here <strong>${otp}<strong>.</p>
-            </div>
-          `,
+              <div style="max-width: 600px; margin: 0 auto; background-color: #F4F8F8; padding: 20px; color: #333;">
+                <!-- Header -->
+                
+          
+                <!-- Main Content -->
+                <div style="font-family: Arial, sans-serif; line-height: 1.5;">
+                  <h2 style="color: #4a5568; font-size: 1.5rem;">Hi ${user?.name},</h2>
+                  <p style="color: #718096; font-size: 14px;">
+                  OTP to reset your password is <strong>${otp}</strong>
+                  </p>
+                 
+                  <p style="color: #718096; font-size: 14px; margin-top: 20px;">
+                    Thanks, <br> Oramsys team
+                  </p>
+                </div>
+          
+                <!-- Footer -->
+                <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #a0aec0; font-size: 0.875rem; margin-top: 20px;">
+                  <p>
+                    This email was sent to ${user?.email} 
+                    If you'd rather not receive this kind of email, you can 
+                    <a href="#" style="color: #3182ce; text-decoration: none;">unsubscribe</a> or 
+                    <a href="#" style="color: #3182ce; text-decoration: none;">manage your email preferences</a>.
+                  </p>
+                  <p style="margin-top: 10px;">© ${new Date().getFullYear()} Oramsys. All Rights Reserved.</p>
+                </div>
+              </div>
+            `,
           };
-
+          
           // Send the email
           transporter.sendMail(mailOptions, (error, info) => {
             if (error) {

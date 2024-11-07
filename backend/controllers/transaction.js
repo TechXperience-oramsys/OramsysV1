@@ -716,16 +716,7 @@ class transactionController {
 
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-
-        return res
-          .status(httpStatus.OK)
-          .json(
-            new APIResponse(
-              { data: data },
-              "TermSheet downloaded successfully.",
-              httpStatus.OK
-            )
-          );
+        res.send(pdfData); // directly send the PDF data as a response
       } else {
         // const User = await user.getById(finedTransaction.userId)
         // const SuperAdmin = await superAdmin.getById(finedTransaction.userId)
@@ -789,6 +780,43 @@ class transactionController {
         );
     }
   }
+
+  // async download(req, res, next) {
+  //   try {
+  //     let id = req.params.id;
+  //     const finedTransaction = await transaction.getById(id);
+
+  //     if (finedTransaction && finedTransaction.termSheetURL) {
+  //       // Read PDF file directly and send as binary data
+  //       const pdfPath = path.resolve(__dirname, `../files/TermSheet-${id}.pdf`);
+  //       const pdfData = fs.readFileSync(pdfPath);
+
+  //       res.setHeader('Content-Type', 'application/pdf');
+  //       res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
+  //       return res.send(pdfData);
+  //     } else {
+  //       let doc = new PDFDocument({ bufferPages: true });
+  //       let buffers = [];
+  //       doc.on("data", buffers.push.bind(buffers));
+
+  //       makeTermSheet(doc, finedTransaction);
+  //       doc.on("end", () => {
+  //         const pdfData = Buffer.concat(buffers);
+
+  //         res.setHeader('Content-Type', 'application/pdf');
+  //         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
+  //         res.send(pdfData);
+  //       });
+  //       doc.end();
+  //     }
+  //   } catch (e) {
+  //     console.error("Error in downloading TermSheet:", e);
+  //     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(
+  //       new APIResponse({}, "Error in downloading TermSheet", httpStatus.INTERNAL_SERVER_ERROR, e)
+  //     );
+  //   }
+  // }
+
   async uploadTermSheet(req, res, next) {
     try {
       let body = req.body;

@@ -11,6 +11,7 @@ import { useAtom } from 'jotai'
 import { OptionalSpan } from './Helpers/OptionalTags'
 import { EditOutlined, EyeOutlined, InboxOutlined } from '@ant-design/icons';
 import { Table, Button, Form as AntdForm, Tooltip, Upload } from 'antd';
+import { toast } from 'react-hot-toast';
 
 const { Dragger } = Upload;
 
@@ -20,10 +21,6 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
     const location = useLocation()
     const isView = location?.state[2]?.isView
 
-    // const [apiFetched, setApiFetched] = useAtom(apiFetchedAtom);
-    // const [editMode, setEditMode] = useState(false);
-    // const [relation, setRelation] = useAtom(relationAtom);
-    // const [party, setParty] = useState({ name: "", type: "" })
     const [showEditModal, setShowEditModal] = useState(false)
     const [tableData, setTableData] = useAtom(tableDataAtom)
     const [rowEditData, setRowEditData] = useAtom(rowEditDataAtom)
@@ -35,13 +32,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
     const [partiesData, setpartiesData] = useAtom(partiesDataAtom)
     const [keyParties, setkeyParties] = useAtom(keyPartiesAtom)
     const [relatedPartyDetails, setRelatedPartyDetails] = useAtom(relatedPartyDetailsAtom)
-
-    // const [borrower_Applicant, setBorrower_Applicant] = useState("")
-    // const [lenders, setLenders] = useState("")
-    // const [warehouseComp, setWarehouseComp] = useState("")
     const [warehouses, setWarehouses] = useState([])
-    // const [counterPart, setCounterPart] = useState("")
-    // const [shippingComp, setShippingComp] = useState("")
     const parties = [
         "Subsidiary",
         "Owners",
@@ -110,47 +101,70 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                 updatedKeyParties[index].buyer = newValue;
                 updatedRelatedPartyDetails[index].buyer = newValue;
             } else {
-                alert('Party 1 and Party 2 should not be identical');
+                toast.error('Party 1 and Party 2 should not be identical');
             }
         } else {
             if (updatedKeyParties[index].buyer !== newValue) {
                 updatedKeyParties[index].shipper = newValue;
                 updatedRelatedPartyDetails[index].shipper = newValue;
             } else {
-                alert('Party 1 and Party 2 should not be identical');
+                toast.error('Party 1 and Party 2 should not be identical');
             }
         }
 
         setkeyParties(updatedKeyParties);
         setRelatedPartyDetails(updatedRelatedPartyDetails);
     };
+   
+    // const handleRelatedParties = () => {
+    //     setRelatedPartyDetails([...relatedPartyDetails, { party_relation: '', buyer: '', shipper: '', upload_evidence: '' }]);
+    //     console.log(relatedPartyDetails); 
+    // };
     const handleRelatedParties = () => {
         setRelatedPartyDetails(prevDetails => [
             ...prevDetails, 
-            { buyer: '', shipper: '', party_relation: '', upload_evidence: [{}] }  // Added correct structure
+            { party_relation: '', buyer: '', shipper: '', upload_evidence: '' }
         ]);
+        console.log(relatedPartyDetails); // Make sure this logs the new array.
     };
+    
 
     const handleRelationChange = (e, index) => {
         const newRelation = e.target.value;
-        const updatedRelatedPartyDetails = relatedPartyDetails.map((party, i) => (
-            i === index ? { ...party, party_relation: newRelation } : party
-        ));
-        setRelatedPartyDetails(updatedRelatedPartyDetails);
+        setRelatedPartyDetails(prevDetails =>
+            prevDetails.map((party, i) =>
+                i === index ? { ...party, party_relation: newRelation } : party
+            )
+        );
     };
     const [fileList, setFileList] = useState([]);
     const handleChangeFile = (file, index) => {
-        if (file) {
+        const selectedFile = file?.originFileObj || file;
+
+        if (selectedFile && selectedFile instanceof Blob) {
             const reader = new FileReader();
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(selectedFile);
+
             reader.onload = () => {
                 const updatedKeyParties = [...keyParties];
-                updatedKeyParties[index].upload_evidence = [{ type: 'img', name: file.name, file: reader.result }];
-                // console.log('Updated Key Parties:', updatedKeyParties);
+
+                // Ensure the keyParties array has an object at the specified index
+                if (!updatedKeyParties[index]) {
+                    updatedKeyParties[index] = { party_relation: '', buyer: '', shipper: '', upload_evidence: [] };
+                }
+
+                // Update the upload_evidence property
+                updatedKeyParties[index].upload_evidence = [
+                    { type: 'img', name: selectedFile.name, file: reader.result }
+                ];
+
                 setkeyParties(updatedKeyParties);
             };
+        } else {
+            console.error("Selected file is not a Blob or File instance:", file);
         }
     };
+
 
     const handleFileChange = (info, index) => { // Accept index as an argument
         const newFileList = info.fileList.slice(-1); // Only keep the last file
@@ -281,11 +295,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
 
         setpartiesData(storeData);
     }, [getBorrower, getLender, getShippingCompany, warehouseCo, getCounterParty, tdata, setpartiesData]);
-    // console.log('Check for lender', getLender)
 
-    // console.log('warehouse company', getWarehouseCompany?.warehouses?.[0]?.warehouseCompany?.label)
-    // console.log('Shipping company', getShippingCompany)
-    // console.log('Hedging Counterparty', getCounterParty.pricingCounterParty?.details?.name)
     useEffect(() => {
         AddUpParties()
     }, [AddUpParties])
@@ -352,7 +362,6 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
         },
     ];
 
-    // console.log('shipping company', getShippingCompany)
 
     return (
         <>
@@ -424,8 +433,8 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                 <div className='mb-2 pt-4 d-flex justify-content-between align-items-center'>
                     <h6 className='fs-5 fw-bold title-admin' >KEY PARTIES</h6>
 
-                    <Button onClick={() => { setShowEditModal(!showEditModal) }} class={`btn d-inline-flex btn-md btn-light border-base mx-1 me-1`} disabled={isView}>
-                        <span class=' pe-2'><i class="bi bi-plus pe-1 "></i></span>
+                    <Button onClick={() => { setShowEditModal(!showEditModal) }} className={`btn d-inline-flex btn-md btn-light border-base mx-1 me-1`} disabled={isView}>
+                        <span className=' pe-2'><i className="bi bi-plus pe-1 "></i></span>
                         <span className='fw-bold'>Add</span>
                     </Button>
                 </div>
@@ -436,109 +445,98 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                     rowKey={(record) => record.id} // Assuming each record has a unique `id`
                 />
             </div>
+
             <div className='add-edit-product parties_main mb-4'>
                 <div className='p-4 mb-3 pb-4'>
                     <div className='mb-3 d-flex justify-content-between align-items-center'>
                         <h6 className="fs-5 fw-bold title-admin">RELATED PARTIES</h6>
-                        <Button onClick={handleRelatedParties} class='btn d-inline-flex btn-md btn-light border-base mx-1 me-1' disabled={isView}>
-                            <span class=' pe-2'><i class="bi bi-plus pe-1 "></i></span>
+                        <Button onClick={handleRelatedParties} className='btn d-inline-flex btn-md btn-light border-base mx-1 me-1'>
+                            <span className=' pe-2'><i className="bi bi-plus pe-1 "></i></span>
                             <span className='fw-bold'>Add</span>
                         </Button>
                     </div>
 
                     <>
-                        <Form>
-                            {relatedPartyDetails.map((party, index) => (
-                                <Row key={index}>
-                                    <Form.Group as={Col} lg={3}>
-                                        <Form.Label>Party 1 <OptionalSpan /></Form.Label>
-                                        <Form.Select
-                                            onChange={(e) => handleParties(e, e.target.value, index, 'buyer')}
-                                            value={party.buyer}
-                                            className='no-border'
-                                            disabled={isView}
+                        {relatedPartyDetails.map((party, index) => (
+                            <Row key={index}>
+                                <Form.Group as={Col} lg={3}>
+                                    <Form.Label>Party 1 <OptionalSpan /></Form.Label>
+                                    <Form.Select
+                                        onChange={(e) => handleParties(e, e.target.value, index, 'buyer')}
+                                        value={party.buyer}
+                                        className='no-border'
+                                        disabled={isView}
+                                    >
+                                        <option value="">Choose...</option>
+                                        {partiesData.map((item, i) => (
+                                            <option key={i} value={item}>
+                                                {item}
+                                            </option>
+                                        ))}
+                                    </Form.Select>
+                                </Form.Group>
+
+                                <Form.Group as={Col} lg={3}>
+                                    <Form.Label>Party 2 <OptionalSpan /></Form.Label>
+                                    <Form.Select
+                                        onChange={(e) => handleParties(e, e.target.value, index, 'shipper')}
+                                        value={party.shipper}
+                                        className='no-border'
+                                        disabled={isView}
+                                    >
+                                        <option value="">Choose...</option>
+                                        {partiesData.map((item, i) => (
+                                            <option key={i} value={item}>
+                                                {item}
+                                            </option>
+                                        ))}
+                                    </Form.Select>
+                                </Form.Group>
+
+                                <Form.Group as={Col} controlId="formGridZip">
+                                    <Form.Label>Relation</Form.Label>
+                                    <Form.Select
+                                          onChange={(e) => handleRelationChange(e, index)}
+                                          value={party.party_relation || 'Choose...'}
+                                          disabled={isView}>
+                                        <option disabled>Choose...</option>
+                                        {parties.map((item) => (
+                                            <option key={item} value={item}>
+                                                {item}
+                                            </option>
+                                        ))}
+                                    </Form.Select>
+
+                                </Form.Group>
+
+                                <Col lg={2}>
+                                    <AntdForm>
+                                        <Dragger
+                                            fileList={fileList} // Controlled file list
+                                            beforeUpload={() => false} // Prevent automatic upload
+                                            onChange={handleFileChange} // Handle file change event
+                                            onRemove={() => setFileList([])} // Reset file list when removing
+                                            className="upload"
+                                            maxCount={1}
+                                            style={{ width: '10rem', height: '10rem', border: '2px dashed #1890ff' }}
                                         >
-                                            <option value="">Choose...</option>
-                                            {partiesData.map((item, i) => (
-                                                <option key={i} value={item}>
-                                                    {item}
-                                                </option>
-                                            ))}
-                                        </Form.Select>
-                                    </Form.Group>
 
-                                    <Form.Group as={Col} lg={3}>
-                                        <Form.Label>Party 2 <OptionalSpan /></Form.Label>
-                                        <Form.Select
-                                            onChange={(e) => handleParties(e, e.target.value, index, 'shipper')}
-                                            value={party.shipper}
-                                            className='no-border'
-                                            disabled={isView}
-                                        >
-                                            <option value="">Choose...</option>
-                                            {partiesData.map((item, i) => (
-                                                <option key={i} value={item}>
-                                                    {item}
-                                                </option>
-                                            ))}
-                                        </Form.Select>
-                                    </Form.Group>
+                                            <p className="ant-upload-drag-icon"> <InboxOutlined /> </p>
+                                            <p className="ant-upload-text text-center">Upload Relationship Evidence</p>
+                                        </Dragger>
 
-                                    <Form.Group as={Col} controlId="formGridZip">
-                                        <Form.Label>Relation <OptionalSpan /></Form.Label>
-                                        <Form.Select
-                                            onChange={(e) => handleRelationChange(e, index)}
-                                            value={party.party_relation || 'Choose...'}
-                                            disabled={isView}
-                                        >
-                                            <option disabled>Choose...</option>
-                                            {parties.map((item, i) => (
-                                                <option key={i} value={item}> {item} </option>
-                                            ))}
-                                        </Form.Select>
-                                    </Form.Group>
+                                        {fileList.length > 0 && (
+                                            <div style={{ marginTop: 16 }}>
+                                                <p>Preview:</p>
+                                                <img src={URL.createObjectURL(fileList[0].originFileObj)} alt="Preview" style={{ width: '100px' }} />
+                                            </div>
+                                        )}
+                                    </AntdForm>
+                                   
+                                </Col>
+                            </Row>
+                        ))}
 
-                                    <Col lg={2}>
-
-                                        <AntdForm>
-
-                                            <Dragger
-                                                fileList={fileList} // Controlled file list
-                                                beforeUpload={() => false} // Prevent automatic upload
-                                                onChange={handleFileChange} // Handle file change event
-                                                onRemove={() => setFileList([])} // Reset file list when removing
-                                                className="upload"
-                                                maxCount={1}
-                                                style={{ width: '10rem', height: '10rem', border: '2px dashed #1890ff' }}
-                                            >
-
-                                                <p className="ant-upload-drag-icon"> <InboxOutlined /> </p>
-                                                <p className="ant-upload-text text-center">Upload Relationship Evidence</p>
-                                            </Dragger>
-
-                                            {fileList.length > 0 && (
-                                                <div style={{ marginTop: 16 }}>
-                                                    <p>Preview:</p>
-                                                    <img src={URL.createObjectURL(fileList[0].originFileObj)} alt="Preview" style={{ width: '100px' }} />
-                                                </div>
-                                            )}
-                                        </AntdForm>
-                                        {/* <div className='drag-and-drop'>
-                                            <DropzoneArea
-                                                filesLimit={1}
-                                                showPreviews={true}
-                                                showPreviewsInDropzone={false}
-                                                useChipsForPreview
-                                                previewGridProps={{ container: { spacing: 1 } }}
-                                                dropzoneText='Upload Evidence'
-                                                onChange={(files) => handleChangeFile(files[0], index)}
-                                                disabled={!party.buyer || !party.shipper || !party.party_relation}
-                                            />
-                                        </div> */}
-                                    </Col>
-                                </Row>
-                            ))}
-                        </Form>
                     </>
                 </div>
             </div>

@@ -23,17 +23,50 @@ const sendOtp = () => async (req, res) => {
           },
         });
 
+        // const mailOptions = {
+        //   from: "notification@techxperience.ng",
+        //   to: userData.businessEmail,
+        //   subject: "OTP Verification",
+        //   text: "OTP Recieved for Password",
+        //   html: `
+        //   <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
+        //     <p style="font-size: 16px;">Hi, ${userData?.adminName}</p>
+        //      <p style="font-size: 12px;">Your OTP is <strong>${otp}<strong></p>
+        //   </div>
+        // `,
+        // };
         const mailOptions = {
           from: "notification@techxperience.ng",
           to: userData.businessEmail,
-          subject: "OTP Verification",
-          text: "OTP Recieved for Password",
+          subject: "OTP for Password Reset",
           html: `
-          <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
-            <p style="font-size: 16px;">Hi, ${userData?.adminName}</p>
-             <p style="font-size: 12px;">Your OTP is <strong>${otp}<strong></p>
-          </div>
-        `,
+            <div style="max-width: 600px; margin: 0 auto; background-color: ##F4F8F8; padding: 20px; color: #333;">
+              <!-- Header -->
+              
+        
+              <!-- Main Content -->
+              <div style="font-family: Arial, sans-serif; line-height: 1.5;">
+                <h2 style="color: #4a5568; font-size: 1.2rem;">Hi ${userData?.adminName},</h2>
+               
+                <p style="font-weight: normal; font-size: 20px;">OTP to reset your password is: ${otp}</p>
+                
+                <p style="color: #718096; font-size: 14px; margin-top: 20px;">
+                  Thanks, <br> Oramsys team
+                </p>
+              </div>
+        
+              <!-- Footer -->
+              <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #a0aec0; font-size: 0.875rem; margin-top: 20px;">
+                <p>
+                  This email was sent to ${userData.businessEmail} 
+                  If you'd rather not receive this kind of email, you can 
+                  <a href="#" style="color: #3182ce; text-decoration: none;">unsubscribe</a> or 
+                  <a href="#" style="color: #3182ce; text-decoration: none;">manage your email preferences</a>.
+                </p>
+                <p style="margin-top: 10px;">© ${new Date().getFullYear()} Oramsys. All Rights Reserved.</p>
+              </div>
+            </div>
+          `,
         };
 
         // Send the email

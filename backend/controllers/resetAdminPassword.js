@@ -25,19 +25,55 @@ const resetAdminPassword = () => async (req, res) => {
           },
         });
 
+        // const mailOptions = {
+        //   from: "notification@techxperience.ng",
+        //   to: resData.businessEmail,
+        //   subject: "Password reset",
+        //   text: "Password reset successfully",
+        //   html: `
+        //   <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
+        //     <p style="font-size: 16px;">Hi, ${resData?.adminName}</p>
+        //      <p style="font-size: 12px;">Your password has been changed succesfully.</p>
+        //      <a href='https://oramsys.com/fa-login'>Visit Oramsys</a>
+        //   </div>
+        // `,
+        // };
         const mailOptions = {
           from: "notification@techxperience.ng",
           to: resData.businessEmail,
-          subject: "Password reset",
-          text: "Password reset successfully",
+          subject: "Password reset successful",
+          text: "Password reset successfull",
           html: `
-          <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
-            <p style="font-size: 16px;">Hi, ${resData?.adminName}</p>
-             <p style="font-size: 12px;">Your password has been changed succesfully.</p>
-             <a href='https://oramsys.com/fa-login'>Visit Oramsys</a>
-          </div>
-        `,
+            <div style="max-width: 600px; margin: 0 auto; background-color: #F4F8F8; padding: 20px; color: #333;">
+              <!-- Header -->
+              
+        
+              <!-- Main Content -->
+              <div style="font-family: Arial, sans-serif; line-height: 1.5;">
+                <h2 style="color: #4a5568; font-size: 1.5rem;">Bravo ${resData?.adminName},</h2>
+               
+                <p style="font-weight: bold; font-size: 20px;">Your password has been changed succesfully!</p>
+                <a href='https://www.oramsysdev.com/fa-login' style="display: inline-block; padding: 10px 20px; margin-top: 20px; font-size: 0.875rem; font-weight: 500; color: #ffffff; background-color: #3182ce; border-radius: 8px; text-align: center; text-decoration: none;">Visist Oramsys
+                </a>
+                <p style="color: #718096; font-size: 14px; margin-top: 20px;">
+                  Thanks, <br> Oramsys team
+                </p>
+              </div>
+        
+              <!-- Footer -->
+              <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #a0aec0; font-size: 0.875rem; margin-top: 20px;">
+                <p>
+                  This email was sent to ${resData.businessEmail}
+                  If you'd rather not receive this kind of email, you can 
+                  <a href="#" style="color: #3182ce; text-decoration: none;">unsubscribe</a> or 
+                  <a href="#" style="color: #3182ce; text-decoration: none;">manage your email preferences</a>.
+                </p>
+                <p style="margin-top: 10px;">© ${new Date().getFullYear()} Oramsys. All Rights Reserved.</p>
+              </div>
+            </div>
+          `,
         };
+
 
         // Send the email
         transporter.sendMail(mailOptions, (error, info) => {

@@ -1,7 +1,7 @@
 const { body, validationResult } = require("express-validator");
 const Corporation = require("../models/userAdmins/userAdmin");
 const APIResponse = require("../helpers/APIResponse");
-const mjml = require('mjml');
+// const mjml = require('mjml');
 
 // Middleware for validation
 const validateCorporationData = [
@@ -74,30 +74,30 @@ const createAdmin = () => async (req, res) => {
     const nodemailer = require("nodemailer");
     const id = newCorporation._id.toString();
 
-    const mjmlTemplate = `
-      <mjml>
-        <mj-body background-color="#f5f5f5">
-          <mj-section>
-            <mj-column>
-              <mj-text font-size="16px" font-weight="semibold" color="#333">Hi, ${adminName}</mj-text>
-              <mj-text font-size="15px" color="#333">
-                You have been onboarded as an Administrator on the Oramsys platform. 
-                Click the link below to create your password.
-              </mj-text>
-              <mj-text font-size="14px" font-weight="bold">
-                Your current password is <strong style="margin-left: 5px; color: #3C0412; font-weight: bold; font-size: 20px;">${password}</strong>
+    // const mjmlTemplate = `
+    //   <mjml>
+    //     <mj-body background-color="#f5f5f5">
+    //       <mj-section>
+    //         <mj-column>
+    //           <mj-text font-size="16px" font-weight="semibold" color="#333">Hi, ${adminName}</mj-text>
+    //           <mj-text font-size="15px" color="#333">
+    //             You have been onboarded as an Administrator on the Oramsys platform. 
+    //             Click the link below to create your password.
+    //           </mj-text>
+    //           <mj-text font-size="14px" font-weight="bold">
+    //             Your current password is <strong style="margin-left: 5px; color: #3C0412; font-weight: bold; font-size: 20px;">${password}</strong>
                 
-              </mj-text>
-              <mj-button href="https://www.oramsysdev.com/verify-admin?id=${id}" background-color="#0070E0" margin="auto color="white" font-weight="bold">
-                Reset password and login
-              </mj-button>
-            </mj-column>
-          </mj-section>
-        </mj-body>
-      </mjml>
-    `;
+    //           </mj-text>
+    //           <mj-button href="https://www.oramsysdev.com/verify-admin?id=${id}" background-color="#0070E0" margin="auto color="white" font-weight="bold">
+    //             Reset password and login
+    //           </mj-button>
+    //         </mj-column>
+    //       </mj-section>
+    //     </mj-body>
+    //   </mjml>
+    // `;
 
-    const htmlOutput = mjml(mjmlTemplate).html;
+    // const htmlOutput = mjml(mjmlTemplate).html;
 
     const transporter = nodemailer.createTransport({
       host: "c116604.sgvps.net",
@@ -108,12 +108,53 @@ const createAdmin = () => async (req, res) => {
       },
     });
 
+    // const mailOptions = {
+    //   from: "notification@techxperience.ng",
+    //   to: businessEmail,
+    //   subject: "OTP from Oramsys",
+    //   html: htmlOutput,
+    // };
     const mailOptions = {
       from: "notification@techxperience.ng",
       to: businessEmail,
-      subject: "OTP from Oramsys",
-      html: htmlOutput,
+      subject: "Admin Invitation to Join Oramsys",
+      html: `
+        <div style="max-width: 600px; margin: 0 auto; background-color: #F4F8F8; padding: 20px; color: #333;">
+          <!-- Header -->
+          
+    
+          <!-- Main Content -->
+          <div style="font-family: Arial, sans-serif; line-height: 1.5;">
+            <h2 style="color: #4a5568; font-size: 1.5rem;">Hi ${adminName},</h2>
+            <p style="color: #718096; font-size: 14px;">
+            You have been onboarded as the admin for ${corporationName} on the Oramsys platform.
+            </p>
+            <p style="color: #718096; font-size: 14px;">
+            Click on the link below to enter the your current password and create a new password
+            </p>
+            <p style="font-weight: bold; font-size: 20px;">Your current password is: ${password}</p>
+            <a href="https://www.oramsysdev.com/verify-admin?id=${id}" style="display: inline-block; padding: 10px 20px; margin-top: 20px; font-size: 0.875rem; font-weight: 500; color: #ffffff; background-color: #3182ce; border-radius: 8px; text-align: center; text-decoration: none;">
+              Reset password and login
+            </a>
+            <p style="color: #718096; font-size: 14px; margin-top: 20px;">
+              Thanks, <br> Oramsys team
+            </p>
+          </div>
+    
+          <!-- Footer -->
+          <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #a0aec0; font-size: 0.875rem; margin-top: 20px;">
+            <p>
+              This email was sent to ${businessEmail} 
+              If you'd rather not receive this kind of email, you can 
+              <a href="#" style="color: #3182ce; text-decoration: none;">unsubscribe</a> or 
+              <a href="#" style="color: #3182ce; text-decoration: none;">manage your email preferences</a>.
+            </p>
+            <p style="margin-top: 10px;">© ${new Date().getFullYear()} Oramsys. All Rights Reserved.</p>
+          </div>
+        </div>
+      `,
     };
+
 
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {

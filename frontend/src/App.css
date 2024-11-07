@@ -3091,3 +3091,8 @@ h6 {
   text-align: center;
   font-size: 15px;
 }
+
+.card:hover, .container:hover {
+  transform: none !important;
+  transition: none !important;
+}
