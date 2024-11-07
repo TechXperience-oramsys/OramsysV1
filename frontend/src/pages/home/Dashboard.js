@@ -51,7 +51,7 @@ const Dashboard = () => {
       status: "Completed",
     },
     {
-      title: "Transactions Value",
+      title: "Total Transactions Value",
       img: "sales",
       icon: StockOutlined,
       color: "bg-teal-500",

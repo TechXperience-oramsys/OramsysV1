@@ -9,7 +9,7 @@ import AddEntityModal from './AddEntityModal';
 import { toast } from "react-hot-toast";
 
 
-const PartiesEditModal = ({ show, onHide, getModalData, isView, editData }) => {
+const PartiesEditModal = ({ show, onHide, getModalData, isView, editData, tableData }) => {
 
     const dispatch = useDispatch()
     const [parties, setParties] = useState({
@@ -101,7 +101,7 @@ const PartiesEditModal = ({ show, onHide, getModalData, isView, editData }) => {
             return
         }
         if (editData) {
-            let id = editData.tableData.id
+            let id = editData.tableData?.id
             getModalData(parties, id)
             onHide()
         } else {

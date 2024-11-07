@@ -4,6 +4,7 @@ import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { useNavigate } from "react-router-dom";
 import { Security } from "@okta/okta-react";
 import { Toaster } from 'react-hot-toast';
+import ErrorBoundary from '../ErrorBoundary';
 // import { useEffect, useState } from "react";
 
 const CLIENT_ID = "0oa5hrixzgbpayfmA5d7";
@@ -45,7 +46,9 @@ const Routes = () => {
   return (
     <Security restoreOriginalUri={restoreOriginalUri} oktaAuth={oktaAuth}>
       <Toaster />
-      <Index />
+      <ErrorBoundary>
+        <Index />
+      </ErrorBoundary>
     </Security>
   );
 };

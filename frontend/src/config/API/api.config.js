@@ -9,7 +9,7 @@
 // export const API = API_LOCAL.host
 
 export let API;
-API = 'https://backend.oramsysdev.com/' 
+API = 'https://backend.oramsysdev.com/'
 // API = 'http://localhost:5003/'
 // if(window.location.origin.includes('oramsysdev.com')) {
 // API = "https://backend.oramsysdev.com/";
