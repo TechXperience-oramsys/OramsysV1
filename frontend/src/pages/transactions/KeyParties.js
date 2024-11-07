@@ -254,7 +254,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
         dispatch(transactionDataAction(body))
         hendelNext()
     }
-    // console.log('TAbLE dATa', tableData)
+    console.log('TAbLE dATa', tableData)
     useEffect(() => {
         let buyer_arr = [];
         let warehouses = [];
@@ -287,14 +287,16 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
         const storeData = [
             getBorrower,
             getLender,
-            getShippingCompany,
+            // getShippingCompany,
             warehouseCo,
             getCounterParty,
             ...tdata,
         ].filter(item => item);
 
         setpartiesData(storeData);
-    }, [getBorrower, getLender, getShippingCompany, warehouseCo, getCounterParty, tdata, setpartiesData]);
+    }, [getBorrower, getLender,
+        // getShippingCompany,
+        warehouseCo, getCounterParty, tdata, setpartiesData]);
 
     useEffect(() => {
         AddUpParties()
@@ -391,7 +393,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
 
                         </Form.Group>
 
-                        <Form.Group as={Col} lg={4} md={6} m={12} className="mb-3" controlId="formHorizontalEmail">
+                        {/* <Form.Group as={Col} lg={4} md={6} m={12} className="mb-3" controlId="formHorizontalEmail">
                             <Form.Label className='text-muted'>Shipping Company</Form.Label>
 
                             <Form.Control className='text-muted no-border'
@@ -399,10 +401,8 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                                 value={getShippingCompany}
                                 disabled={true} />
 
-                        </Form.Group>
-                    </Row>
-                    <Row>
-                        {warehouseStatus &&
+                        </Form.Group> */}
+                         {warehouseStatus &&
                             <Form.Group as={Col} lg={4} md={6} m={12} className="mb-3" controlId="formHorizontalEmail">
                                 <Form.Label className='text-muted'>Warehouse Company</Form.Label>
 
@@ -412,6 +412,9 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
 
                             </Form.Group>
                         }
+                    </Row>
+                    <Row>
+                       
 
                         {pricingHedgingStatus &&
                             <Form.Group as={Col} lg={4} md={6} sm={12} className="mb-3" controlId="formHorizontalEmail">
@@ -450,10 +453,10 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                 <div className='p-4 mb-3 pb-4'>
                     <div className='mb-3 d-flex justify-content-between align-items-center'>
                         <h6 className="fs-5 fw-bold title-admin">RELATED PARTIES</h6>
-                        <Button onClick={handleRelatedParties} className='btn d-inline-flex btn-md btn-light border-base mx-1 me-1'>
+                        {/* <Button onClick={handleRelatedParties} className='btn d-inline-flex btn-md btn-light border-base mx-1 me-1'>
                             <span className=' pe-2'><i className="bi bi-plus pe-1 "></i></span>
                             <span className='fw-bold'>Add</span>
-                        </Button>
+                        </Button> */}
                     </div>
 
                     <>

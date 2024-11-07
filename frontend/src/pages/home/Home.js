@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
 import { Carousel } from 'antd';
@@ -8,6 +8,7 @@ import { homeImages } from '../../assets/assests'
 
 const Home = () => {
 
+  
 
   const contentStyle = {
     display: 'flex',
@@ -26,6 +27,7 @@ const Home = () => {
 
   return (
     <>
+      
       <section id='home' className="">
         <div className="background-shape6">
           <img src={homeImages.img1} alt="figure" width="404" height="216" />
@@ -549,7 +551,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section id='contact' className="call-back-wrap" style={{ marginBottom: '15rem'}}>
+      <section id='contact' className="call-back-wrap" style={{ marginBottom: '15rem' }}>
         <div className="container">
           <div className="row no-gutters">
             <div className="col-lg-5 col-md-12">

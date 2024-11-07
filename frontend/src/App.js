@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
@@ -8,18 +8,17 @@ import store from "./redux/store";
 
 
 
-window.onbeforeunload = function () {
-  // localStorage.clear();
-};
+// window.onbeforeunload = function () {
+//   localStorage.clear();
+// };
 
 function App() {
 
   
   // useEffect(() => {
 
-  //   // Load float.js dynamically from public folder
   //   const customScript = document.createElement("script");
-  //   customScript.src = `${process.env.PUBLIC_URL}/float.js`; // Load script.js from public folder
+  //   customScript.src = `${process.env.PUBLIC_URL}/float.js`; 
   //   customScript.defer = true;
   //   document.body.appendChild(customScript);
 
@@ -39,6 +38,32 @@ function App() {
   //     }
   //   };
   // }, []); // Empty array ensures this only runs after the component is first mounted
+
+//   useEffect(() => {
+//     // Load float.js dynamically from the public folder
+//     const customScript = document.createElement("script");
+//     customScript.src = `${process.env.PUBLIC_URL}/float.js`;
+//     customScript.defer = true;
+//     customScript.crossOrigin = "anonymous";
+//     document.body.appendChild(customScript);
+
+//     const langScript = document.createElement("script");
+//     langScript.src = `${process.env.PUBLIC_URL}/lang.js`;
+//     langScript.defer = true;
+//     langScript.crossOrigin = "anonymous";
+//     document.body.appendChild(langScript);
+
+//     // Cleanup function to remove scripts when the component unmounts
+//     return () => {
+//       if (langScript && document.body.contains(langScript)) {
+//           document.body.removeChild(langScript);
+//       }
+//       if (customScript && document.body.contains(customScript)) {
+//           document.body.removeChild(customScript);
+//       }
+//   };
+// }, []); // Empty array ensures this only runs after the component is first mounted
+
 
   return (
     <div className="">

@@ -873,7 +873,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
 
         if (!contractDetails.descriptionOfContract) {
             flag = true
-            error.descriptionOfContract = "Please enter sescription of contract!"
+            error.descriptionOfContract = "Please enter description of contract!"
             toast.error(error.descriptionOfContract);
 
         }
@@ -918,7 +918,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
 
         if (!shippingOptions.shippedWeights) {
             flag = true
-            error.shippedWeights = "Please enter proipped weights!"
+            error.shippedWeights = "Please enter shipped weights!"
             toast.error(error.shippedWeights);
         }
 
