@@ -67,16 +67,16 @@ const Add_Edit_User = () => {
 
   useEffect(() => {
     if (userEdit?.data && id) {
-      setState({
-        ...state,
+      setState((prevState) => ({
+        ...prevState,
         name: userEdit.data?.name,
         email: userEdit.data?.email,
         department: userEdit.data?.department || "",
         profile: userEdit.data?.profile,
         createdBy: localStorage.getItem("userId"),
-      });
+      }));
     }
-  }, [userEdit, id, state]);
+  }, [userEdit, id]);
 
   useEffect(() => {
     if (registeredData && registeredData.status === 200) {
@@ -93,13 +93,6 @@ const Add_Edit_User = () => {
     }
   }, [registeredData, dispatch, navigate]);
 
-  // const handleChange = (event) => {
-  //   const name = event.target.name;
-  //   setState({
-  //     ...state,
-  //     [event.target.name]: event.target.value,
-  //   });
-  // };
 
   useEffect(() => {
     if (userUpdate && userUpdate.status === 200) {
@@ -158,15 +151,6 @@ const Add_Edit_User = () => {
     dispatch(registerAction(state));
     // }
   };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (id) {
-  //     editUser();
-  //   } else {
-  //     addUser();
-  //   }
-  // };
 
   const profileOption = ["User", "Admin", "Tester"];
 
