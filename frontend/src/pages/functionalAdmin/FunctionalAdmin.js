@@ -31,7 +31,7 @@ const FunctionalAdmin = () => {
 
   useEffect(() => {
     if (loginData) {
-      console.log("loginData", loginData);
+      // console.log("loginData", loginData);
       if (
         loginData.status === 200 &&
         loginData.message === "Login Successfully"

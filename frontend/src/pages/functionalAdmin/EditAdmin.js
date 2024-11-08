@@ -19,12 +19,12 @@ function EditAdmin() {
   const adminData = useSelector((state) => state.adminData?.getAdminId);
   // const adminUpdate = useSelector((state) => state.adminData?.adminUpdate);
   const [loading, setLoading] = useState(true);
-  console.log("Admin Data", adminData);
+  // console.log("Admin Data", adminData);
 
   useEffect(() => {
     ApiGet(`admin/get-admin-by/${id}`)
       .then((res) => {
-        console.log(res, "inside out");
+        // console.log(res, "inside out");
         setFormData({
           corporationName: res.data[0]?.corporationName || "",
           businessEmail: res.data[0]?.businessEmail || "",

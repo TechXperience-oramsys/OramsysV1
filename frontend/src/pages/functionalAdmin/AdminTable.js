@@ -17,7 +17,7 @@ const Admin = () => {
   const [postsPerPage] = useState(10);
 
   const userData = useSelector((state) => state.adminData?.getAdminData);
-  console.log('get admin data', userData.data)
+  // console.log('get admin data', userData.data)
   let userId = AuthStorage.getStorageData(STORAGEKEY.roles) === "admin" ? AuthStorage.getStorageData(STORAGEKEY.userId) : "";
 
   useEffect(() => {

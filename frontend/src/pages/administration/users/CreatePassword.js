@@ -90,7 +90,7 @@ export const CreateNewPassword = () => {
     await axios
       .post(`${API}user/verifyOtp`, { otp: otpAsNumber })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setUserId(response.data.data._id);
         setVisible(true);
         toast.success(response.data.message);
@@ -114,7 +114,7 @@ export const CreateNewPassword = () => {
           confirm_password: state.confirm_password,
         })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           toast.success(response.data.message);
           navigate("/signin");
         })

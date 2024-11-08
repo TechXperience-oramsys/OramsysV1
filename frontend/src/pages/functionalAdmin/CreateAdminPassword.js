@@ -98,7 +98,7 @@ const SetAdminPassword = () => {
 
                 if (response.ok) {
                     toast.success("Password updated successfully")
-                    console.log('Password updated successfully');
+                    // console.log('Password updated successfully');
                     resetInput();
                     window.location.href = 'https://www.oramsysdev.com/fa-login';
                 } else {

@@ -103,7 +103,7 @@ const Add_Edit_User = () => {
       });
       navigate("/users");
     }
-    console.log("userUpdate", userUpdate);
+    // console.log("userUpdate", userUpdate);
   }, [userUpdate, dispatch, navigate]);
 
   const validation = () => {
@@ -162,6 +162,13 @@ const Add_Edit_User = () => {
     "Finance",
     "Credit Remediation",
     "Senior Management",
+    "Teller",
+    "Accountant",
+    "Branch Manager",
+    "Investment Banker",
+    "Financial Advisor",
+    "Private banker",
+    "Appraisal review officer"
   ];
 
   return (
