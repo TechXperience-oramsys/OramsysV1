@@ -53,7 +53,7 @@ const CreateAdmin = () => {
       .catch((err) => {
         message.error("Please check for duplicate data");
       });
-    console.log("Form data:", formData);
+    // console.log("Form data:", formData);
   };
 
   const handleFinishFailed = () => {

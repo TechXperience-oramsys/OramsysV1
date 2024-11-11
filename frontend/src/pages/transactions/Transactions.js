@@ -218,7 +218,7 @@ const Transactions = () => {
   const indexOfLastTrans = currentPage * postsPerPage;
   const indexOfFirstTrans = indexOfLastTrans - postsPerPage;
   const currentTrans = transaction?.slice(indexOfFirstTrans, indexOfLastTrans);
-  console.log('get all transactins', currentTrans)
+  // console.log('get all transactins', currentTrans)
   //page change
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 

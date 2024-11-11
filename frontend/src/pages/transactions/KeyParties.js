@@ -460,7 +460,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                     </div>
 
                     <>
-                        {relatedPartyDetails.map((party, index) => (
+                        {relatedPartyDetails.map((party, index) => ( 
                             <Row key={index}>
                                 <Form.Group as={Col} lg={3}>
                                     <Form.Label>Party 1 <OptionalSpan /></Form.Label>

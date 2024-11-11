@@ -27,13 +27,13 @@ function ForgetPassword() {
       admin
         .sendOtp({ email: mail })
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           toast.success(res?.data?.message);
           setIsSent(true);
         })
         .catch((error) => {
           toast.error(error?.response?.data?.message);
-          console.log(error?.response?.data?.message);
+          // console.log(error?.response?.data?.message);
         })
         .finally(() => setLoading(false));
     }
@@ -50,11 +50,11 @@ function ForgetPassword() {
       setLoading(false);
       return;
     }
-    console.log(data);
+    // console.log(data);
     admin
       .verifyOtp(data)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         toast.success(res?.data?.message);
         setIsVerified(true);
       })
@@ -85,7 +85,7 @@ function ForgetPassword() {
     admin
       .setPassword(data)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         toast.success(res?.data?.message);
         navigate("/fa-login");
       })
