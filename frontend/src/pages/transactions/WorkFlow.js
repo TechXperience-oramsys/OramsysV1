@@ -198,11 +198,11 @@ const Workflow = () => {
                 (step) => step.stepName
               );
               const availableStepNames = [
-                "Transaction Details",
-                "Key Parties",
-                "Document Flow",
-                "Fund Flow",
-                "Facility",
+                { label: "Transaction Details", value: "details" },
+                { label: "Key Parties", value: "keyParties" },
+                { label: "Document Flow", value: "documentFlow" },
+                { label: "Fund Flow", value: "fundFlow" },
+                { label: "Facility", value: "facility" },
               ];
 
               const filteredStepNames = availableStepNames.filter(
@@ -250,22 +250,24 @@ const Workflow = () => {
                                         }`}
                                       >
                                         <option value="">Select Step</option>
-                                        {availableStepNames.map((stepName) => (
-                                          <option
-                                            key={stepName}
-                                            value={stepName}
-                                            style={{
-                                              display:
-                                                selectedStepNames.includes(
-                                                  stepName
-                                                )
-                                                  ? "none"
-                                                  : "block",
-                                            }}
-                                          >
-                                            {stepName}
-                                          </option>
-                                        ))}
+                                        {availableStepNames.map(
+                                          ({ label, value }) => (
+                                            <option
+                                              key={value}
+                                              value={value}
+                                              style={{
+                                                display:
+                                                  selectedStepNames.includes(
+                                                    value
+                                                  )
+                                                    ? "none"
+                                                    : "block",
+                                              }}
+                                            >
+                                              {label}
+                                            </option>
+                                          )
+                                        )}
                                       </Field>
                                       <ErrorMessage
                                         name={`steps[${index}].stepName`}
