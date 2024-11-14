@@ -101,43 +101,159 @@ exports.createWorkFlow = async (req, res) => {
 };
 
 
+
+
 exports.getWorkflowByUserAndAdmin = async (req, res) => {
   try {
     const { assignedUser, addedBy } = req.query;
+
+    // Step 1: Check if both assignedUser and addedBy are provided
     if (!assignedUser || !addedBy) {
       return res.status(400).json({ message: "Both assignedUser and addedBy are required" });
     }
 
-    // Step 1: Find the workflow document
+    // Step 2: Find the workflow document
     const workflowDocument = await WorkFlow.findOne({ assignedUser, addedBy });
     if (!workflowDocument) {
       return res.status(404).json({ message: "Workflow document not found" });
     }
 
-    // Step 2: Find the related transaction documents and populate fields
-    const transactionDocuments = await Transaction.find({
-      admin: addedBy,  // Matching the admin to get multiple documents
-    })
-      .populate('userId')  // Populate all fields of the user
-      .populate('details')
-      .populate('documentFlow')
-      .populate('facility')
-      .populate('fundFlow')
+    // Step 3: Fetch all transaction documents for this workflow, autopopulated
+    const transactionDocuments = await Transaction.find({ admin: addedBy })
+      .populate({
+        path: 'details',
+        model: 'TransactionDetails',
+        populate: [
+          {
+            path: 'productDetails.name',
+            model: 'Product' // Replace with your actual model name
+          },
+          {
+            path: 'shippingOptions.countryOfOrigin',
+            model: 'Countries',
+          },
+          {
+            path: 'shippingOptions.shippingCompany',
+            model: 'Entity',
+          },
+          {
+            path: 'shippingOptions.warehouses',
+            populate: [
+              {
+                path: 'warehouseCompany',
+                model: 'Entity',
+               
+              },
+              {
+                path: 'warehouse',
+                model: 'EntityWarehouse'
+              }
+            ]
+          },
+          {
+            path: 'shippingOptions.destinationCountry',
+            model: 'Countries'
+          },
+          {
+            path: 'shippingOptions.airbaseOfOrigin',
+            model: 'AirBase'
+          },
+          {
+            path: 'shippingOptions.destinationAirbase',
+            model: 'Port'
+          }
+        ]
+      })
       .populate({
         path: 'keyParties',
-        model: 'TransactionKeyParties'  // Ensure this model name is correct
+        model: 'TransactionKeyParties',
+        populate: [
+          {
+            path: 'parties.type',  // Assuming 'type' refers to a model like 'PartyType'
+            model: 'EntityRoles', 
+          },
+          {
+            path: 'parties.name',  // Assuming 'name' is a reference to the 'User' model
+            model: 'Entity',  
+          }, 
+        ]
+      })
+      .populate({
+        path: 'documentFlow',
+        model: 'TransactionDocumentFlow',
+        // populate: {
+        //   path: 'document',  // Example if document flow has nested references
+        //   model: 'DocumentDetails'
+        // }
+      })
+      .populate({
+        path: 'facility',
+        model: 'TransactionFacility',
+        // populate: {
+        //   path: 'location',
+        //   model: 'FacilityLocation'  // Populate any nested fields if needed
+        // }
+      })
+      .populate({
+        path: 'fundFlow',
+        model: 'TransactionFundFlow',
+        populate: [
+          {
+            path: 'lettersOfCredit.applicant',
+            model: 'Entity',  // Assuming applicant is a User
+          },
+          {
+            path: 'lettersOfCredit.issuingBank',
+            model: 'Entity', // Assuming issuingBank is a Bank
+            
+          },
+          {
+            path: 'lettersOfCredit.beneficiary',
+            model: 'Entity', 
+          },
+          {
+            path: 'lettersOfCredit.advisingBank',
+            model: 'Entity', 
+          },
+          {
+            path: 'lettersOfCredit.negotiatingBank',
+            model: 'Entity',
+          },
+          {
+            path: 'lettersOfCredit.secondBeneficiary',
+            model: 'Entity', 
+          },
+          {
+            path: 'lettersOfCredit.reimbursingBank',
+            model: 'Entity', 
+          },
+          {
+            path: 'paymentOrigin',
+            model: 'Countries', // Assuming paymentOrigin refers to a Transaction model
+          },
+          {
+            path: 'beneficiary',
+            model: 'Entity', // Assuming beneficiary is a User
+           
+          }
+        ]
+      })
+      
+      .populate({
+        path: 'userId',  // Populate the user details
+        model: 'User',
+        select: 'name email' // Example of selecting only specific fields from the User model
       });
 
-    console.log(transactionDocuments);  // Log to see all populated transaction documents
-
+    // Step 4: Handle no transaction documents found
     if (!transactionDocuments || transactionDocuments.length === 0) {
       return res.status(404).json({ message: "No transaction documents found" });
     }
 
-    // Return combined workflow and populated transaction data
+    // Return combined workflow and autopopulated transaction data
     return res.json({
       workflowDocument,
-      transactionDocuments  // Return an array of transaction documents
+      transactionDocuments  // Automatically populated
     });
 
   } catch (error) {
@@ -145,3 +261,4 @@ exports.getWorkflowByUserAndAdmin = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
