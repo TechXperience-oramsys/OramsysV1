@@ -28,6 +28,7 @@ var Schema = new Schema({
     transactionId: { type: String, required: true, default: null },
     parties: { type: [Parties], required: false },
     relatedParties: { type: [relatedParties], required: false },
+    flowVerified : { type: Boolean, required: true, default: false },
 }, {
     timestamps: true
 })

@@ -36,6 +36,7 @@ var Schema = new Schema({
     leviesCurrency: { type: String, required: false, default: null },
     leviesValue: { type: String, required: false, default: null },
     isDeleted: { type: Boolean, required: true, default: false },
+    flowVerified : { type: Boolean, required: true, default: false },
 }, {
     timestamps: true
 })

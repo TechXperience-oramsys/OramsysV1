@@ -2,7 +2,13 @@
 "use strict";
 
 const WorkFlow = require('../models/workflow'); // Adjust the path if needed
+const Transaction = require('../models/transaction/transaction')
 const nodemailer = require('nodemailer');
+// const TransactionDetails = require('../models/TransactionDetails');
+// const TransactionDocumentFlows = require('../models/TransactionDocumentFlows');
+// const TransactionFacilities = require('../models/TransactionFacilities');
+// const TransactionFundFlows = require('../models/TransactionFundFlows');
+// const TransactionKeyParties = require('../models/TransactionKeyParties');  // Ensure correct casing here
 
 // Configure Nodemailer transporter
 const transporter = nodemailer.createTransport({
@@ -91,5 +97,51 @@ exports.createWorkFlow = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error creating workflow", error });
+  }
+};
+
+
+exports.getWorkflowByUserAndAdmin = async (req, res) => {
+  try {
+    const { assignedUser, addedBy } = req.query;
+    if (!assignedUser || !addedBy) {
+      return res.status(400).json({ message: "Both assignedUser and addedBy are required" });
+    }
+
+    // Step 1: Find the workflow document
+    const workflowDocument = await WorkFlow.findOne({ assignedUser, addedBy });
+    if (!workflowDocument) {
+      return res.status(404).json({ message: "Workflow document not found" });
+    }
+
+    // Step 2: Find the related transaction documents and populate fields
+    const transactionDocuments = await Transaction.find({
+      admin: addedBy,  // Matching the admin to get multiple documents
+    })
+      .populate('userId')  // Populate all fields of the user
+      .populate('details')
+      .populate('documentFlow')
+      .populate('facility')
+      .populate('fundFlow')
+      .populate({
+        path: 'keyParties',
+        model: 'TransactionKeyParties'  // Ensure this model name is correct
+      });
+
+    console.log(transactionDocuments);  // Log to see all populated transaction documents
+
+    if (!transactionDocuments || transactionDocuments.length === 0) {
+      return res.status(404).json({ message: "No transaction documents found" });
+    }
+
+    // Return combined workflow and populated transaction data
+    return res.json({
+      workflowDocument,
+      transactionDocuments  // Return an array of transaction documents
+    });
+
+  } catch (error) {
+    console.error("Error fetching documents:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
