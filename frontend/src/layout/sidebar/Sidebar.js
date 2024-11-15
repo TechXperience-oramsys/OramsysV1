@@ -185,6 +185,12 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
       label: "Transactions",
       path: "transactions",
     },
+    {
+      key: "4",
+      icon: <FaOutdent />,
+      label: "Workflow",
+      path: "workflow",
+    },
   ];
 
   if (AuthStorage.getStorageData(STORAGEKEY.roles) === "user") {
