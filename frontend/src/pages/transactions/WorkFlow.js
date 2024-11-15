@@ -145,7 +145,7 @@ const Workflow = () => {
 
       const data = await response.json();
       console.log("Update successful:", data);
-fetchData()
+      fetchData()
       // Reset changes and submission state
       setFormChanges((prev) => ({
         ...prev,
@@ -824,46 +824,56 @@ fetchData()
                     disabled={true} />
 
                 </Form.Group>
-                <Form.Group as={Col} lg={6} md={6} m={12} className="mb-3" controlId="formHorizontalEmail">
+                <Form.Group as={Col} lg={12} md={12} m={12} className="mb-3" controlId="formHorizontalEmail">
                   <Form.Label className='text-muted'> Parties </Form.Label>
                   {item.parties && item.parties.map((party, i) => {
                     return (
                       <Row key={i}>
-                        <Col>
-                          <Form.Control className='text-muted no-border my-1' type="text"
-                            name='borrower_Applicant'
-                            value={party?.name?.email}
-                            disabled={true}
-                            placeholder='Email' />
-                        </Col>
-                        <Col><Form.Control className='text-muted no-border my-1' type="text"
-                          name='borrower_Applicant'
-                          value={party?.name?.type}
-                          disabled={true}
-                          placeholder='Type' /></Col>
+                        <Col lg={6} md={6} m={12}>
+                          <Form.Group as={Col} lg={12} md={12} m={8} className="mb-1" controlId="formHorizontalEmail">
+                            <Form.Label className='text-muted'>Email</Form.Label>
+                            <Form.Control className='text-muted no-border my-1' type="text"
+                              name='borrower_Applicant'
+                              value={party?.name?.email}
+                              disabled={true}
+                              placeholder='Email' />
+                          </Form.Group></Col>
+                        <Col lg={6} md={6} m={12}>
+                          <Form.Group as={Col} lg={12} md={12} m={8} className="mb-1" controlId="formHorizontalEmail">
+                            <Form.Label className='text-muted'>Type</Form.Label><Form.Control className='text-muted no-border my-1' type="text"
+                              name='borrower_Applicant'
+                              value={party?.name?.type}
+                              disabled={true}
+                              placeholder='Type' /></Form.Group></Col>
                       </Row>
 
 
                     )
                   })}
                 </Form.Group>
-                {item.relatedParties.length > 0 && <Form.Group as={Col} lg={6} md={6} m={12} className="mb-3" controlId="formHorizontalEmail">
+                {item.relatedParties.length > 0 && <Form.Group as={Col} lg={12} md={12} m={12} className="mb-3" controlId="formHorizontalEmail">
                   <Form.Label className='text-muted'>Related Parties</Form.Label>
                   {item.relatedParties && item.relatedParties.map((party, i) => {
                     return (
                       <Row>
-                        <Col>
-                          <Form.Control key={i} className='text-muted no-bordermy-1' type="text"
-                            name='borrower_Applicant'
-                            value={party?.buyer}
-                            disabled={true}
-                            placeholder="Buyer" />
+                        <Col lg={6} md={6} m={12}>
+                          <Form.Group as={Col} lg={12} md={12} m={8} className="mb-1" controlId="formHorizontalEmail">
+                            <Form.Label className='text-muted'>Buyer</Form.Label>
+                            <Form.Control key={i} className='text-muted no-bordermy-1' type="text"
+                              name='borrower_Applicant'
+                              value={party?.buyer}
+                              disabled={true}
+                              placeholder="Buyer" />
+                          </Form.Group>
                         </Col>
-                        <Col>
-                          <Form.Control key={i} className='text-muted no-border my-1' type="text"
-                            name='borrower_Applicant'
-                            value={party?.shipper}
-                            disabled={true} placeholder="Shipper" />
+                        <Col lg={6} md={6} m={12}>
+                          <Form.Group as={Col} lg={12} md={12} m={8} className="mb-1" controlId="formHorizontalEmail">
+                            <Form.Label className='text-muted'>Shipper</Form.Label>
+                            <Form.Control key={i} className='text-muted no-border my-1' type="text"
+                              name='borrower_Applicant'
+                              value={party?.shipper}
+                              disabled={true} placeholder="Shipper" />
+                          </Form.Group>
                         </Col>
                       </Row>
                     )
@@ -889,38 +899,62 @@ fetchData()
                 value={previewData?.flowVerified}
                 disabled={true} />
             </Form.Group>
-            <Form.Group as={Col} lg={6} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+            <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
               <Form.Label className='text-muted'>Contract Details</Form.Label>
               <Row>
-                <Col lg={6} md={6} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.contractDetails?.currency}
-                  disabled={true} /></Col>
-                <Col lg={6} md={6} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.contractDetails?.value}
-                  disabled={true} /></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Currency Type</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.contractDetails?.currency}
+                      disabled={true} /></Form.Group></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Amount</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.contractDetails?.value}
+                      disabled={true} placeholder="Amount" /></Form.Group></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Contract Date</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={moment(previewData?.contractDetails?.contractDate).format('MM/DD/YYYY')}
+                      disabled={true} placeholder="Contract Date" /></Form.Group></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Contract End Date</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={moment(previewData?.contractDetails?.contractDate).format('MM/DD/YYYY')}
+                      disabled={true} placeholder="Contract End Date" /></Form.Group></Col>
               </Row>
             </Form.Group>
-            <Form.Group as={Col} lg={13} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+            <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
               <Form.Label className='text-muted'>Pricing Details</Form.Label>
               <Row>
-                <Col lg={3} md={3} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.pricingDetails?.pricingType}
-                  disabled={true} placeholder="Pricing Type" /></Col>
-                <Col lg={3} md={3} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.pricingDetails?.pricingHedgingMethod}
-                  disabled={true} placeholder="Pricing Hedging Method" /></Col>
-                <Col lg={3} md={3} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.pricingDetails?.pricingFormula}
-                  disabled={true} placeholder="Pricing Formula" /></Col>
-                <Col lg={3} md={3} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.pricingDetails?.pricingHedgingStatu}
-                  disabled={true} placeholder="Pricing Hedging Statu" /></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Price Type</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.pricingDetails?.pricingType}
+                      disabled={true} placeholder="Pricing Type" /></Form.Group></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Pricing Hedging Method</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.pricingDetails?.pricingHedgingMethod}
+                      disabled={true} placeholder="Pricing Hedging Method" /></Form.Group></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Pricing Formula</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.pricingDetails?.pricingFormula}
+                      disabled={true} placeholder="Pricing Formula" /></Form.Group></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Pricing Hedging Status</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.pricingDetails?.pricingHedgingStatu}
+                      disabled={true} placeholder="Pricing Hedging Status" /></Form.Group></Col>
               </Row>
             </Form.Group>
 
@@ -941,34 +975,50 @@ fetchData()
                 value={previewData?.flowVerified}
                 disabled={true} />
             </Form.Group>
-            <Form.Group as={Col} lg={6} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+            <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
               <Form.Label className='text-muted'>Beneficiary Details</Form.Label>
               <Row>
-                <Col lg={6} md={6} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.beneficiary?.email}
-                  disabled={true} placeholder="Beneficiary Email" /></Col>
-                <Col lg={6} md={6} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.beneficiary?.type}
-                  disabled={true} placeholder="Beneficiary Type" /></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Beneficiary Email</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.beneficiary?.email}
+                      disabled={true} placeholder="Beneficiary Email" /></Form.Group></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Beneficiary Type</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.beneficiary?.type}
+                      disabled={true} placeholder="Beneficiary Type" /></Form.Group></Col>
               </Row>
             </Form.Group>
             <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
               <Form.Label className='text-muted'>Payment Details</Form.Label>
               <Row>
-                <Col lg={4} md={4} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.paymentMethod}
-                  disabled={true} placeholder="Payment Method" /></Col>
-                <Col lg={4} md={4} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.contractCurrency}
-                  disabled={true} placeholder="Contract Currency" /></Col>
-                <Col lg={4} md={4} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.contractValue}
-                  disabled={true} placeholder="Contract Value" /></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Payment Method</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.paymentMethod}
+                      disabled={true} placeholder="Payment Method" /></Form.Group></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Contract Currency</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.contractCurrency}
+                      disabled={true} placeholder="Contract Currency" /></Form.Group></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Contract Value</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.contractValue}
+                      disabled={true} placeholder="Contract Value" /></Form.Group></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Payment Date</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={moment(previewData?.paymentDate).format('MM/DD/YYYY')}
+                      disabled={true} placeholder="Payment Date" /></Form.Group></Col>
               </Row>
             </Form.Group>
 
@@ -989,17 +1039,21 @@ fetchData()
                 value={previewData?.flowVerified}
                 disabled={true} />
             </Form.Group>
-            <Form.Group as={Col} lg={6} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+            <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
               <Form.Label className='text-muted'>Documnet Details</Form.Label>
               <Row>
-                <Col lg={6} md={6} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.details}
-                  disabled={true} placeholder="Approved/UnApproved" /></Col>
-                <Col lg={6} md={6} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.documentRemittance}
-                  disabled={true} placeholder="Document Remittance" /></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-1" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Approved/UnApproved</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.details}
+                      disabled={true} placeholder="Approved/UnApproved" /></Form.Group></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-1" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Document Remittance</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.documentRemittance}
+                      disabled={true} placeholder="Document Remittance" /></Form.Group></Col>
               </Row>
             </Form.Group>
           </Row>
@@ -1019,67 +1073,102 @@ fetchData()
                 value={previewData?.flowVerified}
                 disabled={true} />
             </Form.Group>
-            <Form.Group as={Col} lg={6} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+            <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
               <Form.Label className='text-muted'>Interest Details</Form.Label>
               <Row>
-                <Col lg={6} md={6} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.interestRateType}
-                  disabled={true} placeholder="Interest Rate Type" /></Col>
-                <Col lg={6} md={6} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.interestRate + '%'}
-                  disabled={true} placeholder="Interest Rate" /></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Interest Rate Type</Form.Label>
+                    <Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.interestRateType}
+                      disabled={true} placeholder="Interest Rate Type" />
+                  </Form.Group>
+                </Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Interest Rate</Form.Label>
+                    <Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.interestRate + '%'}
+                      disabled={true} placeholder="Interest Rate" />
+                  </Form.Group>
+                </Col>
               </Row>
             </Form.Group>
             <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
-              <Form.Label className='text-muted'>Basic Details</Form.Label>
+              <Form.Label className='text-muted'>Facility Details</Form.Label>
               <Row>
-                <Col lg={3} md={4} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.amount}
-                  disabled={true} placeholder="Amount" /></Col>
-                <Col lg={3} md={4} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.currency}
-                  disabled={true} placeholder="Currency" /></Col>
-                <Col lg={3} md={4} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.governingLaw}
-                  disabled={true} placeholder="Governing Law" /></Col>
-                <Col lg={3} md={4} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.type}
-                  disabled={true} placeholder="Type" /></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Facility Amount</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.amount}
+                      disabled={true} placeholder="Facility Amount" />
+                  </Form.Group></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Currency Type</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.currency}
+                      disabled={true} placeholder="Currency" />
+                  </Form.Group></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Governing Law</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.governingLaw}
+                      disabled={true} placeholder="Governing Law" /></Form.Group></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Facility Type</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.type}
+                      disabled={true} placeholder="Type" /></Form.Group></Col>
               </Row>
             </Form.Group>
             <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
               <Form.Label className='text-muted'>Pricing Details</Form.Label>
               <Row>
-                <Col lg={4} md={4} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.interestPeriod}
-                  disabled={true} placeholder="Interest Period" /></Col>
-                <Col lg={4} md={4} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={moment(previewData?.interestPaymentDate).format('MM/DD/YYYY')}
-                  disabled={true} placeholder="Interest Payment Date" /></Col>
-                <Col lg={4} md={4} m={12}><Form.Control className='text-muted no-border' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.tenor + '%'}
-                  disabled={true} placeholder="Tenor" /></Col>
-                <Col lg={4} md={4} m={12}><Form.Control className='text-muted no-border my-1' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.lateInterestCharges + '%'}
-                  disabled={true} placeholder="Late Interest Charges" /></Col>
-                <Col lg={4} md={4} m={12}><Form.Control className='text-muted no-border my-1' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.jurisdiction}
-                  disabled={true} placeholder="Jurisdiction" /></Col>
-                <Col lg={4} md={4} m={12}><Form.Control className='text-muted no-border my-1' type="text"
-                  name='borrower_Applicant'
-                  value={previewData?.loanPurposJustification}
-                  disabled={true} placeholder="Loan Purpos Justification" /></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Interest Period</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.interestPeriod}
+                      disabled={true} placeholder="Interest Period" />
+                  </Form.Group></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Interest Payment Date</Form.Label>
+                    <Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={moment(previewData?.interestPaymentDate).format('MM/DD/YYYY')}
+                      disabled={true} placeholder="Interest Payment Date" /></Form.Group>
+                </Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Tenor</Form.Label><Form.Control className='text-muted no-border' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.tenor + '%'}
+                      disabled={true} placeholder="Tenor" /></Form.Group></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Late Interest Charges</Form.Label><Form.Control className='text-muted no-border my-1' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.lateInterestCharges + '%'}
+                      disabled={true} placeholder="Late Interest Charges" /></Form.Group></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Jurisdiction</Form.Label><Form.Control className='text-muted no-border my-1' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.jurisdiction}
+                      disabled={true} placeholder="Jurisdiction" /></Form.Group></Col>
+                <Col lg={6} md={6} m={12}>
+                  <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
+                    <Form.Label className='text-muted'>Loan Purpose Justification</Form.Label><Form.Control className='text-muted no-border my-1' type="text"
+                      name='borrower_Applicant'
+                      value={previewData?.loanPurposJustification}
+                      disabled={true} placeholder="Loan Purpos Justification" /></Form.Group></Col>
               </Row>
             </Form.Group>
           </Row>
