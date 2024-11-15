@@ -4,21 +4,21 @@
 const WorkFlow = require('../models/workflow'); // Adjust the path if needed
 const Transaction = require('../models/transaction/transaction')
 const nodemailer = require('nodemailer');
-// const TransactionDetails = require('../models/TransactionDetails');
-// const TransactionDocumentFlows = require('../models/TransactionDocumentFlows');
-// const TransactionFacilities = require('../models/TransactionFacilities');
-// const TransactionFundFlows = require('../models/TransactionFundFlows');
-// const TransactionKeyParties = require('../models/TransactionKeyParties');  // Ensure correct casing here
+const Details = require('../models//transaction/transactionDetails');
+const DocumentFlow = require('../models/transaction/transactionDocumentFlow');
+const Facility = require('../models/transaction/transactionFacility');
+const FundFlow = require('../models/transaction/transactionFundFlow');
+const KeyParties = require('../models/transaction/transactionKeyParties');  // Ensure correct casing here
 
 // Configure Nodemailer transporter
 const transporter = nodemailer.createTransport({
-    host: "c116604.sgvps.net",
-    port: 465,
-    auth: {
-      user: "notification@techxperience.ng",
-      pass: "0ramsys!@#",
-    },
-  });
+  host: "c116604.sgvps.net",
+  port: 465,
+  auth: {
+    user: "notification@techxperience.ng",
+    pass: "0ramsys!@#",
+  },
+});
 
 // POST - Create a new workflow and send an email to the new user
 exports.createWorkFlow = async (req, res) => {
@@ -41,19 +41,19 @@ exports.createWorkFlow = async (req, res) => {
 
     // Send an email to the new user
     const mailOptions = {
-        from: 'notification@techxperience.ng', // Sender's email address
-        to: newUser,                           // Email address of the new user
-        subject: 'Welcome to the Workflow System',
-        text: `Hello, ${newUser}!
+      from: 'notification@techxperience.ng', // Sender's email address
+      to: newUser,                           // Email address of the new user
+      subject: 'Welcome to the Workflow System',
+      text: `Hello, ${newUser}!
         
         You have been assigned a new workflow step: ${stepName}.
         Please log in to the system to view more details.
       
         Thank you!
         Workflow Management Team`,
-      
-        // HTML version of the email
-        html: `
+
+      // HTML version of the email
+      html: `
           <div style="font-family: Arial, sans-serif; line-height: 1.6;">
             <p>Hello, ${newUser}!</p>
             <p>You have been assigned a new workflow step: <strong>${stepName}</strong>.</p>
@@ -74,8 +74,8 @@ exports.createWorkFlow = async (req, res) => {
             <p>Thank you!<br />Workflow Management Team</p>
           </div>
         `
-      };
-      
+    };
+
 
     // Send email
     transporter.sendMail(mailOptions, (error, info) => {
@@ -142,7 +142,7 @@ exports.getWorkflowByUserAndAdmin = async (req, res) => {
               {
                 path: 'warehouseCompany',
                 model: 'Entity',
-               
+
               },
               {
                 path: 'warehouse',
@@ -170,12 +170,12 @@ exports.getWorkflowByUserAndAdmin = async (req, res) => {
         populate: [
           {
             path: 'parties.type',  // Assuming 'type' refers to a model like 'PartyType'
-            model: 'EntityRoles', 
+            model: 'EntityRoles',
           },
           {
             path: 'parties.name',  // Assuming 'name' is a reference to the 'User' model
-            model: 'Entity',  
-          }, 
+            model: 'Entity',
+          },
         ]
       })
       .populate({
@@ -205,15 +205,15 @@ exports.getWorkflowByUserAndAdmin = async (req, res) => {
           {
             path: 'lettersOfCredit.issuingBank',
             model: 'Entity', // Assuming issuingBank is a Bank
-            
+
           },
           {
             path: 'lettersOfCredit.beneficiary',
-            model: 'Entity', 
+            model: 'Entity',
           },
           {
             path: 'lettersOfCredit.advisingBank',
-            model: 'Entity', 
+            model: 'Entity',
           },
           {
             path: 'lettersOfCredit.negotiatingBank',
@@ -221,11 +221,11 @@ exports.getWorkflowByUserAndAdmin = async (req, res) => {
           },
           {
             path: 'lettersOfCredit.secondBeneficiary',
-            model: 'Entity', 
+            model: 'Entity',
           },
           {
             path: 'lettersOfCredit.reimbursingBank',
-            model: 'Entity', 
+            model: 'Entity',
           },
           {
             path: 'paymentOrigin',
@@ -234,11 +234,11 @@ exports.getWorkflowByUserAndAdmin = async (req, res) => {
           {
             path: 'beneficiary',
             model: 'Entity', // Assuming beneficiary is a User
-           
+
           }
         ]
       })
-      
+
       .populate({
         path: 'userId',  // Populate the user details
         model: 'User',
@@ -262,3 +262,106 @@ exports.getWorkflowByUserAndAdmin = async (req, res) => {
   }
 };
 
+
+exports.updateModel = async (req, res) => {
+  const { _id, type, userEmail, flowName } = req.body;
+
+  if (!_id || !type || !userEmail || !flowName) {
+    return res.status(400).json({ error: "Missing _id, type, userEmail, or flowName in request body." });
+  }
+
+  let model;
+  switch (type) {
+    case 'facility':
+      model = Facility;
+      break;
+    case 'documentFlow':
+      model = DocumentFlow;
+      break;
+    case 'keyParties':
+      model = KeyParties;
+      break;
+    case 'details':
+      model = Details;
+      break;
+    case 'fundFlow':
+      model = FundFlow;
+      break;
+    default:
+      return res.status(400).json({ error: "Invalid type provided." });
+  }
+
+  try {
+    // Update flowVerified to true
+    const updatedDocument = await model.findByIdAndUpdate(_id, { flowVerified: true }, { new: true });
+    if (!updatedDocument) {
+      return res.status(404).json({ error: "Document not found." });
+    }
+
+    // Send email notification
+    const mailOptions = {
+      from: 'notification@techxperience.ng',
+      to: userEmail,
+      subject: 'Flow Verification Notification',
+      text: `Hello,
+
+The flow "${flowName}" has been successfully verified.
+
+Best regards,
+Your Team`
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Error sending email:', error);
+        return res.status(500).json({ error: "Error sending email notification." });
+      } else {
+        console.log('Email sent:', info.response);
+        res.status(200).json({ message: 'Flow verified and email sent to user.', updatedDocument });
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ error: "An error occurred during the update process." });
+  }
+};
+
+exports.getWorkflowsByAddedBy = async (req, res) => {
+  const { addedBy } = req.query;
+
+  if (!addedBy) {
+    return res.status(400).json({ error: "The 'addedBy' query parameter is required." });
+  }
+
+  try {
+    const workflows = await WorkFlow.find({ addedBy });
+    res.status(200).json(workflows);
+  } catch (error) {
+    res.status(500).json({ error: "An error occurred while fetching workflows." });
+  }
+};
+
+exports.updateAssignedUser = async (req, res) => {
+  const { _id } = req.body;  // Extract _id from the request body
+  const { assignedUser } = req.body;  // Extract assignedUser from the request body
+
+  if (!_id || !assignedUser) {
+    return res.status(400).json({ error: "The '_id' and 'assignedUser' fields are required." });
+  }
+
+  try {
+    // Find the document by _id and update the assignedUser field
+    const updatedWorkflow = await WorkFlow.findByIdAndUpdate(
+      _id,
+      { assignedUser },
+      { new: true }  // Return the updated document
+    );
+
+    if (!updatedWorkflow) {
+      return res.status(404).json({ error: "Workflow not found." });
+    }
+
+    res.status(200).json({ message: "Assigned user updated successfully.", updatedWorkflow });
+  } catch (error) {
+    res.status(500).json({ error: "An error occurred while updating the assigned user." });
+  }
+};
