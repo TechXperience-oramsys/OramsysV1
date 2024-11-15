@@ -49,9 +49,145 @@ const Workflow = () => {
   const [currentUser, setcurrentUser] = useState(
     JSON.parse(localStorage.getItem("userData"))
   );
+
+  const [select1Value, setSelect1Value] = useState(""); // State for first select box
+  const [select2Value, setSelect2Value] = useState(""); // State for second select box
+  const [inputValue, setInputValue] = useState("");     // State for input box
+
+  const [formChanges, setFormChanges] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState({}); // Tracks submission state for each card
+
+  const handleInputChange = (e, index, field) => {
+    const { value } = e.target;
+
+    setFormChanges((prev) => ({
+      ...prev,
+      [index]: {
+        ...prev[index],
+        [field]: value !== workFlow[index][field], // Check if the value is changed
+      },
+    }));
+  };
+
+  const handleSelect1Change = (e, index) => {
+    const value = e.target.value;
+    setFormChanges((prev) => ({
+      ...prev,
+      [index]: {
+        ...prev[index],
+        assignedUser: value,
+      },
+    }));
+  };
+
+  const handleSelect2Change = (e, index) => {
+    const value = e.target.value;
+    setFormChanges((prev) => ({
+      ...prev,
+      [index]: {
+        ...prev[index],
+        stepName: value,
+      },
+    }));
+  };
+
+
+  const handleInputTextChange = (e, index) => {
+    const value = e.target.value;
+    setFormChanges((prev) => ({
+      ...prev,
+      [index]: {
+        ...prev[index],
+        userRole: value,
+      },
+    }));
+  };
+
+
+  const isSubmitEnabled = (index) => {
+    const currentChanges = formChanges[index] || {};
+    const originalValues = workFlow[index];
+
+    return (
+      currentChanges.assignedUser !== originalValues.assignedUser ||
+      currentChanges.stepName !== originalValues.stepName ||
+      currentChanges.userRole !== originalValues.userRole
+    );
+  };
+
+  const handleSubmitData = async (index) => {
+    const updatedWorkflow = {
+      _id: workFlow[index]._id,
+      assignedUser: formChanges[index]?.assignedUser
+        ? formChanges[index].assignedUser
+        : workFlow[index].assignedUser,
+      userRole: formChanges[index]?.userRole
+        ? formChanges[index].userRole
+        : workFlow[index].userRole,
+      stepName: formChanges[index]?.stepName
+        ? formChanges[index].stepName
+        : workFlow[index].stepName,
+    };
+
+    setIsSubmitting((prev) => ({ ...prev, [index]: true })); // Set submitting state for this card
+
+    try {
+      const response = await fetch(`${BaseURL}api/workflow/updateWorkFlow`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedWorkflow),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Update successful:", data);
+
+      // Reset changes and submission state
+      setFormChanges((prev) => ({
+        ...prev,
+        [index]: undefined,
+      }));
+    } catch (error) {
+      console.error("Error updating workflow:", error);
+    } finally {
+      setIsSubmitting((prev) => ({ ...prev, [index]: false })); // Reset submitting state
+    }
+  };
+
   const BaseURL = API;
   const role = localStorage.getItem("roles")
-  // console.log(role,currentUser,"loggedin role");
+
+  const [workFlow, setworkFlow] = useState(null);
+
+  useEffect(() => {
+
+
+    fetchData();
+  }, []); // Empty dependency array ensures the effect runs only once after component mounts.
+
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        `${BaseURL}api/workFlow/getWorkFlow?addedBy=${currentUser?.id}`,
+        {
+          method: 'GET',
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const result = await response.json();
+      setworkFlow(result);
+    } catch (err) {
+      console.error('Error fetching data:', err);
+      setError(err.message);
+    }
+  };
 
   useEffect(() => {
     if (role == 'user' && currentUser) {
@@ -65,7 +201,7 @@ const Workflow = () => {
     const fetchUsers = async () => {
       try {
         const response = await fetch(
-          `${BaseURL}user/getUsersByAdmin?id=66d7ffd34f536624285360c7`
+          `${BaseURL}user/getUsersByAdmin?id=${currentUser?.id}`
         );
         if (!response.ok) {
           throw new Error(`Error: ${response.status} ${response.statusText}`);
@@ -154,8 +290,6 @@ const Workflow = () => {
           if (!response.ok) {
             throw new Error(`Error: ${response.status} ${response.statusText}`);
           }
-
-          console.log(`User added: ${step.userEmail}`);
         } catch (error) {
           console.error("Error while adding user:", error);
         }
@@ -176,7 +310,7 @@ const Workflow = () => {
 
       try {
         const response = await fetch(
-          "http://localhost:5003/api/workFlow/create",
+          `${BaseURL}api/workFlow/create`,
           {
             method: "POST",
             headers: {
@@ -265,19 +399,19 @@ const Workflow = () => {
               </Menu.Item>
               <Menu.Item disabled={record?.[workflowData?.workflowDocument?.stepName]?.flowVerified || record?.[workflowData?.workflowDocument?.stepName][0]?.flowVerified}
                 onClick={() => {
-                  const formData ={
-                    "_id":  record?.[workflowData?.workflowDocument?.stepName][0]?._id ||record?.[workflowData?.workflowDocument?.stepName]?._id,
+                  const formData = {
+                    "_id": record?.[workflowData?.workflowDocument?.stepName][0]?._id || record?.[workflowData?.workflowDocument?.stepName]?._id,
                     "type": workflowData?.workflowDocument?.stepName,
                     "userEmail": record?.userId?.email,
-                    "flowName":data.find(item => item.value === workflowData?.workflowDocument?.stepName)?.label
+                    "flowName": data.find(item => item.value === workflowData?.workflowDocument?.stepName)?.label
                   }
-                 userServices.updateWorkFlow(formData).then((res)=>{
-                  toast.success(res.data?.message)
-                 }).catch((err)=>{
-                  toast.error(err?.response?.data?.error)                
-                 })
+                  userServices.updateWorkFlow(formData).then((res) => {
+                    toast.success(res.data?.message)
+                  }).catch((err) => {
+                    toast.error(err?.response?.data?.error)
+                  })
                 }}>
-               Verify
+                Verify
               </Menu.Item>
             </Menu>
           }
@@ -289,6 +423,9 @@ const Workflow = () => {
       ),
     },
   ]
+
+  console.log(BaseURL, 'bbbababba');
+
 
   return (
     <Container className="mt-4">
@@ -559,6 +696,84 @@ const Workflow = () => {
         </Card>
       )}
 
+      {!showForm &&
+        workFlow?.map((item, index) => (
+          <Card className="mb-3 mt-3" key={index}>
+            <Card.Header>Step {index + 1}</Card.Header>
+            <Card.Body>
+              <Form>
+                <Row className="mb-3">
+                  {/* First Column: Select Box */}
+                  <Col lg={4}>
+                    <Form.Group controlId={`formSelect1-${index}`}>
+                      <Form.Label>Select Option 1</Form.Label>
+                      <Form.Control
+                        as="select"
+                        value={formChanges[index]?.assignedUser || item?.assignedUser}
+                        onChange={(e) => handleSelect1Change(e, index)}
+                      >
+                        <option value="">Select an option</option>
+                        {users?.map((elem, userIndex) => (
+                          <option key={userIndex} value={elem?.email}>
+                            {elem?.name}
+                          </option>
+                        ))}
+                      </Form.Control>
+                    </Form.Group>
+                  </Col>
+
+                  {/* Second Column: Select Box */}
+                  <Col lg={4}>
+                    <Form.Group controlId={`formSelect2-${index}`}>
+                      <Form.Label>Step Name</Form.Label>
+                      <Form.Control
+                        as="select"
+                        value={formChanges[index]?.stepName || item?.stepName}
+                        onChange={(e) => handleSelect2Change(e, index)}
+                      >
+                        <option value="">Select an option</option>
+                        {data?.map((elem, dataIndex) => (
+                          <option key={dataIndex} value={elem?.value}>
+                            {elem?.label}
+                          </option>
+                        ))}
+                      </Form.Control>
+                    </Form.Group>
+                  </Col>
+
+                  {/* Third Column: Input Text Box */}
+                  <Col lg={4}>
+                    <Form.Group controlId={`formTextInput-${index}`}>
+                      <Form.Label>Input Text</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={formChanges[index]?.userRole || item?.userRole}
+                        onChange={(e) => handleInputTextChange(e, index)}
+                        placeholder="Enter text"
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+
+                {/* Submit Button Row */}
+                <Row>
+                  <Col className="text-end">
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      onClick={() => handleSubmitData(index)}
+                      disabled={!isSubmitEnabled(index) || isSubmitting[index]} // Disable if no changes or submission in progress
+                    >
+                      {isSubmitting[index] ? "Submitting..." : "Submit"}
+                    </Button>
+                  </Col>
+                </Row>
+              </Form>
+            </Card.Body>
+          </Card>
+        ))
+      }
+
       {role == 'user' && <div className="mt-10 table-responsive form ">
         <Table
           className="custom-header"
@@ -615,19 +830,19 @@ const Workflow = () => {
                     return (
                       <Row key={i}>
                         <Col>
-                        <Form.Control className='text-muted no-border my-1' type="text"
-                        name='borrower_Applicant'
-                        value={party?.name?.email}
-                        disabled={true} 
-                        placeholder='Email'/>
+                          <Form.Control className='text-muted no-border my-1' type="text"
+                            name='borrower_Applicant'
+                            value={party?.name?.email}
+                            disabled={true}
+                            placeholder='Email' />
                         </Col>
                         <Col><Form.Control className='text-muted no-border my-1' type="text"
-                        name='borrower_Applicant'
-                        value={party?.name?.type}
-                        disabled={true} 
-                        placeholder='Type'/></Col>
+                          name='borrower_Applicant'
+                          value={party?.name?.type}
+                          disabled={true}
+                          placeholder='Type' /></Col>
                       </Row>
-                      
+
 
                     )
                   })}
@@ -641,14 +856,14 @@ const Workflow = () => {
                           <Form.Control key={i} className='text-muted no-bordermy-1' type="text"
                             name='borrower_Applicant'
                             value={party?.buyer}
-                            disabled={true} 
-                            placeholder="Buyer"/>
+                            disabled={true}
+                            placeholder="Buyer" />
                         </Col>
                         <Col>
                           <Form.Control key={i} className='text-muted no-border my-1' type="text"
                             name='borrower_Applicant'
                             value={party?.shipper}
-                            disabled={true}  placeholder="Shipper"/>
+                            disabled={true} placeholder="Shipper" />
                         </Col>
                       </Row>
                     )
@@ -678,37 +893,37 @@ const Workflow = () => {
               <Form.Label className='text-muted'>Contract Details</Form.Label>
               <Row>
                 <Col lg={6} md={6} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.contractDetails?.currency}
-                disabled={true} /></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.contractDetails?.currency}
+                  disabled={true} /></Col>
                 <Col lg={6} md={6} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.contractDetails?.value}
-                disabled={true} /></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.contractDetails?.value}
+                  disabled={true} /></Col>
               </Row>
             </Form.Group>
             <Form.Group as={Col} lg={13} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
               <Form.Label className='text-muted'>Pricing Details</Form.Label>
               <Row>
                 <Col lg={3} md={3} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.pricingDetails?.pricingType}
-                disabled={true} placeholder="Pricing Type"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.pricingDetails?.pricingType}
+                  disabled={true} placeholder="Pricing Type" /></Col>
                 <Col lg={3} md={3} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.pricingDetails?.pricingHedgingMethod}
-                disabled={true} placeholder="Pricing Hedging Method"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.pricingDetails?.pricingHedgingMethod}
+                  disabled={true} placeholder="Pricing Hedging Method" /></Col>
                 <Col lg={3} md={3} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.pricingDetails?.pricingFormula}
-                disabled={true} placeholder="Pricing Formula"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.pricingDetails?.pricingFormula}
+                  disabled={true} placeholder="Pricing Formula" /></Col>
                 <Col lg={3} md={3} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.pricingDetails?.pricingHedgingStatu}
-                disabled={true} placeholder="Pricing Hedging Statu"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.pricingDetails?.pricingHedgingStatu}
+                  disabled={true} placeholder="Pricing Hedging Statu" /></Col>
               </Row>
             </Form.Group>
-           
+
           </Row>
         </Modal.Body>
 
@@ -730,33 +945,33 @@ const Workflow = () => {
               <Form.Label className='text-muted'>Beneficiary Details</Form.Label>
               <Row>
                 <Col lg={6} md={6} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.beneficiary?.email}
-                disabled={true} placeholder="Beneficiary Email"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.beneficiary?.email}
+                  disabled={true} placeholder="Beneficiary Email" /></Col>
                 <Col lg={6} md={6} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.beneficiary?.type}
-                disabled={true} placeholder="Beneficiary Type"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.beneficiary?.type}
+                  disabled={true} placeholder="Beneficiary Type" /></Col>
               </Row>
             </Form.Group>
             <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
               <Form.Label className='text-muted'>Payment Details</Form.Label>
               <Row>
                 <Col lg={4} md={4} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.paymentMethod}
-                disabled={true} placeholder="Payment Method"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.paymentMethod}
+                  disabled={true} placeholder="Payment Method" /></Col>
                 <Col lg={4} md={4} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.contractCurrency}
-                disabled={true} placeholder="Contract Currency"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.contractCurrency}
+                  disabled={true} placeholder="Contract Currency" /></Col>
                 <Col lg={4} md={4} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.contractValue}
-                disabled={true} placeholder="Contract Value"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.contractValue}
+                  disabled={true} placeholder="Contract Value" /></Col>
               </Row>
             </Form.Group>
-           
+
           </Row>
         </Modal.Body>
 
@@ -778,13 +993,13 @@ const Workflow = () => {
               <Form.Label className='text-muted'>Documnet Details</Form.Label>
               <Row>
                 <Col lg={6} md={6} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.details}
-                disabled={true} placeholder="Approved/UnApproved"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.details}
+                  disabled={true} placeholder="Approved/UnApproved" /></Col>
                 <Col lg={6} md={6} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.documentRemittance}
-                disabled={true} placeholder="Document Remittance"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.documentRemittance}
+                  disabled={true} placeholder="Document Remittance" /></Col>
               </Row>
             </Form.Group>
           </Row>
@@ -808,63 +1023,63 @@ const Workflow = () => {
               <Form.Label className='text-muted'>Interest Details</Form.Label>
               <Row>
                 <Col lg={6} md={6} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.interestRateType}
-                disabled={true} placeholder="Interest Rate Type"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.interestRateType}
+                  disabled={true} placeholder="Interest Rate Type" /></Col>
                 <Col lg={6} md={6} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.interestRate+'%'}
-                disabled={true} placeholder="Interest Rate"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.interestRate + '%'}
+                  disabled={true} placeholder="Interest Rate" /></Col>
               </Row>
             </Form.Group>
             <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
               <Form.Label className='text-muted'>Basic Details</Form.Label>
               <Row>
                 <Col lg={3} md={4} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.amount}
-                disabled={true} placeholder="Amount"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.amount}
+                  disabled={true} placeholder="Amount" /></Col>
                 <Col lg={3} md={4} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.currency}
-                disabled={true} placeholder="Currency"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.currency}
+                  disabled={true} placeholder="Currency" /></Col>
                 <Col lg={3} md={4} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.governingLaw}
-                disabled={true} placeholder="Governing Law"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.governingLaw}
+                  disabled={true} placeholder="Governing Law" /></Col>
                 <Col lg={3} md={4} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.type}
-                disabled={true} placeholder="Type"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.type}
+                  disabled={true} placeholder="Type" /></Col>
               </Row>
             </Form.Group>
             <Form.Group as={Col} lg={12} md={12} m={8} className="mb-3" controlId="formHorizontalEmail">
               <Form.Label className='text-muted'>Pricing Details</Form.Label>
               <Row>
                 <Col lg={4} md={4} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.interestPeriod}
-                disabled={true} placeholder="Interest Period"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.interestPeriod}
+                  disabled={true} placeholder="Interest Period" /></Col>
                 <Col lg={4} md={4} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={moment(previewData?.interestPaymentDate).format('MM/DD/YYYY')}
-                disabled={true} placeholder="Interest Payment Date"/></Col>
+                  name='borrower_Applicant'
+                  value={moment(previewData?.interestPaymentDate).format('MM/DD/YYYY')}
+                  disabled={true} placeholder="Interest Payment Date" /></Col>
                 <Col lg={4} md={4} m={12}><Form.Control className='text-muted no-border' type="text"
-                name='borrower_Applicant'
-                value={previewData?.tenor+'%'}
-                disabled={true} placeholder="Tenor"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.tenor + '%'}
+                  disabled={true} placeholder="Tenor" /></Col>
                 <Col lg={4} md={4} m={12}><Form.Control className='text-muted no-border my-1' type="text"
-                name='borrower_Applicant'
-                value={previewData?.lateInterestCharges+'%'}
-                disabled={true} placeholder="Late Interest Charges"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.lateInterestCharges + '%'}
+                  disabled={true} placeholder="Late Interest Charges" /></Col>
                 <Col lg={4} md={4} m={12}><Form.Control className='text-muted no-border my-1' type="text"
-                name='borrower_Applicant'
-                value={previewData?.jurisdiction}
-                disabled={true} placeholder="Jurisdiction"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.jurisdiction}
+                  disabled={true} placeholder="Jurisdiction" /></Col>
                 <Col lg={4} md={4} m={12}><Form.Control className='text-muted no-border my-1' type="text"
-                name='borrower_Applicant'
-                value={previewData?.loanPurposJustification}
-                disabled={true} placeholder="Loan Purpos Justification"/></Col>
+                  name='borrower_Applicant'
+                  value={previewData?.loanPurposJustification}
+                  disabled={true} placeholder="Loan Purpos Justification" /></Col>
               </Row>
             </Form.Group>
           </Row>

@@ -101,8 +101,6 @@ exports.createWorkFlow = async (req, res) => {
 };
 
 
-
-
 exports.getWorkflowByUserAndAdmin = async (req, res) => {
   try {
     const { assignedUser, addedBy } = req.query;
@@ -340,28 +338,36 @@ exports.getWorkflowsByAddedBy = async (req, res) => {
   }
 };
 
-exports.updateAssignedUser = async (req, res) => {
-  const { _id } = req.body;  // Extract _id from the request body
-  const { assignedUser } = req.body;  // Extract assignedUser from the request body
 
-  if (!_id || !assignedUser) {
-    return res.status(400).json({ error: "The '_id' and 'assignedUser' fields are required." });
+exports.updateAssignedUser = async (req, res) => {
+  const { _id, assignedUser, userRole, stepName } = req.body; // Extract fields from the request body
+console.log(req.body , 'body is here');
+
+  if (!_id || !assignedUser || !userRole || !stepName) {
+    return res.status(400).json({ 
+      error: "The '_id', 'assignedUser', 'userRole', and 'stepName' fields are required." 
+    });
   }
 
   try {
-    // Find the document by _id and update the assignedUser field
+    // Find the document by _id and update the specified fields
     const updatedWorkflow = await WorkFlow.findByIdAndUpdate(
       _id,
-      { assignedUser },
-      { new: true }  // Return the updated document
+      { assignedUser, userRole, stepName },
+      { new: true } // Return the updated document
     );
 
     if (!updatedWorkflow) {
       return res.status(404).json({ error: "Workflow not found." });
     }
 
-    res.status(200).json({ message: "Assigned user updated successfully.", updatedWorkflow });
+    res.status(200).json({ 
+      message: "Workflow updated successfully.", 
+      updatedWorkflow 
+    });
   } catch (error) {
-    res.status(500).json({ error: "An error occurred while updating the assigned user." });
+    res.status(500).json({ 
+      error: "An error occurred while updating the workflow." 
+    });
   }
 };
