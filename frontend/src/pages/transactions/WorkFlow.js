@@ -145,7 +145,7 @@ const Workflow = () => {
 
       const data = await response.json();
       console.log("Update successful:", data);
-
+fetchData()
       // Reset changes and submission state
       setFormChanges((prev) => ({
         ...prev,
