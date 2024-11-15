@@ -52,7 +52,7 @@ const Workflow = () => {
 
   const [select1Value, setSelect1Value] = useState(""); // State for first select box
   const [select2Value, setSelect2Value] = useState(""); // State for second select box
-  const [inputValue, setInputValue] = useState("");     // State for input box
+  const [isRefresh, setIsRefresh] = useState(Date.now());     // State for input box
 
   const [formChanges, setFormChanges] = useState({});
   const [isSubmitting, setIsSubmitting] = useState({}); // Tracks submission state for each card
@@ -214,7 +214,7 @@ const Workflow = () => {
     };
 
     fetchUsers();
-  }, [BaseURL]);
+  }, [BaseURL,isRefresh]);
 
   const validationSchema = Yup.object().shape({
     steps: Yup.array().of(
@@ -353,10 +353,6 @@ const Workflow = () => {
       title: "ID",
       dataIndex: "_id",
       key: "_id",
-      // render: (createdAt) =>
-      //   new Date(createdAt).toLocaleDateString("en-US", DATE_OPTIONS),
-      // className: "hide-on-md",
-      // align: "center",
     },
     {
       title: "Name",
@@ -407,6 +403,7 @@ const Workflow = () => {
                   }
                   userServices.updateWorkFlow(formData).then((res) => {
                     toast.success(res.data?.message)
+                    setIsRefresh(Date.now())
                   }).catch((err) => {
                     toast.error(err?.response?.data?.error)
                   })
