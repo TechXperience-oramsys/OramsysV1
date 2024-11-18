@@ -703,7 +703,7 @@ const Workflow = () => {
                   {/* First Column: Select Box */}
                   <Col lg={4}>
                     <Form.Group controlId={`formSelect1-${index}`}>
-                      <Form.Label>Select Option 1</Form.Label>
+                      <Form.Label>Select User</Form.Label>
                       <Form.Control
                         as="select"
                         value={formChanges[index]?.assignedUser || item?.assignedUser}
@@ -722,7 +722,7 @@ const Workflow = () => {
                   {/* Second Column: Select Box */}
                   <Col lg={4}>
                     <Form.Group controlId={`formSelect2-${index}`}>
-                      <Form.Label>Step Name</Form.Label>
+                      <Form.Label>Select Step</Form.Label>
                       <Form.Control
                         as="select"
                         value={formChanges[index]?.stepName || item?.stepName}
@@ -741,7 +741,7 @@ const Workflow = () => {
                   {/* Third Column: Input Text Box */}
                   <Col lg={4}>
                     <Form.Group controlId={`formTextInput-${index}`}>
-                      <Form.Label>Input Text</Form.Label>
+                      <Form.Label>User Role</Form.Label>
                       <Form.Control
                         type="text"
                         value={formChanges[index]?.userRole || item?.userRole}
