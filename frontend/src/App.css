@@ -3096,3 +3096,11 @@ h6 {
   transform: none !important;
   transition: none !important;
 }
+
+.row-red {
+  background-color:  #f5b2b9;
+}
+
+.row-green {
+  background-color: #ccf5c7;
+}

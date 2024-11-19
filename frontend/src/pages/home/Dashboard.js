@@ -31,6 +31,7 @@ import Financials from "./Financials";
 import NotificationSection from "./Notification";
 // import { useTranslation } from "react-i18next";
 import { adminGetAction } from "../../redux/actions/adminAction";
+import { API } from "../../config/API/api.config";
 
 const Dashboard = () => {
   // const token = AuthStorage.getToken();
@@ -160,6 +161,9 @@ const Dashboard = () => {
   const getAllEntities = useSelector((state) => state.entityData.entity);
   const ratingAgenciesDatas = useSelector((state) => state.ratingAgenciesData?.ratingAgencies);
   const adminDatas = useSelector((state) => state.adminData?.getAdminData);
+  const [currentUser, setcurrentUser] = useState(
+    JSON.parse(localStorage.getItem("userData"))
+  );
   // console.log('admin data', adminDatas)
 
   const totalValue = useMemo(() => {
@@ -259,7 +263,56 @@ const Dashboard = () => {
     dispatch(() => adminAction());
     // console.log(getAlltransactionData)
     // eslint-disable-next-line
+    fetchData()
   }, []);
+
+  const BaseURL = API;
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        `${BaseURL}api/workflow/getuserFlow?assignedUser=${currentUser?.email}&addedBy=${currentUser?.admin?._id}`,
+        {
+          method: 'GET',
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const result = await response.json();
+      fetchTransactionCounts(result?.workflowDocument?.admin?.id  , result?.workflowDocument?.department);
+
+      // setworkFlow(result);
+    } catch (err) {
+      console.error('Error fetching data:', err);
+      // setError(err.message);
+    }
+  };
+
+  const fetchTransactionCounts = async (adminId, workflowStepName) => {
+    const url = `${BaseURL}api/workFlow/counts?admin=${adminId}&workflowStepName=${encodeURIComponent(workflowStepName)}`;
+  
+    try {
+      const response = await fetch(url, {
+        method: 'GET', // Use GET method to fetch data
+        headers: {
+          'Content-Type': 'application/json', // Set content type to JSON
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+  
+      const data = await response.json(); // Parse the response body as JSON
+      console.log('Counts:', data.counts); // Log the counts to the console
+      return data.counts; // Return the counts
+    } catch (error) {
+      console.error('Error fetching counts:', error); // Handle errors
+    }
+  };
+  
+
 
   const DATE_OPTIONS = {
     weekday: "short",

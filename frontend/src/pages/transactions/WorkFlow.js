@@ -30,6 +30,7 @@ import {
   EyeOutlined,
   FormOutlined,
   EllipsisOutlined,
+  CheckCircleOutlined,
 } from "@ant-design/icons";
 import { userServices } from "../../_Services/userServices";
 import AuthStorage from "../../helper/AuthStorage";
@@ -164,8 +165,6 @@ const Workflow = () => {
   const [workFlow, setworkFlow] = useState(null);
 
   useEffect(() => {
-
-
     fetchData();
   }, []); // Empty dependency array ensures the effect runs only once after component mounts.
 
@@ -359,63 +358,78 @@ const Workflow = () => {
     {
       title: "Name",
       key: "name",
-      render: (record) => (
-        <p>{record?.userId?.name}</p>
-      )
+      render: (record) => <p>{record?.userId?.name || "N/A"}</p>,
     },
     {
       title: "Email",
       key: "email",
-      render: (record) => (
-        <p>{record?.userId?.email}</p>
-      )
+      render: (record) => <p>{record?.userId?.email || "N/A"}</p>,
     },
-
     {
       title: "Lender",
       dataIndex: "lenders",
-      key: "lenders"
+      key: "lenders",
     },
     {
       title: "Borrower Applicant",
       dataIndex: "borrower_Applicant",
-      key: "borrower_Applicant"
+      key: "borrower_Applicant",
     },
     {
       title: "Actions",
       key: "actions",
       render: (record) => (
-        <AntDropdown placement="bottomRight"
+        <AntDropdown
+          placement="bottomRight"
           overlay={
             <Menu>
+              {/* Preview Option */}
               <Menu.Item
                 onClick={() => {
-                  setIsPreview(true)
-                  setPreviewData(record?.[workflowData?.workflowDocument?.stepName]);
-                }}>
-                <EyeOutlined className='pe-2' /> Preview
+                  setIsPreview(true);
+                  setPreviewData(record?.[workflowData?.workflowDocument?.stepName] || {});
+                }}
+              >
+                <EyeOutlined className="pe-2" /> Preview
               </Menu.Item>
-              <Menu.Item disabled={record?.[workflowData?.workflowDocument?.stepName]?.flowVerified || record?.[workflowData?.workflowDocument?.stepName][0]?.flowVerified}
+  
+              {/* Verify Option */}
+              <Menu.Item
+                disabled={
+                  record?.[workflowData?.workflowDocument?.stepName]?.flowVerified ||
+                  record?.[workflowData?.workflowDocument?.stepName]?.[0]?.flowVerified
+                }
                 onClick={() => {
+                  const stepName = workflowData?.workflowDocument?.stepName;
+                  const department = workflowData?.workflowDocument?.department;
+  
                   const formData = {
-                    "_id": record?.[workflowData?.workflowDocument?.stepName][0]?._id || record?.[workflowData?.workflowDocument?.stepName]?._id,
-                    "type": workflowData?.workflowDocument?.stepName,
-                    "userEmail": record?.userId?.email,
-                    "flowName": data.find(item => item.value === workflowData?.workflowDocument?.stepName)?.label,
-                    "transactionId" : record?._id,
-                    "department" :  workflowData?.workflowDocument?.department
-                  }
-
-                  console.log(record , 'daata' , workflowData?.workflowDocument?.department);
-                  
-                  userServices.updateWorkFlow(formData).then((res) => {
-                    toast.success(res.data?.message)
-                    setIsRefresh(Date.now())
-                  }).catch((err) => {
-                    toast.error(err?.response?.data?.error)
-                  })
-                }}>
-                Verify
+                    _id:
+                      record?.[stepName]?.[0]?._id || record?.[stepName]?._id,
+                    type: stepName,
+                    userEmail: record?.userId?.email,
+                    flowName: data.find((item) => item.value === stepName)?.label,
+                    transactionId: record?._id,
+                    department: department,
+                  };
+  
+                  console.log("Record:", record);
+                  console.log("Form Data:", formData);
+  
+                  // Uncomment this block to enable the API call
+                
+                  userServices.updateWorkFlow(formData)
+                    .then((res) => {
+                      toast.success(res.data?.message);
+                      setIsRefresh(Date.now());
+                    })
+                    .catch((err) => {
+                      toast.error(err?.response?.data?.error);
+                    });
+                
+                }}
+              >
+                <CheckCircleOutlined className="pe-2" /> Verify
               </Menu.Item>
             </Menu>
           }
@@ -426,10 +440,14 @@ const Workflow = () => {
         </AntDropdown>
       ),
     },
-  ]
-
-  console.log(BaseURL, 'bbbababba');
-  // department
+  ];
+  
+  // Define the row class name function
+  const getRowClassName = (record) => {
+    return record?.workFlowSteps?.includes(workflowData?.workflowDocument?.department)
+      ? "row-green" // Class for rows where the condition is true
+      : "row-red";  // Class for rows where the condition is false
+  };
 
   return (
     <Container className="mt-4">
@@ -791,18 +809,18 @@ const Workflow = () => {
 
       {role == 'user' && <div className="mt-10 table-responsive form ">
         <Table
-          className="custom-header"
-          columns={columns}
-          dataSource={workflowData?.transactionDocuments}
-          // pagination={{
-          //   total: getAlltransactionData?.data?.length,
-          //   pageSize: postsPerPage,
-          //   current: currentPage,
-          //   onChange: paginate,
-          // }}
-          loading={!workflowData?.transactionDocuments}
-          rowKey={(record) => record._id}
-        />
+  className="custom-header"
+  columns={columns}
+  rowClassName={(record) => 
+    record?.workFlowSteps?.includes(workflowData?.workflowDocument?.department)
+      ? "row-green" // Class for rows where the condition is true
+      : "row-red"   // Class for rows where the condition is false
+  }
+  dataSource={workflowData?.transactionDocuments}
+  loading={!workflowData?.transactionDocuments}
+  rowKey={(record) => record._id}
+/>
+
       </div>}
 
       {/* Confirmation Modal */}

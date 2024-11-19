@@ -389,3 +389,35 @@ console.log(req.body , 'body is here');
     });
   }
 };
+
+exports.getTransactionCounts = async (req, res) => {
+  const { admin, workflowStepName } = req.query; // Admin ID and workflow step name from query parameters
+
+  if (!admin || !workflowStepName) {
+    return res.status(400).json({ error: "Admin ID and workflowStepName are required." });
+  }
+
+  try {
+    // Query for documents where the workflowStepName exists in the workFlowSteps array
+    const countWithWorkflowStep = await Transaction.countDocuments({
+      admin,
+      workFlowSteps: { $in: [workflowStepName] }, // Checks if workflowStepName exists in the array
+    });
+    // Query for documents where the workflowStepName does NOT exist in the workFlowSteps array
+    const countWithoutWorkflowStep = await Transaction.countDocuments({
+      admin,
+      isDeleted: false,
+      workFlowSteps: { $nin: [workflowStepName] }, // Checks if workflowStepName does not exist in the array
+    });
+
+    return res.status(200).json({
+      counts: {
+        withWorkflowStep: countWithWorkflowStep,
+        withoutWorkflowStep: countWithoutWorkflowStep,
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching transaction counts:", error);
+    return res.status(500).json({ error: "An error occurred while fetching counts." });
+  }
+};
