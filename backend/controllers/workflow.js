@@ -263,7 +263,7 @@ exports.getWorkflowByUserAndAdmin = async (req, res) => {
 
 
 exports.updateModel = async (req, res) => {
-  const { _id, type, userEmail, flowName, transactionId } = req.body;
+  const { _id, type, userEmail, flowName, transactionId , department } = req.body;
 
   if (!_id || !type || !userEmail || !flowName || !transactionId) {
     return res
@@ -302,7 +302,7 @@ exports.updateModel = async (req, res) => {
     // Update Transaction model: Push flowName into workFlowSteps
     const updatedTransaction = await Transaction.findByIdAndUpdate(
       transactionId,
-      { $push: { workFlowSteps: flowName } },
+      { $push: { workFlowSteps: department } },
       { new: true }
     );
     if (!updatedTransaction) {

@@ -402,17 +402,18 @@ const Workflow = () => {
                     "type": workflowData?.workflowDocument?.stepName,
                     "userEmail": record?.userId?.email,
                     "flowName": data.find(item => item.value === workflowData?.workflowDocument?.stepName)?.label,
-                    "transactionId" : record?._id
+                    "transactionId" : record?._id,
+                    "department" :  workflowData?.workflowDocument?.department
                   }
 
-                  console.log(record , 'daata');
+                  console.log(record , 'daata' , workflowData?.workflowDocument?.department);
                   
-                  // userServices.updateWorkFlow(formData).then((res) => {
-                  //   toast.success(res.data?.message)
-                  //   setIsRefresh(Date.now())
-                  // }).catch((err) => {
-                  //   toast.error(err?.response?.data?.error)
-                  // })
+                  userServices.updateWorkFlow(formData).then((res) => {
+                    toast.success(res.data?.message)
+                    setIsRefresh(Date.now())
+                  }).catch((err) => {
+                    toast.error(err?.response?.data?.error)
+                  })
                 }}>
                 Verify
               </Menu.Item>
@@ -576,7 +577,7 @@ const Workflow = () => {
                                         {availableUsers.map((user) => (
                                           <option
                                             key={user._id}
-                                            value={user._id}
+                                            value={user.email}
                                           >
                                             {user.name}
                                           </option>
