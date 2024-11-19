@@ -264,19 +264,6 @@ const Transactions = () => {
       className: "hide-on-md",
       align: "center",
     },
-    // {
-    //   title: "Created by",
-    //   key: "createdBy",
-    //   align: "center",
-    //   className: "hide-on-md",
-    //   render: () => loginData?.data?.name,
-    // },
-    // {
-    //   title: "Transaction Number",
-    //   dataIndex: "_id",
-    //   key: "_id",
-    //   className: "hide-on-md",
-    // },
     {
       title: "Borrower",
       dataIndex: "borrower_Applicant",
@@ -295,24 +282,6 @@ const Transactions = () => {
       align: "center",
       render: (value) => formateCurrencyValue(value),
     },
-    // {
-    //   title: 'Created by',
-    //   dataIndex: 'createdBy',
-    //   key: 'lenders',
-    //   render: (record) => {
-
-    //   }
-    // },
-    // {
-    //   title: 'Product',
-    //   key: 'product',
-    //   sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
-    //   render: (text, record) => {
-    //     const productName = record.details.productDetails.name?.name;
-    //     const otherProduct = record.details.productDetails.otherProduct;
-    //     return productName || otherProduct;
-    //   }
-    // },
     {
       title: "Product",
       dataIndex: ["details", "productDetails", "name", "name"],
@@ -339,12 +308,16 @@ const Transactions = () => {
         </div>
       ),
     },
-    // {
-    //   title: "Transaction Status",
-    //   dataIndex: ["details", "productDetails", "name", "name"],
-    //   key: "product",
-    //   align: "center",
-    // },
+    {
+      title: "Workflow Step Name",
+      dataIndex: "workFlowSteps",
+      key: "workflowStepName",
+      render: (workFlowSteps) =>
+        workFlowSteps && workFlowSteps.length > 0
+          ? workFlowSteps[workFlowSteps.length - 1] // Show last step
+          : "In Progress", // Show "In Progress" for empty array
+      align: "center",
+    },
     {
       title: "Actions",
       key: "actions",

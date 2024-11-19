@@ -24,16 +24,17 @@ const transporter = nodemailer.createTransport({
 exports.createWorkFlow = async (req, res) => {
 
   try {
-    const { addedBy, stepName, assignedUser, userRole, newUser, admin } = req.body;
+    const { addedBy, stepName, assignedUser, userRole, newUser, admin , department} = req.body;
 
     // Create a new instance of the WorkFlow model with data from the request body
     const newWorkFlow = new WorkFlow({
-      addedBy,
-      stepName,
       assignedUser,
+      department,
       userRole,
+      stepName,
+      addedBy,
       newUser,
-      admin
+      admin,
     });
 
     // Save the new workflow to the database
@@ -262,10 +263,12 @@ exports.getWorkflowByUserAndAdmin = async (req, res) => {
 
 
 exports.updateModel = async (req, res) => {
-  const { _id, type, userEmail, flowName } = req.body;
+  const { _id, type, userEmail, flowName, transactionId } = req.body;
 
-  if (!_id || !type || !userEmail || !flowName) {
-    return res.status(400).json({ error: "Missing _id, type, userEmail, or flowName in request body." });
+  if (!_id || !type || !userEmail || !flowName || !transactionId) {
+    return res
+      .status(400)
+      .json({ error: "Missing _id, type, userEmail, flowName, or transactionId in request body." });
   }
 
   let model;
@@ -296,6 +299,16 @@ exports.updateModel = async (req, res) => {
       return res.status(404).json({ error: "Document not found." });
     }
 
+    // Update Transaction model: Push flowName into workFlowSteps
+    const updatedTransaction = await Transaction.findByIdAndUpdate(
+      transactionId,
+      { $push: { workFlowSteps: flowName } },
+      { new: true }
+    );
+    if (!updatedTransaction) {
+      return res.status(404).json({ error: "Transaction not found." });
+    }
+
     // Send email notification
     const mailOptions = {
       from: 'notification@techxperience.ng',
@@ -315,10 +328,15 @@ Your Team`
         return res.status(500).json({ error: "Error sending email notification." });
       } else {
         console.log('Email sent:', info.response);
-        res.status(200).json({ message: 'Flow verified and email sent to user.', updatedDocument });
+        res.status(200).json({
+          message: 'Flow verified, transaction updated, and email sent to user.',
+          updatedDocument,
+          updatedTransaction,
+        });
       }
     });
   } catch (error) {
+    console.error('Error during update:', error);
     res.status(500).json({ error: "An error occurred during the update process." });
   }
 };

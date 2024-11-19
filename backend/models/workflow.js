@@ -31,6 +31,10 @@ const WorkFlowSchema = new mongoose.Schema(
       type: Object, 
       required: true, 
       default: null 
+    },
+    department: { 
+      type: String, 
+      default: null 
     }
   },
   {

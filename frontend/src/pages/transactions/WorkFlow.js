@@ -229,6 +229,7 @@ const Workflow = () => {
   const initialValues = {
     steps: [
       {
+        department : '',
         stepName: "",
         assignedUser: "",
         userRole: "",
@@ -399,14 +400,18 @@ const Workflow = () => {
                     "_id": record?.[workflowData?.workflowDocument?.stepName][0]?._id || record?.[workflowData?.workflowDocument?.stepName]?._id,
                     "type": workflowData?.workflowDocument?.stepName,
                     "userEmail": record?.userId?.email,
-                    "flowName": data.find(item => item.value === workflowData?.workflowDocument?.stepName)?.label
+                    "flowName": data.find(item => item.value === workflowData?.workflowDocument?.stepName)?.label,
+                    "transactionId" : record?._id
                   }
-                  userServices.updateWorkFlow(formData).then((res) => {
-                    toast.success(res.data?.message)
-                    setIsRefresh(Date.now())
-                  }).catch((err) => {
-                    toast.error(err?.response?.data?.error)
-                  })
+
+                  console.log(record , 'daata');
+                  
+                  // userServices.updateWorkFlow(formData).then((res) => {
+                  //   toast.success(res.data?.message)
+                  //   setIsRefresh(Date.now())
+                  // }).catch((err) => {
+                  //   toast.error(err?.response?.data?.error)
+                  // })
                 }}>
                 Verify
               </Menu.Item>
@@ -422,7 +427,7 @@ const Workflow = () => {
   ]
 
   console.log(BaseURL, 'bbbababba');
-
+  // department
 
   return (
     <Container className="mt-4">
@@ -477,7 +482,18 @@ const Workflow = () => {
                                   </Badge>
                                 </div>
                                 <Row className="mb-3">
-                                  <Col lg={4}>
+                                <Col lg={3}>
+                                    <Form.Group controlId={`department${index}`}>
+                                      <Form.Label>Department</Form.Label>
+                                      <Field
+                                        type="text"
+                                        name={`steps[${index}].department`}
+                                        placeholder="Enter user role"
+                                        className="form-control"
+                                      />
+                                    </Form.Group>
+                                  </Col>
+                                  <Col lg={3}>
                                     <Form.Group controlId={`stepName${index}`}>
                                       <Form.Label>Step Name</Form.Label>
                                       <Field
@@ -518,7 +534,7 @@ const Workflow = () => {
                                       />
                                     </Form.Group>
                                   </Col>
-                                  <Col lg={4}>
+                                  <Col lg={3}>
                                     <Form.Group
                                       controlId={`assignedUser${index}`}
                                     >
@@ -573,7 +589,7 @@ const Workflow = () => {
                                       />
                                     </Form.Group>
                                   </Col>
-                                  <Col lg={4}>
+                                  <Col lg={3}>
                                     <Form.Group controlId={`userRole${index}`}>
                                       <Form.Label>User Role</Form.Label>
                                       <Field
