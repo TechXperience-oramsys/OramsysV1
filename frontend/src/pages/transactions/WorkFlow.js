@@ -229,7 +229,7 @@ const Workflow = () => {
   const initialValues = {
     steps: [
       {
-        department : '',
+        departmentFlow : '',
         stepName: "",
         assignedUser: "",
         userRole: "",
@@ -307,6 +307,7 @@ const Workflow = () => {
         userRole: step.userRole,
         newUser: step.userEmail || "", // If newUser is empty, fallback to empty string
         admin: currentUser, // Replace with admin's ID if needed
+        department : step?.departmentFlow
       };
 
       try {
@@ -483,11 +484,11 @@ const Workflow = () => {
                                 </div>
                                 <Row className="mb-3">
                                 <Col lg={3}>
-                                    <Form.Group controlId={`department${index}`}>
+                                    <Form.Group controlId={`departmentFlow${index}`}>
                                       <Form.Label>Department</Form.Label>
                                       <Field
                                         type="text"
-                                        name={`steps[${index}].department`}
+                                        name={`steps[${index}].departmentFlow`}
                                         placeholder="Enter user role"
                                         className="form-control"
                                       />
