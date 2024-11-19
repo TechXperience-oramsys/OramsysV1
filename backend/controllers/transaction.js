@@ -459,10 +459,6 @@ class transactionController {
         saveResponse._id
       );
       if (Transaction) {
-        const newTransaction = await transaction.updateTransaction(
-         { workFlowSteps : [],
-          _id : saveResponse._id}
-        )
         return res
           .status(httpStatus.OK)
           .json(
