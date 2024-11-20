@@ -164,6 +164,7 @@ const Dashboard = () => {
   const [currentUser, setcurrentUser] = useState(
     JSON.parse(localStorage.getItem("userData"))
   );
+  const [worfFlowCount , setworkflowcount] = useState()
   // console.log('admin data', adminDatas)
 
   const totalValue = useMemo(() => {
@@ -182,8 +183,6 @@ const Dashboard = () => {
     return sum.toLocaleString();
   }, [getAlltransactionData]);
   // console.log("alltransactionn", getAlltransactionData);
-
-
 
   const signedCount = [];
   const notSignedCount = [];
@@ -305,6 +304,7 @@ const Dashboard = () => {
       }
   
       const data = await response.json(); // Parse the response body as JSON
+      setworkflowcount(data?.counts)
       console.log('Counts:', data.counts); // Log the counts to the console
       return data.counts; // Return the counts
     } catch (error) {
@@ -528,6 +528,53 @@ const Dashboard = () => {
                   
 
                 ))}
+
+
+ {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" &&    // <>
+                    <div className="col-6 mb-3 col-sm-6 col-12" >
+                      <div className="card shadow border-0">
+                        <div className="card-body">
+                          <div className="row">
+                            <div className="col">
+                              <span className="h6 font-semibold fw-2 text-muted text-md d-block mb-2">
+                              Workflow steps
+                              </span>
+                          
+                              
+
+                            </div>
+                            <div className="col-auto">
+                              <div className={`icon icon-shape rounded-circle`}>
+                                {/* <card.icon size={30} /> */}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="mt-2 mb-0 text-sm">
+                           
+                              <>
+                                <span className="badge badge-pill bg-soft-success text-success me-2">
+                            {worfFlowCount?.withWorkflowStep}
+                                </span>
+                                <span className="text-nowrap text-xs text-muted">
+                                  Completed
+                                </span>
+                              </>
+                          
+                              <>
+                                <span className="badge mx-2 badge-pill bg-danger text-success-white me-2">
+                                {worfFlowCount?.withoutWorkflowStep}
+                                </span>
+                                <span className="text-nowrap text-xs text-muted">
+                                  In Progress...
+                                </span>
+                              </>
+                            
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+}
 
                 {AuthStorage.getStorageData(STORAGEKEY.roles) === "admin" && adminCard.map((card, i) => (
                   

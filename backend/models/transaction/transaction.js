@@ -17,7 +17,8 @@ var Schema = new Schema({
     facility: { type: Schema.Types.ObjectId, ref: "TransactionFacility", required: false, default: null },
     isDeleted: { type: Boolean, required: true, default: false },
     admin : { type: String, required: true, default: null },
-    workFlowSteps: {type : []}
+    workFlowSteps: {type : []},
+    workflowstepNotes : { type : []}
 }, {
     timestamps: true
 })
