@@ -421,3 +421,46 @@ exports.getTransactionCounts = async (req, res) => {
     return res.status(500).json({ error: "An error occurred while fetching counts." });
   }
 };
+
+exports.updateTransactionWorkflowNotes = async (req, res) => {
+  const { transactionId, workflowstepNotes } = req.body;
+
+  // Validate request body
+  if (!transactionId || !workflowstepNotes || !Array.isArray(workflowstepNotes)) {
+    return res.status(400).json({ error: "Missing transactionId or invalid workflowstepNotes array." });
+  }
+
+  // Validate each note object
+  const isValidNote = workflowstepNotes.every(note => 
+    note.hasOwnProperty('username') &&
+    note.hasOwnProperty('note') &&
+    note.hasOwnProperty('department')
+  );
+
+  if (!isValidNote) {
+    return res.status(400).json({ error: "Each workflowstepNote must have 'username', 'note', and 'department' properties." });
+  }
+
+  try {
+    // Update the Transaction model: Push new objects into workflowstepNotes array
+    const updatedTransaction = await Transaction.findByIdAndUpdate(
+      transactionId,
+      { $push: { workflowstepNotes: { $each: workflowstepNotes } } },
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedTransaction) {
+      return res.status(404).json({ error: "Transaction not found." });
+    }
+
+    // Respond with the updated transaction
+    res.status(200).json({
+      message: 'Transaction updated with new workflowstepNotes.',
+      updatedTransaction,
+    });
+
+  } catch (error) {
+    console.error('Error during update:', error);
+    res.status(500).json({ error: "An error occurred during the update process." });
+  }
+};

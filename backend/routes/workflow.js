@@ -10,5 +10,6 @@ router.patch('/update', workflow.updateModel)
 router.get('/getWorkFlow', workflow.getWorkflowsByAddedBy)
 router.patch('/updateWorkFlow', workflow.updateAssignedUser)
 router.get('/counts' , workflow.getTransactionCounts)
+router.post('/updateNotes' , workflow.updateTransactionWorkflowNotes)
 
 module.exports = router;
