@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API } from "../config/API/api.config";
 
-export const userServices = { sendOtp, verifyOtp, setPassword, getWorkflowData, updateWorkFlow };
+export const userServices = { sendOtp, verifyOtp, setPassword, getWorkflowData, updateWorkFlow, flowNoteUpdate };
 
 async function sendOtp(data) {
   return await axios.post(`${API}user/send-otp`, data);
@@ -21,4 +21,8 @@ async function getWorkflowData(userMail, adminId) {
 
 async function updateWorkFlow(data) {
   return await axios.patch(`${API}api/workFlow/update`, data)
+}
+
+async function flowNoteUpdate(data) {
+  return await axios.post(`${API}api/workFlow/updateNotes`,data)
 }

@@ -51,10 +51,13 @@ const Workflow = () => {
     JSON.parse(localStorage.getItem("userData"))
   );
 
-  const [select1Value, setSelect1Value] = useState(""); // State for first select box
-  const [select2Value, setSelect2Value] = useState(""); // State for second select box
+  const [noteText, setNoteText] = useState(""); // State for first select box
+  const [transactionId, setTransactionId] = useState(""); // State for second select box
+  const [dept, setDept] = useState('')
+  const [workFlowNotes, setWorkFlowNotes] = useState([])
+  const [isWorkFlowNote, setIsWorkFlowNotes] = useState(false)
   const [isRefresh, setIsRefresh] = useState(Date.now());     // State for input box
-
+  const [isLoading, setIsLoading] = useState(false)
   const [formChanges, setFormChanges] = useState({});
   const [isSubmitting, setIsSubmitting] = useState({}); // Tracks submission state for each card
 
@@ -169,6 +172,7 @@ const Workflow = () => {
   }, []); // Empty dependency array ensures the effect runs only once after component mounts.
 
 
+
   const fetchData = async () => {
     try {
       const response = await fetch(
@@ -213,7 +217,7 @@ const Workflow = () => {
     };
 
     fetchUsers();
-  }, [BaseURL,isRefresh]);
+  }, [BaseURL, isRefresh]);
 
   const validationSchema = Yup.object().shape({
     steps: Yup.array().of(
@@ -228,7 +232,7 @@ const Workflow = () => {
   const initialValues = {
     steps: [
       {
-        departmentFlow : '',
+        departmentFlow: '',
         stepName: "",
         assignedUser: "",
         userRole: "",
@@ -306,7 +310,7 @@ const Workflow = () => {
         userRole: step.userRole,
         newUser: step.userEmail || "", // If newUser is empty, fallback to empty string
         admin: currentUser, // Replace with admin's ID if needed
-        department : step?.departmentFlow
+        department: step?.departmentFlow
       };
 
       try {
@@ -386,13 +390,23 @@ const Workflow = () => {
               {/* Preview Option */}
               <Menu.Item
                 onClick={() => {
+                  setTransactionId(record?._id);
+                  setDept(workflowData?.workflowDocument?.department);
                   setIsPreview(true);
                   setPreviewData(record?.[workflowData?.workflowDocument?.stepName] || {});
                 }}
               >
                 <EyeOutlined className="pe-2" /> Preview
               </Menu.Item>
-  
+              <Menu.Item
+                onClick={() => {
+                  setIsWorkFlowNotes(true)
+                  setWorkFlowNotes(record?.workflowstepNotes.filter((item)=>item.department==currentUser?.department));
+                }}
+              >
+                <EyeOutlined className="pe-2" /> View Work Flow Notes
+              </Menu.Item>
+
               {/* Verify Option */}
               <Menu.Item
                 disabled={
@@ -402,7 +416,7 @@ const Workflow = () => {
                 onClick={() => {
                   const stepName = workflowData?.workflowDocument?.stepName;
                   const department = workflowData?.workflowDocument?.department;
-  
+
                   const formData = {
                     _id:
                       record?.[stepName]?.[0]?._id || record?.[stepName]?._id,
@@ -412,12 +426,12 @@ const Workflow = () => {
                     transactionId: record?._id,
                     department: department,
                   };
-  
-                  console.log("Record:", record);
+
+
                   console.log("Form Data:", formData);
-  
+
                   // Uncomment this block to enable the API call
-                
+
                   userServices.updateWorkFlow(formData)
                     .then((res) => {
                       toast.success(res.data?.message);
@@ -426,7 +440,7 @@ const Workflow = () => {
                     .catch((err) => {
                       toast.error(err?.response?.data?.error);
                     });
-                
+
                 }}
               >
                 <CheckCircleOutlined className="pe-2" /> Verify
@@ -441,13 +455,104 @@ const Workflow = () => {
       ),
     },
   ];
-  
+
   // Define the row class name function
   const getRowClassName = (record) => {
     return record?.workFlowSteps?.includes(workflowData?.workflowDocument?.department)
       ? "row-green" // Class for rows where the condition is true
       : "row-red";  // Class for rows where the condition is false
   };
+
+  const handleNoteChange = () => {
+    setIsLoading(true)
+    if (noteText.length <= 0) {
+      toast.error("Please enter some text...")
+      setIsLoading(false)
+    } else {
+      const data = {
+        "transactionId": transactionId,
+        "workflowstepNotes": [
+          {
+            "username": currentUser?.name,
+            "note": noteText,
+            "department": dept
+          }
+        ]
+      }
+      userServices.flowNoteUpdate(data).then((res) => {
+        toast.success(res.data.message)
+        setIsPreview(false)
+        setIsLoading(false)
+        setIsRefresh(res.data);
+      }).catch((err) => {
+        toast.error(err?.response?.data?.error)
+        setIsLoading(false)
+      })
+    }
+
+  }
+
+  const addNote = () => {
+    return (
+      <Form.Group as={Col} lg={12} md={12} m={12} className="mb-3" controlId="formHorizontalNote">
+        <Form.Label className="text-muted">Add Note</Form.Label>
+        <Row>
+          <Col lg={6} md={6} m={12}>
+            <Form.Group as={Col} lg={12} md={12} m={8} className="mb-1" controlId="formHorizontalNoteTextarea">
+              <Form.Control
+                as="textarea"  // Change type to textarea
+                rows={4}       // Define the number of rows
+                className="text-muted border border-secondary my-1 bg-light"
+                name="borrower_Applicant"
+                placeholder="Add Note..."
+                onChange={(e) => setNoteText(e.target.value)} // Handle onChange event
+              />
+            </Form.Group>
+            <AntButton onClick={() => handleNoteChange()} loading={isLoading}>Add Note</AntButton>
+          </Col>
+        </Row>
+      </Form.Group>
+
+    )
+  }
+
+  const ViewNotes = () => {
+    return (
+      <Modal show={isWorkFlowNote} onHide={() => setIsWorkFlowNotes(false)} centered className="w-90" size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Workflow Notes</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {workFlowNotes.length > 0 ? (
+            <Row>
+              {workFlowNotes.map((note, index) => (
+                <Col lg={6} md={6} sm={12} key={index} className="mb-3">
+                  <Form.Group className="mb-1">
+                    <Form.Label className="text">
+                      {note?.username}
+                      <p className="text-muted mx-2">{note?.department}</p>
+                    </Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      className="text-muted no-border"
+                      type="text"
+                      name="borrower_Applicant"
+                      value={note?.note}
+                      disabled={true}
+                      placeholder="Note"
+                    />
+                  </Form.Group>
+                </Col>
+              ))}
+            </Row>
+          ) : (
+            <Form.Label className="text-muted">No notes available!</Form.Label>
+          )}
+        </Modal.Body>
+      </Modal>
+
+    )
+  }
 
   return (
     <Container className="mt-4">
@@ -502,7 +607,7 @@ const Workflow = () => {
                                   </Badge>
                                 </div>
                                 <Row className="mb-3">
-                                <Col lg={3}>
+                                  <Col lg={3}>
                                     <Form.Group controlId={`departmentFlow${index}`}>
                                       <Form.Label>Department</Form.Label>
                                       <Field
@@ -809,17 +914,17 @@ const Workflow = () => {
 
       {role == 'user' && <div className="mt-10 table-responsive form ">
         <Table
-  className="custom-header"
-  columns={columns}
-  rowClassName={(record) => 
-    record?.workFlowSteps?.includes(workflowData?.workflowDocument?.department)
-      ? "row-green" // Class for rows where the condition is true
-      : "row-red"   // Class for rows where the condition is false
-  }
-  dataSource={workflowData?.transactionDocuments}
-  loading={!workflowData?.transactionDocuments}
-  rowKey={(record) => record._id}
-/>
+          className="custom-header"
+          columns={columns}
+          rowClassName={(record) =>
+            record?.workFlowSteps?.includes(workflowData?.workflowDocument?.department)
+              ? "row-green" // Class for rows where the condition is true
+              : "row-red"   // Class for rows where the condition is false
+          }
+          dataSource={workflowData?.transactionDocuments}
+          loading={!workflowData?.transactionDocuments}
+          rowKey={(record) => record._id}
+        />
 
       </div>}
 
@@ -911,6 +1016,7 @@ const Workflow = () => {
                       </Row>
                     )
                   })}
+                  {addNote()}
                 </Form.Group>}
 
               </Row>
@@ -990,7 +1096,7 @@ const Workflow = () => {
                       disabled={true} placeholder="Pricing Hedging Status" /></Form.Group></Col>
               </Row>
             </Form.Group>
-
+            {addNote()}
           </Row>
         </Modal.Body>
 
@@ -1054,7 +1160,7 @@ const Workflow = () => {
                       disabled={true} placeholder="Payment Date" /></Form.Group></Col>
               </Row>
             </Form.Group>
-
+            {addNote()}
           </Row>
         </Modal.Body>
 
@@ -1089,6 +1195,7 @@ const Workflow = () => {
                       disabled={true} placeholder="Document Remittance" /></Form.Group></Col>
               </Row>
             </Form.Group>
+            {addNote()}
           </Row>
         </Modal.Body>
 
@@ -1204,10 +1311,12 @@ const Workflow = () => {
                       disabled={true} placeholder="Loan Purpos Justification" /></Form.Group></Col>
               </Row>
             </Form.Group>
+            {addNote()}
           </Row>
         </Modal.Body>
 
       </Modal>
+      {ViewNotes()}
     </Container>
   );
 };

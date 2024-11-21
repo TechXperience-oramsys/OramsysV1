@@ -25,6 +25,7 @@ import {
   FormOutlined,
   EllipsisOutlined,
 } from "@ant-design/icons";
+import { Col, Form, Modal, Row } from "react-bootstrap";
 
 const Transactions = () => {
   const dispatch = useDispatch();
@@ -40,6 +41,8 @@ const Transactions = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
   const [setSearch] = useState("");
+  const [isPreview, setIsPreview] = useState(false)
+  const [workFlowNotes, setWorkFlowNotes] = useState([])
 
   const getAlltransactionData = useSelector(
     (state) => state.transactionData.getAllTransaction
@@ -137,7 +140,7 @@ const Transactions = () => {
   //     .then((res) => {
   //       const blob = new Blob([res.data], { type: 'application/pdf' });
   //       const fileURL = URL.createObjectURL(blob);
-  
+
   //       if (name === "view") {
   //         window.open(fileURL); // View the PDF in a new tab
   //       } else if (name === "download") {
@@ -149,7 +152,7 @@ const Transactions = () => {
   //     })
   //     .catch((e) => console.error("Error downloading TermSheet:", e));
   // };
-  
+
 
   // const converBase64toBlob = (content, contentType) => {
   //   const linkSource = `data:application/pdf;base64,${content}`;
@@ -164,13 +167,13 @@ const Transactions = () => {
     const byteCharacters = atob(content);
     const byteArrays = [];
     for (let offset = 0; offset < byteCharacters.length; offset += 512) {
-        const slice = byteCharacters.slice(offset, offset + 512);
-        const byteNumbers = new Array(slice.length);
-        for (let i = 0; i < slice.length; i++) {
-            byteNumbers[i] = slice.charCodeAt(i);
-        }
-        const byteArray = new Uint8Array(byteNumbers);
-        byteArrays.push(byteArray);
+      const slice = byteCharacters.slice(offset, offset + 512);
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
     }
     const blob = new Blob(byteArrays, { type: contentType });
     const url = URL.createObjectURL(blob);
@@ -181,7 +184,7 @@ const Transactions = () => {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-};
+  };
 
   const ViewRiskAssessment = (contents) => {
     const linkSources = `data:application/pdf;base64,${contents}`;
@@ -380,6 +383,14 @@ const Transactions = () => {
               </Menu.Item>
               <Menu.Item
                 onClick={() => {
+                  setIsPreview(true)
+                  setWorkFlowNotes(record?.workflowstepNotes);
+                }}
+              >
+                <EyeOutlined className='pe-2' /> View Flowstep Notes
+              </Menu.Item>
+              <Menu.Item
+                onClick={() => {
                   record.termSheet === "Not Signed"
                     ? downloadTermSheet(record._id, "download")
                     : converBase64toBlob(record.termSheetUrl);
@@ -413,6 +424,45 @@ const Transactions = () => {
       </Menu.SubMenu>
     </Menu>
   );
+
+  const ViewNotes = () => {
+    return (
+      <Modal show={isPreview} onHide={() => setIsPreview(false)} centered className="w-90" size="lg">
+      <Modal.Header closeButton>
+        <Modal.Title>Workflow Notes</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {workFlowNotes.length > 0 ? (
+          <Row>
+            {workFlowNotes.map((note, index) => (
+              <Col lg={6} md={6} sm={12} key={index} className="mb-3">
+                <Form.Group className="mb-1">
+                  <Form.Label className="text">
+                    {note?.username}
+                    <p className="text-muted mx-2">{note?.department}</p>
+                  </Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    className="text-muted no-border"
+                    type="text"
+                    name="borrower_Applicant"
+                    value={note?.note}
+                    disabled={true}
+                    placeholder="Note"
+                  />
+                </Form.Group>
+              </Col>
+            ))}
+          </Row>
+        ) : (
+          <Form.Label className="text-muted">No notes available!</Form.Label>
+        )}
+      </Modal.Body>
+    </Modal>
+    
+
+    )
+  }
 
   return (
     <>
@@ -512,7 +562,7 @@ const Transactions = () => {
 
         </div>
       </div>
-
+      {ViewNotes()}
       {showExcelModal && (
         <ExcelModal
           refreshpage={() => dispatch(() => refreshPage())}
