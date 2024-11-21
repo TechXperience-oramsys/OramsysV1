@@ -401,7 +401,7 @@ const Workflow = () => {
               <Menu.Item
                 onClick={() => {
                   setIsWorkFlowNotes(true)
-                  setWorkFlowNotes(record?.workflowstepNotes.filter((item)=>item.department==currentUser?.department));
+                  setWorkFlowNotes(record?.workflowstepNotes.filter((item)=>item.department==workflowData?.workflowDocument?.department));
                 }}
               >
                 <EyeOutlined className="pe-2" /> View Work Flow Notes
