@@ -537,7 +537,7 @@ const Dashboard = () => {
                           <div className="row">
                             <div className="col">
                               <span className="h6 font-semibold fw-2 text-muted text-md d-block mb-2">
-                              Workflow steps
+                              Workflow
                               </span>
                           
                               

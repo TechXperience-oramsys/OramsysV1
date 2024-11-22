@@ -435,23 +435,19 @@ const Transactions = () => {
         {workFlowNotes.length > 0 ? (
           <Row>
             {workFlowNotes.map((note, index) => (
-              <Col lg={6} md={6} sm={12} key={index} className="mb-3">
+              
                 <Form.Group className="mb-1">
-                  <Form.Label className="text">
-                    {note?.username}
-                    <p className="text-muted mx-2">{note?.department}</p>
-                  </Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    className="text-muted no-border"
-                    type="text"
-                    name="borrower_Applicant"
-                    value={note?.note}
-                    disabled={true}
-                    placeholder="Note"
-                  />
+                 
+
+<div className="d-flex"> <p>     {note?.username}  </p>  
+
+<p className="text-muted mx-2">({note?.department})</p>
+
+</div>
+
+              <div style={{fontSize:12}}>  {note?.note} </div>
                 </Form.Group>
-              </Col>
+              
             ))}
           </Row>
         ) : (
