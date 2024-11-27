@@ -100,7 +100,7 @@ const ExchangeRateRisk = ({ hendelNext, hendelCancel }) => {
             <div className='add-edit-product'>
                 <div className='d-flex align-items-center justify-content-center error-info mt-5 mb-5'>
                     {/* <img alt='icon' src={`../../../assets/img/about/${data?.currencyHedge || data?.marginFinancing ? "error-info-success.png" : "error-info.png"}`} className='me-3' /> */}
-                    {data?.currencyHedge || data?.marginFinancing ? <FaRegCheckCircle className='text-success fs-4 me-3' /> : <PiWarningCircleLight className='text-danger fs-5 me-3' />}
+                    {data?.currencyHedge || data?.marginFinancing ? <FaRegCheckCircle className='text-success fs-2 me-3' /> : <PiWarningCircleLight className='text-danger fs-2 me-3' />}
 
                     {data?.currencyHedge || data?.marginFinancing ?
                         <p className='success'>Risks are acceptable due to mitigants</p> :
@@ -114,11 +114,11 @@ const ExchangeRateRisk = ({ hendelNext, hendelCancel }) => {
                             {getTransactionByIdData?.data?.facility?.rePaymentCurrency !== getTransactionByIdData?.data?.details?.contractDetails?.currency &&
                                 <div className='risk-tab' onClick={() => { setcurrencyHedgeModal(true); setSelected("currencyHedge") }}>
                                     <h3>Enter a currency hedge</h3>
-                                    <img alt='icon' src={`../../../assets/img/about/${data?.currencyHedge?.counterparty || data?.currencyHedge?.hedgingMethod ? "correct-success.png" : "correct (1).png"}`} />
+                                    {data?.currencyHedge?.counterparty || data?.currencyHedge?.hedgingMethod ? <FaRegCheckCircle className='text-success fs-2' /> : <FaRegCheckCircle className='text-secondary fs-2' />}
                                 </div>}
                             <div className='risk-tab' onClick={() => setfinancingSufficientlyModal(true)}>
                                 <h3>Margin the financing sufficiently</h3>
-                                <img alt='icon' src={`../../../assets/img/about/${data?.marginFinancing?.contractValue ? "correct-success.png" : "correct (1).png"}`} />
+                                {data?.marginFinancing?.contractValue ? <FaRegCheckCircle className='text-success fs-2' /> : <FaRegCheckCircle className='text-secondary fs-2' />}
                             </div>
                         </div>
                     }

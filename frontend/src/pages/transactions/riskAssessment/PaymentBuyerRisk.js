@@ -6,6 +6,8 @@ import CreditInsurersModal from '../../../component/Modal/CreditInsurersModal'
 import InternationalCreditStandingModal from '../../../component/Modal/InternationalCreditStandingModal'
 import LocalCreditStandingModal from '../../../component/Modal/LocalCreditStandingModal'
 import { riskAssessmentAction } from '../../../redux/actions/riskAssessmentAction'
+import { PiWarningCircleLight } from "react-icons/pi";
+import { FaRegCheckCircle } from "react-icons/fa";
 
 const PaymentBuyerRisk = ({ hendelNext, hendelCancel }) => {
 
@@ -44,7 +46,7 @@ const PaymentBuyerRisk = ({ hendelNext, hendelCancel }) => {
             value: '',
             clauses: '',
             evidence: "",
-            underwriter:''
+            underwriter: ''
 
 
         },
@@ -213,9 +215,10 @@ const PaymentBuyerRisk = ({ hendelNext, hendelCancel }) => {
 
     return (
         <>
-            <div className='add-edit-product'>
+            <div className='add-edit-product mt-5'>
                 <div className='d-flex align-items-center justify-content-center error-info mb-3'>
-                    <img alt='icon' src={`../../../assets/img/about/${paymentBuyesrRisk?.internationalCreditStanding && paymentBuyesrRisk?.counterparties && paymentBuyesrRisk?.acceptableParty && paymentBuyesrRisk?.creditInsurers && paymentBuyesrRisk?.localCreditStanding ? "error-info-success.png" : "error-info.png"}`} className='me-3' />
+                    {paymentBuyesrRisk?.internationalCreditStanding && paymentBuyesrRisk?.counterparties && paymentBuyesrRisk?.acceptableParty && paymentBuyesrRisk?.creditInsurers && paymentBuyesrRisk?.localCreditStanding ? <FaRegCheckCircle className='text-success fs-2 me-3' /> : <PiWarningCircleLight className='text-danger fs-2 me-3' />}
+                    {/* <img alt='icon' src={`../../../assets/img/about/${paymentBuyesrRisk?.internationalCreditStanding && paymentBuyesrRisk?.counterparties && paymentBuyesrRisk?.acceptableParty && paymentBuyesrRisk?.creditInsurers && paymentBuyesrRisk?.localCreditStanding ? "error-info-success.png" : "error-info.png"}`} className='me-3' /> */}
                     {paymentBuyesrRisk?.internationalCreditStanding && paymentBuyesrRisk?.counterparties && paymentBuyesrRisk?.acceptableParty && paymentBuyesrRisk?.creditInsurers && paymentBuyesrRisk?.localCreditStanding ?
                         <p className='success'>Risks are acceptable due to mitigants</p> :
                         <p className='error'>The below risks require your attention</p>
@@ -228,23 +231,28 @@ const PaymentBuyerRisk = ({ hendelNext, hendelCancel }) => {
                             <div>
                                 <div className='risk-tab' onClick={() => { setInternationalCreditStandingModal(true); setSelected('internationalCreditStanding') }}>
                                     <h3>If international bank, use an on-lending model with a local bank with acceptable credit standing</h3>
-                                    <img alt='icon' src={`../../../assets/img/about/${paymentBuyesrRisk?.internationalCreditStanding?.type ? "correct-success.png" : "correct (1).png"}`} />
+                                    {paymentBuyesrRisk?.internationalCreditStanding?.type ? <FaRegCheckCircle className='text-success fs-2' /> : <FaRegCheckCircle className='text-body-tertiary fs-2' />}
+
                                 </div>
                                 <div className='risk-tab' onClick={() => { setCounterpartiesModal(true); setSelected('counterparties'); setOptions(counterpartiesOptions) }}>
                                     <h3>Take acceptable guarantees (from Central Banks, Corporates, other reliable counterparties)</h3>
-                                    <img alt='icon' src={`../../../assets/img/about/${paymentBuyesrRisk?.counterparties?.type ? "correct-success.png" : "correct (1).png"}`} />
+                                    {paymentBuyesrRisk?.counterparties?.type ? <FaRegCheckCircle className='text-success fs-2' /> : <FaRegCheckCircle className='text-body-tertiary fs-2' />}
+
                                 </div>
                                 <div className='risk-tab' onClick={() => { setCounterpartiesModal(true); setSelected('acceptableParty'); setOptions(acceptablePartyOptions) }}>
                                     <h3>Transfer payment risk to another acceptable party (make loan self-liquidating)</h3>
-                                    <img alt='icon' src={`../../../assets/img/about/${paymentBuyesrRisk?.acceptableParty?.type ? "correct-success.png" : "correct (1).png"}`} />
+                                    {paymentBuyesrRisk?.acceptableParty?.type ? <FaRegCheckCircle className='text-success fs-2' /> : <FaRegCheckCircle className='text-body-tertiary fs-2' />}
+
                                 </div>
                                 <div className='risk-tab' onClick={() => setCreditInsurersModal(true)}>
                                     <h3>Use credit insurance issued by acceptable credit insurers</h3>
-                                    <img alt='icon' src={`../../../assets/img/about/${paymentBuyesrRisk?.creditInsurers?.type ? "correct-success.png" : "correct (1).png"}`} />
+                                    {paymentBuyesrRisk?.localCreditStanding?.applicant ? <FaRegCheckCircle className='text-success fs-2' /> : <FaRegCheckCircle className='text-body-tertiary fs-2' />}
+
                                 </div>
                                 <div className='risk-tab' onClick={() => setLocalCreditStandingModal(true)}>
                                     <h3>Use L/Cs issued by Banks with acceptable credit standing (e.g investment grade rated)</h3>
-                                    <img alt='icon' src={`../../../assets/img/about/${paymentBuyesrRisk?.localCreditStanding?.applicant ? "correct-success.png" : "correct (1).png"}`} />
+                                    {paymentBuyesrRisk?.counterparties?.type ? <FaRegCheckCircle className='text-success fs-2' /> : <FaRegCheckCircle className='text-body-tertiary fs-2' />}
+
                                 </div>
                             </div>
                         }

@@ -137,7 +137,7 @@ const Transactions = () => {
   //     .then((res) => {
   //       const blob = new Blob([res.data], { type: 'application/pdf' });
   //       const fileURL = URL.createObjectURL(blob);
-  
+
   //       if (name === "view") {
   //         window.open(fileURL); // View the PDF in a new tab
   //       } else if (name === "download") {
@@ -149,7 +149,7 @@ const Transactions = () => {
   //     })
   //     .catch((e) => console.error("Error downloading TermSheet:", e));
   // };
-  
+
 
   // const converBase64toBlob = (content, contentType) => {
   //   const linkSource = `data:application/pdf;base64,${content}`;
@@ -164,13 +164,13 @@ const Transactions = () => {
     const byteCharacters = atob(content);
     const byteArrays = [];
     for (let offset = 0; offset < byteCharacters.length; offset += 512) {
-        const slice = byteCharacters.slice(offset, offset + 512);
-        const byteNumbers = new Array(slice.length);
-        for (let i = 0; i < slice.length; i++) {
-            byteNumbers[i] = slice.charCodeAt(i);
-        }
-        const byteArray = new Uint8Array(byteNumbers);
-        byteArrays.push(byteArray);
+      const slice = byteCharacters.slice(offset, offset + 512);
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
     }
     const blob = new Blob(byteArrays, { type: contentType });
     const url = URL.createObjectURL(blob);
@@ -181,7 +181,7 @@ const Transactions = () => {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-};
+  };
 
   const ViewRiskAssessment = (contents) => {
     const linkSources = `data:application/pdf;base64,${contents}`;
@@ -218,8 +218,7 @@ const Transactions = () => {
   const indexOfLastTrans = currentPage * postsPerPage;
   const indexOfFirstTrans = indexOfLastTrans - postsPerPage;
   const currentTrans = transaction?.slice(indexOfFirstTrans, indexOfLastTrans);
-  // console.log('get all transactins', currentTrans)
-  //page change
+
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const checkSearch = (e) => {
@@ -227,7 +226,7 @@ const Transactions = () => {
       // Check if item.borrower_Applicant and item.lenders are strings
       if (
         typeof item.borrower_Applicant !== "string" ||
-        typeof item.lenders !== "string"
+        typeof item.lenders !== "string" 
       ) {
         return false;
       }
@@ -287,6 +286,7 @@ const Transactions = () => {
       title: "Lender",
       dataIndex: "lenders",
       key: "lenders",
+      align: "center",
     },
     {
       title: "Contract Value",
@@ -317,6 +317,7 @@ const Transactions = () => {
       title: "Product",
       dataIndex: ["details", "productDetails", "name", "name"],
       key: "product",
+      align: "center",
     },
     {
       title: "Termsheet",
@@ -348,6 +349,7 @@ const Transactions = () => {
     {
       title: "Actions",
       key: "actions",
+      align: "center",
       render: (record) => (
         <AntDropdown placement="bottomRight"
           overlay={
@@ -444,101 +446,84 @@ const Transactions = () => {
   return (
     <>
 
-
-      <div className='mx-5 d-flex flex-column flex-lg-row h-lg-full'>
-        <div id='dash' className='h-screen flex-grow-1'>
-          <header className='bg-surface-primary pt-6'>
-            <div className='container-fluid'>
-              <div id='dash' className='mb-npx'>
-                <div className='row text-white align-items-center mb-3 product' style={{ backgroundImage: "linear-gradient(to right, #111827, #121b2f, #131f37, #142240, #152548)" }}>
-                  <div className='col-sm-6 col-12 mb-4 mb-sm-0'>
-
-                    <h1 className='h2 mb-0 fw-bold fs-4 ls-tight'>Transactions</h1>
-                  </div>
-
-                  <div className="col-sm-6 col-12 text-sm-end">
-                    <div className="mx-n1 me-5 d-flex align-items-center justify-content-end gap-2">
-                      {/* <Link to='/transactions' style={{ borderColor: '#9E3E65' }} className='btn d-inline-flex btn-md btn-light border-base mx-1 me-3'>
-                        <span className=' pe-2'>
-                          <i className='bi bi-pencil'></i>
-                        </span>
-                        <span className='fw-bold'>Edit</span>
-                      </Link> */}
-                    </div>
-                  </div>
+      <div className="product">
+        <div className="container-fluid">
+          <div id="dash" className="mb-npx">
+            <header className="bg-surface-primary pt-6">
+              <div className="row align-items-center text-white mb-3 product"
+                style={{ backgroundImage: "linear-gradient(to right, #111827, #121b2f, #131f37, #142240, #152548)" }}>
+                <div className="col-sm-6 col-12 mb-4 mb-sm-0">
+                  <h1 className="h2 mb-0 fw-bold fs-4 ls-tight">Transactions</h1>
                 </div>
+
+                {/* <div className="col-sm-6 col-12 text-sm-end">
+                  <div className="mx-n1 me-5 d-flex align-items-center justify-content-end gap-2">
+                    {(localStorage.getItem("roles").toLowerCase() === "admin" ||
+                      localStorage.getItem("roles").toLowerCase() ===
+                      "superAdmin") && (
+                        <Link to="/add-user" style={{ borderColor: "#9E3E65" }} className="btn d-inline-flex btn-md btn-light border-base mx-1 me-3">
+                          <span className=" pe-2"> <i className="bi bi-plus"></i></span>
+                          <span className="fw-bold">Add User</span>
+                        </Link>
+                      )}
+                  </div>
+                </div> */}
               </div>
+            </header>
+          </div>
+        </div>
+
+
+        <div className="container mx-auto">
+          <div className="row g-6 mb-4"></div>
+          <div className='mx-auto mb-3'>
+            <div className="position-relative">
+              <span className="position-absolute search">
+                <CiSearch size={25} />
+              </span>
+              <input
+                type="text"
+                id="search"
+                onChange={(e) => checkSearch(e)}
+                // onChange={(e) => setSearch(e.target.value)}
+                className="form-control w-auto ps-5 fw-light"
+                placeholder="Search transaction..."
+              />
             </div>
-          </header>
 
+            {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" ? (
+              <AntDropdown overlay={menu} trigger={["click"]}>
+                <AntButton
+                  className="btn d-inline-flex btn-md btn-light mx-1 py-2 me-3"
+                  id="dropdown-autoclose-outside"
+                >
+                  <span className="">Create transaction</span>
+                </AntButton>
+              </AntDropdown>
+            ) : (
+              <></>
+            )}
+          </div>
 
-          <main className="py-2">
-            <div className="container-fluid">
-              <div className="row g-6 mb-4"></div>
-
-              <div className="container mx-auto">
-                <div className="mb-2 d-flex justify-content-start align-items-center">
-                  <div className="position-relative">
-                    <span className="position-absolute search">
-                      <CiSearch size={25} />
-                    </span>
-                    <input
-                      type="text"
-                      id="search"
-                      onChange={(e) => checkSearch(e)}
-                      // onChange={(e) => setSearch(e.target.value)}
-                      className="form-control w-100 ps-5 fw-light border-none"
-                      placeholder="Search transaction..."
-                    />
-                  </div>
-
-                  {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" ? (
-                    <AntDropdown overlay={menu} trigger={["click"]}>
-                      <AntButton
-                        className="btn d-inline-flex btn-md btn-light mx-1 py-2 me-3"
-                        id="dropdown-autoclose-outside"
-                      >
-                        <span className="">Create transaction</span>
-                      </AntButton>
-                    </AntDropdown>
-                  ) : (
-                    <></>
-                  )}
-                </div>
-                <div className="mt-10 table-responsive form ">
-                  <Table
-                    className="custom-header"
-                    columns={columns}
-                    dataSource={currentTrans}
-                    pagination={{
-                      total: getAlltransactionData?.data?.length,
-                      pageSize: postsPerPage,
-                      current: currentPage,
-                      onChange: paginate,
-                    }}
-                    loading={!currentTrans}
-                    rowKey={(record) => record._id}
-                  />
-                </div>
-                {/* <div className=" border-0 mb-0">
-                    <span className="text-muted text-sm">
-                      <Paginate
-                        postsPerPage={postsPerPage}
-                        totalPosts={getAlltransactionData?.data?.length}
-                        paginate={paginate}
-                        prevPagefunc={() => setCurrentPage((prev) => prev - 1)}
-                        nextPagefunc={() => setCurrentPage((prev) => prev + 1)}
-                        currentPage={currentPage}
-                        currentTrans={currentTrans}
-                      />
-                    </span>
-                  </div> */}
-              </div>
-            </div>
-          </main>
-
+          <div className="table-responsive">
+            <Table
+              className="custom-header"
+              columns={columns}
+              dataSource={currentTrans}
+              pagination={{
+                total: getAlltransactionData?.data?.length,
+                pageSize: postsPerPage,
+                current: currentPage,
+                onChange: paginate,
+              }}
+              loading={!currentTrans}
+              rowKey={(record) => record._id}
+            />
+          </div>
         </div>
       </div>
+
+
 
       {showExcelModal && (
         <ExcelModal

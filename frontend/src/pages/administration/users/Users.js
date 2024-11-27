@@ -2,26 +2,29 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userGetAction } from "../../../redux/actions/userAction";
-import { Table, Badge, Button, Menu, Dropdown } from "antd";
+import { Table, Badge, Button, Menu, Dropdown, Input, Select } from "antd";
 
-import { EditOutlined, EllipsisOutlined, EyeOutlined } from "@ant-design/icons";
+import { EditOutlined, EllipsisOutlined, EyeOutlined, SearchOutlined } from "@ant-design/icons";
 
 const Users = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [getUserDatas, setGetUserDatas] = useState();
+  const [getUserDatas, setGetUserDatas] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(10);
+  const [postsPerPage, setPostsPerPage] = useState(10);
+  const [searchTerm, setSearchTerm] = useState("");
+
 
   const userData = useSelector((state) => state.userData?.getUserData);
 
   // console.log("userData==================", userData);
 
   useEffect(() => {
-    setGetUserDatas(userData);
+    if (userData?.data) {
+      setGetUserDatas(userData.data); // Initialize with full data
+    }
   }, [userData]);
 
-  // console.log('getUserData====================', getUserDatas)
 
   useEffect(() => {
     dispatch(userGetAction());
@@ -29,12 +32,34 @@ const Users = () => {
 
   const indexOfLastItem = currentPage * postsPerPage;
   const indexOfFirstItem = indexOfLastItem - postsPerPage;
-  const getAllUsers = getUserDatas?.data?.slice(
-    indexOfFirstItem,
-    indexOfLastItem
+
+  // Filter data based on search term
+  const filteredData = getUserDatas.filter((item) =>
+    Object.values(item).some(
+      (value) =>
+        value &&
+        value
+          .toString()
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
+    )
   );
-  //page change
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const paginatedData = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset to the first page when searching
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handleRowsPerPageChange = (value) => {
+    setPostsPerPage(value); // Update postsPerPage state
+    setCurrentPage(1); // Reset to the first page when changing rows per page
+  };
+
 
   const columns = [
     {
@@ -110,13 +135,8 @@ const Users = () => {
         <div className="container-fluid">
           <div id="dash" className="mb-npx">
             <header className="bg-surface-primary pt-6">
-              <div
-                className="row align-items-center text-white mb-3 product"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(to right, #111827, #121b2f, #131f37, #142240, #152548)",
-                }}
-              >
+              <div className="row align-items-center text-white mb-3 product"
+                style={{ backgroundImage: "linear-gradient(to right, #111827, #121b2f, #131f37, #142240, #152548)" }}>
                 <div className="col-sm-6 col-12 mb-4 mb-sm-0">
                   <h1 className="h2 mb-0 fw-bold fs-4 ls-tight">Users</h1>
                 </div>
@@ -125,12 +145,12 @@ const Users = () => {
                   <div className="mx-n1 me-5 d-flex align-items-center justify-content-end gap-2">
                     {(localStorage.getItem("roles").toLowerCase() === "admin" ||
                       localStorage.getItem("roles").toLowerCase() ===
-                        "superAdmin") && (
-                      <Link to="/add-user" style={{ borderColor: "#9E3E65" }} className="btn d-inline-flex btn-md btn-light border-base mx-1 me-3">
-                        <span className=" pe-2"> <i className="bi bi-plus"></i></span>
-                        <span className="fw-bold">Add User</span>
-                      </Link>
-                    )}
+                      "superAdmin") && (
+                        <Link to="/add-user" style={{ borderColor: "#9E3E65" }} className="btn d-inline-flex btn-md btn-light border-base mx-1 me-3">
+                          <span className=" pe-2"> <i className="bi bi-plus"></i></span>
+                          <span className="fw-bold">Add User</span>
+                        </Link>
+                      )}
                   </div>
                 </div>
               </div>
@@ -139,17 +159,39 @@ const Users = () => {
         </div>
         <div className="container mx-auto">
           <div className="row g-6 mb-4"></div>
+          <div className='mx-auto'>
+            <Input
+              placeholder="Search"
+              prefix={<SearchOutlined />}
+              value={searchTerm}
+              onChange={handleSearch}
+              style={{ width: 300, marginBottom: 16 }}
+            />
+
+            <Select
+              defaultValue={10} // Default rows per page
+              style={{ width: 100, marginLeft: '10px' }}
+              onChange={handleRowsPerPageChange}
+              options={[
+                { value: 5, label: "5 / page" },
+                { value: 10, label: "10 / page" },
+                { value: 20, label: "20 / page" },
+                { value: 50, label: "50 / page" },
+              ]}
+            />
+          </div>
+
           <div className="table-responsive">
             <Table
-              dataSource={getAllUsers}
+              dataSource={paginatedData}
               rowKey="_id"
               columns={columns}
               pagination={{
                 pageSize: postsPerPage,
-                total: userData?.data?.length,
-                onChange: paginate,
+                total: filteredData?.length,
+                onChange: handlePageChange,
               }}
-              loading={!getAllUsers} // Show loading spinner if getAllUsers is not available yet
+              loading={!userData?.data} // Show loading spinner if getAllUsers is not available yet
             />
           </div>
         </div>

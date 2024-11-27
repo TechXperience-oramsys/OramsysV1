@@ -3,6 +3,7 @@ const app = express();
 const dotenv = require('dotenv').config();
 var database = require("./database/database");
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const port = process.env.PORT || 5002
 
 // const corsOptions = {
@@ -62,6 +63,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json({ limit: '50mb' }));
+app.use(cookieParser());  // This enables req.cookies
 app.use(express.static('files'));
 
 // app.all("*", function (req, res, next) {

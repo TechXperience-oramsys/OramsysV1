@@ -9,6 +9,7 @@ const APIResponse = require("../helpers/APIResponse");
 const userController = require("../controllers/user");
 const { decodeToken } = require("../utils/jwt.helper");
 const { sendOtp, verifyOtp, setPassword } = require("../controllers/forgotPassword");
+const { Userauthenticate } = require("../middleware/AuthMiddleware");
 
 
 const createValidation = Joi.object({

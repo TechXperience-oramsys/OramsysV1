@@ -8,6 +8,7 @@ const httpStatus = require("http-status");
 const Joi = require("joi");
 const APIResponse = require("../helpers/APIResponse");
 const { decodeToken } = require("../utils/jwt.helper");
+const { Adminauthenticate } = require("../middleware/AuthMiddleware");
 
 // Apply the middleware and controller
 router.post("/create-admin", validateCorporationData, createAdmin());

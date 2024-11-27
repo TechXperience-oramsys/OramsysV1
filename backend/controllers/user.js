@@ -87,9 +87,9 @@ class UserController {
       const token = getJWTToken({
         id: user.id,
         email: req.body.email,
-        role: "user",
+        role: user.role,
       });
-      console.log(user[0], "here  new user");
+
       let newUser;
       newUser = {
         id: user.id,
@@ -109,6 +109,63 @@ class UserController {
         .send({ message: "Somethig went wrong" });
     }
   }
+
+  // async login(req, res, next) {
+  //   try {
+  //     const userLogin = req.body.user_name.toLowerCase();
+  //     const user = await User.findOne({ email: userLogin }).populate({
+  //       path: "createdBy",
+  //       select: "corporationName",
+  //     });
+      
+  //     if (!user) {
+  //       return res
+  //         .status(httpStatus.OK)
+  //         .json(new APIResponse(null, "Wrong Email", httpStatus.NOT_FOUND));
+  //     }
+  
+  //     const match = await comparePassword(req.body.password, user.password);
+  //     if (!match) {
+  //       return res
+  //         .status(httpStatus.OK)
+  //         .json(new APIResponse(null, "Wrong Password", httpStatus.NOT_FOUND));
+  //     }
+  
+  //     // Generate the JWT token with user ID, email, and role
+  //     const token = getJWTToken({
+  //       id: user.id,
+  //       email: req.body.email,
+  //       role: "user",
+  //     });
+  
+  //     // Set the JWT token in an HTTP-only cookie
+  //     res.cookie('authToken', token, {
+  //       httpOnly: true,
+  //       secure: process.env.NODE_ENV === 'production',  // Enables HTTPS in production
+  //       sameSite: 'Strict',
+  //       maxAge: 60 * 60 * 1000,  // 1 hour
+  //     });
+  
+  //     // Prepare the user data for response (excluding the token)
+  //     const newUser = {
+  //       id: user.id,
+  //       name: user.name,
+  //       email: user.email,
+  //       department: user.department,
+  //       admin: user.createdBy,
+  //     };
+  
+  //     // Send the response to the client
+  //     return res
+  //       .status(httpStatus.OK)
+  //       .json(new APIResponse(newUser, "Login Successfully", httpStatus.OK));
+  //   } catch (e) {
+  //     return res
+  //       .status(httpStatus.BAD_REQUEST)
+  //       .send({ message: "Something went wrong" });
+  //   }
+  // }
+  
 
   async signUp(req, res, next) {
     let body = req.body;
