@@ -6,7 +6,8 @@ var Schema = mongoose.Schema
 var Schema = new Schema({
     transactionId: { type: String, required: true, default: null },
     documentRemittance: { type: String, required: false, default: null },
-    details: { type: String, required: false, default: null }
+    details: { type: String, required: false, default: null },
+    flowVerified : { type: Boolean, required: true, default: false },
 }, {
     timestamps: true
 })

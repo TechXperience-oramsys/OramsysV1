@@ -80,6 +80,10 @@ const Index = () => {
       path: "/final-page",
       component: FinalPage,
     },
+    {
+      path: "/workflow",
+      component: Workflow,
+    },
   ];
 
   const AdminRoutes = [

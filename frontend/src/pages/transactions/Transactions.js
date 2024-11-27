@@ -25,6 +25,7 @@ import {
   FormOutlined,
   EllipsisOutlined,
 } from "@ant-design/icons";
+import { Col, Form, Modal, Row } from "react-bootstrap";
 
 const Transactions = () => {
   const dispatch = useDispatch();
@@ -40,6 +41,8 @@ const Transactions = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
   const [setSearch] = useState("");
+  const [isPreview, setIsPreview] = useState(false)
+  const [workFlowNotes, setWorkFlowNotes] = useState([])
 
   const getAlltransactionData = useSelector(
     (state) => state.transactionData.getAllTransaction
@@ -263,19 +266,6 @@ const Transactions = () => {
       className: "hide-on-md",
       align: "center",
     },
-    // {
-    //   title: "Created by",
-    //   key: "createdBy",
-    //   align: "center",
-    //   className: "hide-on-md",
-    //   render: () => loginData?.data?.name,
-    // },
-    // {
-    //   title: "Transaction Number",
-    //   dataIndex: "_id",
-    //   key: "_id",
-    //   className: "hide-on-md",
-    // },
     {
       title: "Borrower",
       dataIndex: "borrower_Applicant",
@@ -295,24 +285,6 @@ const Transactions = () => {
       align: "center",
       render: (value) => formateCurrencyValue(value),
     },
-    // {
-    //   title: 'Created by',
-    //   dataIndex: 'createdBy',
-    //   key: 'lenders',
-    //   render: (record) => {
-
-    //   }
-    // },
-    // {
-    //   title: 'Product',
-    //   key: 'product',
-    //   sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
-    //   render: (text, record) => {
-    //     const productName = record.details.productDetails.name?.name;
-    //     const otherProduct = record.details.productDetails.otherProduct;
-    //     return productName || otherProduct;
-    //   }
-    // },
     {
       title: "Product",
       dataIndex: ["details", "productDetails", "name", "name"],
@@ -340,12 +312,16 @@ const Transactions = () => {
         </div>
       ),
     },
-    // {
-    //   title: "Transaction Status",
-    //   dataIndex: ["details", "productDetails", "name", "name"],
-    //   key: "product",
-    //   align: "center",
-    // },
+    {
+      title: "Workflow Step Name",
+      dataIndex: "workFlowSteps",
+      key: "workflowStepName",
+      render: (workFlowSteps) =>
+        workFlowSteps && workFlowSteps.length > 0
+          ? workFlowSteps[workFlowSteps.length - 1] // Show last step
+          : "In Progress", // Show "In Progress" for empty array
+      align: "center",
+    },
     {
       title: "Actions",
       key: "actions",
@@ -409,6 +385,14 @@ const Transactions = () => {
               </Menu.Item>
               <Menu.Item
                 onClick={() => {
+                  setIsPreview(true)
+                  setWorkFlowNotes(record?.workflowstepNotes);
+                }}
+              >
+                <EyeOutlined className='pe-2' /> View Flowstep Notes
+              </Menu.Item>
+              <Menu.Item
+                onClick={() => {
                   record.termSheet === "Not Signed"
                     ? downloadTermSheet(record._id, "download")
                     : converBase64toBlob(record.termSheetUrl);
@@ -442,6 +426,41 @@ const Transactions = () => {
       </Menu.SubMenu>
     </Menu>
   );
+
+  const ViewNotes = () => {
+    return (
+      <Modal show={isPreview} onHide={() => setIsPreview(false)} centered className="w-90" size="lg">
+      <Modal.Header closeButton>
+        <Modal.Title>Workflow Notes</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {workFlowNotes.length > 0 ? (
+          <Row>
+            {workFlowNotes.map((note, index) => (
+              
+                <Form.Group className="mb-1">
+                 
+
+<div className="d-flex"> <p>     {note?.username}  </p>  
+
+<p className="text-muted mx-2">({note?.department})</p>
+
+</div>
+
+              <div style={{fontSize:12}}>  {note?.note} </div>
+                </Form.Group>
+              
+            ))}
+          </Row>
+        ) : (
+          <Form.Label className="text-muted">No notes available!</Form.Label>
+        )}
+      </Modal.Body>
+    </Modal>
+    
+
+    )
+  }
 
   return (
     <>
@@ -522,9 +541,7 @@ const Transactions = () => {
           </div>
         </div>
       </div>
-
-
-
+      {ViewNotes()}
       {showExcelModal && (
         <ExcelModal
           refreshpage={() => dispatch(() => refreshPage())}

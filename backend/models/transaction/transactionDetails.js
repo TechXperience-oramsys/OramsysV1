@@ -7,6 +7,10 @@ var Warehouses = new Schema({
     warehouseCompany: { type: Schema.Types.ObjectId, ref: "Entity", required: false },
     warehouse: { type: Schema.Types.ObjectId, ref: "EntityWarehouse", required: false }
 })
+
+var Workflow = new Schema({
+    isverified: { type: Boolean, default : false},
+})
 var ProductDetails = new Schema({
     nature: { type: String, require: false, default: null },
     type: { type: String, require: false, default: null },
@@ -84,6 +88,7 @@ var Schema = new Schema({
     insurances: { type: [InsurancesOptions], required: false, default: null },
     pricingDetails: { type: PricingDetailOptions, required: false, default: null },
     isDeleted: { type: Boolean, required: true, default: false },
+    flowVerified : { type: Boolean, required: true, default: false },
 }, {
     timestamps: true
 })

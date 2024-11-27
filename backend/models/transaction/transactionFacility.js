@@ -83,6 +83,7 @@ var Schema = new Schema({
     transactionStructure: { type: String, required: false, default: null },
     permittedAccounts: { type: String, required: false, default: null },
     isDeleted: { type: Boolean, required: false, default: false },
+    flowVerified : { type: Boolean, required: true, default: false },
 }, {
     timestamps: true
 })

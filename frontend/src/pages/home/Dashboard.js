@@ -31,6 +31,7 @@ import Financials from "./Financials";
 import NotificationSection from "./Notification";
 // import { useTranslation } from "react-i18next";
 import { adminGetAction } from "../../redux/actions/adminAction";
+import { API } from "../../config/API/api.config";
 
 const Dashboard = () => {
   // const token = AuthStorage.getToken();
@@ -160,6 +161,10 @@ const Dashboard = () => {
   const getAllEntities = useSelector((state) => state.entityData.entity);
   const ratingAgenciesDatas = useSelector((state) => state.ratingAgenciesData?.ratingAgencies);
   const adminDatas = useSelector((state) => state.adminData?.getAdminData);
+  const [currentUser, setcurrentUser] = useState(
+    JSON.parse(localStorage.getItem("userData"))
+  );
+  const [worfFlowCount , setworkflowcount] = useState()
   // console.log('admin data', adminDatas)
 
   const totalValue = useMemo(() => {
@@ -178,8 +183,6 @@ const Dashboard = () => {
     return sum.toLocaleString();
   }, [getAlltransactionData]);
   // console.log("alltransactionn", getAlltransactionData);
-
-
 
   const signedCount = [];
   const notSignedCount = [];
@@ -259,7 +262,57 @@ const Dashboard = () => {
     dispatch(() => adminAction());
     // console.log(getAlltransactionData)
     // eslint-disable-next-line
+    fetchData()
   }, []);
+
+  const BaseURL = API;
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        `${BaseURL}api/workflow/getuserFlow?assignedUser=${currentUser?.email}&addedBy=${currentUser?.admin?._id}`,
+        {
+          method: 'GET',
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const result = await response.json();
+      fetchTransactionCounts(result?.workflowDocument?.admin?.id  , result?.workflowDocument?.department);
+
+      // setworkFlow(result);
+    } catch (err) {
+      console.error('Error fetching data:', err);
+      // setError(err.message);
+    }
+  };
+
+  const fetchTransactionCounts = async (adminId, workflowStepName) => {
+    const url = `${BaseURL}api/workFlow/counts?admin=${adminId}&workflowStepName=${encodeURIComponent(workflowStepName)}`;
+  
+    try {
+      const response = await fetch(url, {
+        method: 'GET', // Use GET method to fetch data
+        headers: {
+          'Content-Type': 'application/json', // Set content type to JSON
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+  
+      const data = await response.json(); // Parse the response body as JSON
+      setworkflowcount(data?.counts)
+      console.log('Counts:', data.counts); // Log the counts to the console
+      return data.counts; // Return the counts
+    } catch (error) {
+      console.error('Error fetching counts:', error); // Handle errors
+    }
+  };
+  
+
 
   const DATE_OPTIONS = {
     weekday: "short",
@@ -475,6 +528,53 @@ const Dashboard = () => {
                   
 
                 ))}
+
+
+ {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" &&    // <>
+                    <div className="col-6 mb-3 col-sm-6 col-12" >
+                      <div className="card shadow border-0">
+                        <div className="card-body">
+                          <div className="row">
+                            <div className="col">
+                              <span className="h6 font-semibold fw-2 text-muted text-md d-block mb-2">
+                              Workflow
+                              </span>
+                          
+                              
+
+                            </div>
+                            <div className="col-auto">
+                              <div className={`icon icon-shape rounded-circle`}>
+                                {/* <card.icon size={30} /> */}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="mt-2 mb-0 text-sm">
+                           
+                              <>
+                                <span className="badge badge-pill bg-soft-success text-success me-2">
+                            {worfFlowCount?.withWorkflowStep}
+                                </span>
+                                <span className="text-nowrap text-xs text-muted">
+                                  Completed
+                                </span>
+                              </>
+                          
+                              <>
+                                <span className="badge mx-2 badge-pill bg-danger text-success-white me-2">
+                                {worfFlowCount?.withoutWorkflowStep}
+                                </span>
+                                <span className="text-nowrap text-xs text-muted">
+                                  In Progress...
+                                </span>
+                              </>
+                            
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+}
 
                 {AuthStorage.getStorageData(STORAGEKEY.roles) === "admin" && adminCard.map((card, i) => (
                   
