@@ -180,14 +180,16 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
         if (nameOption?.data) {
             let temp_names = [];
             nameOption?.data?.forEach((element) => {
-                // Ensure name is correctly assigned
-                element.details.name = element.details?.name || element.details?.givenName;
+                if (element.details) {
+                    // Safely assign name
+                    element.details.name = element.details.name || element.details.givenName;
+                }
                 temp_names.push(element);
             });
-            // console.log("GET RELATED PARTIES DATA-----", temp_names);
             setNames(temp_names);
         }
     }, [nameOption, setNames]);
+    
 
     const partiesEditData = (data, id) => {
         if (id !== undefined) {

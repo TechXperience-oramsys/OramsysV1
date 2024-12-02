@@ -229,7 +229,7 @@ const Transactions = () => {
       // Check if item.borrower_Applicant and item.lenders are strings
       if (
         typeof item.borrower_Applicant !== "string" ||
-        typeof item.lenders !== "string" 
+        typeof item.lenders !== "string"
       ) {
         return false;
       }
@@ -430,34 +430,34 @@ const Transactions = () => {
   const ViewNotes = () => {
     return (
       <Modal show={isPreview} onHide={() => setIsPreview(false)} centered className="w-90" size="lg">
-      <Modal.Header closeButton>
-        <Modal.Title>Workflow Notes</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        {workFlowNotes.length > 0 ? (
-          <Row>
-            {workFlowNotes.map((note, index) => (
-              
+        <Modal.Header closeButton>
+          <Modal.Title>Workflow Notes</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {workFlowNotes.length > 0 ? (
+            <Row>
+              {workFlowNotes.map((note, index) => (
+
                 <Form.Group className="mb-1">
-                 
 
-<div className="d-flex"> <p>     {note?.username}  </p>  
 
-<p className="text-muted mx-2">({note?.department})</p>
+                  <div className="d-flex"> <p>     {note?.username}  </p>
 
-</div>
+                    <p className="text-muted mx-2">({note?.department})</p>
 
-              <div style={{fontSize:12}}>  {note?.note} </div>
+                  </div>
+
+                  <div style={{ fontSize: 12 }}>  {note?.note} </div>
                 </Form.Group>
-              
-            ))}
-          </Row>
-        ) : (
-          <Form.Label className="text-muted">No notes available!</Form.Label>
-        )}
-      </Modal.Body>
-    </Modal>
-    
+
+              ))}
+            </Row>
+          ) : (
+            <Form.Label className="text-muted">No notes available!</Form.Label>
+          )}
+        </Modal.Body>
+      </Modal>
+
 
     )
   }
@@ -495,7 +495,7 @@ const Transactions = () => {
 
         <div className="container mx-auto">
           <div className="row g-6 mb-4"></div>
-          <div className='mx-auto mb-3'>
+          <div className='mx-auto mb-3 mb-2 d-flex justify-content-start align-items-center gap-0 column-gap-3'>
             <div className="position-relative">
               <span className="position-absolute search">
                 <CiSearch size={25} />
@@ -513,7 +513,7 @@ const Transactions = () => {
             {AuthStorage.getStorageData(STORAGEKEY.roles) === "user" ? (
               <AntDropdown overlay={menu} trigger={["click"]}>
                 <AntButton
-                  className="btn d-inline-flex btn-md btn-light mx-1 py-2 me-3"
+                  className="btn d-inline-flex btn-md btn-light mx-1 p-3 me-3"
                   id="dropdown-autoclose-outside"
                 >
                   <span className="">Create transaction</span>
