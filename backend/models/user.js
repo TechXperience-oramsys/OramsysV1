@@ -15,6 +15,7 @@ var Schema = new Schema(
     otp: { type: Number },
     createdBy: { type: Schema.Types.ObjectId, ref: "Corporation" },
     isRegistered: { type: Boolean, required: true, default: false }, // New field
+    registrationStatus: { type: String, required: true, default: 'Invited'}
   },
   {
     timestamps: true,
