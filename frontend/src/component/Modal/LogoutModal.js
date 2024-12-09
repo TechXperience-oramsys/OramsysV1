@@ -8,10 +8,6 @@ import { useNavigate } from 'react-router-dom';
 
 
 const LogoutModal = ({ show, onHide }) => {
-  //   const [show, setShow] = useState(false);
-
-  //   const handleClose = () => setShow(false);
-  //   const handleShow = () => setShow(true);
   const dispatch = useDispatch()
   const navigate = useNavigate();
 

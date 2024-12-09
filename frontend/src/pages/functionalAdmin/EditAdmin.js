@@ -216,11 +216,12 @@ function EditAdmin() {
               name="branch"
               rules={[{ required: true, message: "Please select a branch!" }]}
             >
-              <Select placeholder="Select a branch">
+              {/* <Select placeholder="Select a branch">
                 <Option value="branch1">Branch 1</Option>
                 <Option value="branch2">Branch 2</Option>
                 <Option value="branch3">Branch 3</Option>
-              </Select>
+              </Select> */}
+              <Input placeholder="Add branch" />
             </Form.Item>
           </div>
           <div className="col-md-6">

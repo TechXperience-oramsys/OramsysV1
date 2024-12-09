@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import { entityGetAction } from '../../redux/actions/entityAction';
-
+import { IoCloseSharp } from "react-icons/io5";
 import { Form, Upload } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 
@@ -112,7 +112,7 @@ const CurrencyHedgeDetailsModal = ({ show, onHide, getModalData, editRowData, da
                         <div className='modal-content'>
                             <div className='d-flex justify-content-between'>
                                 <h2 id="transition-modal-title" className='modal-title'>Enter a price hedge</h2>
-                                <img alt='props' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                                <IoCloseSharp onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                             </div>
                             <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                                 <div className='form'>
@@ -162,7 +162,7 @@ const CurrencyHedgeDetailsModal = ({ show, onHide, getModalData, editRowData, da
                                                     beforeUpload={() => false} // Prevent automatic upload
                                                     onChange={handleFileChange} // Handle file change
                                                     className="upload"
-                                                    maxCount={1}> 
+                                                    maxCount={1}>
                                                     <p className="ant-upload-drag-icon"><InboxOutlined /></p>
                                                     <p className="ant-upload-text">Click or drag file to this area to upload</p>
                                                 </Dragger>

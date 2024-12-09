@@ -1,8 +1,9 @@
 import { Backdrop, Fade, Modal, TextField } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
-import {  useDispatch } from 'react-redux'
-import {entityRoleAddAction, entityRoleUpdateAction} from '../../redux/actions/entitiesRoleAction'
+import { useDispatch } from 'react-redux'
+import { entityRoleAddAction, entityRoleUpdateAction } from '../../redux/actions/entitiesRoleAction'
+import { IoCloseSharp } from "react-icons/io5";
 
 const EntitiesRoleAddModal = ({ show, onHide, data, formType }) => {
     const dispatch = useDispatch()
@@ -50,7 +51,7 @@ const EntitiesRoleAddModal = ({ show, onHide, data, formType }) => {
         if (validation()) {
             return
         }
-        if(formType === 'add') {
+        if (formType === 'add') {
             dispatch(entityRoleAddAction(state))
             onHide()
         } else {
@@ -77,7 +78,7 @@ const EntitiesRoleAddModal = ({ show, onHide, data, formType }) => {
                     <div className='modal-content'>
                         <div className='d-flex justify-content-between'>
                             <h2 id="transition-modal-title" className='modal-title'>Add Entity Role</h2>
-                            <img alt='props' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                            <IoCloseSharp onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                         </div>
                         <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                             <div className='form'>

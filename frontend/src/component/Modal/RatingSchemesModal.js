@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { useLocation } from 'react-router-dom'
 import TextEditerModal from './TextEditerModal';
+import { IoCloseSharp } from "react-icons/io5";
 // import { useDispatch } from 'react-redux'
 // import Autocomplete from "@material-ui/lab/Autocomplete";
 
@@ -121,7 +122,7 @@ const RatingSchemesModal = ({ onHide, show, getModalData, data, viewData }) => {
                     <div className='modal-content'>
                         <div className='d-flex justify-content-between'>
                             <h2 id="transition-modal-title" className='modal-title'>Rating schema</h2>
-                            <img src='../../assets/img/my-img/Close.png' alt='' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                            <IoCloseSharp alt='' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                         </div>
                         <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                             <div className='form'>

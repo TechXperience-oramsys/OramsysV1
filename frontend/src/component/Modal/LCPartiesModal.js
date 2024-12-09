@@ -1,10 +1,11 @@
-import { Backdrop, Fade,  Modal, TextField, Autocomplete } from '@mui/material';
+import { Backdrop, Fade, Modal, TextField, Autocomplete } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap';
 // import { useLocation } from 'react-router-dom';
 // import Autocomplete from "@mui/lab";
 import { entityGetAction } from '../../redux/actions/entityAction';
 import { useSelector, useDispatch } from 'react-redux';
+import { IoCloseSharp } from "react-icons/io5";
 
 
 const LCPartiesModal = ({ show, onHide, addParties, data }) => {
@@ -41,7 +42,7 @@ const LCPartiesModal = ({ show, onHide, addParties, data }) => {
     // const handleChange = (e, name, type) => {
     //     if (type === "lcParties") {
     //         if (name === "valueOfcurrency") {
-              
+
     //           if (e.target.value === "" || numberReg.test(e.target.value)) {
     //             setLcParties({ ...lcParties, [e.target.name]: e.target.value })
     //         }
@@ -94,7 +95,7 @@ const LCPartiesModal = ({ show, onHide, addParties, data }) => {
                         <div className='modal-content'>
                             <div className='d-flex justify-content-between'>
                                 <h2 id="transition-modal-title" className='modal-title'>Add letter of credit</h2>
-                                <img alt='props' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                                <IoCloseSharp onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                             </div>
                             <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                                 <div className='form pt-2'>

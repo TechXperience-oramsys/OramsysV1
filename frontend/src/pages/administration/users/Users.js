@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userGetAction } from "../../../redux/actions/userAction";
-import { Table, Badge, Button, Menu, Dropdown, Input, Select } from "antd";
+import { Table, Badge, Button, Menu, Dropdown, Input, Select, Tag } from "antd";
 
 import { EditOutlined, EllipsisOutlined, EyeOutlined, SearchOutlined } from "@ant-design/icons";
 
@@ -17,14 +17,21 @@ const Users = () => {
 
   const userData = useSelector((state) => state.userData?.getUserData);
 
-  // console.log("userData==================", userData);
-
+  // useEffect(() => {
+  //   if (userData?.data) {
+  //     setGetUserDatas(userData.data); // Initialize with full data
+  //   }
+  // }, [userData]);
   useEffect(() => {
     if (userData?.data) {
-      setGetUserDatas(userData.data); // Initialize with full data
+      // Sort by `dateAdded` in descending order (newest first)
+      const sortedData = [...userData.data].sort(
+        (a, b) => new Date(b.dateAdded) - new Date(a.dateAdded) // Correct sorting logic
+      );
+      setGetUserDatas(sortedData); // Initialize with sorted data
+      // console.log('SORTED DATA', sortedData)
     }
   }, [userData]);
-
 
   useEffect(() => {
     dispatch(userGetAction());
@@ -34,7 +41,8 @@ const Users = () => {
   const indexOfFirstItem = indexOfLastItem - postsPerPage;
 
   // Filter data based on search term
-  const filteredData = getUserDatas.filter((item) =>
+  const filteredData = getUserDatas
+  .filter((item) =>
     Object.values(item).some(
       (value) =>
         value &&
@@ -43,9 +51,12 @@ const Users = () => {
           .toLowerCase()
           .includes(searchTerm.toLowerCase())
     )
-  );
+  )
+  .sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded)); // Ensure newest first
+
 
   const paginatedData = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
     setCurrentPage(1); // Reset to the first page when searching
@@ -59,22 +70,36 @@ const Users = () => {
     setPostsPerPage(value); // Update postsPerPage state
     setCurrentPage(1); // Reset to the first page when changing rows per page
   };
+  const DATE_OPTIONS = {
+    // weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  };
+
 
 
   const columns = [
+    {
+      title: "Date Added",
+      dataIndex: "createdAt", // Key from your data
+      key: "createdAt", // Sorting function
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt), // Sorting logic for Ant Design
+      // defaultSortOrder: "descend", 
+      render: (createdAt) =>
+      new Date(createdAt).toLocaleDateString("en-US", DATE_OPTIONS), // Format the date for display
+    },
     {
       title: "Name",
       dataIndex: "name",
       key: "name",
       align: "center",
-      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
       align: "center",
-      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
     {
       title: "Department",
@@ -82,7 +107,6 @@ const Users = () => {
       key: "department",
       render: (text) => <Badge className="" status="success" text={text} />,
       align: "center",
-      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
 
     {
@@ -90,7 +114,18 @@ const Users = () => {
       dataIndex: "profile",
       key: "profile",
       align: "center",
-      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+    },
+
+    {
+      title: "Registration Status",
+      dataIndex: "registrationStatus", // Match the field name sent from the backend
+      key: "registrationStatus",
+      align: "center",
+      render: (text) => (
+        <Tag color={text === "Registered" ? "green" : "orange"}>
+          {text}
+        </Tag>
+      ),
     },
     {
       title: "Actions",

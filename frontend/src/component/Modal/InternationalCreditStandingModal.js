@@ -4,6 +4,8 @@ import { Row, Col } from "react-bootstrap";
 // import Autocomplete from "@mui/lab";
 import { useDispatch, useSelector } from 'react-redux';
 import { entityGetAction } from '../../redux/actions/entityAction';
+import { IoCloseSharp } from "react-icons/io5";
+
 
 const InternationalCreditStandingModal = ({ show, onHide, getModalData, type, data, from }) => {
 
@@ -31,7 +33,7 @@ const InternationalCreditStandingModal = ({ show, onHide, getModalData, type, da
       setInternationalCreditStanding(data)
     else
       setInternationalCreditStanding(data[type])
-  }, [data,from, type])
+  }, [data, from, type])
 
   useEffect(() => {
     dispatch(entityGetAction('Company'))
@@ -71,7 +73,8 @@ const InternationalCreditStandingModal = ({ show, onHide, getModalData, type, da
           <div className='modal-content'>
             <div className='d-flex justify-content-between'>
               <h2 id="transition-modal-title" className='modal-title'>Enter a Mitigant</h2>
-              <img alt='props' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+              <IoCloseSharp onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+
             </div>
             <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
               <div className='form'>

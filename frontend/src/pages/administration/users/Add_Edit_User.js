@@ -18,6 +18,7 @@ const Add_Edit_User = () => {
   const isView = location.state?.isView;
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false)
 
   let emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   const [state, setState] = React.useState({
@@ -134,22 +135,33 @@ const Add_Edit_User = () => {
     return param;
   };
 
-  const editUser = () => {
+  const editUser = async () => {
     if (validation()) {
       return;
     }
+    setLoading(true)
     if (id) {
-      delete state.createdBy;
-      dispatch(userUpdateAction(state, id));
+      try {
+        delete state.createdBy;
+        await dispatch(userUpdateAction(state, id));
+
+      } finally {
+        setLoading(false);
+      }
     }
+
+
   };
-  const addUser = () => {
+  const addUser = async () => {
     if (validation()) {
       return;
     }
-    // if (id) {
-    dispatch(registerAction(state));
-    // }
+    setLoading(true)
+    try {
+      await dispatch(registerAction(state));;
+    } finally {
+      setLoading(false);
+    }
   };
 
   const profileOption = ["User", "Admin", "Tester"];
@@ -168,7 +180,7 @@ const Add_Edit_User = () => {
     "Investment Banker",
     "Financial Advisor",
     "Private banker",
-    "Appraisal review officer"
+    "Appraisal Officer"
   ];
 
   return (
@@ -315,7 +327,17 @@ const Add_Edit_User = () => {
             }}
             className={`footer_next_btn ${isView ? "d-none" : "d-block"}`}
           >
-            Save
+            {!loading ? 'Save' :
+              <div className="d-flex justify-content-center">
+                <strong className="me-2">Saving...</strong>
+                <div
+                  className="spinner-border spinner-border-sm mt-1"
+                  role="status"
+                >
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            }
           </button>
         </div>
       </div>

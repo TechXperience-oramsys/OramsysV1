@@ -4,7 +4,7 @@ import { Row, Col } from "react-bootstrap";
 // import Autocomplete from "@mui/lab";
 import { useSelector } from 'react-redux'
 import { CurrencyOptions } from '../../helper/common';
-// import { useLocation } from 'react-router-dom'
+import { IoCloseSharp } from "react-icons/io5";
 
 const FinancingSufficientlyModal = ({ show, onHide, getModalData, data }) => {
   const [financingSufficiently, setFinancingSufficiently] = useState({
@@ -76,7 +76,7 @@ const FinancingSufficientlyModal = ({ show, onHide, getModalData, data }) => {
           <div className='modal-content'>
             <div className='d-flex justify-content-between'>
               <h2 id="transition-modal-title" className='modal-title'>Margin the financing sufficiently</h2>
-              <img src='../../assets/img/my-img/Close.png' onClick={onHide} style={{ cursor: "pointer", width: "24px", height: "24px" }} alt="Close" />
+              <IoCloseSharp onClick={onHide} style={{ cursor: "pointer", width: "24px", height: "24px" }} alt="Close" />
             </div>
             <div className='add-edit-product p-0 mt-3' id="transition-modal-description">
               <div className='form'>

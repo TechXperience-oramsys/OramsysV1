@@ -148,21 +148,11 @@ function UserForgetPassword() {
 
             {!isSent && (
               <>
-                {/* <div className="mb-3">
-                  <label htmlFor="email" className="form-label">E-mail</label>
-                  <div className="input-group">
-                    <input type="email" className="form-control" placeholder="Enter your E-mail" onChange={(e) => setMail(e.target.value)} />
-                  </div>
-                  <button className="btn btn-primary w-100 mt-3" onClick={() => handleSendOTP()}>
-                    Send OTP {loading && <Spinner size="sm" />}
-                  </button>
-                </div> */}
-
                 <div className="form-floating mb-3">
                   <input type="email" name="email" onChange={(e) => setMail(e.target.value)} onKeyDown={handleKeyPress} className="form-control" id="floatingInput" placeholder="Email" />
                   <label htmlFor="floatingInputValue">Email address</label>
 
-                  <button className="btn btn-primary w-100 mt-3" onClick={() => handleSendOTP()}>
+                  <button className="btn btn-primary w-100 mt-3" onClick={() => handleSendOTP()} >
                     Send OTP {loading && <Spinner size="sm" />}
                   </button>
                 </div>
@@ -206,20 +196,10 @@ function UserForgetPassword() {
             {isVerified && (
               <div>
                 <div className="mb-3">
-                  <label htmlFor="password" className="form-label">
-                    New password
-                  </label>
+                  <label htmlFor="password" className="form-label">New password</label>
                   <div className="input-group position-relative">
-                    <input
-                      type={show ? "text" : "password"}
-                      className="form-control"
-                      placeholder=""
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <span
-                      className="position-absolute end-0 top-50 translate-middle-y me-3 cursor-pointer"
-                      onClick={() => setShow((prev) => !prev)}
-                    >
+                    <input type={show ? "text" : "password"} className="form-control" placeholder="" onChange={(e) => setPassword(e.target.value)} />
+                    <span  className="position-absolute end-0 top-50 translate-middle-y me-3 cursor-pointer" onClick={() => setShow((prev) => !prev)}>
                       {show ? <EyeInvisibleOutlined /> : <EyeOutlined />}
                     </span>
                   </div>
@@ -227,30 +207,17 @@ function UserForgetPassword() {
                 </div>
 
                 <div className="mb-3">
-                  <label htmlFor="confirm_password" className="form-label">
-                    Confirm new password
-                  </label>
+                  <label htmlFor="confirm_password" className="form-label">Confirm new password</label>
                   <div className="input-group">
-                    <input
-                      type={show ? "text" : "password"}
-                      className="form-control"
-                      placeholder=""
-                      onChange={(e) => setConfirmPass(e.target.value)}
-                    />
-                     <span
-                      className="position-absolute end-0 top-50 translate-middle-y me-3 cursor-pointer"
-                      onClick={() => setShow((prev) => !prev)}
-                    >
+                    <input type={show ? "text" : "password"} className="form-control"  placeholder="" onChange={(e) => setConfirmPass(e.target.value)} />
+                    <span className="position-absolute end-0 top-50 translate-middle-y me-3 cursor-pointer" onClick={() => setShow((prev) => !prev)}>
                       {show ? <EyeInvisibleOutlined /> : <EyeOutlined />}
                     </span>
                   </div>
                   {error && error?.confirPass && <span style={{ color: 'red' }}>{error.confirPass}</span>}
                 </div>
 
-                <button
-                  className="btn btn-primary w-100 mt-3"
-                  onClick={() => handelChangePassword()}
-                >
+                <button className="btn btn-primary w-100 mt-3" onClick={() => handelChangePassword()}>
                   Submit {loading && <Spinner size="sm" />}
                 </button>
               </div>

@@ -5,8 +5,9 @@ import { Row, Col } from "react-bootstrap";
 import { useDispatch } from 'react-redux';
 import { entityGetAction } from '../../redux/actions/entityAction';
 import { useSelector } from 'react-redux';
+import { IoCloseSharp } from "react-icons/io5";
 
-const CurrencyHedgeModal = ({ show, onHide, getModalData, type,data }) => {
+const CurrencyHedgeModal = ({ show, onHide, getModalData, type, data }) => {
     // const riskAssessment = useSelector(state => state.riskAssessmentData.riskAssessment)
 
     const [currencyHedgeModal, setCurrencyHedgeModal] = useState({
@@ -27,9 +28,9 @@ const CurrencyHedgeModal = ({ show, onHide, getModalData, type,data }) => {
     ]
 
     const counterparty = useSelector(state => state.entityData.entity)
-    useEffect(()=>{
+    useEffect(() => {
         setCurrencyHedgeModal(data)
-    },[data])
+    }, [data])
 
     // useEffect(() => {
     //     if (riskAssessment?.currencyHedge) {
@@ -91,7 +92,7 @@ const CurrencyHedgeModal = ({ show, onHide, getModalData, type,data }) => {
                     <div className='modal-content'>
                         <div className='d-flex justify-content-between'>
                             <h2 id="transition-modal-title" className='modal-title'>Enter a currency hedge</h2>
-                            <img alt='props' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                            <IoCloseSharp onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                         </div>
                         <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                             <div className='form'>

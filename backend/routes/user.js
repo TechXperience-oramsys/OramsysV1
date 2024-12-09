@@ -58,6 +58,7 @@ router.post("/set-password", userController.setPassword);
 router.get("/getUsersByAdmin", userController.getUsersByAdmin);
 
 
+
 function signUpValidate(req, res, next) {
   const Data = req.body;
   console.log(Data, "data");

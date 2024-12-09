@@ -5,6 +5,8 @@ import CounterpartiesModal from '../../../component/Modal/CounterpartiesModal'
 import InternationalCreditStandingModal from '../../../component/Modal/InternationalCreditStandingModal'
 import LoanPurposeRiskModal from '../../../component/Modal/LoanPurposeRiskModal'
 import { riskAssessmentAction } from '../../../redux/actions/riskAssessmentAction'
+import { FaRegCheckCircle } from 'react-icons/fa'
+import { PiWarningCircleLight } from 'react-icons/pi'
 
 const PerformanceRisk = ({ hendelNext, hendelCancel }) => {
 
@@ -24,7 +26,7 @@ const PerformanceRisk = ({ hendelNext, hendelCancel }) => {
         },
         acceptableJurisdiction: {
             justification: '',
-            evidence:''
+            evidence: ''
         },
         cashCollateral: {
             type: '',
@@ -142,8 +144,9 @@ const PerformanceRisk = ({ hendelNext, hendelCancel }) => {
         <>
             <>
                 <div className='add-edit-product'>
-                    <div className='d-flex align-items-center justify-content-center error-info mb-3'>
-                        <img src={`../../../assets/img/about/${performanceRisk?.goodCreditStanding?.type || performanceRisk?.acceptableJurisdiction?.justification || performanceRisk?.cashCollateral?.type || performanceRisk?.coverageOnStock?.type || performanceRisk?.acceptableCMA?.type ? "error-info-success.png" : "error-info.png"}`} alt='imaaage' className='me-3' />
+                    <div className='d-flex align-items-center justify-content-center error-info mt-5 mb-3'>
+                        {performanceRisk?.goodCreditStanding?.type || performanceRisk?.acceptableJurisdiction?.justification || performanceRisk?.cashCollateral?.type || performanceRisk?.coverageOnStock?.type || performanceRisk?.acceptableCMA?.type ? <FaRegCheckCircle className='text-success fs-2 me-3' /> : <PiWarningCircleLight className='text-danger fs-2 me-3' />}
+                        {/* <img src={`../../../assets/img/about/${performanceRisk?.goodCreditStanding?.type || performanceRisk?.acceptableJurisdiction?.justification || performanceRisk?.cashCollateral?.type || performanceRisk?.coverageOnStock?.type || performanceRisk?.acceptableCMA?.type ? "error-info-success.png" : "error-info.png"}`} alt='imaaage' className='me-3' /> */}
                         {performanceRisk?.goodCreditStanding?.type || performanceRisk?.acceptableJurisdiction?.justification || performanceRisk?.cashCollateral?.type || performanceRisk?.coverageOnStock?.type || performanceRisk?.acceptableCMA?.type ?
                             <p className='success'>Risks are acceptable due to mitigants</p> :
                             <p className='error'>The below risks require your attention</p>
@@ -156,23 +159,28 @@ const PerformanceRisk = ({ hendelNext, hendelCancel }) => {
                                 <div>
                                     <div className='risk-tab' onClick={() => { setShowSameModal(true); setSelected('goodCreditStanding') }}>
                                         <h3>Transfer risk to an entity with good credit standing (e.g the government, a Bank etc)</h3>
-                                        <img alt='imaaage' src={`../../../assets/img/about/${performanceRisk?.goodCreditStanding?.type ? "correct-success.png" : "correct (1).png"}`} />
+                                        {performanceRisk?.goodCreditStanding?.type ? <FaRegCheckCircle className='text-success fs-3' /> : <FaRegCheckCircle className='text-body-tertiary fs-2' />}
+
                                     </div>
                                     <div className='risk-tab' onClick={() => { setShowTextEditer(true); setSelected('acceptableJurisdiction') }}>
                                         <h3>Charge over marketable assets of the company, located in an acceptable jurisdiction</h3>
-                                        <img alt='imaaage' src={`../../../assets/img/about/${performanceRisk?.acceptableJurisdiction?.justification ? "correct-success.png" : "correct (1).png"}`} />
+                                        {performanceRisk?.acceptableJurisdiction?.justification ? <FaRegCheckCircle className='text-success fs-3' /> : <FaRegCheckCircle className='text-body-tertiary fs-2' />}
+
                                     </div>
                                     <div className='risk-tab' onClick={() => { setSameModal(true); setSelected('cashCollateral'); setOptions(cashCollateralOption) }}>
                                         <h3>Cash Collateral</h3>
-                                        <img alt='imaaage' src={`../../../assets/img/about/${performanceRisk?.cashCollateral?.type ? "correct-success.png" : "correct (1).png"}`} />
+                                        {performanceRisk?.cashCollateral?.type ? <FaRegCheckCircle className='text-success fs-3' /> : <FaRegCheckCircle className='text-body-tertiary fs-2' />}
+
                                     </div>
                                     <div className='risk-tab' onClick={() => { setSameModal(true); setSelected('coverageOnStock'); setOptions(coverageOnStock) }}>
                                         <h3>Take Insurance coverage on stock (in the case of theft and other related issues)</h3>
-                                        <img alt='imaaage' src={`../../../assets/img/about/${performanceRisk?.coverageOnStock?.type ? "correct-success.png" : "correct (1).png"}`} />
+                                        {performanceRisk?.coverageOnStock?.type ? <FaRegCheckCircle className='text-success fs-3' /> : <FaRegCheckCircle className='text-body-tertiary fs-2' />}
+
                                     </div>
                                     <div className='risk-tab' onClick={() => { setShowSameModal(true); setSelected('acceptableCMA') }}>
                                         <h3>Appoint an acceptable CMA</h3>
-                                        <img alt='imaaage' src={`../../../assets/img/about/${performanceRisk?.acceptableCMA?.type ? "correct-success.png" : "correct (1).png"}`} />
+                                        {performanceRisk?.acceptableCMA?.type ? <FaRegCheckCircle className='text-success fs-3' /> : <FaRegCheckCircle className='text-body-tertiary fs-2' />}
+
                                     </div>
                                 </div>
                             }
