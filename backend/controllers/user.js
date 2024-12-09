@@ -207,7 +207,7 @@ class UserController {
             pass: "0ramsys!@#",
           },
         });
-      
+
         const mailOptions = {
           from: "notification@techxperience.ng",
           to: body?.email,
@@ -296,7 +296,7 @@ class UserController {
   // async getAllUser(req, res, next) {
   //   // try {
   //   const user = await User.getAll(req.query.id, req.query.role);
-    
+
 
   //   if (user) {
   //     return res
@@ -308,32 +308,77 @@ class UserController {
   //     .status(httpStatus.BAD_REQUEST)
   //     .send({ message: "user not found" });
   // }
+  // async getAllUser(req, res, next) {
+  //   try {
+  //     const users = await User.find({
+  //       orderBy: ["createdAt", "DESC"]
+  //     }); 
+
+  //     if (users.length > 0) {
+  //       for (let user of users) {
+  //         if (user?.isRegistered === false && user?.password) {
+  //           user.isRegistered = true 
+  //           await user.save()
+  //         }
+  //         }
+
+  //       // console.log(users, 'inflow')
+  //       const usersWithStatus = users.map((user) => ({
+  //         ...user.toObject(),
+  //         registrationStatus: user.isRegistered ? "Registered" : "Invited",
+  //       }));
+
+  //       return res.status(httpStatus.OK).json({
+  //         message: "Users retrieved successfully.",
+  //         data: usersWithStatus, 
+  //       });
+  //     }
+
+  //     return res
+  //       .status(httpStatus.BAD_REQUEST)
+  //       .send({ message: "No users found" });
+  //   } catch (error) {
+  //     console.error("Error fetching users:", error);
+  //     return res
+  //       .status(httpStatus.INTERNAL_SERVER_ERROR)
+  //       .send({ message: "An error occurred while fetching users." });
+  //   }
+  // }
+
   async getAllUser(req, res, next) {
     try {
-      const users = await User.find({
-        orderBy: ["createdAt", "DESC"]
-      }); 
-      
+      const { id, role } = req.query; // Admin's ID and role from query params
+
+      // Check if the user is an admin and should only see their own users
+      let filter = {};
+      if (role === "admin") {
+        filter = { createdBy: id }; // Assuming each user has a `createdBy` field
+      }
+
+      // Fetch users based on the filter
+      const users = await User.find(filter).sort({ createdAt: -1 }); // Sort by `createdAt` descending
+
+      // Update registration status if needed
       if (users.length > 0) {
         for (let user of users) {
           if (user?.isRegistered === false && user?.password) {
-            user.isRegistered = true 
-            await user.save()
+            user.isRegistered = true;
+            await user.save();
           }
-          }
-        
-        // console.log(users, 'inflow')
+        }
+
+        // Add registration status
         const usersWithStatus = users.map((user) => ({
           ...user.toObject(),
           registrationStatus: user.isRegistered ? "Registered" : "Invited",
         }));
-  
+
         return res.status(httpStatus.OK).json({
           message: "Users retrieved successfully.",
-          data: usersWithStatus, 
+          data: usersWithStatus,
         });
       }
-  
+
       return res
         .status(httpStatus.BAD_REQUEST)
         .send({ message: "No users found" });
@@ -344,7 +389,8 @@ class UserController {
         .send({ message: "An error occurred while fetching users." });
     }
   }
-  
+
+
 
   async getUserById(req, res, next) {
     try {
@@ -690,16 +736,16 @@ class UserController {
     try {
       const { email, password } = req.body;
       const userData = await User.findOne({ email });
-  
+
       if (!userData) {
         return res.status(401).json({ message: "User not found!" });
       }
-  
+
       const hashedPassword = await hashPassword(password, 10);
-  
+
       const resData = await User.findById(userData._id)
       resData.password = hashedPassword
-      resData.isRegistered = true 
+      resData.isRegistered = true
       await resData.save()
       // const resData = await User.findByIdAndUpdate(userData._id, {
       //   $set: {
@@ -709,27 +755,27 @@ class UserController {
       // },
       // { new: true }
       // );
-  
+
       if (resData) {
         return res.status(201).json({
           message: "Password set successfully. User registration completed!!",
         });
       }
-  
+
       res.status(500).json({ message: "Failed to set password." });
     } catch (error) {
       if (error.name === "ValidationError") {
         return res.status(400).json({ message: "Validation error", errors: error.errors });
       }
-  
+
       if (error.code === 11000) {
         return res.status(409).json({ message: "Duplicate key error", error: error.message });
       }
-  
+
       res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
   }
-  
+
 
   async getUsersByAdmin(req, res, next) {
     // try {
@@ -746,7 +792,7 @@ class UserController {
   }
 
   // check registered users
- 
+
   // async checkRegistrationStatus(req, res, next) {
   //   try {
   //     const { email } = req.query; // Pass email as a query parameter
