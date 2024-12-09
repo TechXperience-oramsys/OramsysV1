@@ -45,7 +45,7 @@ const tokenValidation = Joi.object({
 
 router.post("/add_user", signUpValidate, userController.signUp);
 router.post("/login", loginValidate, userController.login);
-router.get("/validateToken", tokenValidate, userController.verifyToken);
+router.get("/validateToken", tokenValidate, userController.verifyToken); 
 router.get("/get", Validate, userController.getAllUser);
 router.get("/getById/:id", Validate, userController.getUserById);
 router.post("/edit/:id", editValidate, userController.editUser);

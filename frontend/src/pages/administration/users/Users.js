@@ -24,12 +24,10 @@ const Users = () => {
   // }, [userData]);
   useEffect(() => {
     if (userData?.data) {
-      // Sort by `dateAdded` in descending order (newest first)
       const sortedData = [...userData.data].sort(
-        (a, b) => new Date(b.dateAdded) - new Date(a.dateAdded) // Correct sorting logic
+        (a, b) => new Date(b.dateAdded) - new Date(a.dateAdded) 
       );
-      setGetUserDatas(sortedData); // Initialize with sorted data
-      // console.log('SORTED DATA', sortedData)
+      setGetUserDatas(sortedData); 
     }
   }, [userData]);
 
