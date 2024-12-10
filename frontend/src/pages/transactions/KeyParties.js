@@ -115,19 +115,19 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
         setkeyParties(updatedKeyParties);
         setRelatedPartyDetails(updatedRelatedPartyDetails);
     };
-   
+
     // const handleRelatedParties = () => {
     //     setRelatedPartyDetails([...relatedPartyDetails, { party_relation: '', buyer: '', shipper: '', upload_evidence: '' }]);
     //     console.log(relatedPartyDetails); 
     // };
     const handleRelatedParties = () => {
         setRelatedPartyDetails(prevDetails => [
-            ...prevDetails, 
+            ...prevDetails,
             { party_relation: '', buyer: '', shipper: '', upload_evidence: '' }
         ]);
         console.log(relatedPartyDetails); // Make sure this logs the new array.
     };
-    
+
 
     const handleRelationChange = (e, index) => {
         const newRelation = e.target.value;
@@ -189,7 +189,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
             setNames(temp_names);
         }
     }, [nameOption, setNames]);
-    
+
 
     const partiesEditData = (data, id) => {
         if (id !== undefined) {
@@ -256,7 +256,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
         dispatch(transactionDataAction(body))
         hendelNext()
     }
-    console.log('TAbLE dATa', tableData)
+    // console.log('TAbLE dATa', tableData)
     useEffect(() => {
         let buyer_arr = [];
         let warehouses = [];
@@ -404,7 +404,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                                 disabled={true} />
 
                         </Form.Group> */}
-                         {warehouseStatus &&
+                        {warehouseStatus &&
                             <Form.Group as={Col} lg={4} md={6} m={12} className="mb-3" controlId="formHorizontalEmail">
                                 <Form.Label className='text-muted'>Warehouse Company</Form.Label>
 
@@ -416,7 +416,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                         }
                     </Row>
                     <Row>
-                       
+
 
                         {pricingHedgingStatus &&
                             <Form.Group as={Col} lg={4} md={6} sm={12} className="mb-3" controlId="formHorizontalEmail">
@@ -462,7 +462,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                     </div>
 
                     <>
-                        {relatedPartyDetails.map((party, index) => ( 
+                        {relatedPartyDetails.map((party, index) => (
                             <Row key={index}>
                                 <Form.Group as={Col} lg={3}>
                                     <Form.Label>Party 1 <OptionalSpan /></Form.Label>
@@ -501,10 +501,10 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                                 <Form.Group as={Col} controlId="formGridZip">
                                     <Form.Label>Relation</Form.Label>
                                     <Form.Select
-                                          onChange={(e) => handleRelationChange(e, index)}
-                                          value={party.party_relation || 'Choose...'}
-                                          disabled={isView}>
-                                        <option disabled>Choose...</option>
+                                        onChange={(e) => handleRelationChange(e, index)}
+                                        value={party.party_relation || ''}
+                                        disabled={isView}>
+                                        <option value="" disabled>Choose...</option>
                                         {parties.map((item) => (
                                             <option key={item} value={item}>
                                                 {item}
@@ -537,7 +537,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                                             </div>
                                         )}
                                     </AntdForm>
-                                   
+
                                 </Col>
                             </Row>
                         ))}

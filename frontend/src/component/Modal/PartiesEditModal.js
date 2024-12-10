@@ -92,11 +92,11 @@ const PartiesEditModal = ({ show, onHide, getModalData, isView, editData, tableD
         return flag
     }
 
-    useEffect(() => {
-        console.log('isView', isView)
-        console.log('editData', editData)
-        console.log('names', names)
-    }, [isView, editData, names])
+    // useEffect(() => {
+    //     console.log('isView', isView)
+    //     console.log('editData', editData)
+    //     console.log('names', names)
+    // }, [isView, editData, names])
 
 
     const saveData = () => {

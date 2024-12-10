@@ -243,7 +243,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
   const counterpartyOptions = useSelector((state) => state.entityData.entity);
 
   useEffect(() => {
-    console.log("transactionData===", transactionData);
+    // console.log("transactionData===", transactionData);
     if (
       transactionData &&
       transactionData.facility?.currencyHedgeDetails &&
@@ -798,9 +798,9 @@ const Facility = ({ hendelCancel, hendelNext }) => {
     }
   };
 
-  useEffect(() => {
-    console.log("error", error);
-  }, [error]);
+  // useEffect(() => {
+  //   console.log("error", error);
+  // }, [error]);
 
   const save = async () => {
     if (validation()) {

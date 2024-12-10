@@ -82,8 +82,8 @@ const DocumentFlow = ({ hendelCancel, hendelNext }) => {
                                 value={documentFlow.documentRemittance}
                                 defaultValue="Choose...">
                                 <option>Choose...</option>
-                                {disableClearableOptions.map((item) => (
-                                    <option value={item}>{item}</option>
+                                {disableClearableOptions.map((item, i) => (
+                                    <option key={i} value={item}>{item}</option>
                                 ))}
 
                             </Form.Select>

@@ -444,8 +444,8 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                                         value={fundFlow.paymentMethod}
                                         defaultValue="Choose...">
                                         <option>Choose...</option>
-                                        {paymentMethodOption.map((item) => (
-                                            <option value={item}>{item}</option>
+                                        {paymentMethodOption.map((item, i) => (
+                                            <option key={i} value={item}>{item}</option>
                                         ))}
 
                                     </Form.Select>
@@ -523,8 +523,8 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                                 value={fundFlow.terms}
                                 defaultValue="Choose...">
                                 <option>Choose...</option>
-                                {termsOptions.map((item) => (
-                                    <option value={item}>{item}</option>
+                                {termsOptions.map((item, i) => (
+                                    <option key={i} value={item}>{item}</option>
                                 ))}
 
                             </Form.Select>
@@ -541,8 +541,8 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                                 value={fundFlow.paymentOrigin}
                                 defaultValue="Choose...">
                                 <option>Choose...</option>
-                                {country.map((item) => (
-                                    <option value={item._id}>{item.name}</option>
+                                {country.map((item, i) => (
+                                    <option key={i} value={item._id}>{item.name}</option>
                                 ))}
 
                             </Form.Select>
@@ -559,8 +559,8 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                                 value={fundFlow.beneficiary}
                                 defaultValue="Choose...">
                                 <option>Choose...</option>
-                                {beneficiary.map((item) => (
-                                    <option value={item._id}>{item.details?.name}</option>
+                                {beneficiary.map((item, i) => (
+                                    <option key={i} value={item._id}>{item.details?.name}</option>
                                 ))}
 
                             </Form.Select>
@@ -592,8 +592,8 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                                 value={fundFlow.additonalCharges.toString()}
                                 defaultValue="Choose...">
                                 <option>Choose...</option>
-                                {additonalChargesOption.map((item) => (
-                                    <option value={item.value}>{item.label}</option>
+                                {additonalChargesOption.map((item, i) => (
+                                    <option key={i} value={item.value}>{item.label}</option>
                                 ))}
 
                             </Form.Select>
@@ -620,8 +620,8 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                                                 value={fundFlow.payer}
                                                 defaultValue="Choose...">
                                                 <option>Choose...</option>
-                                                {beneficiary.map((item) => (
-                                                    <option value={item._id}>{item.details?.name}</option>
+                                                {beneficiary.map((item, i) => (
+                                                    <option key={i} value={item._id}>{item.details?.name}</option>
                                                 ))}
 
                                             </Form.Select>
@@ -638,8 +638,8 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                                                 disabled={isView}
                                                 defaultValue="Choose...">
                                                 <option>Choose...</option>
-                                                {CurrencyOptions.map((item) => (
-                                                    <option value={item.label}>{item.label}</option>
+                                                {CurrencyOptions.map((item, i) => (
+                                                    <option key={i} value={item.label}>{item.label}</option>
                                                 ))}
 
                                             </Form.Select>
@@ -666,8 +666,8 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                                                 disabled={isView}
                                                 defaultValue="Choose...">
                                                 <option>Choose...</option>
-                                                {CurrencyOptions.map((item) => (
-                                                    <option value={item.label}>{item.label}</option>
+                                                {CurrencyOptions.map((item, i) => (
+                                                    <option key={i} value={item.label}>{item.label}</option>
                                                 ))}
 
                                             </Form.Select>
@@ -700,8 +700,8 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                                                 disabled={isView}
                                                 defaultValue="Choose...">
                                                 <option>Choose...</option>
-                                                {CurrencyOptions.map((item) => (
-                                                    <option value={item.label}>{item.label}</option>
+                                                {CurrencyOptions.map((item, i) => (
+                                                    <option key={i} value={item.label}>{item.label}</option>
                                                 ))}
 
                                             </Form.Select>
@@ -729,8 +729,8 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                                                 disabled={isView}
                                                 defaultValue="Choose...">
                                                 <option>Choose...</option>
-                                                {CurrencyOptions.map((item) => (
-                                                    <option value={item.label}>{item.label}</option>
+                                                {CurrencyOptions.map((item, i) => (
+                                                    <option key={i} value={item.label}>{item.label}</option>
                                                 ))}
 
                                             </Form.Select>
