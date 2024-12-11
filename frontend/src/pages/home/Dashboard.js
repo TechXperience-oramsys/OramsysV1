@@ -352,21 +352,21 @@ const Dashboard = () => {
       key: "overview",
       icon: <MailOutlined />,
     },
-    {
-      label: "Analytics",
-      key: "analytics",
-      icon: <RiseOutlined />,
-    },
-    {
-      label: "Financials",
-      key: "financials",
-      icon: <FaMoneyCheckAlt />,
-    },
-    {
-      label: "Notifications",
-      key: "notifications",
-      icon: <BellOutlined />,
-    },
+    // {
+    //   label: "Analytics",
+    //   key: "analytics",
+    //   icon: <RiseOutlined />,
+    // },
+    // {
+    //   label: "Financials",
+    //   key: "financials",
+    //   icon: <FaMoneyCheckAlt />,
+    // },
+    // {
+    //   label: "Notifications",
+    //   key: "notifications",
+    //   icon: <BellOutlined />,
+    // },
   ];
 
   const [current, setCurrent] = useState("overview");
@@ -719,24 +719,24 @@ const Dashboard = () => {
             </div>
           </div>
         );
-      case "analytics":
-        return (
-          <div>
-            <ChartComponent />
-          </div>
-        );
-      case "financials":
-        return (
-          <div>
-            <Financials />
-          </div>
-        );
-      case "notifications":
-        return (
-          <div>
-            <NotificationSection />
-          </div>
-        );
+      // case "analytics":
+      //   return (
+      //     <div>
+      //       <ChartComponent />
+      //     </div>
+      //   );
+      // case "financials":
+      //   return (
+      //     <div>
+      //       <Financials />
+      //     </div>
+      //   );
+      // case "notifications":
+      //   return (
+      //     <div>
+      //       <NotificationSection />
+      //     </div>
+      //   );
       default:
         return <div>Select an option</div>;
     }

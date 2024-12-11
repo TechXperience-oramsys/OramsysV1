@@ -135,34 +135,7 @@ const Transactions = () => {
       .catch((e) => console.log(e));
   };
 
-  // const downloadTermSheet = (id, name) => {
-  //   ApiGet(`transaction/termSheet/${id}`, { responseType: 'arraybuffer' }) // Set response type to arraybuffer
-  //     .then((res) => {
-  //       const blob = new Blob([res.data], { type: 'application/pdf' });
-  //       const fileURL = URL.createObjectURL(blob);
 
-  //       if (name === "view") {
-  //         window.open(fileURL); // View the PDF in a new tab
-  //       } else if (name === "download") {
-  //         const downloadLink = document.createElement("a");
-  //         downloadLink.href = fileURL;
-  //         downloadLink.download = "TermSheet.pdf";
-  //         downloadLink.click();
-  //       }
-  //     })
-  //     .catch((e) => console.error("Error downloading TermSheet:", e));
-  // };
-
-
-  // const converBase64toBlob = (content, contentType) => {
-  //   const linkSource = `data:application/pdf;base64,${content}`;
-  //   const downloadLink = document.createElement("a");
-  //   const fileName = "TermSheet.pdf";
-
-  //   downloadLink.href = linkSource;
-  //   downloadLink.download = fileName;
-  //   downloadLink.click();
-  // };
   const converBase64toBlob = (content, contentType = "application/pdf") => {
     const byteCharacters = atob(content);
     const byteArrays = [];
