@@ -407,7 +407,7 @@ const Workflow = () => {
               <Menu.Item
                 onClick={() => {
                   setIsWorkFlowNotes(true)
-                  setWorkFlowNotes(record?.workflowstepNotes.filter((item)=>item.department==workflowData?.workflowDocument?.department));
+                  setWorkFlowNotes(record?.workflowstepNotes.filter((item) => item.department == workflowData?.workflowDocument?.department));
                 }}
               >
                 <EyeOutlined className="pe-2" /> View Work Flow Notes
@@ -532,19 +532,19 @@ const Workflow = () => {
           {workFlowNotes.length > 0 ? (
             <Row>
               {workFlowNotes.map((note, index) => (
-                
-                  <Form.Group className="mb-1">
-                   
 
-<div className="d-flex"> <p>     {note?.username}  </p>  
+                <Form.Group className="mb-1">
 
-<p className="text-muted mx-2">({note?.department})</p>
 
- </div>
+                  <div className="d-flex"> <p>     {note?.username}  </p>
 
-                <div style={{fontSize:12}}>  {note?.note} </div>
-                  </Form.Group>
-                
+                    <p className="text-muted mx-2">({note?.department})</p>
+
+                  </div>
+
+                  <div style={{ fontSize: 12 }}>  {note?.note} </div>
+                </Form.Group>
+
               ))}
             </Row>
           ) : (

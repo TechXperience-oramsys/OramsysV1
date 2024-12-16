@@ -7,6 +7,8 @@ import CurrencyHedgeDetailsModal from '../../../component/Modal/CurrencyHedgeDet
 import FinancingSufficientlyModal from '../../../component/Modal/FinancingSufficientlyModal'
 import { addRiskAssessment, getRiskAssessment } from '../../../redux/actions/riskAssessmentAction'
 import { ADD_RISK_ASSESSMENT } from '../../../redux/types'
+import { FaRegCheckCircle } from 'react-icons/fa'
+import { PiWarningCircleLight } from 'react-icons/pi'
 
 
 const MarketPriceRisk = ({ hendelNext, hendelCancel }) => {
@@ -155,8 +157,10 @@ const MarketPriceRisk = ({ hendelNext, hendelCancel }) => {
     return (
         <>
             <div className='add-edit-product'>
-                <div className='d-flex align-items-center justify-content-center error-info mb-3'>
-                    <img alt='icon' src={`../../../assets/img/about/${marketPriceRisk?.contractsBasis?.justification || marketPriceRisk?.priceHedge?.hedgingMethod || marketPriceRisk?.financingSufficiently?.justification ? "error-info-success.png" : "error-info.png"}`} className='me-3' />
+                <div className='d-flex align-items-center mt-5 justify-content-center error-info mb-3'>
+                    {marketPriceRisk?.contractsBasis?.justification || marketPriceRisk?.priceHedge?.hedgingMethod || marketPriceRisk?.financingSufficiently?.justification ? <FaRegCheckCircle className='text-success fs-2 me-3' /> : <PiWarningCircleLight className='text-danger fs-2 me-3' />}
+
+                    {/* <img alt='icon' src={`../../../assets/img/about/${marketPriceRisk?.contractsBasis?.justification || marketPriceRisk?.priceHedge?.hedgingMethod || marketPriceRisk?.financingSufficiently?.justification ? "error-info-success.png" : "error-info.png"}`} className='me-3' /> */}
                     {marketPriceRisk?.contractsBasis?.justification || marketPriceRisk?.priceHedge?.hedgingMethod || marketPriceRisk?.financingSufficiently?.contractValue ?
                         <p className='success'>Risks are acceptable due to mitigants</p> :
                         <p className='error'>The below risks require your attention</p>
@@ -169,15 +173,19 @@ const MarketPriceRisk = ({ hendelNext, hendelCancel }) => {
                             <div>
                                 {getTransactionByIdData.data?.details?.pricingDetails.pricingType !== "Firm fixed price" ? <><div className='risk-tab' onClick={() => { setShowModal(true); setSelected('contractsBasis') }}>
                                     <h3>Finance only on Firm Fixed Price contracts basis</h3>
-                                    <img alt='icon' src={`../../../assets/img/about/${marketPriceRisk?.contractsBasis?.justification ? "correct-success.png" : "correct (1).png"}`} />
+                                    {/* <img alt='icon' src={`../../../assets/img/about/${marketPriceRisk?.contractsBasis?.justification ? "correct-success.png" : "correct (1).png"}`} /> */}
+                                    {marketPriceRisk?.contractsBasis?.justification ? <FaRegCheckCircle className='text-success fs-3' /> : <FaRegCheckCircle className='text-body-tertiary fs-2' />}
+
                                 </div></> : ''}
                                 <div className='risk-tab' onClick={() => { setCurrencyHedgeDetailsModal(true); setSelected('priceHedge') }}>
                                     <h3>Enter a price hedge</h3>
-                                    <img alt='icon' src={`../../../assets/img/about/${marketPriceRisk?.priceHedge?.hedgingMethod ? "correct-success.png" : "correct (1).png"}`} />
+                                    {/* <img alt='icon' src={`../../../assets/img/about/${marketPriceRisk?.priceHedge?.hedgingMethod ? "correct-success.png" : "correct (1).png"}`} /> */}
+                                    {marketPriceRisk?.priceHedge?.hedgingMethod ? <FaRegCheckCircle className='text-success fs-3' /> : <FaRegCheckCircle className='text-body-tertiary fs-2' />}
                                 </div>
                                 <div className='risk-tab' onClick={() => { setFinancingSufficientlyModal(true); setSelected('financingSufficiently') }}>
                                     <h3>Margin the financing sufficiently</h3>
-                                    <img alt='icon' src={`../../../assets/img/about/${marketPriceRisk?.financingSufficiently?.contractValue ? "correct-success.png" : "correct (1).png"}`} />
+                                    {/* <img alt='icon' src={`../../../assets/img/about/${marketPriceRisk?.financingSufficiently?.contractValue ? "correct-success.png" : "correct (1).png"}`} /> */}
+                                    {marketPriceRisk?.financingSufficiently?.contractValue ? <FaRegCheckCircle className='text-success fs-3' /> : <FaRegCheckCircle className='text-body-tertiary fs-2' />}
                                 </div>
                             </div>
                         }

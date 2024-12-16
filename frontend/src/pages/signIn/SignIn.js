@@ -160,7 +160,7 @@ const SignIn = () => {
                     onClick={(e) => Login(e)}
                     className="btn btn-block btn-primary"
                   >
-                    Log In
+                    Login
                   </button>
 
                   {/* <span className="d-block text-left my-4 text-muted">&mdash; or login as &mdash;</span> */}

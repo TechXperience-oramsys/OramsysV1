@@ -162,13 +162,7 @@ const FunctionalAdmin = () => {
                       />
                       <label htmlFor="floatingInputValue">Email address</label>
                       {loginFormError.email && (
-                        <span
-                          style={{
-                            color: "#da251e",
-                            width: "100%",
-                            textAlign: "start",
-                          }}
-                        >
+                        <span style={{ color: "#da251e", width: "100%", textAlign: "start"}}>
                           {loginFormError.email}
                         </span>
                       )}
@@ -231,41 +225,12 @@ const FunctionalAdmin = () => {
                 </div>
               </div>
             </div>
-            {/* 
-                        <div className="col-md-6">
-                            <img src={svgIcon} style={{ height: '480x' }} alt="Image" className='img-slide img-responsive' />
-                        </div> */}
+          
           </div>
         </div>
       </div>
 
-      {/* <section className="login">
-                <div className="container">
-                    <div className="sign-grd">
-                        <div className="lft-pan">
-                            <div className="form-box">
-                                <div className='form'>
-                                    <h1 className='mb-5 mt-5'>Sign In</h1>
-                                    <input type="email" placeholder="Email" name='email' onChange={handelChange} />
-                                    {loginFormError.email && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{loginFormError.email}</span>}
-                                    <input type="password" placeholder="Password" name='password' onChange={handelChange} />
-                                    {loginFormError.password && <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{loginFormError.password}</span>}
-                                    <a href="#" className="forgot">Forgot your password?</a>
-                                    <button onClick={(e) => Login(e)}>Sign In</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="rgt-pan">
-                            <h1>Login with your </h1>
-                            <p> Log in with your coopertae credentials
-                            </p>
-                            <p>OR</p>
-                            <a onClick={() => navigate('/signup')} className="ghost">Create Account</a>
-
-                        </div>
-                    </div>
-                </div>
-            </section> */}
+   
     </>
   );
 };

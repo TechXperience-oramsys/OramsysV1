@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import { entityGetAction } from '../../redux/actions/entityAction';
+import { IoCloseSharp } from "react-icons/io5";
 
 const LocalCreditStandingModal = ({ show, onHide, getModalData ,data}) => {
 
@@ -67,7 +68,7 @@ const LocalCreditStandingModal = ({ show, onHide, getModalData ,data}) => {
                     <div className='modal-content'>
                     <div className='d-flex justify-content-between'>
                         <h2 id="transition-modal-title" className='modal-title'>Local Credit standing modal</h2>
-                            <img alt='prosp' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                            <IoCloseSharp onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                         </div>
                         <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                             <div className='form'>

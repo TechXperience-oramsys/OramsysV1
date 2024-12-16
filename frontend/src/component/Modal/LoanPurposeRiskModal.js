@@ -5,6 +5,8 @@ import { Row, Col } from "react-bootstrap";
 import TextEditerModal from './TextEditerModal';
 import { InboxOutlined } from '@ant-design/icons';
 import { Form, Upload } from 'antd';
+import { IoCloseSharp } from "react-icons/io5";
+
 
 const { Dragger } = Upload;
 
@@ -87,7 +89,7 @@ const LoanPurposeRiskModal = ({ show, onHide, getModalData, types, data }) => {
                     <div className='modal-content'>
                         <div className='d-flex justify-content-between'>
                             <h2 id="transition-modal-title" className='modal-title'>Provide a Justification</h2>
-                            <img alt='props' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                            <IoCloseSharp onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                         </div>
                         <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                             <div className='form'>

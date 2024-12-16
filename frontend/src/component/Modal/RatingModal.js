@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 // import { toast } from 'react-hot-toast'
-import { TextField, Fade, Modal, Backdrop, Autocomplete  } from '@mui/material';
+import { TextField, Fade, Modal, Backdrop, Autocomplete } from '@mui/material';
 // import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useDispatch, useSelector } from 'react-redux';
 import { ratingAgenciesAction } from '../../redux/actions/ratingAgenciesAction';
@@ -9,8 +9,9 @@ import { companydataAction } from '../../redux/actions/companydataAction';
 // import { getRatingAgenciesById } from '../../redux/actions/entityAction';
 // import { useLocation } from 'react-router-dom';
 import moment from 'moment';
+import { IoCloseSharp } from "react-icons/io5";
 
-const RatingModal = ({ onHide, show, mode, editData }) => { 
+const RatingModal = ({ onHide, show, mode, editData }) => {
 
     const dispatch = useDispatch()
     // const location = useLocation()
@@ -144,7 +145,7 @@ const RatingModal = ({ onHide, show, mode, editData }) => {
                     <div className='modal-content'>
                         <div className='d-flex justify-content-between'>
                             <h2 id="transition-modal-title" className='modal-title'>{mode} Rating</h2>
-                            <img alt='props' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                            <IoCloseSharp onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                         </div>
                         <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                             <div className='form'>

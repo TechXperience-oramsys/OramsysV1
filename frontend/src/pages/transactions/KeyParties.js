@@ -265,7 +265,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
             hendelNext()
         }
     }
-    console.log('TAbLE dATa', tableData)
+    // console.log('TAbLE dATa', tableData)
     useEffect(() => {
         let buyer_arr = [];
         let warehouses = [];

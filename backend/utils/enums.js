@@ -13,6 +13,13 @@ const UserDepartmentTypes = {
     Risk: 'Risk',
     Credit_Remediation: 'Credit Remediation',
     Senior_Management: 'Senior Management',
+    Teller: "Teller",
+    Accountant: "Accountant",
+    Branch_Manager: "Branch Manager",
+    Investment_Banker: "Investment Banker",
+    Financial_Advisor: "Financial Advisor",
+    Private_banker: "Private banker",
+    Appraisal_Officer: "Appraisal Officer"
 }
 
 const ProductNatureTypes = {

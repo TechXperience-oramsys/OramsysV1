@@ -4,6 +4,7 @@ const { createAdmin,  validateCorporationData, updateAdmin } = require("../contr
 const { resetAdminPassword } = require("../controllers/resetAdminPassword");
 const { sendOtp, verifyOtp, setPassword } = require("../controllers/forgetAdminPassword");
 const { login, getAllAdmins, getAdminById } = require("../controllers/admin");
+// const userController = require("../controllers/user");
 const httpStatus = require("http-status");
 const Joi = require("joi");
 const APIResponse = require("../helpers/APIResponse");
@@ -19,6 +20,8 @@ router.post("/set-password", setPassword());
 router.post("/login", loginValidate, login());
 router.get("/getAdmins", getAllAdmins());
 router.get("/get-admin-by/:id", verifyToken, getAdminById());
+// router.get('/check-registration-status', userController.checkRegistrationStatus);
+
 router.put(
   "/update-admin/:id",
   verifyToken,

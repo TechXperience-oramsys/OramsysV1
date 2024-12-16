@@ -1,4 +1,4 @@
-import { Backdrop, Fade, Modal} from '@mui/material'
+import { Backdrop, Fade, Modal } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Col, Form, Row } from 'react-bootstrap'
 // import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -7,6 +7,9 @@ import { entitiesRoleAction } from '../../redux/actions/entitiesRoleAction';
 import { entityGetAction } from '../../redux/actions/entityAction';
 import AddEntityModal from './AddEntityModal';
 import { toast } from "react-hot-toast";
+
+import { IoCloseSharp } from "react-icons/io5";
+
 
 
 const PartiesEditModal = ({ show, onHide, getModalData, isView, editData, tableData }) => {
@@ -89,11 +92,11 @@ const PartiesEditModal = ({ show, onHide, getModalData, isView, editData, tableD
         return flag
     }
 
-    useEffect(() => {
-        console.log('isView', isView)
-        console.log('editData', editData)
-        console.log('names', names)
-    }, [isView, editData, names])
+    // useEffect(() => {
+    //     console.log('isView', isView)
+    //     console.log('editData', editData)
+    //     console.log('names', names)
+    // }, [isView, editData, names])
 
 
     const saveData = () => {
@@ -128,7 +131,7 @@ const PartiesEditModal = ({ show, onHide, getModalData, isView, editData, tableD
                     <div className='modal-content'>
                         <div className='d-flex justify-content-end'>
                             {/* <h2 id="transition-modal-title" className='modal-title'>Edit Licence</h2> */}
-                            <img alt='props' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                            <IoCloseSharp onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                         </div>
                         <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                             <div className=''>

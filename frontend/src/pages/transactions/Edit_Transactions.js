@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Steps, Button, Typography } from 'antd';
-import {Box,} from '@mui/material';
+import { Box, } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import DetailsTransaction from './DetailsTransaction';
 import KeyParties from './KeyParties';
@@ -123,60 +123,63 @@ const Edit_Transactions = () => {
     return (
         <>
             <div className='add-edit-product'>
-                <Box sx={{ width: '100%' }}>
-                    {productNature === 'Physical' && (
-                        <Steps className='container mb-5' current={activeStep}>
-                            {step.length &&
-                                step.map((label, index) => (
-                                    <Step key={label} title={label} icon={getStepIcon(label)} />
-                                ))}
-                        </Steps>
-                    )}
-                    {activeStep === step.length ? (
-                        <React.Fragment>
-                            <Typography style={{ marginTop: '2px', marginBottom: '6px' }}>
-                                All steps completed - you&apos;re finished
-                            </Typography>
-                            <div style={{ display: 'flex', flexDirection: 'row', paddingTop: '2px' }}>
-                                <div style={{ flex: '1 1 auto' }} />
-                                <Button onClick={handleReset}>Reset</Button>
-                            </div>
-                        </React.Fragment>
-                    ) : (
-                        <>
-                            {
-                                transactionType === "Export" ? <React.Fragment>
-                                    {
-                                        productNature === 'Physical' ?
-                                            <>
-                                                {activeStep + 1 === 1 && <DetailsTransaction hendelNext={handleNext} signalShippingCompany={signalShippingCompany} signalCounterParty={signalCounterParty} signalPricingHedgingStatus={signalPricingHedgingStatus} signalContract={signalContract} signalWarehouseCompany={signalWarehouseCompany} signalWarehouseStatus={signalWarehouseStatus} signalLender={signalLender} signalBorrower={signalBorrower} transactionType={transactionType} transaction_id={transId} />}
-                                                {activeStep + 1 === 2 && <KeyParties hendelNext={handleNext} getShippingCompany={getShippingCompany} getCounterParty={getCounterParty} pricingHedgingStatus={pricingHedgingStatus} getLender={getLender} getBorrower={getBorrower} getWarehouseCompany={getWarehouseCompany} warehouseStatus={warehouseStatus} hendelCancel={handleBack} transactionType={transactionType} />}
-                                                {activeStep + 1 === 3 && <DocumentFlow hendelNext={handleNext} hendelCancel={handleBack} />}
-                                                {activeStep + 1 === 4 && <FundFlow hendelNext={handleNext} getTrans={getTrans} hendelCancel={handleBack} />}
-                                                {activeStep + 1 === 5 && <Facility hendelNext={handleNext} hendelCancel={handleBack} />}
-                                            </>
-                                            :
-                                            <>
-                                                <div style={{ height: "88vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                                    <p style={{ fontSize: '48px', fontWeight: "bold" }}>Product not yet available.</p>
-                                                </div>
-                                            </>
-                                    }
-                                </React.Fragment>
-                                    :
-                                    <>
-                                        {!location.state && (
+                {/* <Box sx={{ width: '100%' }}> */}
+                {productNature === 'Physical' && (
+                    <Steps className='container mb-5' current={activeStep}>
+                        {step.length &&
+                            step.map((label, index) => (
+                                <Step key={label} title={label} icon={getStepIcon(label)} />
+                            ))}
+                    </Steps>
+                )}
+                {activeStep === step.length ? (
+                    <React.Fragment>
+                        <Typography style={{ marginTop: '2px', marginBottom: '6px' }}>
+                            All steps completed - you&apos;re finished
+                        </Typography>
+                        <div style={{ display: 'flex', flexDirection: 'row', paddingTop: '2px' }}>
+                            <div style={{ flex: '1 1 auto' }} />
+                            <Button onClick={handleReset}>Reset</Button>
+                        </div>
+                    </React.Fragment>
+                ) : (
+                    <>
+                        {
+                            transactionType === "Export" ? <React.Fragment>
+                                {
+                                    productNature === 'Physical' ?
+                                        <>
+                                            {activeStep + 1 === 1 && <DetailsTransaction hendelNext={handleNext} signalShippingCompany={signalShippingCompany} signalCounterParty={signalCounterParty} signalPricingHedgingStatus={signalPricingHedgingStatus} signalContract={signalContract} signalWarehouseCompany={signalWarehouseCompany} signalWarehouseStatus={signalWarehouseStatus} signalLender={signalLender} signalBorrower={signalBorrower} transactionType={transactionType} transaction_id={transId} />}
+                                            {activeStep + 1 === 2 && <KeyParties hendelNext={handleNext} getShippingCompany={getShippingCompany} getCounterParty={getCounterParty} pricingHedgingStatus={pricingHedgingStatus} getLender={getLender} getBorrower={getBorrower} getWarehouseCompany={getWarehouseCompany} warehouseStatus={warehouseStatus} hendelCancel={handleBack} transactionType={transactionType} />}
+                                            {activeStep + 1 === 3 && <DocumentFlow hendelNext={handleNext} hendelCancel={handleBack} />}
+                                            {activeStep + 1 === 4 && <FundFlow hendelNext={handleNext} getTrans={getTrans} hendelCancel={handleBack} />}
+                                            {activeStep + 1 === 5 && <Facility hendelNext={handleNext} hendelCancel={handleBack} />}
+                                        </>
+                                        :
+                                        <>
+                                            <div style={{ height: "88vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                                <p style={{ fontSize: '48px', fontWeight: "bold" }}>Product not yet available.</p>
+                                            </div>
+                                        </>
+                                }
+                            </React.Fragment>
+                                :
+                                <>
+                                    {/* {!location.state && (
                                             <div style={{ height: "88vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
                                                 <p style={{ fontSize: '48px', fontWeight: "bold" }}>Product not yet available. Coming soon</p>
                                             </div>
-                                        )}
+                                        )} */}
+                                    <div style={{ height: "88vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                        <p style={{ fontSize: '48px', fontWeight: "bold" }}>Import Process is not yet available. Coming soon.</p>
+                                    </div>
 
-                                    </>
-                            }
-                        </>
+                                </>
+                        }
+                    </>
 
-                    )}
-                </Box>
+                )}
+                {/* </Box> */}
             </div>
         </>
     )

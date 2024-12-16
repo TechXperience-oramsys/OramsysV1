@@ -75,13 +75,13 @@ class UserController {
       if (!user) {
         return res
           .status(httpStatus.OK)
-          .json(new APIResponse(null, "Wrong Email", httpStatus.NOT_FOUND));
+          .json(new APIResponse(null, "login failed. incorrect email", httpStatus.NOT_FOUND));
       }
       const match = await comparePassword(req.body.password, user.password);
       if (!match) {
         return res
           .status(httpStatus.OK)
-          .json(new APIResponse(null, "Wrong Password", httpStatus.NOT_FOUND));
+          .json(new APIResponse(null, "Login failed. Incorrect password", httpStatus.NOT_FOUND));
       }
 
       const token = getJWTToken({
@@ -106,7 +106,7 @@ class UserController {
     } catch (e) {
       return res
         .status(httpStatus.BAD_REQUEST)
-        .send({ message: "Somethig went wrong" });
+        .send({ message: "Something went wrong" });
     }
   }
 
@@ -117,27 +117,27 @@ class UserController {
   //       path: "createdBy",
   //       select: "corporationName",
   //     });
-      
+
   //     if (!user) {
   //       return res
   //         .status(httpStatus.OK)
   //         .json(new APIResponse(null, "Wrong Email", httpStatus.NOT_FOUND));
   //     }
-  
+
   //     const match = await comparePassword(req.body.password, user.password);
   //     if (!match) {
   //       return res
   //         .status(httpStatus.OK)
   //         .json(new APIResponse(null, "Wrong Password", httpStatus.NOT_FOUND));
   //     }
-  
+
   //     // Generate the JWT token with user ID, email, and role
   //     const token = getJWTToken({
   //       id: user.id,
   //       email: req.body.email,
   //       role: "user",
   //     });
-  
+
   //     // Set the JWT token in an HTTP-only cookie
   //     res.cookie('authToken', token, {
   //       httpOnly: true,
@@ -145,7 +145,7 @@ class UserController {
   //       sameSite: 'Strict',
   //       maxAge: 60 * 60 * 1000,  // 1 hour
   //     });
-  
+
   //     // Prepare the user data for response (excluding the token)
   //     const newUser = {
   //       id: user.id,
@@ -154,7 +154,7 @@ class UserController {
   //       department: user.department,
   //       admin: user.createdBy,
   //     };
-  
+
   //     // Send the response to the client
   //     return res
   //       .status(httpStatus.OK)
@@ -165,7 +165,7 @@ class UserController {
   //       .send({ message: "Something went wrong" });
   //   }
   // }
-  
+
 
   async signUp(req, res, next) {
     let body = req.body;
@@ -181,7 +181,7 @@ class UserController {
     if (req.body.password) {
       newPassword = await hashPassword(req.body.password, 10);
     } else {
-      newPassword = await hashPassword("", 10);
+      newPassword = ""
     }
     const newUser = {
       name: body.name,
@@ -190,11 +190,11 @@ class UserController {
       otp: otp,
       createdBy: body.createdBy,
     };
-    console.log(generateOTP());
+    // console.log(generateOTP());
     const model = new User(newUser);
     try {
       const alreadyExist = await User.getUserByEmail(req.body.email);
-      console.log("tetstyuuuo jhyuh");
+      // console.log("tetstyuuuo jhyuh");
       if (!alreadyExist.length) {
         const nodemailer = require("nodemailer");
 
@@ -207,25 +207,6 @@ class UserController {
             pass: "0ramsys!@#",
           },
         });
-        // Email content
-        // const mailOptions = {
-        //   from: "notification@techxperience.ng",
-        //   to: body.email,
-        //   subject: "OTP from Oramsys",
-        //   text: "User created successfully",
-        //   html: `
-        //     <div style="font-family: Arial, sans-serif; line-height: 1.5; color: #333;">
-        //       <p styyle="font-size: 16px">Hi, ${body.name}</p>
-        //       <p styyle="font-size: 12px">You have been onboarded on the Oramsys platform. Click on the link below to enter the OTP and create a password.</p>
-        //       <p style="font-weight: bold; font-size: 20px;">OTP: ${otp}</p>
-        //       <p>
-        //         <a href="https://oramsysdev.com/verify-user" style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">
-        //           Verify Account
-        //         </a>
-        //       </p>
-        //     </div>
-        //   `,
-        // };
 
         const mailOptions = {
           from: "notification@techxperience.ng",
@@ -312,20 +293,104 @@ class UserController {
     }
   }
 
+  // async getAllUser(req, res, next) {
+  //   // try {
+  //   const user = await User.getAll(req.query.id, req.query.role);
+
+
+  //   if (user) {
+  //     return res
+  //       .status(httpStatus.OK)
+  //       .json(new APIResponse(user, "User get successfully.", httpStatus.OK));
+  //   }
+
+  //   return res
+  //     .status(httpStatus.BAD_REQUEST)
+  //     .send({ message: "user not found" });
+  // }
+  // async getAllUser(req, res, next) {
+  //   try {
+  //     const users = await User.find({
+  //       orderBy: ["createdAt", "DESC"]
+  //     }); 
+
+  //     if (users.length > 0) {
+  //       for (let user of users) {
+  //         if (user?.isRegistered === false && user?.password) {
+  //           user.isRegistered = true 
+  //           await user.save()
+  //         }
+  //         }
+
+  //       // console.log(users, 'inflow')
+  //       const usersWithStatus = users.map((user) => ({
+  //         ...user.toObject(),
+  //         registrationStatus: user.isRegistered ? "Registered" : "Invited",
+  //       }));
+
+  //       return res.status(httpStatus.OK).json({
+  //         message: "Users retrieved successfully.",
+  //         data: usersWithStatus, 
+  //       });
+  //     }
+
+  //     return res
+  //       .status(httpStatus.BAD_REQUEST)
+  //       .send({ message: "No users found" });
+  //   } catch (error) {
+  //     console.error("Error fetching users:", error);
+  //     return res
+  //       .status(httpStatus.INTERNAL_SERVER_ERROR)
+  //       .send({ message: "An error occurred while fetching users." });
+  //   }
+  // }
+
   async getAllUser(req, res, next) {
-    // try {
-    const user = await User.getAll(req.query.id, req.query.role);
+    try {
+      const { id, role } = req.query; // Admin's ID and role from query params
 
-    if (user) {
+      // Check if the user is an admin and should only see their own users
+      let filter = {};
+      if (role === "admin") {
+        filter = { createdBy: id }; // Assuming each user has a `createdBy` field
+      }
+
+      // Fetch users based on the filter
+      const users = await User.find(filter).sort({ createdAt: -1 }); // Sort by `createdAt` descending
+
+      // Update registration status if needed
+      if (users.length > 0) {
+        for (let user of users) {
+          if (user?.isRegistered === false && user?.password) {
+            user.isRegistered = true;
+            await user.save();
+          }
+        }
+
+        // Add registration status
+        const usersWithStatus = users.map((user) => ({
+          ...user.toObject(),
+          registrationStatus: user.isRegistered ? "Registered" : "Invited",
+        }));
+
+        return res.status(httpStatus.OK).json({
+          message: "Users retrieved successfully.",
+          data: usersWithStatus,
+        });
+      }
+
       return res
-        .status(httpStatus.OK)
-        .json(new APIResponse(user, "User get successfully.", httpStatus.OK));
+        .status(httpStatus.BAD_REQUEST)
+        .send({ message: "No users found" });
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      return res
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .send({ message: "An error occurred while fetching users." });
     }
-
-    return res
-      .status(httpStatus.BAD_REQUEST)
-      .send({ message: "user not found" });
   }
+
+
 
   async getUserById(req, res, next) {
     try {
@@ -462,7 +527,7 @@ class UserController {
 
   async verifyToken(req, res, next) {
     try {
-      console.log("req", req.headers.authorization);
+      // console.log("req", req.headers.authorization);
       const user = decodeToken(req.headers.authorization);
       if (!user) {
         return res
@@ -484,7 +549,7 @@ class UserController {
   async verifyOtp(req, res, next) {
     try {
       const otp = req.body.otp;
-      console.log(otp, "otp");
+      // console.log(otp, "otp");
       if (!otp) {
         return res
           .status(httpStatus.BAD_REQUEST)
@@ -493,7 +558,7 @@ class UserController {
           );
       }
       const user = await User.findOne({ otp });
-      console.log(user, "user");
+      // console.log(user, "user");
       if (!user) {
         return res
           .status(httpStatus.UNAUTHORIZED)
@@ -528,11 +593,11 @@ class UserController {
       if (password !== confirm_password) {
         return res
           .status(httpStatus.BAD_REQUEST)
-          .send({ message: "Password not matched!" });
+          .send({ message: "Password does not match!" });
       }
       const newPassword = await hashPassword(password, 10);
       const updatedUser = await User.updateUser(
-        { password: newPassword },
+        { password: newPassword, isRegistered: true },
         user._id
       );
       return res
@@ -540,7 +605,7 @@ class UserController {
         .json(
           new APIResponse(
             updatedUser,
-            "User updated successfully.",
+            "Password updated successfully!!..",
             httpStatus.OK
           )
         );
@@ -577,7 +642,7 @@ class UserController {
             },
           });
 
-        
+
           const mailOptions = {
             from: "notification@techxperience.ng",
             to: user?.email,
@@ -612,7 +677,7 @@ class UserController {
               </div>
             `,
           };
-          
+
           // Send the email
           transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
@@ -652,71 +717,65 @@ class UserController {
       const userData = await User.findOne({ email: body.email });
       if (userData) {
         if (userData.otp == body.otp) {
-          res.status(201).json({ message: "OTP Verified" });
+          // await User.findByIdAndUpdate(userData._id, { $set: { isRegistered: true } });
+          res.status(201).json({ message: "OTP Verified. User registration completed!" });
         } else {
-          res.status(401).json({ message: "OTP not verified!" });
+          res.status(401).json({ message: "Invalid OTP!" });
         }
       } else {
-        res.status(401).json({ message: "OTP not verified!" });
+        res.status(401).json({ message: "User not found!" });
       }
     } catch (error) {
-      // Handle specific error types
-      if (error.name === "ValidationError") {
-        // Mongoose validation error
-        res
-          .status(400)
-          .json({ message: "Validation error", errors: error.errors });
-      } else if (error.code && error.code === 11000) {
-        // MongoDB duplicate key error
-        res
-          .status(409)
-          .json({ message: "Duplicate key error", error: error.message });
-      } else {
-        // General server error
-        console.error("Unexpected error:", error);
-        res
-          .status(500)
-          .json({ message: "Internal Server Error", error: error.message });
-      }
+      console.error("Unexpected error:", error);
+      res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
   }
 
+
   async setPassword(req, res, next) {
     try {
-      const body = req.body;
-      const userData = await User.findOne({ email: body.email });
-      if (userData) {
-        let hashedPassword = await hashPassword(body.password, 10);
-        const resData = await User.findByIdAndUpdate(userData._id, {
-          $set: { password: hashedPassword },
+      const { email, password } = req.body;
+      const userData = await User.findOne({ email });
+
+      if (!userData) {
+        return res.status(401).json({ message: "User not found!" });
+      }
+
+      const hashedPassword = await hashPassword(password, 10);
+
+      const resData = await User.findById(userData._id)
+      resData.password = hashedPassword
+      resData.isRegistered = true
+      await resData.save()
+      // const resData = await User.findByIdAndUpdate(userData._id, {
+      //   $set: {
+      //     password: hashedPassword,
+      //     isRegistered: true, // Mark user as registered
+      //   },
+      // },
+      // { new: true }
+      // );
+
+      if (resData) {
+        return res.status(201).json({
+          message: "Password set successfully. User registration completed!!",
         });
-        if (resData) {
-          res.status(201).json({
-            message: "Password Changed Successfully!",
-          });
-        }
       }
+
+      res.status(500).json({ message: "Failed to set password." });
     } catch (error) {
-      // Handle specific error types
       if (error.name === "ValidationError") {
-        // Mongoose validation error
-        res
-          .status(400)
-          .json({ message: "Validation error", errors: error.errors });
-      } else if (error.code && error.code === 11000) {
-        // MongoDB duplicate key error
-        res
-          .status(409)
-          .json({ message: "Duplicate key error", error: error.message });
-      } else {
-        // General server error
-        console.error("Unexpected error:", error);
-        res
-          .status(500)
-          .json({ message: "Internal Server Error", error: error.message });
+        return res.status(400).json({ message: "Validation error", errors: error.errors });
       }
+
+      if (error.code === 11000) {
+        return res.status(409).json({ message: "Duplicate key error", error: error.message });
+      }
+
+      res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
   }
+
 
   async getUsersByAdmin(req, res, next) {
     // try {
@@ -731,6 +790,28 @@ class UserController {
       .status(httpStatus.BAD_REQUEST)
       .send({ message: "No users found" });
   }
+
+  // check registered users
+
+  // async checkRegistrationStatus(req, res, next) {
+  //   try {
+  //     const { email } = req.query; // Pass email as a query parameter
+  //     const user = await User.findOne({ email });
+  //     if (!user) {
+  //       return res.status(404).json({ message: "User not found" });
+  //     }
+
+  //     // Determine registration status
+  //     const registrationStatus = user.isRegistered ? "Registered" : "Invited";
+
+  //     res.status(200).json({ registrationStatus });
+  //   } catch (error) {
+  //     console.error("Unexpected error:", error);
+  //     res.status(500).json({ message: "Internal Server Error", error: error.message });
+  //   }
+  // }
+
+
 }
 
 var exports = (module.exports = new UserController());

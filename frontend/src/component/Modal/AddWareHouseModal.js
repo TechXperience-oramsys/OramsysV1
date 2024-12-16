@@ -3,6 +3,7 @@ import { Modal, TextField, Backdrop, Fade, Autocomplete } from '@mui/material';
 import { Col, Row } from 'react-bootstrap';
 import { entityGetAction } from '../../redux/actions/entityAction';
 import { useDispatch, useSelector } from 'react-redux';
+import { IoCloseSharp } from 'react-icons/io5';
 // import {Autocomplete} from "@mui/lab";
 
 const AddWareHouseModal = ({ onHide, show, wareHouseData, wareHouseId }) => {
@@ -131,7 +132,7 @@ console.log(wareHouseData,wareHouseId,"main")
                         <div className='modal-content'>
                             <div className='d-flex justify-content-between'>
                                 <h2 id="transition-modal-title" className='modal-title'>Add Warehouse</h2>
-                                <img alt='props' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                                <IoCloseSharp onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                             </div>
                             <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                                 <div className='form'>

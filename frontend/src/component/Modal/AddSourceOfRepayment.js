@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap';
 import { InboxOutlined } from '@ant-design/icons';
 import { Upload } from 'antd';
+import { IoCloseSharp } from "react-icons/io5";
 
 const { Dragger } = Upload;
 const AddSourceOfRepayment = ({ show, onHide, getModalData, data, getEditData, isView }) => {
@@ -130,7 +131,7 @@ const AddSourceOfRepayment = ({ show, onHide, getModalData, data, getEditData, i
                     <div className='modal-content'>
                         <div className='d-flex justify-content-between'>
                             <h2 id="transition-modal-title" className='modal-title'>Source of Repayment</h2>
-                            <img alt='prop' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                            <IoCloseSharp onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                         </div>
                         <div className='add-edit-product p-0 mt-3' id="transition-modal-description" >
                             <div className='form'>

@@ -1,5 +1,6 @@
 import React from 'react';
-import {Backdrop, Modal, Fade, FormControl, FormControlLabel, Radio, RadioGroup} from '@mui/material';
+import { Backdrop, Modal, Fade, FormControl, FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import { IoCloseSharp } from 'react-icons/io5';
 
 const ApprovalRole = ({ onHide, show }) => {
 
@@ -192,7 +193,7 @@ const ApprovalRole = ({ onHide, show }) => {
                     <div className='modal-content'>
                         <div className='d-flex justify-content-between'>
                             <h2 id="transition-modal-title" className='modal-title'>Performance Risk</h2>
-                            <img alt='props' src='../../assets/img/my-img/Close.png' onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
+                            <IoCloseSharp onClick={() => onHide()} style={{ cursor: "pointer", width: "24px", height: "24px" }} />
                         </div>
                         <div className='add-edit-product approvalrolemodal p-0 mt-3' id="transition-modal-description" style={{ height: '80vh', overflow: 'auto' }}>
                             {

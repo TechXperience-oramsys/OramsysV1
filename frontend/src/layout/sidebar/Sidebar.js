@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  FileTextOutlined,
-  AppstoreOutlined,
-  TableOutlined,
-  
-} from "@ant-design/icons";
+import { MenuFoldOutlined, MenuUnfoldOutlined, FileTextOutlined, AppstoreOutlined, TableOutlined } from "@ant-design/icons";
 import {  Button,  Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
 import STORAGEKEY from "../../config/APP/app.config";
@@ -17,7 +10,6 @@ import { FaBoxOpen, FaOutdent, FaUserCircle } from "react-icons/fa";
 import { HiOutlineLogout, HiOutlineUsers } from "react-icons/hi";
 import { MdAdminPanelSettings } from "react-icons/md";
 import { FaMoneyBillTransfer, FaUsersLine } from "react-icons/fa6";
-// import Fade from "react-reveal/Fade";
 import { ApiGet } from "../../helper/API/ApiData";
 const { Header, Sider, Content } = Layout;
 
@@ -277,31 +269,7 @@ const Sidebar = ({ showSidebar, setSidebar }) => {
               </div>
             )}
           </div>
-          {/* <div className={`d-flex ${collapsed ? "justify-content-center" : "justify-content-between"} align-items-center p-3`} style={{ backgroundColor: "#F0F0F0" }}>
-            <Dropdown overlay={
-              <Menu>
-                <Menu.Item key="logout" onClick={() => setshowModal(true)}>
-                  <HiOutlineLogout size={20} /> Logout
-                </Menu.Item>
-              </Menu>
-            }>
-              <div className={`d-flex align-items-center ${collapsed ? "justify-content-center w-100" : ""}`}>
-                {logo?.length > 0 ? (<img src={logo} alt="user" className="user__logo" />
-                ) : (
-                  <FaUserCircle size={30} />
-                )}
-                {!collapsed && <span className="ms-2">{userData?.name}</span>}
-              </div>
-            </Dropdown>
-
-            {!collapsed && (
-              <div className="">
-                <button onClick={() => setshowModal(true)}>
-                  <HiOutlineLogout size={20} />
-                </button>
-              </div>
-            )}
-          </div> */}
+          
           <Menu
             className="fs-6 fw-semibold mt-10 bg-gray-100"
             // theme="dark"

@@ -3092,13 +3092,14 @@ h6 {
   font-size: 15px;
 }
 
-.card:hover, .container:hover {
+.card:hover,
+.container:hover {
   transform: none !important;
   transition: none !important;
 }
 
 .row-red {
-  background-color:  #f5b2b9;
+  background-color: #f5b2b9;
 }
 
 .row-green {
