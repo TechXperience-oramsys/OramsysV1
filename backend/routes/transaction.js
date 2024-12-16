@@ -13,10 +13,15 @@ router.get('/get', Validate, transactionController.getAll);
 router.get('/getById/:id', Validate, transactionController.getById);
 router.post('/add', Validate, transactionController.create);
 router.post('/details', Validate, transactionController.saveDetails);
+router.put('/details/:id', Validate, transactionController.updateDetails)
 router.post('/key-party', Validate, transactionController.saveKeyParties);
+router.put('/key-party/:id', Validate, transactionController.updateKeyParties);
 router.post('/document-flow', Validate, transactionController.saveDocumentFlow);
+router.put('/document-flow/:id', Validate, transactionController.updateDocumentFlow);
 router.post('/fund-flow', Validate, transactionController.saveFundFlow);
+router.put('/fund-flow/:id', Validate, transactionController.updateFundFlow);
 router.post('/facility', Validate, transactionController.saveFacility);
+router.put('/facility/:id', Validate, transactionController.updateFacility);
 router.post('/edit/:id', Validate, transactionController.edit);
 router.get('/termSheet/:id',Validate, transactionController.download);
 router.post('/uploadTermSheet',Validate, transactionController.uploadTermSheet);

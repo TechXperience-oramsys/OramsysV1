@@ -31,6 +31,7 @@ router.get(
   Validate,
   entitiesController.getRatingAgenciesById
 );
+router.get('/getByEntityId/:id', Validate, entitiesController.getEntityDetailsByEntityId)
 
 function loginValidate(req, res, next) {
   const Data = req.body;

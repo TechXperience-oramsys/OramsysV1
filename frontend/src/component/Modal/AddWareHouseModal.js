@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const AddWareHouseModal = ({ onHide, show, wareHouseData, wareHouseId }) => {
 
     const dispatch = useDispatch()
-
+console.log(wareHouseData,wareHouseId,"main")
     const [addWarehouse, setAddWarehouse] = useState({
         warehouseCompany: "",
         warehouse: ""
@@ -75,18 +75,18 @@ const AddWareHouseModal = ({ onHide, show, wareHouseData, wareHouseId }) => {
             }))
         }
 
-        console.log('addWarehouse', addWarehouse);
+        // console.log('addWarehouse', addWarehouse);
     }, [addWarehouse, entityData.data])
 
 
     useEffect(() => {
-        console.log('addWarehouse 22', addWarehouse);
+        // console.log('addWarehouse 22', addWarehouse);
     }, [addWarehouse])
     useEffect(() => {
         if (wareHouseId) {
             setAddWarehouse({
-                warehouse: { value: wareHouseId?.warehouse?.value, label: wareHouseId?.warehouse?.label },
-                warehouseCompany: { value: wareHouseId?.warehouseCompany?.value, label: wareHouseId?.warehouseCompany?.label },
+                warehouse: wareHouseId?.warehouse?.value,
+                warehouseCompany:wareHouseId?.warehouseCompany?.value,
             })
         }
     }, [wareHouseId])
@@ -100,9 +100,11 @@ const AddWareHouseModal = ({ onHide, show, wareHouseData, wareHouseId }) => {
         if (wareHouseId) {
             let id = wareHouseId?.tableData?.id
             wareHouseData(addWarehouse, id)
+            console.log(addWarehouse,"if")
             onHide()
         } else {
             wareHouseData(addWarehouse)
+            console.log(addWarehouse,"else")
             onHide()
         }
         // wareHouseData(addWarehouse)

@@ -111,6 +111,7 @@ Schema.statics.getById = async function (id) {
 }
 
 Schema.statics.updateTransactionDetail = async function (data, id) {
+    console.log(data,"updateeeeeeeeeeeeee")
     return await this.findOneAndUpdate({
         _id: id
     }, {

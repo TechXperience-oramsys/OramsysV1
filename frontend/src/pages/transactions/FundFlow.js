@@ -13,6 +13,8 @@ import { useAtom } from 'jotai'
 import { Table, Button, Tooltip } from 'antd';
 import { EditOutlined, EyeOutlined } from '@ant-design/icons';
 import { beneficiaryAtom, contractDetailAtom, countryAtom, editeRowDataAtom, fundFlowAtom, lettersOfCreditAtom, selectedNameAtom, showTextEditorAtom } from './Helpers/atoms';
+import { transactionServices } from '../../_Services/transactions';
+import toast from 'react-hot-toast';
 
 
 const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
@@ -43,6 +45,7 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
     const paymentOrigin = useSelector(state => state.countryData.country)
     const beneficiaries = useSelector(state => state.entityData.entity)
     const getTransactionByIdData = useSelector((state) => state.transactionData.getTransactionById)
+    console.log(getTransactionByIdData)
 
     useEffect(() => {
         dispatch(countrieAction('all'))
@@ -190,8 +193,18 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans }) => {
                 lettersOfCredit
             }
         }
+        fundFlow.transactionId = body?.details?.transactionId
+        fundFlow.flowVerified = body?.details?.flowVerified
         dispatch(transactionDataAction(body))
-        hendelNext()
+        
+        if(fundFlow._id.length>0){
+            transactionServices.updateFundFlow(fundFlow).then((res) => {
+                toast.success(res.data?.message)
+                hendelNext()
+            }).catch((err) => toast.error("Failed to update Fund Flow"))
+        }else{
+            hendelNext()
+        }
     }
 
     const validation = () => {

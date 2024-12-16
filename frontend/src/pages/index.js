@@ -35,6 +35,7 @@ import ForgetPassword from "./functionalAdmin/ForgetPassword";
 import UserForgetPassword from "./signIn/UserForgetPassword";
 import EditAdmin from "./functionalAdmin/EditAdmin";
 import SetAdminPassword from "./functionalAdmin/CreateAdminPassword";
+import WorkflowPreview from "./transactions/WorkflowPreview";
 
 const pathForLayout = [
   "/",
@@ -84,6 +85,10 @@ const Index = () => {
       path: "/workflow",
       component: Workflow,
     },
+    {
+      path: "/workflow-preview",
+      component : WorkflowPreview
+    }
   ];
 
   const AdminRoutes = [

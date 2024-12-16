@@ -22,6 +22,7 @@ import { toast } from "react-hot-toast";
 // import { transactionItems } from '../../_Services/transactions'
 import { Table, Button, Tooltip } from "antd"
 import { EyeOutlined, EditOutlined } from '@ant-design/icons'
+import { transactionServices } from "../../_Services/transactions"
 
 
 
@@ -524,6 +525,8 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                 getTransactionByIdData.data?.details?.shippingOptions?.warehouses?.map(
                                     (item) => {
                                         return {
+                                            // warehouse: item?.warehouse?._id,
+                                            // warehouseCompany: item?.warehouseCompany?._id,
                                             warehouse: {
                                                 value: item?.warehouse?._id,
                                                 label: item?.warehouse?.name,
@@ -1084,8 +1087,10 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                 ...shippingOptions,
                 warehouses: shippingOptions.warehouses.map((ele, i) => {
                     if (i === id) {
+                        console.log(data, "warehouse data.....")
                         return data
                     } else {
+                        console.log(ele, 'warehouse elem')
                         return ele
                     }
                 }),
@@ -1152,7 +1157,21 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         signalWarehouseStatus(body.warehouse_status)
         signalShippingCompany(body.shipping_company)
         signalLender(body.lenders)
-        hendelNext()
+
+
+        if (body.details?._id.length > 0) {
+            body.details.transactionId = transaction_id
+            body.details.shippingOptions.warehouses = body.details.shippingOptions.warehouses.map(warehouse => ({
+                warehouse: warehouse.warehouse.value, // Get the value from the warehouse object
+                warehouseCompany: warehouse.warehouseCompany.value // Get the value from the warehouseCompany object
+            }));
+            transactionServices.detailsUpdate(body).then((res) => {
+                toast.success(res?.data?.message)
+                hendelNext()
+            }).catch((error) => toast.error("Something went wrong!"))
+        } else {
+            hendelNext()
+        }
     }
 
     // const transactionData = useSelector((state) => state.transactionData.transactionData);

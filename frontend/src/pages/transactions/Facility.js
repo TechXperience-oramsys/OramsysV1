@@ -23,6 +23,7 @@ import { useAtom } from "jotai";
 import { OptionalSpan } from "./Helpers/OptionalTags";
 import { Table, Button, Tooltip } from 'antd';
 import { EditOutlined, EyeOutlined, DeleteOutlined } from '@ant-design/icons';
+import { transactionServices } from "../../_Services/transactions";
 // import dayjs from "dayjs";
 // import customParseFormat from "dayjs/plugin/customParseFormat";
 // import { DatePicker, Space } from "antd";
@@ -879,6 +880,8 @@ const Facility = ({ hendelCancel, hendelNext }) => {
       lenders: transactionData.lenders,
       userId: AuthStorage.getStorageData(STORAGEKEY.userId),
     };
+    facility.transactionId = body?.detail?.transactionId
+    facility.flowVerified = false
 
     let user = localStorage.getItem("userData") && JSON.parse(localStorage.getItem("userData"));
     body.admin = user.admin;
@@ -889,7 +892,14 @@ const Facility = ({ hendelCancel, hendelNext }) => {
     setLoading(true);
     await dispatch(addTransaction(body));
     setLoading(false);
-    navigate("/final-page")
+    if(facility?._id?.length>0){
+      transactionServices.updateFacility(facility).then((res) => {
+        toast.success(res.data?.message)
+        navigate("/final-page")
+      }).catch(err => toast.error("Failed to update facility!"))
+    }else{
+        navigate("/final-page")
+    }
   };
 
   useEffect(() => {
@@ -915,24 +925,24 @@ const Facility = ({ hendelCancel, hendelNext }) => {
     // console.log(transactionData.keyParties);
     // return;
     let body = {
-      detail:
-        transactionType !== "Import"
-          ? {
-            ...transactionData.details,
-            shippingOptions: {
-              ...transactionData?.details?.shippingOptions,
-              warehouses:
-                transactionData?.details?.shippingOptions?.warehouses?.map(
-                  (ele) => {
-                    return {
-                      warehouse: ele?.warehouse?.value,
-                      warehouseCompany: ele?.warehouseCompany?.value,
-                    };
-                  }
-                ),
-            },
-          }
-          : "",
+      detail:transactionData.details,
+        // transactionType !== "Import"
+        //   ? {
+        //     ...transactionData.details,
+        //     shippingOptions: {
+        //       ...transactionData?.details?.shippingOptions,
+        //       warehouses:
+        //         transactionData?.details?.shippingOptions?.warehouses?.map(
+        //           (ele) => {
+        //             return {
+        //               warehouse: ele?.warehouse?.value,
+        //               warehouseCompany: ele?.warehouseCompany?.value,
+        //             };
+        //           }
+        //         ),
+        //     },
+        //   }
+        //   : "",
       keyParties: {
         keyParties: transactionData.keyParties?.keyParties?.map((ele) => {
           return {

@@ -38,13 +38,16 @@ import AuthStorage from "../../helper/AuthStorage";
 import STORAGEKEY from "../../config/APP/app.config";
 import moment from "moment";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Workflow = () => {
+  const navigate = useNavigate()
   const [showForm, setShowForm] = useState(false);
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [workflowData, setWorkflowData] = useState(null); // Save workflow data before confirmation
+  const [isFlowDataLoad, setIsFlowDataLoad] = useState(true)
   const [isPreview, setIsPreview] = useState(false)
   const [previewData, setPreviewData] = useState([])
   const [currentUser, setcurrentUser] = useState(
@@ -195,11 +198,12 @@ const Workflow = () => {
   useEffect(() => {
     if (role == 'user' && currentUser) {
       userServices.getWorkflowData(currentUser?.email, currentUser?.admin?._id).then((res) => {
+        console.log(res?.data)
         setWorkflowData(res?.data)
+        setIsFlowDataLoad(false)
       }).catch((err) => {
         console.log(err);
-
-      })
+      }).finally(()=>setIsFlowDataLoad(false))
     }
     const fetchUsers = async () => {
       try {
@@ -390,10 +394,12 @@ const Workflow = () => {
               {/* Preview Option */}
               <Menu.Item
                 onClick={() => {
+                  console.log(record?._id, workflowData?.workflowDocument?.department,record?.[workflowData?.workflowDocument?.stepName])
                   setTransactionId(record?._id);
                   setDept(workflowData?.workflowDocument?.department);
                   setIsPreview(true);
                   setPreviewData(record?.[workflowData?.workflowDocument?.stepName] || {});
+                  navigate('/workflow-preview',{state:{data:record?.[workflowData?.workflowDocument?.stepName], contractValue : record?.details?.contractDetails?.value, step:workflowData?.workflowDocument?.stepName}})
                 }}
               >
                 <EyeOutlined className="pe-2" /> Preview
@@ -918,8 +924,9 @@ const Workflow = () => {
               : "row-red"   // Class for rows where the condition is false
           }
           dataSource={workflowData?.transactionDocuments}
-          loading={!workflowData?.transactionDocuments}
+          loading={isFlowDataLoad}
           rowKey={(record) => record._id}
+          locale={workflowData?.transactionDocuments==null ?'No data found!':''}
         />
 
       </div>}

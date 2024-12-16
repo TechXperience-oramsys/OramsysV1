@@ -5,6 +5,9 @@ import { transactionDataAction } from '../../redux/actions/transactionDataAction
 import { useLocation } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { documentFlowAtom } from './Helpers/atoms';
+import { transactionServices } from '../../_Services/transactions';
+import toast from 'react-hot-toast';
+import { message } from 'antd';
 
 const DocumentFlow = ({ hendelCancel, hendelNext }) => {
 
@@ -63,7 +66,16 @@ const DocumentFlow = ({ hendelCancel, hendelNext }) => {
             documentFlow
         }
         dispatch(transactionDataAction(body))
-        hendelNext()
+        documentFlow.transactionId = body.details?.transactionId
+
+        if (documentFlow?._id.length > 0) {
+            transactionServices.updateDocumentFlow(documentFlow).then((res) => {
+                toast.success(res.data?.message)
+                hendelNext()
+            }).catch((err) => toast.error("Failed to update Document Flow!"))
+        }else{
+            hendelNext()
+        }
     }
 
     return (

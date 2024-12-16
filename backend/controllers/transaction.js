@@ -186,6 +186,37 @@ class transactionController {
     }
   }
 
+  async updateDetails(req, res, next) {
+    const { details } = req.body;
+    const { id } = req.params;
+    try {
+      if (details) {
+        await transactionDetails.updateTransactionDetail(details, id)
+        return res
+          .status(httpStatus.OK)
+          .json(
+            new APIResponse(
+              transactionDetails,
+              "Transaction details updated successfully.",
+              httpStatus.OK
+            )
+          );
+      }
+    } catch (error) {
+      return res
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json(
+          new APIResponse(
+            {},
+            "Error updating transaction details",
+            httpStatus.INTERNAL_SERVER_ERROR,
+            error
+          )
+        );
+
+    }
+  }
+
   async saveKeyParties(req, res, next) {
     const { keyParties } = req.body;
     try {
@@ -223,6 +254,37 @@ class transactionController {
             e
           )
         );
+    }
+  }
+
+  async updateKeyParties(req, res, next){
+    try {
+      const parties  = req.body;
+    const { id } = req.params;
+    if(parties){
+      await transactionKeyParties.updateTransactionKeyParties(parties,id)
+      return res
+          .status(httpStatus.OK)
+          .json(
+            new APIResponse(
+              transactionDetails,
+              "Transaction key parties details updated successfully.",
+              httpStatus.OK
+            )
+          );
+    }
+      
+    } catch (error) {
+      return res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json(
+        new APIResponse(
+          {},
+          "Error updating Transaction key parties details!",
+          httpStatus.INTERNAL_SERVER_ERROR,
+          error
+        )
+      );
     }
   }
 
@@ -264,6 +326,36 @@ class transactionController {
     }
   }
 
+  async updateDocumentFlow(req, res, next){
+try {
+  const data = req.body
+  const id = req.params
+  if(data){
+    await transactionDocumentFlow.updateTransactionDocumentFlow(data,data._id)
+    return res
+          .status(httpStatus.OK)
+          .json(
+            new APIResponse(
+              transactionDetails,
+              "Transaction Document Flow updated successfully.",
+              httpStatus.OK
+            )
+          );
+  }
+} catch (error) {
+  return res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json(
+        new APIResponse(
+          {},
+          "Error updating Transaction Document Flow!",
+          httpStatus.INTERNAL_SERVER_ERROR,
+          error
+        )
+      );
+}
+  }
+
   async saveFundFlow(req, res, next) {
     const { fundFlow } = req.body;
     try {
@@ -303,6 +395,37 @@ class transactionController {
     }
   }
 
+  async updateFundFlow(req, res, next){
+    try {
+      const data = req.body
+      const id = req.params.id
+      if(data){
+        await transactionFundFlow.updateTransactionFundFlow(data, id)
+        return res
+          .status(httpStatus.OK)
+          .json(
+            new APIResponse(
+              transactionDetails,
+              "Transaction Fund Flow updated successfully.",
+              httpStatus.OK
+            )
+          );
+      }
+    } catch (error) {
+      
+      return res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json(
+        new APIResponse(
+          {},
+          "Error updating Transaction Fund Flow!",
+          httpStatus.INTERNAL_SERVER_ERROR,
+          error
+        )
+      );
+    }
+  }
+
   async saveFacility(req, res, next) {
     const { facility } = req.body;
     try {
@@ -338,6 +461,37 @@ class transactionController {
         );
     }
   }
+
+  async updateFacility(req, res, next){
+    try {
+      const data = req.body
+      const id = req.params.id
+      if(data){
+        await transactionFacility.updateTransactionFacility(data,id)
+        return res
+          .status(httpStatus.OK)
+          .json(
+            new APIResponse(
+              transactionDetails,
+              "Transaction Facility details updated successfully.",
+              httpStatus.OK
+            )
+          );
+      }
+    } catch (error) {
+      return res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json(
+        new APIResponse(
+          {},
+          "Error updating Transaction Facility details!",
+          httpStatus.INTERNAL_SERVER_ERROR,
+          error
+        )
+      );
+    }
+  }
+
   async create(req, res, next) {
     let body = req.body;
     let detail = req.body.detail;
@@ -355,7 +509,7 @@ class transactionController {
       lenders: body.lenders,
       borrower_Applicant: body.borrower_Applicant,
       admin: body.admin,
-      workFlowSteps : []
+      workFlowSteps: []
     };
     try {
       const model = new transaction(newTransaction);
