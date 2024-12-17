@@ -30,7 +30,7 @@ import { transactionServices } from "../../_Services/transactions";
 // import Item from "antd/es/list/Item"
 // dayjs.extend(customParseFormat);
 
-const Facility = ({ hendelCancel, hendelNext }) => {
+const Facility = ({ hendelCancel, hendelNext , type}) => {
   useEffect(() => {
     // Include Choices.js stylesheet
     const link = document.createElement("link");
@@ -105,7 +105,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
   //   (state) => state.transactionData.getAllTransaction
   // );
   const transactionData = useSelector(
-    (state) => state.transactionData.transactionData
+    (state) => state?.transactionData?.transactionData
   );
   const addTransactionData = useSelector(
     (state) => state.transactionData.addTransaction
@@ -235,11 +235,11 @@ const Facility = ({ hendelCancel, hendelNext }) => {
     } else {
       setFacility({
         ...facility,
-        currency: transactionData.details.contractDetails.currency,
+        currency: transactionData?.details?.contractDetails?.currency,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getTransactionByIdData, setAddCurrencyHedge, setFacility, setSourceOfRepayment, transactionData.details.contractDetails.currency]);
+  }, [getTransactionByIdData, setAddCurrencyHedge, setFacility, setSourceOfRepayment, transactionData?.details?.contractDetails?.currency]);
 
   const counterpartyOptions = useSelector((state) => state.entityData.entity);
 
@@ -1402,9 +1402,9 @@ const Facility = ({ hendelCancel, hendelNext }) => {
                   name="interestPaymentDate"
                   placeholder="dd-mm-yyyy"
                   min={
-                    transactionData.details.contractDetails.contractDate
+                    transactionData?.details?.contractDetails?.contractDate
                       ? new Date(
-                        transactionData.details.contractDetails.contractDate
+                        transactionData?.details?.contractDetails?.contractDate
                       )
                         .toISOString()
                         .split("T")[0]
@@ -2394,7 +2394,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
             </div>
           </div>
         </div>
-        <div className="footer_">
+    {type == undefined &&    <div className="footer_">
           <button
             onClick={() => {
               hendelCancel();
@@ -2430,7 +2430,7 @@ const Facility = ({ hendelCancel, hendelNext }) => {
               </div>
             )}
           </button>
-        </div>
+        </div>}
       </div>
       {addSourceOfRepayment && (
         <AddSourceOfRepayment

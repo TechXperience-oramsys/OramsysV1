@@ -22,6 +22,7 @@ const Edit_Transactions = () => {
     const dispatch = useDispatch()
     const queryParams = new URLSearchParams(location.search)
     const id = queryParams.get("id")
+    const type = queryParams.get("type")
     // const transactionType = location.state && location.state.length > 0 ? location?.state?.[0]?.type : null
     // const productNature = location.state && location.state.length > 0 ? location?.state?.[1]?.type : null
     // const isView = location.state && location.state.length > 0 ? location?.state?.[2]?.isView : null
@@ -29,6 +30,7 @@ const Edit_Transactions = () => {
     const transactionType = location.state?.[0]?.type ?? null;
     const productNature = location.state?.[1]?.type ?? null;
     // const isView = location.state?.[2]?.isView ?? null;
+console.log(location.state?.[0]?.type , 'location.state?.[0]?.type');
 
     const [getTrans, setGetTrans] = useState({})
     const [transId, setTransId] = useState("");
@@ -41,9 +43,16 @@ const Edit_Transactions = () => {
     const [warehouseStatus, setWarehouseStatus] = useState(false)
 
     const [activeStep, setActiveStep] = useState(0);
+
+  
+    
+
     let step = []
-    const { Step } = Steps;
+const { Step } = Steps;
     const getTransactionId = useSelector(state => state.transactionData.getTransactionById)
+
+    console.log(getTransactionId , 'hghhhh');
+    
 
     useEffect(() => {
         if (id) {
@@ -61,6 +70,8 @@ const Edit_Transactions = () => {
     }, [id, dispatch, getTransactionId.data?.details?.contractDetails?.currency, getTransactionId.data?.details?.contractDetails?.value])
 
     const signalContract = (values) => {
+        console.log(values , 'ppppppppppppppppppppppp');
+        
         setGetTrans(values)
     }
     const signalLender = (values) => {
@@ -120,11 +131,14 @@ const Edit_Transactions = () => {
     const handleReset = () => {
         setActiveStep(0);
     };
+
+    console.log(transactionType , 'transactionType');
+    
     return (
         <>
             <div className='add-edit-product'>
                 {/* <Box sx={{ width: '100%' }}> */}
-                {productNature === 'Physical' && (
+                {productNature === 'Physical' && type ==  undefined  &&(
                     <Steps className='container mb-5' current={activeStep}>
                         {step.length &&
                             step.map((label, index) => (
@@ -149,11 +163,20 @@ const Edit_Transactions = () => {
                                 {
                                     productNature === 'Physical' ?
                                         <>
-                                            {activeStep + 1 === 1 && <DetailsTransaction hendelNext={handleNext} signalShippingCompany={signalShippingCompany} signalCounterParty={signalCounterParty} signalPricingHedgingStatus={signalPricingHedgingStatus} signalContract={signalContract} signalWarehouseCompany={signalWarehouseCompany} signalWarehouseStatus={signalWarehouseStatus} signalLender={signalLender} signalBorrower={signalBorrower} transactionType={transactionType} transaction_id={transId} />}
-                                            {activeStep + 1 === 2 && <KeyParties hendelNext={handleNext} getShippingCompany={getShippingCompany} getCounterParty={getCounterParty} pricingHedgingStatus={pricingHedgingStatus} getLender={getLender} getBorrower={getBorrower} getWarehouseCompany={getWarehouseCompany} warehouseStatus={warehouseStatus} hendelCancel={handleBack} transactionType={transactionType} />}
-                                            {activeStep + 1 === 3 && <DocumentFlow hendelNext={handleNext} hendelCancel={handleBack} />}
-                                            {activeStep + 1 === 4 && <FundFlow hendelNext={handleNext} getTrans={getTrans} hendelCancel={handleBack} />}
-                                            {activeStep + 1 === 5 && <Facility hendelNext={handleNext} hendelCancel={handleBack} />}
+                                            {activeStep + 1 === 1 && type == undefined  && <DetailsTransaction hendelNext={handleNext} signalShippingCompany={signalShippingCompany} signalCounterParty={signalCounterParty} signalPricingHedgingStatus={signalPricingHedgingStatus} signalContract={signalContract} signalWarehouseCompany={signalWarehouseCompany} signalWarehouseStatus={signalWarehouseStatus} signalLender={signalLender} signalBorrower={signalBorrower} transactionType={transactionType} transaction_id={transId} />}
+                                            {activeStep + 1 === 2 && type == undefined  &&  <KeyParties hendelNext={handleNext} getShippingCompany={getShippingCompany} getCounterParty={getCounterParty} pricingHedgingStatus={pricingHedgingStatus} getLender={getLender} getBorrower={getBorrower} getWarehouseCompany={getWarehouseCompany} warehouseStatus={warehouseStatus} hendelCancel={handleBack} transactionType={transactionType} />}
+                                            {activeStep + 1 === 3 && type == undefined  &&  <DocumentFlow hendelNext={handleNext} hendelCancel={handleBack} />}
+                                            {activeStep + 1 === 4 && type == undefined  &&  <FundFlow hendelNext={handleNext} getTrans={getTrans} hendelCancel={handleBack} />}
+                                            {activeStep + 1 === 5 && type == undefined  &&  <Facility hendelNext={handleNext} hendelCancel={handleBack} />}
+
+
+
+
+                                            {type == 'details'  && <DetailsTransaction stype={type}  signalShippingCompany={signalShippingCompany} signalCounterParty={signalCounterParty} signalPricingHedgingStatus={signalPricingHedgingStatus} signalContract={signalContract} signalWarehouseCompany={signalWarehouseCompany} signalWarehouseStatus={signalWarehouseStatus} signalLender={signalLender} signalBorrower={signalBorrower} transactionType={transactionType} transaction_id={transId} />}
+                                            {type == 'keyParties'  &&  <KeyParties stype={type}   getShippingCompany={getShippingCompany} getCounterParty={getCounterParty} pricingHedgingStatus={pricingHedgingStatus} getLender={getLender} getBorrower={getBorrower} getWarehouseCompany={getWarehouseCompany} warehouseStatus={warehouseStatus}   transactionType={transactionType} />}
+                                            {type == 'documentFlow'  && <DocumentFlow   stype={type}   />}
+                                            {type == 'fundFlow'  &&  <FundFlow  stype={type}   getTrans={getTrans}   />}
+                                            {type == 'facility'  &&  <Facility  type={type}    />}
                                         </>
                                         :
                                         <>

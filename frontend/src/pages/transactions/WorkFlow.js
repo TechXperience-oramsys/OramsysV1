@@ -39,9 +39,12 @@ import STORAGEKEY from "../../config/APP/app.config";
 import moment from "moment";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { GET_TRANSACTION_BY_ID } from "../../redux/types";
+import { useDispatch } from "react-redux";
 
 const Workflow = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [showForm, setShowForm] = useState(false);
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
@@ -399,7 +402,22 @@ const Workflow = () => {
                   setDept(workflowData?.workflowDocument?.department);
                   setIsPreview(true);
                   setPreviewData(record?.[workflowData?.workflowDocument?.stepName] || {});
-                  navigate('/workflow-preview',{state:{data:record?.[workflowData?.workflowDocument?.stepName], contractValue : record?.details?.contractDetails?.value, step:workflowData?.workflowDocument?.stepName}})
+                   dispatch({
+                            type: GET_TRANSACTION_BY_ID,
+                            payload: record,
+                          });
+                  navigate(`/edit-transactions?id=${record._id}&type=${workflowData?.workflowDocument?.stepName}`, {
+                    state: [
+                      { type: record.type },
+                      {
+                        type: record?.details?.productDetails?.nature
+                          ? record.details.productDetails.nature
+                          : "",
+                      },
+                      { isView: true },
+                    ],
+                    
+                  });
                 }}
               >
                 <EyeOutlined className="pe-2" /> Preview

@@ -9,7 +9,7 @@ import { transactionServices } from '../../_Services/transactions';
 import toast from 'react-hot-toast';
 import { message } from 'antd';
 
-const DocumentFlow = ({ hendelCancel, hendelNext }) => {
+const DocumentFlow = ({ hendelCancel, hendelNext, stype }) => {
 
     const dispatch = useDispatch()
 
@@ -160,10 +160,10 @@ const DocumentFlow = ({ hendelCancel, hendelNext }) => {
                         }
                     </Row>
                 </div>
-                <div className='footer_'>
+               {stype == undefined &&  <div className='footer_'>
                     <button onClick={() => { hendelCancel() }} className="footer_cancel_btn">Back</button>
                     <button onClick={() => { next() }} className='footer_next_btn'> Next</button>
-                </div>
+                </div>}
             </div>
         </>
     )

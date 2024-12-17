@@ -26,7 +26,7 @@ import { transactionServices } from "../../_Services/transactions"
 
 
 
-const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalCounterParty, signalShippingCompany, signalWarehouseCompany, signalWarehouseStatus, signalContract, signalBorrower, signalLender, transaction_id, signalPricingHedgingStatus }) => {
+const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalCounterParty, signalShippingCompany, signalWarehouseCompany, signalWarehouseStatus, signalContract, signalBorrower, signalLender, transaction_id, signalPricingHedgingStatus , stype}) => {
     const navigate = useNavigate()
     // let numberReg = /^[0-9\b]+$/;
     const [isLoading, setIsLoading] = useState(true);
@@ -2406,14 +2406,14 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                         <AddInsuranceModal show={addInsuranceModal} onHide={() => setAddInsuranceModal(false)} />
                     )}
                     {/* {showTextEditModal && <TextEditerModal show={showTextEditModal} onHide={() => setShowTextEditModal(false)} commentDone={(e) => hadleChangeModal(e)} data={sendModalData} type={type} inputName={selectedName} />} */}
-                    <div className='footer_'>
+                   {stype == undefined && <div className='footer_'>
                         <div className="d-flex justify-content-between">
                             <button onClick={() => navigate("/transactions")} className='footer_cancel_btn'> Back </button>
                             {/* <button onClick={() => { save();  console.log('Click me')}} className='footer_cancel_btn'> Save Details and exit </button> */}
                         </div>
 
                         <button onClick={() => next()} className='footer_next_btn'> {" "} Next</button>
-                    </div>
+                    </div>}
                 </>
             }
         </>
