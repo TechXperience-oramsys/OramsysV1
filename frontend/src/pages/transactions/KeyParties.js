@@ -85,9 +85,6 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
         }
     }, [getTransactionByIdData, relatedPartyDetails, setRelatedPartyDetails])
 
-    // let temp = keyParties;
-
-
     const handleParties = (e, newValue, index, type) => {
         const updatedKeyParties = [...keyParties];
         const updatedRelatedPartyDetails = [...relatedPartyDetails];
