@@ -37,7 +37,7 @@ import AuthStorage from "../../helper/AuthStorage";
 // import { DownloadOutlined, EditOutlined, EllipsisOutlined, EyeOutlined, FormOutlined } from "@ant-design/icons";
 import STORAGEKEY from "../../config/APP/app.config";
 import moment from "moment";
-import toast from "react-hot-toast";
+import {toast} from "sonner";
 
 const Workflow = () => {
   const [showForm, setShowForm] = useState(false);

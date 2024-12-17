@@ -5,7 +5,7 @@ import { ApiPostNoAuth } from "../../helper/API/ApiData";
 import AuthStorage from "../../helper/AuthStorage";
 import { LOGIN } from "../../redux/types";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import svgIcon from "../../css/lock.svg";
 import "../../css/login.css";
 import "../../css/bootstrap.min.css";

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { entitiesRoleAction } from '../../redux/actions/entitiesRoleAction';
 import { entityGetAction } from '../../redux/actions/entityAction';
 import AddEntityModal from './AddEntityModal';
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 
 import { IoCloseSharp } from "react-icons/io5";
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-// import { toast } from 'react-hot-toast'
+// import { toast } from 'sonner'
 import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Fade, Backdrop, Modal, Autocomplete } from '@mui/material';
 import { entitiesRoleAction } from '../../redux/actions/entitiesRoleAction';
@@ -49,7 +49,7 @@ const RoleEditModal = ({ onHide, show, mode, editData }) => {
                 justification: temp?.justification
             })
         }
-    }, [editData, mode,companyData.roles])
+    }, [editData, mode, companyData.roles])
 
     const validation = () => {
         let flag = false

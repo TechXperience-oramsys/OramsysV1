@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { toast } from 'react-hot-toast';
+import { toast } from 'sonner';
 import axios from "axios";
 import { API } from "../../../config/API/api.config";
 import { useNavigate } from "react-router-dom";

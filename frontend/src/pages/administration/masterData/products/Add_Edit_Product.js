@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { productAddAction, productGetByIdAction, productUpdateAction } from '../../../../redux/actions/productAction';
 import moment from 'moment';
 import { PRODUCTADD, PRODUCT_GET_BY_ID, PRODUCT_UPDATE } from '../../../../redux/types';
-import { toast } from 'react-hot-toast'
+import { toast } from 'sonner'
 
 const Add_Edit_Product = () => {
   const searchParams = new URLSearchParams(window.location.search)

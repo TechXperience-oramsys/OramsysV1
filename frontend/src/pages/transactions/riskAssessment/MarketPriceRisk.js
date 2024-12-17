@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { toast } from 'react-hot-toast'
+import { toast } from 'sonner'
 import LoanPurposeRiskModal from '../../../component/Modal/LoanPurposeRiskModal'
 import CurrencyHedgeDetailsModal from '../../../component/Modal/CurrencyHedgeDetailsModal'
 import FinancingSufficientlyModal from '../../../component/Modal/FinancingSufficientlyModal'

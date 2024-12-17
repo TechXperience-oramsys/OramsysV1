@@ -6,7 +6,7 @@ import {
   userGetByIdAction,
   userUpdateAction,
 } from "../../../redux/actions/userAction";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import { REGISTER, USER_GET_BY_ID, USER_UPDATE } from "../../../redux/types";
 import { registerAction } from "../../../redux/actions/registerAction";
 import { RequiredSpan } from "../../transactions/Helpers/OptionalTags";

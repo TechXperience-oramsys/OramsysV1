@@ -8,7 +8,6 @@ import { COMPANY_DATA, EDIT_ENTITY, ENTITY_GET_BY_ID } from '../../../redux/type
 import { Table, Button, Menu, Dropdown, Spin } from 'antd';
 import { EditOutlined, EyeOutlined, EllipsisOutlined } from '@ant-design/icons';
 import { CiSearch } from 'react-icons/ci';
-// import { companydataReducer } from '../../../redux/redusers/companydataReducer';
 import { companydataAction } from '../../../redux/actions/companydataAction';
 
 const Entities = () => {
@@ -26,7 +25,7 @@ const Entities = () => {
   const dispatch = useDispatch()
 
   const entityData = useSelector(state => state.entityData.entity)
-  // console.log('GET ALL ENTITY', entityData)
+  console.log('GET ALL ENTITY', entityData)
   let userId = AuthStorage.getStorageData(STORAGEKEY.roles) === 'admin' ? AuthStorage.getStorageData(STORAGEKEY.userId) : ""
   // let userRoleId = AuthStorage.getStorageData(STORAGEKEY.roles) === "user" ? AuthStorage.getStorageData(STORAGEKEY.userId) : ""
   const userRole = AuthStorage.getStorageData(STORAGEKEY.roles) === "user"
@@ -67,16 +66,6 @@ const Entities = () => {
         }
       }))
       setOriginalEntityTableData(entityData.data);
-
-      // setOriginalEntityTableData(entityData.data?.map(item => {
-      //   return {
-      //     ...item,
-      //     name: item?.details?.name ?? item?.details?.givenName,
-      //     type: item?.type,
-      //     email: item?.email,
-      //     country: item?.details?.country?.name,
-      //   }
-      // }))
     }
   }, [entityData])
 
@@ -85,11 +74,11 @@ const Entities = () => {
   }, [entityData, dispatch, refreshPage])
 
 
-  const indexOfLastItem = currentPage * postsPerPage
-  const indexOfFirstItem = indexOfLastItem - postsPerPage
-  const getAllEntity = entityTableData?.slice(indexOfFirstItem, indexOfLastItem)
-  //page change
-  const paginate = (pageNumber) => setCurrentPage(pageNumber)
+    const indexOfLastItem = currentPage * postsPerPage
+    const indexOfFirstItem = indexOfLastItem - postsPerPage
+    const getAllEntity = entityTableData?.slice(indexOfFirstItem, indexOfLastItem)
+    //page change
+    const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
   const handleItemClick = (type) => {
     navigate('/add-edit-entities', { state: [{ type }] });
@@ -148,9 +137,7 @@ const Entities = () => {
               </Menu.Item>
             )}
 
-            <Menu.Item onClick={() => {
-              navigate(`/add-edit-entities?id=${record._id}`, {
-                state: [{ type: `${record.type}` }, { isView: true }],
+            <Menu.Item onClick={() => { navigate(`/add-edit-entities?id=${record._id}`, { state: [{ type: `${record.type}` }, { isView: true }],
               });
             }}>
               <EyeOutlined /> Preview

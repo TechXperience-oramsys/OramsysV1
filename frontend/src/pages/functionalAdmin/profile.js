@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
 import { ApiGet } from "../../helper/API/ApiData";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 
 function Profile() {
   // const navigate = useNavigate();
