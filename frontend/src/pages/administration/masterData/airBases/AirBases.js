@@ -8,7 +8,7 @@ import { Backdrop, Fade, Modal, TextField } from '@mui/material';
 // import axios from 'axios';
 import { ApiPost } from '../../../../helper/API/ApiData';
 import { airPortsAction } from '../../../../redux/actions/portsAction';
-import { toast } from 'react-hot-toast'
+import { toast } from 'sonner'
 import { MdEdit } from 'react-icons/md';
 // import { Tooltip } from 'react-tooltip';
 import { Spin, Table } from 'antd';
@@ -158,7 +158,7 @@ const AirBases = ({ showSidebar, setSidebar }) => {
             />
           </div>
         </div>
-       
+
       </div>
       <Modal
         aria-labelledby="transition-modal-title"

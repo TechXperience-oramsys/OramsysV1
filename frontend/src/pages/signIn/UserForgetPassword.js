@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { emailRegex, passwordRegex } from "../../helper/utils";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import { userServices } from "../../_Services/userServices";
 import { Spinner } from "react-bootstrap";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
@@ -199,7 +199,7 @@ function UserForgetPassword() {
                   <label htmlFor="password" className="form-label">New password</label>
                   <div className="input-group position-relative">
                     <input type={show ? "text" : "password"} className="form-control" placeholder="" onChange={(e) => setPassword(e.target.value)} />
-                    <span  className="position-absolute end-0 top-50 translate-middle-y me-3 cursor-pointer" onClick={() => setShow((prev) => !prev)}>
+                    <span className="position-absolute end-0 top-50 translate-middle-y me-3 cursor-pointer" onClick={() => setShow((prev) => !prev)}>
                       {show ? <EyeInvisibleOutlined /> : <EyeOutlined />}
                     </span>
                   </div>
@@ -209,7 +209,7 @@ function UserForgetPassword() {
                 <div className="mb-3">
                   <label htmlFor="confirm_password" className="form-label">Confirm new password</label>
                   <div className="input-group">
-                    <input type={show ? "text" : "password"} className="form-control"  placeholder="" onChange={(e) => setConfirmPass(e.target.value)} />
+                    <input type={show ? "text" : "password"} className="form-control" placeholder="" onChange={(e) => setConfirmPass(e.target.value)} />
                     <span className="position-absolute end-0 top-50 translate-middle-y me-3 cursor-pointer" onClick={() => setShow((prev) => !prev)}>
                       {show ? <EyeInvisibleOutlined /> : <EyeOutlined />}
                     </span>

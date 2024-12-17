@@ -7,7 +7,7 @@ import { countrieAction } from '../../../../redux/actions/countrieAction';
 import { Backdrop, Fade, Modal, TextField } from '@mui/material';
 // import axios from 'axios';
 import { ApiPost } from '../../../../helper/API/ApiData';
-import { toast } from 'react-hot-toast'
+import { toast } from 'sonner'
 import { FcSearch } from 'react-icons/fc';
 import { MdEdit } from 'react-icons/md';
 // import { Tooltip } from 'react-tooltip';
@@ -164,10 +164,10 @@ const Countries = ({ showSidebar, setSidebar }) => {
               loading={!getCountries && { indicator: <Spin /> }}
               locale={{ emptyText: contryData?.length < 1 ? 'No records were found' : 'Loading...' }}
             />
-  
+
           </div>
         </div>
-       
+
       </div>
       <Modal
         aria-labelledby="transition-modal-title"

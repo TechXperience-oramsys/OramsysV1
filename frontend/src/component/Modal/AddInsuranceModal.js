@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import {Fade, Modal, Backdrop, TextField, Autocomplete} from '@mui/material'
+import { Fade, Modal, Backdrop, TextField, Autocomplete } from '@mui/material'
 import { Col, Row } from 'react-bootstrap';
-// import { toast } from 'react-hot-toast'
+// import { toast } from 'sonner'
 
 
 const AddInsuranceModal = ({ onHide, show }) => {

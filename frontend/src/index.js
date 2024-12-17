@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client"
 import "./App.css"
 import "./index.css"
 import App from "./App"
-import { Toaster } from "react-hot-toast"
+import { Toaster } from "sonner"
 import reportWebVitals from "./reportWebVitals"
 import "@fortawesome/fontawesome-svg-core/styles.css"
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
@@ -20,7 +20,9 @@ root.render(
   <React.StrictMode>
     <MantineProvider withGlobalStyles withNormalizeCSS>
       <App />
-      <Toaster toastOptions={{ duration: 3000 }} />
+      <Toaster
+        // position="top-right"
+        toastOptions={{ duration: 3000 }} />
     </MantineProvider>
   </React.StrictMode>
 )

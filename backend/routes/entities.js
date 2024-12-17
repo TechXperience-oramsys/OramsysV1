@@ -26,12 +26,7 @@ router.post("/edit/:id", Validate, entitiesController.edit);
 router.delete("/remove/:id", Validate, entitiesController.delete);
 router.get("/get/:id", Validate, entitiesController.getAll);
 router.get("/getById/:id", Validate, entitiesController.getById);
-router.get(
-  "/getRatingAgenciesById/:id",
-  Validate,
-  entitiesController.getRatingAgenciesById
-);
-router.get('/getByEntityId/:id', Validate, entitiesController.getEntityDetailsByEntityId)
+router.get("/getRatingAgenciesById/:id", Validate, entitiesController.getRatingAgenciesById);
 
 function loginValidate(req, res, next) {
   const Data = req.body;

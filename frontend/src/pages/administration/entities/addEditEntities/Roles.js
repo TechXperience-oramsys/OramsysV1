@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { companydataAction } from '../../../../redux/actions/companydataAction'
 import { editEntityAction, entityAddAction } from '../../../../redux/actions/entityAction';
 import { EDIT_ENTITY, ENTITY_ADD } from '../../../../redux/types';
-import { toast } from 'react-hot-toast'
+import { toast } from 'sonner'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { entitiesRoleAction } from '../../../../redux/actions/entitiesRoleAction';
 import { Button, Space, Table } from 'antd';
@@ -200,7 +200,7 @@ const Roles = ({ handleBack }) => {
                             Add Roles
                         </button>
                     </div>
-                    
+
 
                     <Table
                         columns={columns}

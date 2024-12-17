@@ -95,9 +95,11 @@ var Schema = new Schema({
 
 Schema.index({ name: "text" })
 
-Schema.statics.createTransactionDetail = async function () {
-    return await this.Save()
-}
+Schema.statics.createTransactionDetail = async function (data) {
+    const transaction = new this(data);
+    return await transaction.save();
+};
+
 
 Schema.statics.getAll = async function () {
     return await this.find({ isDeleted: false }).populate('countryOfBirth').sort({ name: 1 }).exec();

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { countrieAction } from '../../../../redux/actions/countrieAction';
 import { editEntityAction, entityAddAction } from '../../../../redux/actions/entityAction';
 import { EDIT_ENTITY, ENTITY_ADD } from '../../../../redux/types';
-import { toast } from 'react-hot-toast';
+import { toast } from 'sonner';
 
 const IndividualAddress = ({ handleNext, hendelCancel, sendDetailData, common }) => {
 

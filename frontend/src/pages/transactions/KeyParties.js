@@ -11,7 +11,7 @@ import { useAtom } from 'jotai'
 import { OptionalSpan } from './Helpers/OptionalTags'
 import { EditOutlined, EyeOutlined, InboxOutlined } from '@ant-design/icons';
 import { Table, Button, Form as AntdForm, Tooltip, Upload } from 'antd';
-import { toast } from 'react-hot-toast';
+import { toast } from 'sonner';
 import { transactionServices } from '../../_Services/transactions';
 
 const { Dragger } = Upload;

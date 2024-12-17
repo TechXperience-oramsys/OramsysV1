@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 // import TextEditerModal from '../../../../component/Modal/TextEditerModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { RATINGAGENCIES, RATINGAGENCIES_GET_BY_ID, RATINGAGENCY_UPDATE } from '../../../../redux/types';
-import { toast } from 'react-hot-toast'
+import { toast } from 'sonner'
 import { ratingAgencyAddAction, ratingAgencyUpdateAction } from '../../../../redux/actions/ratingAgenciesAction';
 import { Table, Button } from 'antd';
 import { EyeOutlined, EditOutlined } from '@ant-design/icons';

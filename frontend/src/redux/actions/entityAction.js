@@ -12,12 +12,13 @@ export const entityGetAction = (type) => async (dispatch) => {
             payload: true
         })
         await ApiGet(`entities/get/${type}`)
-            .then(res =>
+            .then((res) => {
+                console.log('API Response:', res.data.data)
                 dispatch({
                     type: ENTITY,
                     payload: res
                 })
-            )
+            })
             .catch(e =>
                 console.log('e', e)
             )
@@ -201,7 +202,7 @@ export const editEntityAction = (id, body) => async (dispatch) => {
             payload: true
         })
         await ApiPost(`entities/edit/${id}`, body)
-            .then(res =>    
+            .then(res =>
                 dispatch({
                     type: EDIT_ENTITY,
                     payload: res

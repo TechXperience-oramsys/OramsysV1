@@ -6,7 +6,7 @@ import STORAGEKEY from "../../config/APP/app.config";
 // import { ApiPostNoAuth } from "../../helper/API/ApiData";
 import AuthStorage from "../../helper/AuthStorage";
 import { LOGIN } from "../../redux/types";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 // import { useOktaAuth } from "@okta/okta-react";
 // import svgIcon from "../../css/undraw_developer_activity_re_39tg.svg";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
@@ -162,7 +162,7 @@ const FunctionalAdmin = () => {
                       />
                       <label htmlFor="floatingInputValue">Email address</label>
                       {loginFormError.email && (
-                        <span style={{ color: "#da251e", width: "100%", textAlign: "start"}}>
+                        <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>
                           {loginFormError.email}
                         </span>
                       )}
@@ -225,12 +225,12 @@ const FunctionalAdmin = () => {
                 </div>
               </div>
             </div>
-          
+
           </div>
         </div>
       </div>
 
-   
+
     </>
   );
 };

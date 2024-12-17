@@ -18,7 +18,7 @@ import { useAtom } from 'jotai';
 import { productDetailsAtom, contractDetailsAtom, borrowerApplicantAtom, lendersAtom, shippingOptionsAtom, transShipmentAtom, pricingDetailsAtom, shippingCompanyAtom, hedgingPartyAtom, hedgingStatusAtom, warehouseStatusAtom, productNameAtom, countriesAtom, counterPartyOptionAtom, borrowerOptionAtom, wareHouseIdAtom, errorAtom, editIdAtom, portsOptionsAtom, originCountryAtom, shippingCompanyOptionAtom } from '../transactions/Helpers/atoms';
 import AuthStorage from "../../helper/AuthStorage"
 import STORAGEKEY from "../../config/APP/app.config"
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 // import { transactionItems } from '../../_Services/transactions'
 import { Table, Button, Tooltip } from "antd"
 import { EyeOutlined, EditOutlined } from '@ant-design/icons'
