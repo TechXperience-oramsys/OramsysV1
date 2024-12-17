@@ -233,7 +233,7 @@ class transactionController {
       lenders: body.lenders,
       borrower_Applicant: body.borrower_Applicant,
       admin: body.admin,
-      workFlowSteps : []
+      workFlowSteps: []
     };
     try {
       const model = new transaction(newTransaction);

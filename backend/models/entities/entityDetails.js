@@ -71,4 +71,8 @@ Schema.statics.getEntityDetailsFromArrayOfIds = async function (ids) {
 
 }
 
+Schema.statics.getEntityDetailByEntityID = async function (id){
+    return await this.findOne({entityId : id , idDeleted : false})
+}
+
 module.exports = mongoose.model("EntityDetails", Schema)

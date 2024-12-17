@@ -1,7 +1,7 @@
 "use strict";
 
 const entities = require("../models/entities/entities");
-const entityDetails = require("../models/entities/entityDetails");
+// const entityDetails = require("../models/entities/entityDetails");
 const entityAddress = require("../models/entities/entityAddress");
 const entityFinancials = require("../models/entities/entityFinancials");
 const entityLicense = require("../models/entities/entityLicense");
@@ -13,6 +13,7 @@ const httpStatus = require('http-status');
 const APIResponse = require("../helpers/APIResponse");
 const { hashPassword, comparePassword } = require("../utils/bcrypt.helper");
 const { getJWTToken } = require("../utils/jwt.helper");
+const entityDetails = require("../models/entities/entityDetails");
 
 class entitiesController {
 
@@ -551,6 +552,24 @@ class entitiesController {
             return res
                 .status(httpStatus.BAD_REQUEST)
                 .send({ message: "Somethig went wrong" });
+        }
+    }
+
+    async getEntityDetailsByEntityId(req, res, next) {
+        try {
+            let entityDetail = await entityDetails.getEntityDetailByEntityID(req.params.id)
+            if(entityDetail){
+                return res.status(httpStatus.OK).json(new APIResponse(entityDetail, 'Entity Details get successfully.', httpStatus.OK));
+            }else{
+                return res
+                .status(httpStatus.BAD_REQUEST)
+                .send({ message: "Entity not found" });
+            }
+            
+        } catch (error) {
+            return res
+            .status(httpStatus.BAD_REQUEST)
+            .send({ message: "Somethig went wrong" });
         }
     }
 }

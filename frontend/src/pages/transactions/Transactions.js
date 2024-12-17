@@ -348,11 +348,12 @@ const Transactions = () => {
                 </Menu.Item>
               )}
               <Menu.Item
-                onClick={() => {
-                  record.termSheet === "Not Signed"
-                    ? downloadTermSheet(record._id, "view")
-                    : ViewRiskAssessment();
-                }}
+              onClick={()=>downloadTermSheet(record._id, "view")}
+                // onClick={() => {
+                //   record.termSheet === "Not Signed"
+                //     ? downloadTermSheet(record._id, "view")
+                //     : ViewRiskAssessment();
+                // }}
               >
                 <EyeOutlined className='pe-2' /> View Termsheet
               </Menu.Item>

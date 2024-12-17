@@ -12,10 +12,11 @@ import { OptionalSpan } from './Helpers/OptionalTags'
 import { EditOutlined, EyeOutlined, InboxOutlined } from '@ant-design/icons';
 import { Table, Button, Form as AntdForm, Tooltip, Upload } from 'antd';
 import { toast } from 'sonner';
+import { transactionServices } from '../../_Services/transactions';
 
 const { Dragger } = Upload;
 
-const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingCompany, getCounterParty, pricingHedgingStatus, getWarehouseCompany, warehouseStatus, getLender, getBorrower }) => {
+const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingCompany, getCounterParty, pricingHedgingStatus, getWarehouseCompany, warehouseStatus, getLender, getBorrower , stype }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const location = useLocation()
@@ -44,6 +45,9 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
     const transactionData = useSelector((state) => state.transactionData.transactionData)
     const getTransactionByIdData = useSelector((state) => state.transactionData.getTransactionById)
 
+
+    console.log(getTransactionByIdData , 'getTransactionByIdDatagetTransactionByIdData' , transactionData);
+    
 
     useEffect(() => {
         dispatch(entityGetAction('all'))
@@ -252,9 +256,17 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
             },
             type: transactionType
         }
-
         dispatch(transactionDataAction(body))
-        hendelNext()
+
+        if (body.keyParties?._id.length > 0) {
+            body.keyParties.transactionId = body.details?.transactionId
+            transactionServices.updateKeyParties(body.keyParties).then((res) => {
+                hendelNext()
+                toast.success(res.data.message)
+            }).catch(err => toast.error("Failed to update Key Parties!"))
+        }else{
+            hendelNext()
+        }
     }
     // console.log('TAbLE dATa', tableData)
     useEffect(() => {
@@ -380,7 +392,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
 
                             <Form.Control className='text-muted no-border' type="text"
                                 name='borrower_Applicant'
-                                value={getBorrower}
+                                value={getBorrower ? getBorrower : getTransactionByIdData?.keyParties&& getTransactionByIdData?.keyParties[0]?.parties[0]?.name?.email                               }
                                 disabled={true} />
 
                         </Form.Group>
@@ -390,7 +402,7 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
 
                             <Form.Control className='text-muted no-border'
                                 name='lenders'
-                                value={getLender}
+                                value={getLender ? getLender : getTransactionByIdData?.lenders }
                                 disabled={true} />
 
                         </Form.Group>
@@ -502,9 +514,9 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                                     <Form.Label>Relation</Form.Label>
                                     <Form.Select
                                         onChange={(e) => handleRelationChange(e, index)}
-                                        value={party.party_relation || ''}
+                                        value={party.party_relation || 'Choose...'}
                                         disabled={isView}>
-                                        <option value="" disabled>Choose...</option>
+                                        <option disabled>Choose...</option>
                                         {parties.map((item) => (
                                             <option key={item} value={item}>
                                                 {item}
@@ -545,10 +557,10 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
                     </>
                 </div>
             </div>
-            <div className='footer_'>
+           {stype == undefined &&  <div className='footer_'>
                 <button onClick={() => { transactionType === "Export" ? hendelCancel() : navigate('/transactions') }} className="footer_cancel_btn">Back</button>
                 <button onClick={() => { tableData.length > 0 && next() }} className='footer_next_btn'> Next</button>
-            </div>
+            </div>}
 
             {showEditModal && <PartiesEditModal show={showEditModal} onHide={() => { setShowEditModal(false); setRowEditData('') }} getModalData={(e, id) => partiesEditData(e, id)} editData={rowEditData} isView={view} />}
         </>
