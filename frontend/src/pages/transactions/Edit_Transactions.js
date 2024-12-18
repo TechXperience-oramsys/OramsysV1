@@ -70,7 +70,7 @@ const { Step } = Steps;
     }, [id, dispatch, getTransactionId.data?.details?.contractDetails?.currency, getTransactionId.data?.details?.contractDetails?.value])
 
     const signalContract = (values) => {
-        console.log(values , 'ppppppppppppppppppppppp');
+        // console.log(values , 'ppppppppppppppppppppppp');
         
         setGetTrans(values)
     }
@@ -88,7 +88,7 @@ const { Step } = Steps;
         return setGetCounterParty(values)
     }
     const signalShippingCompany = (values) => {
-        console.log('val', values)
+        // console.log('val', values)
         return setGetShippingCompany(values)
     }
     const signalPricingHedgingStatus = (values) => {

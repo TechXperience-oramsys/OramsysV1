@@ -21,7 +21,7 @@ root.render(
     <MantineProvider withGlobalStyles withNormalizeCSS>
       <App />
       <Toaster
-        // position="top-right"
+        position="top-right"
         toastOptions={{ duration: 3000 }} />
     </MantineProvider>
   </React.StrictMode>

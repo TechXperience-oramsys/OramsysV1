@@ -14,7 +14,7 @@ import { Table, Button, Tooltip } from 'antd';
 import { EditOutlined, EyeOutlined } from '@ant-design/icons';
 import { beneficiaryAtom, contractDetailAtom, countryAtom, editeRowDataAtom, fundFlowAtom, lettersOfCreditAtom, selectedNameAtom, showTextEditorAtom } from './Helpers/atoms';
 import { transactionServices } from '../../_Services/transactions';
-import toast from 'react-hot-toast';
+import {toast} from 'sonner';
 
 
 const FundFlow = ({ hendelCancel, hendelNext, getTrans ,stype}) => {

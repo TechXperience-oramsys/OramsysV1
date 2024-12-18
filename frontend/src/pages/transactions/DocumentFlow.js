@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { documentFlowAtom } from './Helpers/atoms';
 import { transactionServices } from '../../_Services/transactions';
-import toast from 'react-hot-toast';
+import {toast} from 'sonner';
 import { message } from 'antd';
 
 const DocumentFlow = ({ hendelCancel, hendelNext, stype }) => {
