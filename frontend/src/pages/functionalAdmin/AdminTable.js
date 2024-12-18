@@ -58,6 +58,13 @@ const Admin = () => {
       ),
     },
     {
+      title: "Organisation",
+      dataIndex: "corporationName",
+      key: "corporationName",
+      align: "center",
+      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+    },
+    {
       title: "Branch",
       dataIndex: "branch",
       key: "branch",
@@ -65,13 +72,7 @@ const Admin = () => {
       align: "center",
       sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
     },
-    {
-      title: "Organisation",
-      dataIndex: "corporationName",
-      key: "corporationName",
-      align: "center",
-      sorter: (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
-    },
+   
     {
       title: "Admin Name",
       dataIndex: "adminName",
