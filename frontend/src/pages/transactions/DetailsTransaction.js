@@ -1145,7 +1145,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
             type: transactionType,
         }
 
-        console.log(body, 'WAHALA')
+        // console.log(body, 'WAHALA')
 
         dispatch(transactionDataAction(body))
         toast.success("Details added successfully!");
@@ -1162,10 +1162,10 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         if (body.details?._id.length > 0) {
             body.details.transactionId = transaction_id
             body.details.shippingOptions.warehouses = body.details.shippingOptions.warehouses.map(warehouse => ({
-                warehouse: warehouse.warehouse.value, // Get the value from the warehouse object
-                warehouseCompany: warehouse.warehouseCompany.value // Get the value from the warehouseCompany object
+                warehouse: warehouse.warehouse?.value, // Get the value from the warehouse object
+                warehouseCompany: warehouse.warehouseCompany?.value // Get the value from the warehouseCompany object
             }));
-            transactionServices.detailsUpdate(body).then((res) => {
+            transactionServices?.detailsUpdate(body).then((res) => {
                 toast.success(res?.data?.message)
                 hendelNext()
             }).catch((error) => toast.error("Something went wrong!"))
@@ -2406,7 +2406,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                         <AddInsuranceModal show={addInsuranceModal} onHide={() => setAddInsuranceModal(false)} />
                     )}
                     {/* {showTextEditModal && <TextEditerModal show={showTextEditModal} onHide={() => setShowTextEditModal(false)} commentDone={(e) => hadleChangeModal(e)} data={sendModalData} type={type} inputName={selectedName} />} */}
-                   {stype == undefined && <div className='footer_'>
+                   {stype === undefined && <div className='footer_'>
                         <div className="d-flex justify-content-between">
                             <button onClick={() => navigate("/transactions")} className='footer_cancel_btn'> Back </button>
                             {/* <button onClick={() => { save();  console.log('Click me')}} className='footer_cancel_btn'> Save Details and exit </button> */}

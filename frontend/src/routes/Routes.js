@@ -3,7 +3,7 @@ import Index from "../pages/index";
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { useNavigate } from "react-router-dom";
 import { Security } from "@okta/okta-react";
-import { Toaster } from 'sonner';
+// import { Toaster } from 'sonner';
 import ErrorBoundary from '../ErrorBoundary';
 // import { useEffect, useState } from "react";
 
@@ -45,7 +45,7 @@ const Routes = () => {
   };
   return (
     <Security restoreOriginalUri={restoreOriginalUri} oktaAuth={oktaAuth}>
-      <Toaster />
+      {/* <Toaster /> */}
       <ErrorBoundary>
         <Index />
       </ErrorBoundary>
