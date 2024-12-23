@@ -22,9 +22,8 @@ root.render(
   <React.StrictMode>
     <MantineProvider withGlobalStyles withNormalizeCSS>
       <Toaster richColors position="top-right" toastOptions={{ duration: 3000 }} />
-      {/* <App /> */}
-      <div className="d-flex flex-column justify-content-center align-items-center vh-100 text-center bg-light position-relative">
-        {/* Wrench Icon as Background */}
+      <App />
+      {/* <div className="d-flex flex-column justify-content-center align-items-center vh-100 text-center bg-light position-relative">
         <BsTools
           className="position-absolute text-primary"
           style={{
@@ -33,11 +32,9 @@ root.render(
             zIndex: 1,
           }}
         />
-        {/* 500 Error Text */}
         <h1 className="display-1 text-danger fw-bold position-relative" style={{ zIndex: 2 }}>
           500
         </h1>
-        {/* Maintenance Message */}
         <h2 className="mt-3 text-dark fw-semibold position-relative" style={{ zIndex: 2 }}>
           This platform is under maintenance
         </h2>
@@ -47,7 +44,6 @@ root.render(
         <p className="text-muted position-relative" style={{ zIndex: 2 }}>
           For more information about why you're seeing this page, please contact the administrator.
         </p>
-        {/* Refresh Button */}
         <button
           className="btn btn-primary mt-3 px-4 py-2 shadow position-relative"
           style={{ zIndex: 2 }}
@@ -55,7 +51,7 @@ root.render(
         >
           Refresh Page
         </button>
-      </div>
+      </div> */}
     </MantineProvider>
   </React.StrictMode>
 )
