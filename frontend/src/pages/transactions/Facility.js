@@ -2394,6 +2394,10 @@ const Facility = ({ hendelCancel, hendelNext , type}) => {
             </div>
           </div>
         </div>
+
+
+
+                 
     {type == undefined &&    <div className="footer_">
           <button
             onClick={() => {

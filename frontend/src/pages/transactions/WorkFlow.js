@@ -425,7 +425,7 @@ const Workflow = () => {
               <Menu.Item
                 onClick={() => {
                   setIsWorkFlowNotes(true)
-                  setWorkFlowNotes(record?.workflowstepNotes.filter((item) => item.department == workflowData?.workflowDocument?.department));
+                  setWorkFlowNotes(record?.workflowstepNotes.filter((item) => item.department == workflowData?.workflowDocument?.stepName));
                 }}
               >
                 <EyeOutlined className="pe-2" /> View Work Flow Notes
@@ -540,7 +540,7 @@ const Workflow = () => {
     )
   }
 
-  const ViewNotes = () => {
+  const ViewNotes = () => {    
     return (
       <Modal show={isWorkFlowNote} onHide={() => setIsWorkFlowNotes(false)} centered className="w-90" size="lg">
         <Modal.Header closeButton>

@@ -158,9 +158,11 @@ const Header = () => {
             </button>
             <div className="collapse ms-6 navbar-collapse" id="navbarSupportedContent">
               <ul className="navbar-nav mr-auto mb-2 text-dark mb-lg-0">
+               
                 <li className="nav-item">
                   <a className="nav-link active" aria-current="page" to="#home">Home</a>
                 </li>
+               
                 <li className="nav-item">
                   <a className="nav-link" href="#aboutUs">About us</a>
                 </li>
@@ -168,6 +170,7 @@ const Header = () => {
                 <li className="nav-item">
                   <a className="nav-link" href="#services">Services</a>
                 </li>
+
                 <li className="nav-item">
                   <a className="nav-link" href="#insight">Insight</a>
                 </li>

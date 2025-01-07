@@ -10,7 +10,6 @@ const resetAdminPassword = () => async (req, res) => {
 
     if (password == resData.password) {
       let hashedPassword = await bcrypt.hash(newPassword, 10);
-
       const updateData = await Corporation.findByIdAndUpdate(req.query.id, {
         $set: { password: hashedPassword },
       });
@@ -51,7 +50,6 @@ const resetAdminPassword = () => async (req, res) => {
               <!-- Main Content -->
               <div style="font-family: Arial, sans-serif; line-height: 1.5;">
                 <h2 style="color: #4a5568; font-size: 1.5rem;">Bravo ${resData?.adminName},</h2>
-               
                 <p style="font-weight: bold; font-size: 20px;">Your password has been changed succesfully!</p>
                 <a href='https://www.oramsysdev.com/fa-login' style="display: inline-block; padding: 10px 20px; margin-top: 20px; font-size: 0.875rem; font-weight: 500; color: #ffffff; background-color: #3182ce; border-radius: 8px; text-align: center; text-decoration: none;">Visist Oramsys
                 </a>
