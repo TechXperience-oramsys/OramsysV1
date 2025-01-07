@@ -18,203 +18,479 @@ const makeTermSheet = require("../utils/makeTermSheet");
 class transactionController {
   async getPorts(req, res, next) { }
 
-  
+  // async create(req, res, next) {
+  //     let body = req.body;
+  //     const newTransaction = {
+  //         type: body.type,
+  //         userId: body.userId,
+  //         lenders: body.lenders,
+  //         borrower_Applicant: body.borrower_Applicant,
+  //         admin: body.admin
+  //     };
+  //     try {
+  //         const model = new transaction(newTransaction);
+  //         const saveResponse = await model.save();
+  //         return res.status(httpStatus.OK).json(new APIResponse(saveResponse, 'Transaction created successfully.', httpStatus.OK));
+  //     } catch (e) {
+  //         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(new APIResponse({}, 'Error creating transaction', httpStatus.INTERNAL_SERVER_ERROR, e));
+  //     }
+  // }
 
   // async saveDetails(req, res, next) {
-  //   const { detail } = req.body;
-  //   const { id } = req.params;
-
-  //   console.log('Transaction ID in the backend:', id)
-  //   try {
-  //     if (detail) {
-  //       detail.transactionId = mongoose.Types.ObjectId(id);
-
-  //       if (!detail.pricingDetails.pricingHedgingStatus) {
-  //         delete detail.pricingDetails.pricingCounterParty;
-  //       }
-  //       // detail.transactionId = req.params.id;
-  //       const transactionDetailsModel = new transactionDetails(detail);
-  //       const transactionDetailsResponse = await transactionDetailsModel.save();
-  //       await transaction.updateTransaction(
-  //         { details: transactionDetailsResponse._id }, id
-  //       );
-  //       return res
-  //         .status(httpStatus.OK)
-  //         .json(
-  //           new APIResponse(
-  //             transactionDetailsResponse,
-  //             "Transaction details saved successfully.",
-  //             httpStatus.OK
-  //           )
-  //         );
+  //     let detail = req.body.detail;
+  //     try {
+  //         if (detail) {
+  //             if (detail.pricingDetails.pricingHedgingStatus) {
+  //                 detail = {
+  //                     ...detail,
+  //                     transactionId: req.params.id
+  //                 };
+  //             } else {
+  //                 delete detail.pricingDetails.pricingCounterParty;
+  //                 detail = {
+  //                     ...detail,
+  //                     transactionId: req.params.id
+  //                 };
+  //             }
+  //             const transactionDetailsModel = new transactionDetails(detail);
+  //             const transactionDetailsResponse = await transactionDetailsModel.save();
+  //             await transaction.updateTransaction({ details: transactionDetailsResponse._id }, req.params.id);
+  //             return res.status(httpStatus.OK).json(new APIResponse(transactionDetailsResponse, 'Transaction details saved successfully.', httpStatus.OK));
+  //         }
+  //     } catch (e) {
+  //         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(new APIResponse({}, 'Error saving transaction details', httpStatus.INTERNAL_SERVER_ERROR, e));
   //     }
-  //   } catch (e) {
-  //     return res
-  //       .status(httpStatus.INTERNAL_SERVER_ERROR)
-  //       .json(
-  //         new APIResponse(
-  //           {},
-  //           "Error saving transaction details",
-  //           httpStatus.INTERNAL_SERVER_ERROR,
-  //           e
-  //         )
-  //       );
-  //   }
   // }
 
   // async saveKeyParties(req, res, next) {
-  //   const { keyParties } = req.body;
-  //   try {
-  //     if (keyParties && keyParties.keyParties.length) {
-  //       const element = {
-  //         parties: keyParties.keyParties,
-  //         transactionId: req.params.id,
-  //         relatedParties: keyParties.relatedParties,
-  //       };
-  //       const transactionKeyPartiesModel = new transactionKeyParties(element);
-  //       const transactionKeyPartiesResponse =
-  //         await transactionKeyPartiesModel.save();
-  //       await transaction.updateTransaction(
-  //         { keyParties: transactionKeyPartiesResponse._id },
-  //         req.params.id
-  //       );
-  //       return res
-  //         .status(httpStatus.OK)
-  //         .json(
-  //           new APIResponse(
-  //             transactionKeyPartiesResponse,
-  //             "Transaction key parties saved successfully.",
-  //             httpStatus.OK
-  //           )
-  //         );
+  //     let keyParties = req.body.keyParties;
+  //     try {
+  //         if (keyParties.keyParties.length) {
+  //             let keyParty = keyParties.keyParties.map(element => element);
+  //             let element = {
+  //                 parties: keyParty,
+  //                 transactionId: req.params.id,
+  //                 relatedParties: keyParties?.relatedParties
+  //             };
+  //             const transactionKeyPartiesModel = new transactionKeyParties(element);
+  //             const transactionKeyPartiesResponse = await transactionKeyPartiesModel.save();
+  //             await transaction.updateTransaction({ keyParties: transactionKeyPartiesResponse._id }, req.params.id);
+  //             return res.status(httpStatus.OK).json(new APIResponse(transactionKeyPartiesResponse, 'Transaction key parties saved successfully.', httpStatus.OK));
+  //         }
+  //     } catch (e) {
+  //         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(new APIResponse({}, 'Error saving transaction key parties', httpStatus.INTERNAL_SERVER_ERROR, e));
   //     }
-  //   } catch (e) {
-  //     return res
-  //       .status(httpStatus.INTERNAL_SERVER_ERROR)
-  //       .json(
-  //         new APIResponse(
-  //           {},
-  //           "Error saving transaction key parties",
-  //           httpStatus.INTERNAL_SERVER_ERROR,
-  //           e
-  //         )
-  //       );
-  //   }
   // }
 
   // async saveDocumentFlow(req, res, next) {
-  //   const { documentFlow } = req.body;
-  //   try {
-  //     if (documentFlow) {
-  //       documentFlow.transactionId = req.params.id;
-  //       const transactionDocumentFlowModel = new transactionDocumentFlow(
-  //         documentFlow
-  //       );
-  //       const transactionDocumentFlowResponse =
-  //         await transactionDocumentFlowModel.save();
-  //       await transaction.updateTransaction(
-  //         { documentFlow: transactionDocumentFlowResponse._id },
-  //         req.params.id
-  //       );
-  //       return res
-  //         .status(httpStatus.OK)
-  //         .json(
-  //           new APIResponse(
-  //             transactionDocumentFlowResponse,
-  //             "Transaction document flow saved successfully.",
-  //             httpStatus.OK
-  //           )
-  //         );
+  //     let documentFlow = req.body.documentFlow;
+  //     try {
+  //         if (documentFlow) {
+  //             documentFlow = {
+  //                 ...documentFlow,
+  //                 transactionId: req.params.id
+  //             };
+  //             const transactionDocumentFlowModel = new transactionDocumentFlow(documentFlow);
+  //             const transactionDocumentFlowResponse = await transactionDocumentFlowModel.save();
+  //             await transaction.updateTransaction({ documentFlow: transactionDocumentFlowResponse._id }, req.params.id);
+  //             return res.status(httpStatus.OK).json(new APIResponse(transactionDocumentFlowResponse, 'Transaction document flow saved successfully.', httpStatus.OK));
+  //         }
+  //     } catch (e) {
+  //         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(new APIResponse({}, 'Error saving transaction document flow', httpStatus.INTERNAL_SERVER_ERROR, e));
   //     }
-  //   } catch (e) {
-  //     return res
-  //       .status(httpStatus.INTERNAL_SERVER_ERROR)
-  //       .json(
-  //         new APIResponse(
-  //           {},
-  //           "Error saving transaction document flow",
-  //           httpStatus.INTERNAL_SERVER_ERROR,
-  //           e
-  //         )
-  //       );
-  //   }
   // }
 
   // async saveFundFlow(req, res, next) {
-  //   const { fundFlow } = req.body;
-  //   try {
-  //     if (fundFlow) {
-  //       if (!fundFlow.additonalCharges) {
-  //         delete fundFlow.payer;
-  //       }
-  //       fundFlow.transactionId = req.params.id;
-  //       const transactionFundFlowModel = new transactionFundFlow(fundFlow);
-  //       const transactionFundFlowResponse =
-  //         await transactionFundFlowModel.save();
-  //       await transaction.updateTransaction(
-  //         { fundFlow: transactionFundFlowResponse._id },
-  //         req.params.id
-  //       );
-  //       return res
-  //         .status(httpStatus.OK)
-  //         .json(
-  //           new APIResponse(
-  //             transactionFundFlowResponse,
-  //             "Transaction fund flow saved successfully.",
-  //             httpStatus.OK
-  //           )
-  //         );
+  //     let fundFlow = req.body.fundFlow;
+  //     try {
+  //         if (fundFlow) {
+  //             if (fundFlow.additonalCharges) {
+  //                 fundFlow = {
+  //                     ...fundFlow,
+  //                     transactionId: req.params.id
+  //                 };
+  //             } else {
+  //                 delete fundFlow.payer;
+  //                 fundFlow = {
+  //                     ...fundFlow,
+  //                     transactionId: req.params.id
+  //                 };
+  //             }
+  //             const transactionFundFlowModel = new transactionFundFlow(fundFlow);
+  //             const transactionFundFlowResponse = await transactionFundFlowModel.save();
+  //             await transaction.updateTransaction({ fundFlow: transactionFundFlowResponse._id }, req.params.id);
+  //             return res.status(httpStatus.OK).json(new APIResponse(transactionFundFlowResponse, 'Transaction fund flow saved successfully.', httpStatus.OK));
+  //         }
+  //     } catch (e) {
+  //         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(new APIResponse({}, 'Error saving transaction fund flow', httpStatus.INTERNAL_SERVER_ERROR, e));
   //     }
-  //   } catch (e) {
-  //     return res
-  //       .status(httpStatus.INTERNAL_SERVER_ERROR)
-  //       .json(
-  //         new APIResponse(
-  //           {},
-  //           "Error saving transaction fund flow",
-  //           httpStatus.INTERNAL_SERVER_ERROR,
-  //           e
-  //         )
-  //       );
-  //   }
   // }
 
   // async saveFacility(req, res, next) {
-  //   const { facility } = req.body;
-  //   try {
-  //     if (facility) {
-  //       facility.transactionId = req.params.id;
-  //       const transactionFacilityModel = new transactionFacility(facility);
-  //       const transactionFacilityResponse =
-  //         await transactionFacilityModel.save();
-  //       await transaction.updateTransaction(
-  //         { facility: transactionFacilityResponse._id },
-  //         req.params.id
-  //       );
-  //       return res
-  //         .status(httpStatus.OK)
-  //         .json(
-  //           new APIResponse(
-  //             transactionFacilityResponse,
-  //             "Transaction facility saved successfully.",
-  //             httpStatus.OK
-  //           )
-  //         );
+  //     let facility = req.body.facility;
+  //     try {
+  //         if (facility) {
+  //             facility = {
+  //                 ...facility,
+  //                 transactionId: req.params.id
+  //             };
+  //             const transactionFacilityModel = new transactionFacility(facility);
+  //             const transactionFacilityResponse = await transactionFacilityModel.save();
+  //             await transaction.updateTransaction({ facility: transactionFacilityResponse._id }, req.params.id);
+  //             return res.status(httpStatus.OK).json(new APIResponse(transactionFacilityResponse, 'Transaction facility saved successfully.', httpStatus.OK));
+  //         }
+  //     } catch (e) {
+  //         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(new APIResponse({}, 'Error saving transaction facility', httpStatus.INTERNAL_SERVER_ERROR, e));
   //     }
-  //   } catch (e) {
-  //     return res
-  //       .status(httpStatus.INTERNAL_SERVER_ERROR)
-  //       .json(
-  //         new APIResponse(
-  //           {},
-  //           "Error saving transaction facility",
-  //           httpStatus.INTERNAL_SERVER_ERROR,
-  //           e
-  //         )
-  //       );
-  //   }
   // }
 
+  async saveDetails(req, res, next) {
+    const { detail } = req.body;
+    const { id } = req.params;
+
+    console.log('Transaction ID in the backend:', id)
+    try {
+      if (detail) {
+        detail.transactionId = mongoose.Types.ObjectId(id);
+
+        if (!detail.pricingDetails.pricingHedgingStatus) {
+          delete detail.pricingDetails.pricingCounterParty;
+        }
+        // detail.transactionId = req.params.id;
+        const transactionDetailsModel = new transactionDetails(detail);
+        const transactionDetailsResponse = await transactionDetailsModel.save();
+        await transaction.updateTransaction(
+          { details: transactionDetailsResponse._id }, id
+        );
+        return res
+          .status(httpStatus.OK)
+          .json(
+            new APIResponse(
+              transactionDetailsResponse,
+              "Transaction details saved successfully.",
+              httpStatus.OK
+            )
+          );
+      }
+    } catch (e) {
+      return res
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json(
+          new APIResponse(
+            {},
+            "Error saving transaction details",
+            httpStatus.INTERNAL_SERVER_ERROR,
+            e
+          )
+        );
+    }
+  }
+
+  async updateDetails(req, res, next) {
+    const { details } = req.body;
+    const { id } = req.params;
+    try {
+      if (details) {
+        await transactionDetails.updateTransactionDetail(details, id)
+        return res
+          .status(httpStatus.OK)
+          .json(
+            new APIResponse(
+              transactionDetails,
+              "Transaction details updated successfully.",
+              httpStatus.OK
+            )
+          );
+      }
+    } catch (error) {
+      return res
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json(
+          new APIResponse(
+            {},
+            "Error updating transaction details",
+            httpStatus.INTERNAL_SERVER_ERROR,
+            error
+          )
+        );
+
+    }
+  }
+
+  async saveKeyParties(req, res, next) {
+    const { keyParties } = req.body;
+    try {
+      if (keyParties && keyParties.keyParties.length) {
+        const element = {
+          parties: keyParties.keyParties,
+          transactionId: req.params.id,
+          relatedParties: keyParties.relatedParties,
+        };
+        const transactionKeyPartiesModel = new transactionKeyParties(element);
+        const transactionKeyPartiesResponse =
+          await transactionKeyPartiesModel.save();
+        await transaction.updateTransaction(
+          { keyParties: transactionKeyPartiesResponse._id },
+          req.params.id
+        );
+        return res
+          .status(httpStatus.OK)
+          .json(
+            new APIResponse(
+              transactionKeyPartiesResponse,
+              "Transaction key parties saved successfully.",
+              httpStatus.OK
+            )
+          );
+      }
+    } catch (e) {
+      return res
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json(
+          new APIResponse(
+            {},
+            "Error saving transaction key parties",
+            httpStatus.INTERNAL_SERVER_ERROR,
+            e
+          )
+        );
+    }
+  }
+
+  async updateKeyParties(req, res, next){
+    try {
+      const parties  = req.body;
+    const { id } = req.params;
+    if(parties){
+      await transactionKeyParties.updateTransactionKeyParties(parties,id)
+      return res
+          .status(httpStatus.OK)
+          .json(
+            new APIResponse(
+              transactionDetails,
+              "Transaction key parties details updated successfully.",
+              httpStatus.OK
+            )
+          );
+    }
+      
+    } catch (error) {
+      return res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json(
+        new APIResponse(
+          {},
+          "Error updating Transaction key parties details!",
+          httpStatus.INTERNAL_SERVER_ERROR,
+          error
+        )
+      );
+    }
+  }
+
+  async saveDocumentFlow(req, res, next) {
+    const { documentFlow } = req.body;
+    try {
+      if (documentFlow) {
+        documentFlow.transactionId = req.params.id;
+        const transactionDocumentFlowModel = new transactionDocumentFlow(
+          documentFlow
+        );
+        const transactionDocumentFlowResponse =
+          await transactionDocumentFlowModel.save();
+        await transaction.updateTransaction(
+          { documentFlow: transactionDocumentFlowResponse._id },
+          req.params.id
+        );
+        return res
+          .status(httpStatus.OK)
+          .json(
+            new APIResponse(
+              transactionDocumentFlowResponse,
+              "Transaction document flow saved successfully.",
+              httpStatus.OK
+            )
+          );
+      }
+    } catch (e) {
+      return res
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json(
+          new APIResponse(
+            {},
+            "Error saving transaction document flow",
+            httpStatus.INTERNAL_SERVER_ERROR,
+            e
+          )
+        );
+    }
+  }
+
+  async updateDocumentFlow(req, res, next){
+try {
+  const data = req.body
+  const id = req.params
+  if(data){
+    await transactionDocumentFlow.updateTransactionDocumentFlow(data,data._id)
+    return res
+          .status(httpStatus.OK)
+          .json(
+            new APIResponse(
+              transactionDetails,
+              "Transaction Document Flow updated successfully.",
+              httpStatus.OK
+            )
+          );
+  }
+} catch (error) {
+  return res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json(
+        new APIResponse(
+          {},
+          "Error updating Transaction Document Flow!",
+          httpStatus.INTERNAL_SERVER_ERROR,
+          error
+        )
+      );
+}
+  }
+
+  async saveFundFlow(req, res, next) {
+    const { fundFlow } = req.body;
+    try {
+      if (fundFlow) {
+        if (!fundFlow.additonalCharges) {
+          delete fundFlow.payer;
+        }
+        fundFlow.transactionId = req.params.id;
+        const transactionFundFlowModel = new transactionFundFlow(fundFlow);
+        const transactionFundFlowResponse =
+          await transactionFundFlowModel.save();
+        await transaction.updateTransaction(
+          { fundFlow: transactionFundFlowResponse._id },
+          req.params.id
+        );
+        return res
+          .status(httpStatus.OK)
+          .json(
+            new APIResponse(
+              transactionFundFlowResponse,
+              "Transaction fund flow saved successfully.",
+              httpStatus.OK
+            )
+          );
+      }
+    } catch (e) {
+      return res
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json(
+          new APIResponse(
+            {},
+            "Error saving transaction fund flow",
+            httpStatus.INTERNAL_SERVER_ERROR,
+            e
+          )
+        );
+    }
+  }
+
+  async updateFundFlow(req, res, next){
+    try {
+      const data = req.body
+      const id = req.params.id
+      if(data){
+        await transactionFundFlow.updateTransactionFundFlow(data, id)
+        return res
+          .status(httpStatus.OK)
+          .json(
+            new APIResponse(
+              transactionDetails,
+              "Transaction Fund Flow updated successfully.",
+              httpStatus.OK
+            )
+          );
+      }
+    } catch (error) {
+      
+      return res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json(
+        new APIResponse(
+          {},
+          "Error updating Transaction Fund Flow!",
+          httpStatus.INTERNAL_SERVER_ERROR,
+          error
+        )
+      );
+    }
+  }
+
+  async saveFacility(req, res, next) {
+    const { facility } = req.body;
+    try {
+      if (facility) {
+        facility.transactionId = req.params.id;
+        const transactionFacilityModel = new transactionFacility(facility);
+        const transactionFacilityResponse =
+          await transactionFacilityModel.save();
+        await transaction.updateTransaction(
+          { facility: transactionFacilityResponse._id },
+          req.params.id
+        );
+        return res
+          .status(httpStatus.OK)
+          .json(
+            new APIResponse(
+              transactionFacilityResponse,
+              "Transaction facility saved successfully.",
+              httpStatus.OK
+            )
+          );
+      }
+    } catch (e) {
+      return res
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json(
+          new APIResponse(
+            {},
+            "Error saving transaction facility",
+            httpStatus.INTERNAL_SERVER_ERROR,
+            e
+          )
+        );
+    }
+  }
+
+  async updateFacility(req, res, next){
+    try {
+      const data = req.body
+      const id = req.params.id
+      if(data){
+        await transactionFacility.updateTransactionFacility(data,id)
+        return res
+          .status(httpStatus.OK)
+          .json(
+            new APIResponse(
+              transactionDetails,
+              "Transaction Facility details updated successfully.",
+              httpStatus.OK
+            )
+          );
+      }
+    } catch (error) {
+      return res
+      .status(httpStatus.INTERNAL_SERVER_ERROR)
+      .json(
+        new APIResponse(
+          {},
+          "Error updating Transaction Facility details!",
+          httpStatus.INTERNAL_SERVER_ERROR,
+          error
+        )
+      );
+    }
+  }
 
   async create(req, res, next) {
     let body = req.body;
