@@ -56,7 +56,6 @@ const Workflow = () => {
   const [currentUser, setcurrentUser] = useState(
     JSON.parse(localStorage.getItem("userData"))
   );
-
   const [noteText, setNoteText] = useState(""); // State for first select box
   const [transactionId, setTransactionId] = useState(""); // State for second select box
   const [dept, setDept] = useState('')
@@ -66,6 +65,7 @@ const Workflow = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [formChanges, setFormChanges] = useState({});
   const [isSubmitting, setIsSubmitting] = useState({}); // Tracks submission state for each card
+  const [isVerified, setIsVerified] = useState(true)
 
   const handleInputChange = (e, index, field) => {
     const { value } = e.target;
@@ -178,7 +178,6 @@ const Workflow = () => {
   }, []); // Empty dependency array ensures the effect runs only once after component mounts.
 
 
-
   const fetchData = async () => {
     try {
       const response = await fetch(
@@ -202,6 +201,8 @@ const Workflow = () => {
     if (role == 'user' && currentUser) {
       userServices.getWorkflowData(currentUser?.email, currentUser?.admin?._id).then((res) => {
         console.log(res?.data)
+        
+
         setWorkflowData(res?.data)
         setIsFlowDataLoad(false)
       }).catch((err) => {
@@ -224,7 +225,7 @@ const Workflow = () => {
     };
 
     fetchUsers();
-  }, [BaseURL, isRefresh]);
+  }, [BaseURL, isRefresh,isVerified]);
 
   const validationSchema = Yup.object().shape({
     steps: Yup.array().of(
@@ -933,15 +934,19 @@ const Workflow = () => {
       }
 
       {role == 'user' && <div className="mt-10 table-responsive form ">
+      <AntButton color="default" variant={!isVerified?"outlined":"solid"} className="m-2" onClick={()=>setIsVerified(true)}>Verified</AntButton>
+      <AntButton color="default" variant={!isVerified?"solid":"outlined"} className="m-2" onClick={()=>setIsVerified(false)}>Unverified</AntButton>
         <Table
           className="custom-header"
           columns={columns}
-          rowClassName={(record) =>
-            record?.workFlowSteps?.includes(workflowData?.workflowDocument?.department)
-              ? "row-green" // Class for rows where the condition is true
-              : "row-red"   // Class for rows where the condition is false
-          }
-          dataSource={workflowData?.transactionDocuments}
+          // rowClassName={(record) =>
+          //   record?.workFlowSteps?.includes(workflowData?.workflowDocument?.department)
+          //     ? "row-green" // Class for rows where the condition is true
+          //     : "row-red"   // Class for rows where the condition is false
+          // }
+        //   console.log(res?.data?.workflowDocument?.stepName)
+        // console.log(res?.data?.transactionDocuments.filter((item)=>item?.[res?.data?.workflowDocument?.stepName].flowVerified === isVerified))
+          dataSource={workflowData?.transactionDocuments?.filter((item)=>item?.[workflowData?.workflowDocument?.stepName].flowVerified === isVerified)}
           loading={isFlowDataLoad}
           rowKey={(record) => record._id}
           locale={workflowData?.transactionDocuments==null ?'No data found!':''}
