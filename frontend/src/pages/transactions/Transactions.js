@@ -360,6 +360,8 @@ const Transactions = () => {
               <Menu.Item
                 onClick={() => {
                   setIsPreview(true)
+                  console.log(record , 'recordrecordrecord');
+                  
                   setWorkFlowNotes(record?.workflowstepNotes);
                 }}
               >
