@@ -871,7 +871,7 @@ try {
 
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-        res.send(pdfData); // directly send the PDF data as a response
+        res.send(data); // directly send the PDF data as a response
       } else {
         // const User = await user.getById(finedTransaction.userId)
         // const SuperAdmin = await superAdmin.getById(finedTransaction.userId)
