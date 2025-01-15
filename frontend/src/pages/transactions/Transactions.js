@@ -185,7 +185,7 @@ const Transactions = () => {
     }
   };
   const DATE_OPTIONS = {
-    weekday: "short",
+    // weekday: "short",
     year: "numeric",
     month: "short",
     day: "numeric",
