@@ -871,7 +871,16 @@ try {
 
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-        res.send(pdfData); // directly send the PDF data as a response
+        // Decode the base64 string to binary data
+    const buffer = Buffer.from(data, 'base64');
+
+    // Set response headers for downloading the file
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
+
+    // Send the binary data as a PDF response
+    res.send(buffer);
+        // res.send(data); 
       } else {
         // const User = await user.getById(finedTransaction.userId)
         // const SuperAdmin = await superAdmin.getById(finedTransaction.userId)
