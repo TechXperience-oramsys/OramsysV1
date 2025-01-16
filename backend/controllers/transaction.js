@@ -952,42 +952,40 @@ class transactionController {
       const finedTransaction = await transaction.getById(id);
 
       if (finedTransaction && finedTransaction.termSheetURL) {
-        // TermSheet is already available
         const base64Data = finedTransaction.termSheetURL;
-
-        // Decode base64 to binary
         const buffer = Buffer.from(base64Data, 'base64');
 
-        // Set headers for PDF download
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-
-        // Send the buffer as a file
         return res.end(buffer);
       } else {
-        // Generate TermSheet PDF
         const doc = new PDFDocument();
         const buffers = [];
 
-        // Collect PDF data into buffers
         doc.on('data', (chunk) => buffers.push(chunk));
         doc.on('end', async () => {
           const pdfData = Buffer.concat(buffers);
 
-          // Save PDF to file system (optional)
-          const filePath = path.join(__dirname, `../files/TermSheet-${id}.pdf`);
-          fs.writeFileSync(filePath, pdfData);
+          // Use absolute path
+          const filePath = path.resolve(__dirname, `../files/TermSheet-${id}.pdf`);
 
-          // Send PDF as download
+          // Ensure the files directory is writable
+          try {
+            fs.writeFileSync(filePath, pdfData);
+          } catch (err) {
+            console.error('Error writing file:', err);
+            return res.status(500).json({
+              message: 'Failed to generate TermSheet. Please try again later.',
+              error: err.message,
+            });
+          }
+
           res.setHeader('Content-Type', 'application/pdf');
-          res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
+          res.setHeader('Content-Disposition', `attachment; filename="TermSheet-${id}.pdf"`);
           return res.end(pdfData);
         });
 
-        // Call the function to fill the PDF content
         makeTermSheet(doc, finedTransaction);
-
-        // Finalize the document
         doc.end();
       }
     } catch (e) {
@@ -998,6 +996,7 @@ class transactionController {
       });
     }
   }
+
 
 
   // async download(req, res, next) {
