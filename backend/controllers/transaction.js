@@ -257,13 +257,13 @@ class transactionController {
     }
   }
 
-  async updateKeyParties(req, res, next){
+  async updateKeyParties(req, res, next) {
     try {
-      const parties  = req.body;
-    const { id } = req.params;
-    if(parties){
-      await transactionKeyParties.updateTransactionKeyParties(parties,id)
-      return res
+      const parties = req.body;
+      const { id } = req.params;
+      if (parties) {
+        await transactionKeyParties.updateTransactionKeyParties(parties, id)
+        return res
           .status(httpStatus.OK)
           .json(
             new APIResponse(
@@ -272,19 +272,19 @@ class transactionController {
               httpStatus.OK
             )
           );
-    }
-      
+      }
+
     } catch (error) {
       return res
-      .status(httpStatus.INTERNAL_SERVER_ERROR)
-      .json(
-        new APIResponse(
-          {},
-          "Error updating Transaction key parties details!",
-          httpStatus.INTERNAL_SERVER_ERROR,
-          error
-        )
-      );
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json(
+          new APIResponse(
+            {},
+            "Error updating Transaction key parties details!",
+            httpStatus.INTERNAL_SERVER_ERROR,
+            error
+          )
+        );
     }
   }
 
@@ -326,13 +326,13 @@ class transactionController {
     }
   }
 
-  async updateDocumentFlow(req, res, next){
-try {
-  const data = req.body
-  const id = req.params
-  if(data){
-    await transactionDocumentFlow.updateTransactionDocumentFlow(data,data._id)
-    return res
+  async updateDocumentFlow(req, res, next) {
+    try {
+      const data = req.body
+      const id = req.params
+      if (data) {
+        await transactionDocumentFlow.updateTransactionDocumentFlow(data, data._id)
+        return res
           .status(httpStatus.OK)
           .json(
             new APIResponse(
@@ -341,19 +341,19 @@ try {
               httpStatus.OK
             )
           );
-  }
-} catch (error) {
-  return res
-      .status(httpStatus.INTERNAL_SERVER_ERROR)
-      .json(
-        new APIResponse(
-          {},
-          "Error updating Transaction Document Flow!",
-          httpStatus.INTERNAL_SERVER_ERROR,
-          error
-        )
-      );
-}
+      }
+    } catch (error) {
+      return res
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json(
+          new APIResponse(
+            {},
+            "Error updating Transaction Document Flow!",
+            httpStatus.INTERNAL_SERVER_ERROR,
+            error
+          )
+        );
+    }
   }
 
   async saveFundFlow(req, res, next) {
@@ -395,11 +395,11 @@ try {
     }
   }
 
-  async updateFundFlow(req, res, next){
+  async updateFundFlow(req, res, next) {
     try {
       const data = req.body
       const id = req.params.id
-      if(data){
+      if (data) {
         await transactionFundFlow.updateTransactionFundFlow(data, id)
         return res
           .status(httpStatus.OK)
@@ -412,17 +412,17 @@ try {
           );
       }
     } catch (error) {
-      
+
       return res
-      .status(httpStatus.INTERNAL_SERVER_ERROR)
-      .json(
-        new APIResponse(
-          {},
-          "Error updating Transaction Fund Flow!",
-          httpStatus.INTERNAL_SERVER_ERROR,
-          error
-        )
-      );
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json(
+          new APIResponse(
+            {},
+            "Error updating Transaction Fund Flow!",
+            httpStatus.INTERNAL_SERVER_ERROR,
+            error
+          )
+        );
     }
   }
 
@@ -462,12 +462,12 @@ try {
     }
   }
 
-  async updateFacility(req, res, next){
+  async updateFacility(req, res, next) {
     try {
       const data = req.body
       const id = req.params.id
-      if(data){
-        await transactionFacility.updateTransactionFacility(data,id)
+      if (data) {
+        await transactionFacility.updateTransactionFacility(data, id)
         return res
           .status(httpStatus.OK)
           .json(
@@ -480,15 +480,15 @@ try {
       }
     } catch (error) {
       return res
-      .status(httpStatus.INTERNAL_SERVER_ERROR)
-      .json(
-        new APIResponse(
-          {},
-          "Error updating Transaction Facility details!",
-          httpStatus.INTERNAL_SERVER_ERROR,
-          error
-        )
-      );
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json(
+          new APIResponse(
+            {},
+            "Error updating Transaction Facility details!",
+            httpStatus.INTERNAL_SERVER_ERROR,
+            error
+          )
+        );
     }
   }
 
@@ -866,21 +866,23 @@ try {
       let id = req.params.id;
       let data;
       const finedTransaction = await transaction.getById(id);
+      console.log(finedTransaction, "finedTransaction")
       if (finedTransaction && finedTransaction.termSheetURL) {
         data = finedTransaction.termSheetURL;
+        console.log(data, "data")
 
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
         // Decode the base64 string to binary data
-    const buffer = Buffer.from(data, 'base64');
+        const buffer = Buffer.from(data, 'base64');
+        console.log(buffer, "buffer")
+        // Set response headers for downloading the file
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
 
-    // Set response headers for downloading the file
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-
-    // Send the binary data as a PDF response
-    res.send(buffer);
-        // res.send(data); 
+        // Send the binary data as a PDF response
+        // res.send(buffer);
+        res.send(data);
       } else {
         // const User = await user.getById(finedTransaction.userId)
         // const SuperAdmin = await superAdmin.getById(finedTransaction.userId)
@@ -906,7 +908,6 @@ try {
                     return content;
                   }
                 );
-
                 // Set the correct headers for downloading the file
                 res.setHeader('Content-Type', 'application/pdf');
                 res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
@@ -945,41 +946,44 @@ try {
     }
   }
 
-  // async download(req, res, next) {
-  //   try {
-  //     let id = req.params.id;
-  //     const finedTransaction = await transaction.getById(id);
 
-  //     if (finedTransaction && finedTransaction.termSheetURL) {
-  //       // Read PDF file directly and send as binary data
-  //       const pdfPath = path.resolve(__dirname, `../files/TermSheet-${id}.pdf`);
-  //       const pdfData = fs.readFileSync(pdfPath);
 
-  //       res.setHeader('Content-Type', 'application/pdf');
-  //       res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-  //       return res.send(pdfData);
-  //     } else {
-  //       let doc = new PDFDocument({ bufferPages: true });
-  //       let buffers = [];
-  //       doc.on("data", buffers.push.bind(buffers));
 
-  //       makeTermSheet(doc, finedTransaction);
-  //       doc.on("end", () => {
-  //         const pdfData = Buffer.concat(buffers);
+  async download(req, res, next) {
+    try {
+      let id = req.params.id;
+      const finedTransaction = await transaction.getById(id);
 
-  //         res.setHeader('Content-Type', 'application/pdf');
-  //         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-  //         res.send(pdfData);
-  //       });
-  //       doc.end();
-  //     }
-  //   } catch (e) {
-  //     console.error("Error in downloading TermSheet:", e);
-  //     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(
-  //       new APIResponse({}, "Error in downloading TermSheet", httpStatus.INTERNAL_SERVER_ERROR, e)
-  //     );
-  //   }
-  // }
+      if (finedTransaction && finedTransaction.termSheetURL) {
+        // Read PDF file directly and send as binary data
+        const pdfPath = path.resolve(__dirname, `../files/TermSheet-${id}.pdf`);
+        const pdfData = fs.readFileSync(pdfPath);
+
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
+        return res.send(pdfData);
+      } else {
+        let doc = new PDFDocument({ bufferPages: true });
+        let buffers = [];
+        doc.on("data", buffers.push.bind(buffers));
+
+        makeTermSheet(doc, finedTransaction);
+        doc.on("end", () => {
+          const pdfData = Buffer.concat(buffers);
+
+          res.setHeader('Content-Type', 'application/pdf');
+          res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
+          res.send(pdfData);
+        });
+        doc.end();
+      }
+    } catch (e) {
+      console.error("Error in downloading TermSheet:", e);
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(
+        new APIResponse({}, "Error in downloading TermSheet", httpStatus.INTERNAL_SERVER_ERROR, e)
+      );
+    }
+  }
 
   async uploadTermSheet(req, res, next) {
     try {
