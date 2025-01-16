@@ -866,69 +866,66 @@ class transactionController {
       let id = req.params.id;
       let data;
       const finedTransaction = await transaction.getById(id);
-      //   if (finedTransaction && finedTransaction.termSheetURL) {
-      //     data = finedTransaction.termSheetURL;
+      if (finedTransaction && finedTransaction.termSheetURL) {
+        data = finedTransaction.termSheetURL;
 
-      //     res.setHeader('Content-Type', 'application/pdf');
-      //     res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-      //     // Decode the base64 string to binary data
-      // const buffer = Buffer.from(data, 'base64');
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
+        // Decode the base64 string to binary data
+        const buffer = Buffer.from(data, 'base64');
+        console.log(buffer, "buffer")
+        // Set response headers for downloading the file
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
 
-      // // Set response headers for downloading the file
-      // res.setHeader('Content-Type', 'application/pdf');
-      // res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-
-      // // Send the binary data as a PDF response
-      // res.send(buffer);
-      //     // res.send(data); 
-      //   } else {
-      // const User = await user.getById(finedTransaction.userId)
-      // const SuperAdmin = await superAdmin.getById(finedTransaction.userId)
-      // const financer = User.name ?? SuperAdmin.name
-      let doc = new PDFDocument({ bufferPages: true });
-      let buffers = [];
-      doc.on("data", buffers.push.bind(buffers));
-      makeTermSheet(doc, finedTransaction);
-      // makeTermSheet(doc, finedTransaction,financer)
-      doc.on("end", async () => {
-        let pdfData = Buffer.concat(buffers);
-        console.log(pdfData, "pdfData")
-        const filePath = `files/TermSheet-${id}.pdf`;
-        console.log(filePath, "filePath")
-        fs.writeFile(filePath, pdfData, async function (err) {
-          if (err) {
-            console.log(err);
-          } else {
-            try {
-              console.log("File Created");
-              data = fs.readFileSync(
-                path.join(__dirname, `../files/TermSheet-${id}.pdf`),
-                "base64",
-                function (err, content) {
-                  return content;
-                }
-
-              );
-              // Set the correct headers for downloading the file
-              res.setHeader('Content-Type', 'application/pdf');
-              res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-              console.log(data, "data")
-              return res
-                .status(httpStatus.OK)
-                .json(
-                  new APIResponse(
-                    { data: data },
-                    "TermSheet downloaded successfully.",
-                    httpStatus.OK
-                  )
+        // Send the binary data as a PDF response
+        // res.send(buffer);
+        res.send(data);
+      } else {
+        // const User = await user.getById(finedTransaction.userId)
+        // const SuperAdmin = await superAdmin.getById(finedTransaction.userId)
+        // const financer = User.name ?? SuperAdmin.name
+        let doc = new PDFDocument({ bufferPages: true });
+        let buffers = [];
+        doc.on("data", buffers.push.bind(buffers));
+        makeTermSheet(doc, finedTransaction);
+        // makeTermSheet(doc, finedTransaction,financer)
+        doc.on("end", async () => {
+          let pdfData = Buffer.concat(buffers);
+          const filePath = `files/TermSheet-${id}.pdf`;
+          fs.writeFile(filePath, pdfData, async function (err) {
+            if (err) {
+              console.log(err);
+            } else {
+              try {
+                console.log("File Created");
+                data = fs.readFileSync(
+                  path.join(__dirname, `../files/TermSheet-${id}.pdf`),
+                  "base64",
+                  function (err, content) {
+                    return content;
+                  }
                 );
-            } catch (e) {
-              console.log(e);
+                // Set the correct headers for downloading the file
+                res.setHeader('Content-Type', 'application/pdf');
+                res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
+
+                return res
+                  .status(httpStatus.OK)
+                  .json(
+                    new APIResponse(
+                      { data: data },
+                      "TermSheet downloaded successfully.",
+                      httpStatus.OK
+                    )
+                  );
+              } catch (e) {
+                console.log(e);
+              }
             }
-          }
+          });
         });
-      });
-      // }
+      }
     } catch (e) {
       console.log(
         "-----------------------catch-------------------------------------",
