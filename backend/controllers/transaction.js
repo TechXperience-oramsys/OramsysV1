@@ -951,45 +951,45 @@ class transactionController {
       // Fetch the transaction
       const finedTransaction = await transaction.getById(id);
       console.log(finedTransaction.termSheetURL, "finedTransaction ")
-      if (finedTransaction && finedTransaction.termSheetURL) {
-        const base64Data = finedTransaction.termSheetURL;
-        const buffer = Buffer.from(base64Data, 'base64');
-        console.log(buffer, "buffer")
+      // if (finedTransaction && finedTransaction.termSheetURL) {
+      //   const base64Data = finedTransaction.termSheetURL;
+      //   const buffer = Buffer.from(base64Data, 'base64');
+      //   console.log(buffer, "buffer")
 
+
+      //   res.setHeader('Content-Type', 'application/pdf');
+      //   res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
+      //   return res.end(buffer);
+      // } else {
+      const doc = new PDFDocument();
+      const buffers = [];
+
+      doc.on('data', (chunk) => buffers.push(chunk));
+      doc.on('end', async () => {
+        const pdfData = Buffer.concat(buffers);
+        console.log(pdfData, "pdfdata")
+        // Use absolute path
+        const filePath = path.resolve(__dirname, `../files/TermSheet-${id}.pdf`);
+        console.log(filePath, "filePath")
+        // Ensure the files directory is writable
+        try {
+          fs.writeFileSync(filePath, pdfData);
+        } catch (err) {
+          console.error('Error writing file:', err);
+          return res.status(500).json({
+            message: 'Failed to generate TermSheet. Please try again later.',
+            error: err.message,
+          });
+        }
 
         res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-        return res.end(buffer);
-      } else {
-        const doc = new PDFDocument();
-        const buffers = [];
+        res.setHeader('Content-Disposition', `attachment; filename="TermSheet-${id}.pdf"`);
+        return res.end(pdfData);
+      });
 
-        doc.on('data', (chunk) => buffers.push(chunk));
-        doc.on('end', async () => {
-          const pdfData = Buffer.concat(buffers);
-
-          // Use absolute path
-          const filePath = path.resolve(__dirname, `../files/TermSheet-${id}.pdf`);
-          console.log(filePath, "filePath")
-          // Ensure the files directory is writable
-          try {
-            fs.writeFileSync(filePath, pdfData);
-          } catch (err) {
-            console.error('Error writing file:', err);
-            return res.status(500).json({
-              message: 'Failed to generate TermSheet. Please try again later.',
-              error: err.message,
-            });
-          }
-
-          res.setHeader('Content-Type', 'application/pdf');
-          res.setHeader('Content-Disposition', `attachment; filename="TermSheet-${id}.pdf"`);
-          return res.end(pdfData);
-        });
-
-        makeTermSheet(doc, finedTransaction);
-        doc.end();
-      }
+      makeTermSheet(doc, finedTransaction);
+      doc.end();
+      // }
     } catch (e) {
       console.error('Error while downloading TermSheet:', e);
       return res.status(500).json({
