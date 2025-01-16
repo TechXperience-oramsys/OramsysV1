@@ -950,10 +950,12 @@ class transactionController {
 
       // Fetch the transaction
       const finedTransaction = await transaction.getById(id);
-      console.log(finedTransaction, "finedTransaction ")
+      console.log(finedTransaction.termSheetURL, "finedTransaction ")
       if (finedTransaction && finedTransaction.termSheetURL) {
         const base64Data = finedTransaction.termSheetURL;
         const buffer = Buffer.from(base64Data, 'base64');
+        console.log(buffer, "buffer")
+
 
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
@@ -968,7 +970,7 @@ class transactionController {
 
           // Use absolute path
           const filePath = path.resolve(__dirname, `../files/TermSheet-${id}.pdf`);
-
+          console.log(filePath, "filePath")
           // Ensure the files directory is writable
           try {
             fs.writeFileSync(filePath, pdfData);
