@@ -861,181 +861,127 @@ class transactionController {
     }
   }
 
-  // async download(req, res, next) {
-  //   try {
-  //     let id = req.params.id;
-  //     let data;
-  //     const finedTransaction = await transaction.getById(id);
-  //     if (finedTransaction && finedTransaction.termSheetURL) {
-  //       data = finedTransaction.termSheetURL;
-
-  //       res.setHeader('Content-Type', 'application/pdf');
-  //       res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-  //       // Decode the base64 string to binary data
-  //   const buffer = Buffer.from(data, 'base64');
-
-  //   // Set response headers for downloading the file
-  //   res.setHeader('Content-Type', 'application/pdf');
-  //   res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-
-  //   // Send the binary data as a PDF response
-  //   res.send(buffer);
-  //       // res.send(data); 
-  //     } else {
-  //       // const User = await user.getById(finedTransaction.userId)
-  //       // const SuperAdmin = await superAdmin.getById(finedTransaction.userId)
-  //       // const financer = User.name ?? SuperAdmin.name
-  //       let doc = new PDFDocument({ bufferPages: true });
-  //       let buffers = [];
-  //       doc.on("data", buffers.push.bind(buffers));
-  //       makeTermSheet(doc, finedTransaction);
-  //       // makeTermSheet(doc, finedTransaction,financer)
-  //       doc.on("end", async () => {
-  //         let pdfData = Buffer.concat(buffers);
-  //         const filePath = `files/TermSheet-${id}.pdf`;
-  //         fs.writeFile(filePath, pdfData, async function (err) {
-  //           if (err) {
-  //             console.log(err);
-  //           } else {
-  //             try {
-  //               console.log("File Created");
-  //               data = fs.readFileSync(
-  //                 path.join(__dirname, `../files/TermSheet-${id}.pdf`),
-  //                 "base64",
-  //                 function (err, content) {
-  //                   return content;
-  //                 }
-  //               );
-  //               // Set the correct headers for downloading the file
-  //               res.setHeader('Content-Type', 'application/pdf');
-  //               res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-
-  //               return res
-  //                 .status(httpStatus.OK)
-  //                 .json(
-  //                   new APIResponse(
-  //                     { data: data },
-  //                     "TermSheet downloaded successfully.",
-  //                     httpStatus.OK
-  //                   )
-  //                 );
-  //             } catch (e) {
-  //               console.log(e);
-  //             }
-  //           }
-  //         });
-  //       });
-  //     }
-  //   } catch (e) {
-  //     console.log(
-  //       "-----------------------catch-------------------------------------",
-  //       e
-  //     );
-  //     return res
-  //       .status(httpStatus.INTERNAL_SERVER_ERROR)
-  //       .json(
-  //         new APIResponse(
-  //           {},
-  //           "Error in downloading TermSheet",
-  //           httpStatus.INTERNAL_SERVER_ERROR,
-  //           e
-  //         )
-  //       );
-  //   }
-  // }
-
   async download(req, res, next) {
     try {
-      const id = req.params.id;
-
-      // Fetch the transaction
+      let id = req.params.id;
+      let data;
       const finedTransaction = await transaction.getById(id);
-      console.log(finedTransaction.termSheetURL, "finedTransaction ")
-      // if (finedTransaction && finedTransaction.termSheetURL) {
-      //   const base64Data = finedTransaction.termSheetURL;
-      //   const buffer = Buffer.from(base64Data, 'base64');
-      //   console.log(buffer, "buffer")
+      //   if (finedTransaction && finedTransaction.termSheetURL) {
+      //     data = finedTransaction.termSheetURL;
 
+      //     res.setHeader('Content-Type', 'application/pdf');
+      //     res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
+      //     // Decode the base64 string to binary data
+      // const buffer = Buffer.from(data, 'base64');
 
-      //   res.setHeader('Content-Type', 'application/pdf');
-      //   res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-      //   return res.end(buffer);
-      // } else {
-      const doc = new PDFDocument();
-      const buffers = [];
+      // // Set response headers for downloading the file
+      // res.setHeader('Content-Type', 'application/pdf');
+      // res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
 
-      doc.on('data', (chunk) => buffers.push(chunk));
-      doc.on('end', async () => {
-        const pdfData = Buffer.concat(buffers);
-        console.log(pdfData, "pdfdata")
-        // Use absolute path
-        const filePath = path.resolve(__dirname, `../files/TermSheet-${id}.pdf`);
-        console.log(filePath, "filePath")
-        // Ensure the files directory is writable
-        try {
-          fs.writeFileSync(filePath, pdfData);
-        } catch (err) {
-          console.error('Error writing file:', err);
-          return res.status(500).json({
-            message: 'Failed to generate TermSheet. Please try again later.',
-            error: err.message,
-          });
-        }
-
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', `attachment; filename="TermSheet-${id}.pdf"`);
-        return res.end(pdfData);
-      });
-
+      // // Send the binary data as a PDF response
+      // res.send(buffer);
+      //     // res.send(data); 
+      //   } else {
+      // const User = await user.getById(finedTransaction.userId)
+      // const SuperAdmin = await superAdmin.getById(finedTransaction.userId)
+      // const financer = User.name ?? SuperAdmin.name
+      let doc = new PDFDocument({ bufferPages: true });
+      let buffers = [];
+      doc.on("data", buffers.push.bind(buffers));
       makeTermSheet(doc, finedTransaction);
-      doc.end();
+      // makeTermSheet(doc, finedTransaction,financer)
+      doc.on("end", async () => {
+        let pdfData = Buffer.concat(buffers);
+        const filePath = `files/TermSheet-${id}.pdf`;
+        fs.writeFile(filePath, pdfData, async function (err) {
+          if (err) {
+            console.log(err);
+          } else {
+            try {
+              console.log("File Created");
+              data = fs.readFileSync(
+                path.join(__dirname, `../files/TermSheet-${id}.pdf`),
+                "base64",
+                function (err, content) {
+                  return content;
+                }
+              );
+              // Set the correct headers for downloading the file
+              res.setHeader('Content-Type', 'application/pdf');
+              res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
+
+              return res
+                .status(httpStatus.OK)
+                .json(
+                  new APIResponse(
+                    { data: data },
+                    "TermSheet downloaded successfully.",
+                    httpStatus.OK
+                  )
+                );
+            } catch (e) {
+              console.log(e);
+            }
+          }
+        });
+      });
       // }
     } catch (e) {
-      console.error('Error while downloading TermSheet:', e);
-      return res.status(500).json({
-        message: 'Error in downloading TermSheet',
-        error: e.message || 'Internal Server Error',
-      });
+      console.log(
+        "-----------------------catch-------------------------------------",
+        e
+      );
+      return res
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json(
+          new APIResponse(
+            {},
+            "Error in downloading TermSheet",
+            httpStatus.INTERNAL_SERVER_ERROR,
+            e
+          )
+        );
     }
   }
 
 
 
-  // async download(req, res, next) {
-  //   try {
-  //     let id = req.params.id;
-  //     const finedTransaction = await transaction.getById(id);
 
-  //     if (finedTransaction && finedTransaction.termSheetURL) {
-  //       // Read PDF file directly and send as binary data
-  //       const pdfPath = path.resolve(__dirname, `../files/TermSheet-${id}.pdf`);
-  //       const pdfData = fs.readFileSync(pdfPath);
+  async download(req, res, next) {
+    try {
+      let id = req.params.id;
+      const finedTransaction = await transaction.getById(id);
 
-  //       res.setHeader('Content-Type', 'application/pdf');
-  //       res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-  //       return res.send(pdfData);
-  //     } else {
-  //       let doc = new PDFDocument({ bufferPages: true });
-  //       let buffers = [];
-  //       doc.on("data", buffers.push.bind(buffers));
+      if (finedTransaction && finedTransaction.termSheetURL) {
+        // Read PDF file directly and send as binary data
+        const pdfPath = path.resolve(__dirname, `../files/TermSheet-${id}.pdf`);
+        const pdfData = fs.readFileSync(pdfPath);
 
-  //       makeTermSheet(doc, finedTransaction);
-  //       doc.on("end", () => {
-  //         const pdfData = Buffer.concat(buffers);
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
+        return res.send(pdfData);
+      } else {
+        let doc = new PDFDocument({ bufferPages: true });
+        let buffers = [];
+        doc.on("data", buffers.push.bind(buffers));
 
-  //         res.setHeader('Content-Type', 'application/pdf');
-  //         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-  //         res.send(pdfData);
-  //       });
-  //       doc.end();
-  //     }
-  //   } catch (e) {
-  //     console.error("Error in downloading TermSheet:", e);
-  //     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(
-  //       new APIResponse({}, "Error in downloading TermSheet", httpStatus.INTERNAL_SERVER_ERROR, e)
-  //     );
-  //   }
-  // }
+        makeTermSheet(doc, finedTransaction);
+        doc.on("end", () => {
+          const pdfData = Buffer.concat(buffers);
+
+          res.setHeader('Content-Type', 'application/pdf');
+          res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
+          res.send(pdfData);
+        });
+        doc.end();
+      }
+    } catch (e) {
+      console.error("Error in downloading TermSheet:", e);
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(
+        new APIResponse({}, "Error in downloading TermSheet", httpStatus.INTERNAL_SERVER_ERROR, e)
+      );
+    }
+  }
 
   async uploadTermSheet(req, res, next) {
     try {
