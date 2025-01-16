@@ -907,11 +907,12 @@ class transactionController {
                 function (err, content) {
                   return content;
                 }
+
               );
               // Set the correct headers for downloading the file
               res.setHeader('Content-Type', 'application/pdf');
               res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-
+              console.log(data, "data")
               return res
                 .status(httpStatus.OK)
                 .json(
