@@ -869,6 +869,7 @@ class transactionController {
       console.log(finedTransaction, "finedTransaction")
       if (finedTransaction && finedTransaction.termSheetURL) {
         data = finedTransaction.termSheetURL;
+        console.log(data, "data")
 
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
