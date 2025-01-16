@@ -892,7 +892,9 @@ class transactionController {
       // makeTermSheet(doc, finedTransaction,financer)
       doc.on("end", async () => {
         let pdfData = Buffer.concat(buffers);
+        console.log(pdfData, "pdfData")
         const filePath = `files/TermSheet-${id}.pdf`;
+        console.log(filePath, "filePath")
         fs.writeFile(filePath, pdfData, async function (err) {
           if (err) {
             console.log(err);
