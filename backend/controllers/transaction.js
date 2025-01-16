@@ -950,7 +950,7 @@ class transactionController {
 
       // Fetch the transaction
       const finedTransaction = await transaction.getById(id);
-
+      console.log(finedTransaction, "finedTransaction ")
       if (finedTransaction && finedTransaction.termSheetURL) {
         const base64Data = finedTransaction.termSheetURL;
         const buffer = Buffer.from(base64Data, 'base64');
