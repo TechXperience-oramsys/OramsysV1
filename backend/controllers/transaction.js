@@ -867,7 +867,7 @@ class transactionController {
     try {
       let id = req.params.id;
       let data;
-      //   const finedTransaction = await transaction.getById(id);
+      const finedTransaction = await transaction.getById(id);
       //   console.log(finedTransaction, "finedTransaction")
       //   if (finedTransaction && finedTransaction.termSheetURL) {
       //     data = finedTransaction.termSheetURL;
