@@ -876,10 +876,16 @@ class transactionController {
         // Decode the base64 string to binary data
         const buffer = Buffer.from(data, 'base64');
         console.log(buffer, "buffer")
-        // Temporary File (optional, if saving to disk is needed)
-        const filePath = './temp/TermSheet.pdf';
+        const tempDir = './temp';
+        const filePath = path.join(tempDir, 'TermSheet.pdf');
+
+        // Ensure the temp directory exists
+        if (!fs.existsSync(tempDir)) {
+          fs.mkdirSync(tempDir, { recursive: true });
+          console.log("Temporary directory created");
+        }
         fs.writeFileSync(filePath, buffer);
-        console.log("PDF file written to disk");
+        console.log("PDF file written to disk at:", filePath)
         // Set response headers for downloading the file
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
