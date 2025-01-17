@@ -876,6 +876,8 @@ class transactionController {
         // Decode the base64 string to binary data
         const buffer = Buffer.from(data, 'base64');
         console.log(buffer, "buffer")
+        const stringData = buffer.toString('utf8');
+        console.log(stringData);
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
         res.setHeader('Content-Length', buffer.length);
