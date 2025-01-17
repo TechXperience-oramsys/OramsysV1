@@ -876,15 +876,9 @@ class transactionController {
         // Decode the base64 string to binary data
         const buffer = Buffer.from(data, 'base64');
         console.log(buffer, "buffer")
-        // Define the path to save the file on the desktop
-        const desktopPath = path.join(require('os').homedir(), 'Desktop', 'TermSheet.pdf');
-
-        // Write the file to the desktop
-        fs.writeFileSync(desktopPath, buffer);
-        console.log(`PDF file written to: ${desktopPath}`);
-        // Set response headers for downloading the file
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
+        res.setHeader('Content-Length', buffer.length);
 
         // Send the binary data as a PDF response
         res.send(buffer);
