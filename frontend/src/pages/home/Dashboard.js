@@ -320,6 +320,7 @@ const Dashboard = () => {
     ApiGet(`transaction/termSheet/${id}`)
       .then((res) => {
         let data = res.data.data;
+        console.log(data, "data")
         if (name === "view") {
           ViewRiskAssessment(data);
         } else if (name === "download") {
@@ -438,12 +439,12 @@ const Dashboard = () => {
                                     <Link className='text-decoration-none' to='/entities'>
                                       View Entities{" "} <i className='bi bi-arrow-right me-1'></i>
                                     </Link>
-                                  ) : ( "" )}
+                                  ) : ("")}
                                 </span>
                               </>
                             )}
                           </div>
-                          
+
                         </div>
                       </div>
                     </div>
@@ -695,7 +696,7 @@ const Dashboard = () => {
                                 <td className="text-end text-center">
                                   <div onClick={() => {
                                     data.termSheet === "Not Signed"
-                                    ? downloadTermSheet(data._id, "view") : ViewRiskAssessment();
+                                      ? downloadTermSheet(data._id, "view") : ViewRiskAssessment();
                                   }}
                                     className="btn btn-sm btn-neutral">
                                     View Termsheet
