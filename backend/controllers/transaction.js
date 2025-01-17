@@ -873,7 +873,7 @@ class transactionController {
         // const buffer = Buffer.from(data, 'base64');
         const buffer = Buffer.from(data, 'utf8')
         console.log(buffer, "buffer")
-        const stringData = buffer.toString('base64');
+        const stringData = buffer.toString('utf8');
         console.log(stringData);
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
