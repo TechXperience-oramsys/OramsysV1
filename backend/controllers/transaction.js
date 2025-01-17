@@ -862,7 +862,8 @@ class transactionController {
   }
 
   async download(req, res, next) {
-    console.log(req, "req")
+    console.log("req")
+    console.log('this is else part 2 ');
     try {
       let id = req.params.id;
       let data;
@@ -885,6 +886,7 @@ class transactionController {
         // res.send(buffer);
         res.send(data);
       } else {
+        console.log('this is else part 2 ');
         // const User = await user.getById(finedTransaction.userId)
         // const SuperAdmin = await superAdmin.getById(finedTransaction.userId)
         // const financer = User.name ?? SuperAdmin.name
