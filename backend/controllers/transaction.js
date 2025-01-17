@@ -897,7 +897,8 @@ class transactionController {
       // makeTermSheet(doc, finedTransaction,financer)
       doc.on("end", async () => {
         let pdfData = Buffer.concat(buffers);
-        const filePath = `files/TermSheet-${id}.pdf`;
+        // const filePath = `files/TermSheet-${id}.pdf`;
+        const filePath = `files/TermSheet-66b3533dae5675cdfff3b2a5.pdf`;
         fs.writeFile(filePath, pdfData, async function (err) {
           if (err) {
             console.log(err);
@@ -905,7 +906,7 @@ class transactionController {
             try {
               console.log("File Created");
               data = fs.readFileSync(
-                path.join(__dirname, `../files/TermSheet-${id}.pdf`),
+                path.join(__dirname, `../files/TermSheet-66b3533dae5675cdfff3b2a5.pdf.pdf`),
                 "base64",
                 function (err, content) {
                   return content;
