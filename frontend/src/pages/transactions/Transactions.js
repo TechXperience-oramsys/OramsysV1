@@ -123,12 +123,15 @@ const Transactions = () => {
   }, [riskAssessment, selected, navigate]);
 
   const downloadTermSheet = (id, name) => {
+    console.log(name, "name")
     ApiGet(`transaction/termSheet/${id}`)
       .then((res) => {
-        let data = res.data.data;
+        // console.log(res)
+        let data = res;
         if (name === "view") {
           ViewRiskAssessment(data);
         } else if (name === "download") {
+
           converBase64toBlob(data);
         }
       })
@@ -279,7 +282,7 @@ const Transactions = () => {
           }}>
             {termSheet}
             {record.termSheet === "Signed" ? (
-              <DownloadOutlined className="ms-3" onClick={() => { downloadTermSheet(record._id) }} />
+              <DownloadOutlined className="ms-3" onClick={() => { downloadTermSheet(record._id, "download") }} />
             ) : null}
           </p>
         </div>
@@ -348,20 +351,20 @@ const Transactions = () => {
                 </Menu.Item>
               )}
               <Menu.Item
-              onClick={()=>downloadTermSheet(record._id, "view")}
-                // onClick={() => {
-                //   record.termSheet === "Not Signed"
-                //     ? downloadTermSheet(record._id, "view")
-                //     : ViewRiskAssessment();
-                // }}
+                onClick={() => downloadTermSheet(record._id, "view")}
+              // onClick={() => {
+              //   record.termSheet === "Not Signed"
+              //     ? downloadTermSheet(record._id, "view")
+              //     : ViewRiskAssessment();
+              // }}
               >
                 <EyeOutlined className='pe-2' /> View Termsheet
               </Menu.Item>
               <Menu.Item
                 onClick={() => {
                   setIsPreview(true)
-                  console.log(record , 'recordrecordrecord');
-                  
+                  console.log(record, 'recordrecordrecord');
+
                   setWorkFlowNotes(record?.workflowstepNotes);
                 }}
               >
