@@ -862,6 +862,7 @@ class transactionController {
   }
 
   async download(req, res, next) {
+    console.log(req, "req")
     try {
       let id = req.params.id;
       let data;
