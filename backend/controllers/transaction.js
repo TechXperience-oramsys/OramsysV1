@@ -878,6 +878,16 @@ class transactionController {
         // Decode the base64 string to binary data
         const buffer = Buffer.from(data, 'base64');
         console.log(buffer, "buffer")
+        // Validate if the data is a valid PDF (optional basic sanity check)
+        if (!data.startsWith('%PDF')) {
+          console.error("Invalid PDF data");
+          return res.status(400).json({ error: "Invalid PDF file format" });
+        }
+
+        // Temporary File (optional, if saving to disk is needed)
+        const filePath = './temp/TermSheet.pdf';
+        fs.writeFileSync(filePath, buffer);
+        console.log("PDF file written to disk");
         // Set response headers for downloading the file
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
@@ -885,7 +895,7 @@ class transactionController {
         // Send the binary data as a PDF response
         res.send(buffer);
         // res.send(data);
-        //   } else {
+      } else {
         console.log('this is else part 2 ');
         // const User = await user.getById(finedTransaction.userId)
         // const SuperAdmin = await superAdmin.getById(finedTransaction.userId)
