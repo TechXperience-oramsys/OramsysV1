@@ -871,14 +871,15 @@ class transactionController {
         data = finedTransaction.termSheetURL;
         // Decode the base64 string to binary data
         // const buffer = Buffer.from(data, 'base64');
-        const buffer = Buffer.from(data, 'base64')
+        const buffer = Buffer.from(data, 'utf8')
         console.log(buffer, "buffer")
         const stringData = buffer.toString('base64');
         console.log(stringData);
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
+        res.setHeader('Content-Length', buffer.length);
         // Send the binary data as a PDF response
-        res.send(buffer);
+        res.send(stringData);
         // res.send(data);
       } else {
         console.log('this is else part 2 ');
