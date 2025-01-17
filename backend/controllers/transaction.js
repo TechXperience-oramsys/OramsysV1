@@ -869,8 +869,9 @@ class transactionController {
       console.log(finedTransaction, "finedTransaction")
       if (finedTransaction && finedTransaction.termSheetURL) {
         data = finedTransaction.termSheetURL;
-        // Decode the base64 string to binary data
-        // const buffer = Buffer.from(data, 'base64');
+
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
         const buffer = Buffer.from(data, 'utf8')
         console.log(buffer, "buffer")
         const stringData = buffer.toString('base64');
