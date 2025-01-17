@@ -862,8 +862,6 @@ class transactionController {
   }
 
   async download(req, res, next) {
-    console.log("req")
-    console.log('this is else part 2 ');
     try {
       let id = req.params.id;
       let data;
@@ -878,12 +876,6 @@ class transactionController {
         // Decode the base64 string to binary data
         const buffer = Buffer.from(data, 'base64');
         console.log(buffer, "buffer")
-        // Validate if the data is a valid PDF (optional basic sanity check)
-        if (!data.startsWith('%PDF')) {
-          console.error("Invalid PDF data");
-          return res.status(400).json({ error: "Invalid PDF file format" });
-        }
-
         // Temporary File (optional, if saving to disk is needed)
         const filePath = './temp/TermSheet.pdf';
         fs.writeFileSync(filePath, buffer);
