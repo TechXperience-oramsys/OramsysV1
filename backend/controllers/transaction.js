@@ -883,7 +883,7 @@ class transactionController {
         res.setHeader('Content-Length', buffer.length);
 
         // Send the binary data as a PDF response
-        res.send(stringData);
+        res.send(buffer);
         // res.send(data);
       } else {
         console.log('this is else part 2 ');
