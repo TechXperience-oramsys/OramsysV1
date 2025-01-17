@@ -871,7 +871,7 @@ class transactionController {
       console.log(finedTransaction, "finedTransaction")
       if (finedTransaction && finedTransaction.termSheetURL) {
         data = finedTransaction.termSheetURL;
-        console.log(data, "data")
+        // console.log(data, "data")
 
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
@@ -883,8 +883,8 @@ class transactionController {
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
 
         // Send the binary data as a PDF response
-        // res.send(buffer);
-        res.send(data);
+        res.send(buffer);
+        // res.send(data);
       } else {
         console.log('this is else part 2 ');
         // const User = await user.getById(finedTransaction.userId)
