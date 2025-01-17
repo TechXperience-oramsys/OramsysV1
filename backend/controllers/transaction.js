@@ -906,7 +906,7 @@ class transactionController {
             try {
               console.log("File Created");
               data = fs.readFileSync(
-                path.join(__dirname, `../files/TermSheet-66b3533dae5675cdfff3b2a5.pdf.pdf`),
+                path.join(__dirname, `../files/TermSheet-66b3533dae5675cdfff3b2a5.pdf`),
                 "base64",
                 function (err, content) {
                   return content;
