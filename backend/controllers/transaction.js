@@ -953,6 +953,7 @@ class transactionController {
 
 
   async download(req, res, next) {
+    console.log(req, 'request');
     try {
       let id = req.params.id;
       const finedTransaction = await transaction.getById(id);
