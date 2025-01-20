@@ -14,10 +14,10 @@ import { Table, Button, Tooltip } from 'antd';
 import { EditOutlined, EyeOutlined } from '@ant-design/icons';
 import { beneficiaryAtom, contractDetailAtom, countryAtom, editeRowDataAtom, fundFlowAtom, lettersOfCreditAtom, selectedNameAtom, showTextEditorAtom } from './Helpers/atoms';
 import { transactionServices } from '../../_Services/transactions';
-import {toast} from 'sonner';
+import { toast } from 'sonner';
 
 
-const FundFlow = ({ hendelCancel, hendelNext, getTrans ,stype}) => {
+const FundFlow = ({ hendelCancel, hendelNext, getTrans, stype }) => {
     // console.log(getTrans)
 
     const dispatch = useDispatch()
@@ -45,7 +45,7 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans ,stype}) => {
     const paymentOrigin = useSelector(state => state.countryData.country)
     const beneficiaries = useSelector(state => state.entityData.entity)
     const getTransactionByIdData = useSelector((state) => state.transactionData.getTransactionById)
-    console.log(getTransactionByIdData , 'ppp')
+    console.log(getTransactionByIdData, 'ppp')
 
     useEffect(() => {
         dispatch(countrieAction('all'))
@@ -196,13 +196,13 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans ,stype}) => {
         fundFlow.transactionId = body?.details?.transactionId
         fundFlow.flowVerified = body?.details?.flowVerified
         dispatch(transactionDataAction(body))
-        
-        if(fundFlow._id.length>0){
+
+        if (fundFlow._id.length > 0) {
             transactionServices.updateFundFlow(fundFlow).then((res) => {
                 toast.success(res.data?.message)
                 hendelNext()
             }).catch((err) => toast.error("Failed to update Fund Flow"))
-        }else{
+        } else {
             hendelNext()
         }
     }
@@ -407,7 +407,7 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans ,stype}) => {
         },
     ];
 
-console.log(getTrans , 'pppppp');
+    console.log(getTrans, 'pppppp');
 
     return (
         <>
@@ -419,7 +419,7 @@ console.log(getTrans , 'pppppp');
                             <Form.Label className='text-muted'>Contract Currency</Form.Label>
                             <Form.Control
                                 className='text-muted'
-                                value={getTrans.currency ? getTrans.currency : getTransactionByIdData?.data?.details?.contractDetails?.currency }
+                                value={getTrans.currency ? getTrans.currency : getTransactionByIdData?.data?.details?.contractDetails?.currency}
                                 name="currency"
                                 disabled={true} />
                         </Form.Group>
@@ -428,7 +428,7 @@ console.log(getTrans , 'pppppp');
                             <Form.Label className='text-muted'>Contract Value</Form.Label>
                             <Form.Control
                                 className='text-muted'
-                                value={formateCurrencyValue(getTrans.value) ? formateCurrencyValue(getTrans.value)  : formateCurrencyValue(getTransactionByIdData?.data?.details?.contractDetails?.value) }
+                                value={formateCurrencyValue(getTrans.value) ? formateCurrencyValue(getTrans.value) : formateCurrencyValue(getTransactionByIdData?.data?.details?.contractDetails?.value)}
                                 name="value"
                                 onChange={handleChange}
                                 disabled={true} />
@@ -809,7 +809,7 @@ console.log(getTrans , 'pppppp');
                         </div>
                     </>
                 }
-               {type == undefined &&  <div className='footer_'>
+                {stype == undefined && <div className='footer_'>
                     <button onClick={() => { hendelCancel() }} className="footer_cancel_btn">Back</button>
                     <button onClick={() => { next() }} className='footer_next_btn'> Next</button>
                 </div>}

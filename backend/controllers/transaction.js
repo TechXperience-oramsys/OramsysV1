@@ -866,16 +866,16 @@ class transactionController {
       let id = req.params.id;
       let data;
       const finedTransaction = await transaction.getById(id);
-      console.log(finedTransaction, "finedTransaction")
+      // console.log(finedTransaction, "finedTransaction")
       if (finedTransaction && finedTransaction.termSheetURL) {
         data = finedTransaction.termSheetURL;
 
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
         const buffer = Buffer.from(data, 'utf8')
-        console.log(buffer, "buffer")
+        // console.log(buffer, "buffer")
         const stringData = buffer.toString('base64');
-        console.log(stringData);
+        // console.log(stringData);
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
         // res.setHeader('Content-Length', buffer.length);

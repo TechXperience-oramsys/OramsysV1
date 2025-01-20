@@ -123,7 +123,7 @@ const Transactions = () => {
   }, [riskAssessment, selected, navigate]);
 
   const downloadTermSheet = (id, name) => {
-    console.log(name, "name")
+
     ApiGet(`transaction/termSheet/${id}`)
       .then((res) => {
         // console.log(res)
@@ -140,7 +140,9 @@ const Transactions = () => {
 
 
   const converBase64toBlob = (content, contentType = "application/pdf") => {
+
     const byteCharacters = atob(content);
+
     const byteArrays = [];
     for (let offset = 0; offset < byteCharacters.length; offset += 512) {
       const slice = byteCharacters.slice(offset, offset + 512);
@@ -372,7 +374,7 @@ const Transactions = () => {
               </Menu.Item>
               <Menu.Item
                 onClick={() => {
-                  record.termSheet === "Not Signed"
+                  record.termSheet === "Signed"
                     ? downloadTermSheet(record._id, "download")
                     : converBase64toBlob(record.termSheetUrl);
                 }}
