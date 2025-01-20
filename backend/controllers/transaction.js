@@ -872,7 +872,7 @@ class transactionController {
 
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-        const buffer = Buffer.from(data)
+        const buffer = Buffer.from(data, 'base64')
         console.log(buffer, "buffer")
         const stringData = buffer.toString('base64');
         console.log(stringData);
@@ -880,7 +880,7 @@ class transactionController {
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
         res.setHeader('Content-Length', buffer.length);
         // Send the binary data as a PDF response
-        res.send(stringData);
+        res.send(buffer);
         // res.send(data);
       } else {
         console.log('this is else part 2 ');
