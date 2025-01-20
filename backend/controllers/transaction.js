@@ -878,7 +878,7 @@ class transactionController {
         console.log(stringData);
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-        res.setHeader('Content-Length', buffer.length);
+        // res.setHeader('Content-Length', buffer.length);
         // Send the binary data as a PDF response
         res.send(buffer);
         // res.send(data);
