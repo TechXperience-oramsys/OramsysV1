@@ -74,7 +74,7 @@ const PerformanceRisk = ({ hendelNext, hendelCancel }) => {
                 },
             })
         }
-    }, [riskAssessment, performanceRisk])
+    }, [riskAssessment])
 
     const getData = (e) => {
         if (e.name === 'cashCollateral') {

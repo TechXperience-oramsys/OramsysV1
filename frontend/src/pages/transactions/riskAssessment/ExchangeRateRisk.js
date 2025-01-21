@@ -74,7 +74,7 @@ const ExchangeRateRisk = ({ hendelNext, hendelCancel }) => {
         }
     }, [getTransactionByIdData, data, dispatch, riskAssessment])
 
-    console.log("data", data)
+    // console.log("data", data)
     useEffect(() => {
         if (riskAssessment) {
             setData(riskAssessment)

@@ -78,8 +78,8 @@ const PaymentBuyerRisk = ({ hendelNext, hendelCancel }) => {
     }
 
     const riskAssessment = useSelector(state => state.riskAssessmentData.riskAssessment)
-    console.log('riskAssessment', riskAssessment)
-    console.log('paymentBuyesrRisk', paymentBuyesrRisk)
+    // console.log('riskAssessment', riskAssessment)
+    // console.log('paymentBuyesrRisk', paymentBuyesrRisk)
 
     useEffect(() => {
         if (riskAssessment) {
@@ -173,7 +173,7 @@ const PaymentBuyerRisk = ({ hendelNext, hendelCancel }) => {
         //     })
         // }
 
-    }, [riskAssessment, paymentBuyesrRisk])
+    }, [riskAssessment])
 
     const modalData = (e) => {
         if (e.name === 'internationalCreditStanding') {
@@ -189,10 +189,10 @@ const PaymentBuyerRisk = ({ hendelNext, hendelCancel }) => {
         'Assigned Receivables'
     ]
 
-    useEffect(() => {
-        console.log('riskAssessment', riskAssessment)
-        console.log('paymentBuyesrRisk', paymentBuyesrRisk)
-    }, [riskAssessment, paymentBuyesrRisk])
+    // useEffect(() => {
+    //     console.log('riskAssessment', riskAssessment)
+    //     console.log('paymentBuyesrRisk', paymentBuyesrRisk)
+    // }, [riskAssessment, paymentBuyesrRisk])
 
 
     const nextStep = () => {

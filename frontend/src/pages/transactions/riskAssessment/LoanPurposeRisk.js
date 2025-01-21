@@ -32,7 +32,7 @@ const LoanPurposeRisk = ({ hendelNext }) => {
     }
 
     useEffect(() => {
-        console.log('riskAssessment === 22', riskAssessment)
+        // console.log('riskAssessment === 22', riskAssessment)
         if (riskAssessment) {
             setData({
                 ...data,
@@ -44,7 +44,7 @@ const LoanPurposeRisk = ({ hendelNext }) => {
             dispatch(getTransactionById(id))
             // }
         }
-    }, [riskAssessment, id, data, dispatch])
+    }, [riskAssessment, id, dispatch])
 
     const nextStep = () => {
         let body = {
