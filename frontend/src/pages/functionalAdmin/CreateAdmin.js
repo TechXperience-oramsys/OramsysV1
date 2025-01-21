@@ -46,7 +46,7 @@ const CreateAdmin = () => {
     admin
       .createAdmin(formData)
       .then((resp) => {
-        message.success("Form submitted successfully!");
+        message.success("Invite has been sent to admin.");
         form.resetFields();
         navigate("/admins");
       })

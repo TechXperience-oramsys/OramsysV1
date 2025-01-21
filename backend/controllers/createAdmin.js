@@ -86,7 +86,7 @@ const createAdmin = () => async (req, res) => {
     //           </mj-text>
     //           <mj-text font-size="14px" font-weight="bold">
     //             Your current password is <strong style="margin-left: 5px; color: #3C0412; font-weight: bold; font-size: 20px;">${password}</strong>
-                
+
     //           </mj-text>
     //           <mj-button href="https://www.oramsysdev.com/verify-admin?id=${id}" background-color="#0070E0" margin="auto color="white" font-weight="bold">
     //             Reset password and login
