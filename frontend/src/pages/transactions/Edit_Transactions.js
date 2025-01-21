@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Steps,  Button , Typography } from 'antd';
+import { Steps, Button, Typography } from 'antd';
 import { Box, } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import DetailsTransaction from './DetailsTransaction';
@@ -19,18 +19,18 @@ import {
     Form,
     Badge,
     Modal,
-  } from "react-bootstrap";
+} from "react-bootstrap";
 import { userServices } from '../../_Services/userServices';
-import {toast }from "sonner";
+import { toast } from "sonner";
 const stepsforexport = ['Transaction Details', 'Key Parties', 'Document Flow', 'Fund Flow', 'Facility'];
 const stepsforimport = ['Key Parties', 'Document Flow', 'Fund Flow', 'Facility'];
 
 const Edit_Transactions = () => {
 
 
-      const [currentUser, setcurrentUser] = useState(
+    const [currentUser, setcurrentUser] = useState(
         JSON.parse(localStorage.getItem("userData"))
-      );
+    );
 
     const location = useLocation();
     const dispatch = useDispatch()
@@ -53,15 +53,15 @@ const Edit_Transactions = () => {
     const [getShippingCompany, setGetShippingCompany] = useState("")
     const [pricingHedgingStatus, setPricingHedgingStatus] = useState(false)
     const [warehouseStatus, setWarehouseStatus] = useState(false);
-      const [noteText, setNoteText] = useState(""); // State for first select box
-        const [isLoading, setIsLoading] = useState(false)
-      
+    const [noteText, setNoteText] = useState(""); // State for first select box
+    const [isLoading, setIsLoading] = useState(false)
+
     const [activeStep, setActiveStep] = useState(0);
 
     let step = []
-const { Step } = Steps;
+    const { Step } = Steps;
     const getTransactionId = useSelector(state => state.transactionData.getTransactionById)
-    
+
     useEffect(() => {
         if (id) {
             dispatch(getTransactionById(id))
@@ -79,7 +79,7 @@ const { Step } = Steps;
 
     const signalContract = (values) => {
         // console.log(values , 'ppppppppppppppppppppppp');
-        
+
         setGetTrans(values)
     }
     const signalLender = (values) => {
@@ -144,36 +144,36 @@ const { Step } = Steps;
     const handleNoteChange = () => {
         setIsLoading(true)
         if (noteText.length <= 0) {
-        //    toast.error("Please enter some text...")
-          setIsLoading(false)
+            //    toast.error("Please enter some text...")
+            setIsLoading(false)
         } else {
-          const data = {
-            "transactionId": id,
-            "workflowstepNotes": [
-              {
-                "username": currentUser?.name,
-                "note": noteText,
-                "department": type,
-              }
-            ]
-          }
-          userServices.flowNoteUpdate(data).then((res) => {
-            // toast.success(res.data.message)
-            
-            setIsLoading(false)
-            
-          }).catch((err) => {
-            // toast.error(err?.response?.data?.error)
-            setIsLoading(false)
-          })
+            const data = {
+                "transactionId": id,
+                "workflowstepNotes": [
+                    {
+                        "username": currentUser?.name,
+                        "note": noteText,
+                        "department": type,
+                    }
+                ]
+            }
+            userServices.flowNoteUpdate(data).then((res) => {
+                // toast.success(res.data.message)
+
+                setIsLoading(false)
+
+            }).catch((err) => {
+                // toast.error(err?.response?.data?.error)
+                setIsLoading(false)
+            })
         }
-    
-      }    
+
+    }
     return (
         <>
             <div className='add-edit-product'>
                 {/* <Box sx={{ width: '100%' }}> */}
-                {productNature === 'Physical' && type ==  undefined  &&(
+                {productNature === 'Physical' && type == undefined && (
                     <Steps className='container mb-5' current={activeStep}>
                         {step.length &&
                             step.map((label, index) => (
@@ -198,37 +198,37 @@ const { Step } = Steps;
                                 {
                                     productNature === 'Physical' ?
                                         <>
-                                            {activeStep + 1 === 1 && type == undefined  && <DetailsTransaction hendelNext={handleNext} signalShippingCompany={signalShippingCompany} signalCounterParty={signalCounterParty} signalPricingHedgingStatus={signalPricingHedgingStatus} signalContract={signalContract} signalWarehouseCompany={signalWarehouseCompany} signalWarehouseStatus={signalWarehouseStatus} signalLender={signalLender} signalBorrower={signalBorrower} transactionType={transactionType} transaction_id={transId} />}
-                                            {activeStep + 1 === 2 && type == undefined  &&  <KeyParties hendelNext={handleNext} getShippingCompany={getShippingCompany} getCounterParty={getCounterParty} pricingHedgingStatus={pricingHedgingStatus} getLender={getLender} getBorrower={getBorrower} getWarehouseCompany={getWarehouseCompany} warehouseStatus={warehouseStatus} hendelCancel={handleBack} transactionType={transactionType} />}
-                                            {activeStep + 1 === 3 && type == undefined  &&  <DocumentFlow hendelNext={handleNext} hendelCancel={handleBack} />}
-                                            {activeStep + 1 === 4 && type == undefined  &&  <FundFlow hendelNext={handleNext} getTrans={getTrans} hendelCancel={handleBack} />}
-                                            {activeStep + 1 === 5 && type == undefined  &&  <Facility hendelNext={handleNext} hendelCancel={handleBack} />}
+                                            {activeStep + 1 === 1 && type == undefined && <DetailsTransaction hendelNext={handleNext} signalShippingCompany={signalShippingCompany} signalCounterParty={signalCounterParty} signalPricingHedgingStatus={signalPricingHedgingStatus} signalContract={signalContract} signalWarehouseCompany={signalWarehouseCompany} signalWarehouseStatus={signalWarehouseStatus} signalLender={signalLender} signalBorrower={signalBorrower} transactionType={transactionType} transaction_id={transId} />}
+                                            {activeStep + 1 === 2 && type == undefined && <KeyParties hendelNext={handleNext} getShippingCompany={getShippingCompany} getCounterParty={getCounterParty} pricingHedgingStatus={pricingHedgingStatus} getLender={getLender} getBorrower={getBorrower} getWarehouseCompany={getWarehouseCompany} warehouseStatus={warehouseStatus} hendelCancel={handleBack} transactionType={transactionType} />}
+                                            {activeStep + 1 === 3 && type == undefined && <DocumentFlow hendelNext={handleNext} hendelCancel={handleBack} />}
+                                            {activeStep + 1 === 4 && type == undefined && <FundFlow hendelNext={handleNext} getTrans={getTrans} hendelCancel={handleBack} />}
+                                            {activeStep + 1 === 5 && type == undefined && <Facility hendelNext={handleNext} hendelCancel={handleBack} />}
                                             {/* // preview for workflow  */}
-                                            {type == 'details'  && <DetailsTransaction stype={type}  signalShippingCompany={signalShippingCompany} signalCounterParty={signalCounterParty} signalPricingHedgingStatus={signalPricingHedgingStatus} signalContract={signalContract} signalWarehouseCompany={signalWarehouseCompany} signalWarehouseStatus={signalWarehouseStatus} signalLender={signalLender} signalBorrower={signalBorrower} transactionType={transactionType} transaction_id={transId} />}
-                                            {type == 'keyParties'  &&  <KeyParties stype={type}   getShippingCompany={getShippingCompany} getCounterParty={getCounterParty} pricingHedgingStatus={pricingHedgingStatus} getLender={getLender} getBorrower={getBorrower} getWarehouseCompany={getWarehouseCompany} warehouseStatus={warehouseStatus}   transactionType={transactionType} />}
-                                            {type == 'documentFlow'  && <DocumentFlow   stype={type}   />}
-                                            {type == 'fundFlow'  &&  <FundFlow  stype={type}   getTrans={getTrans}   />}
-                                            {type == 'facility'  &&  <Facility  type={type}    />}
+                                            {type == 'details' && <DetailsTransaction stype={type} signalShippingCompany={signalShippingCompany} signalCounterParty={signalCounterParty} signalPricingHedgingStatus={signalPricingHedgingStatus} signalContract={signalContract} signalWarehouseCompany={signalWarehouseCompany} signalWarehouseStatus={signalWarehouseStatus} signalLender={signalLender} signalBorrower={signalBorrower} transactionType={transactionType} transaction_id={transId} />}
+                                            {type == 'keyParties' && <KeyParties stype={type} getShippingCompany={getShippingCompany} getCounterParty={getCounterParty} pricingHedgingStatus={pricingHedgingStatus} getLender={getLender} getBorrower={getBorrower} getWarehouseCompany={getWarehouseCompany} warehouseStatus={warehouseStatus} transactionType={transactionType} />}
+                                            {type == 'documentFlow' && <DocumentFlow stype={type} />}
+                                            {type == 'fundFlow' && <FundFlow stype={type} getTrans={getTrans} />}
+                                            {type == 'facility' && <Facility type={type} />}
 
 
-                                            <Form.Group as={Col} lg={12} md={12} m={12} className="mb-3" controlId="formHorizontalNote">
-  
-        <Row>
-          <Col lg={12} md={12} m={12}>
-            <Form.Group as={Col} lg={12} md={12} m={8} className="mb-1" controlId="formHorizontalNoteTextarea">
-              <Form.Control
-                as="textarea"  // Change type to textarea
-                rows={4}       // Define the number of rows
-                className="text-muted border border-secondary my-1 bg-light"
-                name="borrower_Applicant"
-                placeholder="Add Note..."
-                onChange={(e) => setNoteText(e.target.value)} // Handle onChange event
-              />
-            </Form.Group>
-            <Button onClick={() => handleNoteChange()} loading={isLoading}>Add Note</Button>
-          </Col>
-        </Row>
-      </Form.Group>
+                                            {type && <Form.Group as={Col} lg={12} md={12} m={12} className="mb-3" controlId="formHorizontalNote">
+
+                                                <Row>
+                                                    <Col lg={12} md={12} m={12}>
+                                                        <Form.Group as={Col} lg={12} md={12} m={8} className="mb-1" controlId="formHorizontalNoteTextarea">
+                                                            <Form.Control
+                                                                as="textarea"  // Change type to textarea
+                                                                rows={4}       // Define the number of rows
+                                                                className="text-muted border border-secondary my-1 bg-light"
+                                                                name="borrower_Applicant"
+                                                                placeholder="Add Note..."
+                                                                onChange={(e) => setNoteText(e.target.value)} // Handle onChange event
+                                                            />
+                                                        </Form.Group>
+                                                        <Button onClick={() => handleNoteChange()} loading={isLoading}>Add Note</Button>
+                                                    </Col>
+                                                </Row>
+                                            </Form.Group>}
                                         </>
                                         :
                                         <>
