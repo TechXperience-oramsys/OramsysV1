@@ -41,39 +41,32 @@ const ExchangeRateRisk = ({ hendelNext, hendelCancel }) => {
             })
         }
     }
-
     useEffect(() => {
-        if (getTransactionByIdData && getTransactionByIdData.data) {
-            if (getTransactionByIdData?.data?.facility?.rePaymentCurrency !== getTransactionByIdData?.data?.details?.contractDetails?.currency) {
-                if (getTransactionByIdData.data?.facility?.currencyHedgeDetails?.length) {
-                    setData({
-                        ...data,
-                        currencyHedge: {
-                            hedgingMethod: getTransactionByIdData.data?.facility?.currencyHedgeDetails[0]?.hedgingMethod,
-                            counterparty: getTransactionByIdData.data?.facility?.currencyHedgeDetails[0]?.counterParty?._id,
-                        },
-                    })
-                    let body = {
-                        ...riskAssessment,
-                        currencyHedge: {
-                            hedgingMethod: getTransactionByIdData.data.facility.currencyHedgeDetails[0]?.hedgingMethod,
-                            counterparty: getTransactionByIdData.data.facility.currencyHedgeDetails[0]?.counterParty?._id,
-                        },
-
-                    }
-                    dispatch(riskAssessmentAction(body))
-                }
+        if (
+            getTransactionByIdData?.data?.facility?.rePaymentCurrency !== 
+            getTransactionByIdData?.data?.details?.contractDetails?.currency
+        ) {
+            if (getTransactionByIdData.data?.facility?.currencyHedgeDetails?.length) {
+                const newCurrencyHedge = {
+                    hedgingMethod: getTransactionByIdData.data.facility.currencyHedgeDetails[0]?.hedgingMethod,
+                    counterparty: getTransactionByIdData.data.facility.currencyHedgeDetails[0]?.counterParty?._id,
+                };
+    
+                setData(prevData => 
+                    JSON.stringify(prevData.currencyHedge) === JSON.stringify(newCurrencyHedge) 
+                        ? prevData 
+                        : { ...prevData, currencyHedge: newCurrencyHedge }
+                );
+    
+                dispatch(riskAssessmentAction(prevRisk => 
+                    JSON.stringify(prevRisk.currencyHedge) === JSON.stringify(newCurrencyHedge) 
+                        ? prevRisk 
+                        : { ...prevRisk, currencyHedge: newCurrencyHedge }
+                ));
             }
-
-
-            // }
-            // let newData = {
-            //     value: data,
-            //     name: type
-            // }
         }
-    }, [getTransactionByIdData, data, dispatch, riskAssessment])
-
+    }, [getTransactionByIdData, dispatch]);
+    
     // console.log("data", data)
     useEffect(() => {
         if (riskAssessment) {

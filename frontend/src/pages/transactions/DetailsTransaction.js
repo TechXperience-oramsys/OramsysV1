@@ -1109,6 +1109,71 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
 
 
 
+    // const next = () => {
+    //     if (validation()) {
+    //         return
+    //     }
+    //     if (!transShipmentOptions.tranShipmentRequired) {
+    //         delete transShipmentOptions.city
+    //         delete transShipmentOptions.country
+    //         delete transShipmentOptions.street
+    //         delete transShipmentOptions.transShipmentDate
+    //         delete transShipmentOptions.transShipmentQuantity
+    //     }
+    //     if (shippingOptions.shipmentMode === "SEA") {
+    //         delete shippingOptions.airbaseOfOrigin
+    //         delete shippingOptions.destinationAirbase
+    //     } else if (shippingOptions.shipmentMode === "AIR") {
+    //         delete shippingOptions.destinationPort
+    //         delete shippingOptions.portOfOrigin
+    //     }
+    //     let body = {
+    //         details: {
+    //             _id: editId,
+    //             productDetails,
+    //             contractDetails,
+    //             shippingOptions,
+    //             transShipmentOptions,
+    //             pricingDetails,
+    //         },
+    //         borrower_Applicant,
+    //         lenders,
+    //         shipping_company,
+    //         hedging_party,
+    //         hedging_status,
+    //         warehouse_status,
+    //         type: transactionType,
+    //     }
+
+    //     // console.log(body, 'WAHALA')
+
+    //     dispatch(transactionDataAction(body))
+    //     toast.success("Details added successfully!");
+    //     signalContract(body.details.contractDetails)
+    //     signalBorrower(body.borrower_Applicant)
+    //     signalWarehouseCompany(body.details.shippingOptions)
+    //     signalCounterParty(body.hedging_party)
+    //     signalPricingHedgingStatus(body.hedging_status)
+    //     signalWarehouseStatus(body.warehouse_status)
+    //     signalShippingCompany(body.shipping_company)
+    //     signalLender(body.lenders)
+
+
+    //     if (body.details?._id.length > 0) {
+    //         body.details.transactionId = transaction_id
+    //         body.details.shippingOptions.warehouses = body.details.shippingOptions.warehouses.map(warehouse => ({
+    //             warehouse: warehouse.warehouse?.value, // Get the value from the warehouse object
+    //             warehouseCompany: warehouse.warehouseCompany?.value // Get the value from the warehouseCompany object
+    //         }));
+    //         transactionServices?.detailsUpdate(body).then((res) => {
+    //             toast.success(res?.data?.message)
+    //             hendelNext()
+    //         }).catch((error) => toast.error("Something went wrong!"))
+    //     } else {
+    //         hendelNext()
+    //     }
+    // }
+
     const next = () => {
         if (validation()) {
             return
@@ -1145,7 +1210,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
             type: transactionType,
         }
 
-        // console.log(body, 'WAHALA')
+        console.log(body, 'WAHALA')
 
         dispatch(transactionDataAction(body))
         toast.success("Details added successfully!");
@@ -1157,21 +1222,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         signalWarehouseStatus(body.warehouse_status)
         signalShippingCompany(body.shipping_company)
         signalLender(body.lenders)
-
-
-        if (body.details?._id.length > 0) {
-            body.details.transactionId = transaction_id
-            body.details.shippingOptions.warehouses = body.details.shippingOptions.warehouses.map(warehouse => ({
-                warehouse: warehouse.warehouse?.value, // Get the value from the warehouse object
-                warehouseCompany: warehouse.warehouseCompany?.value // Get the value from the warehouseCompany object
-            }));
-            transactionServices?.detailsUpdate(body).then((res) => {
-                toast.success(res?.data?.message)
-                hendelNext()
-            }).catch((error) => toast.error("Something went wrong!"))
-        } else {
-            hendelNext()
-        }
+        hendelNext()
     }
 
     // const transactionData = useSelector((state) => state.transactionData.transactionData);
