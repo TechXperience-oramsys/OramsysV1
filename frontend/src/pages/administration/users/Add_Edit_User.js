@@ -167,6 +167,7 @@ const Add_Edit_User = () => {
   const profileOption = ["User", "Admin", "Tester"];
 
   const departmentOption = [
+
     "Client Relations",
     "Trade Finance",
     "Structuring and Risk Distribution",
@@ -183,6 +184,7 @@ const Add_Edit_User = () => {
     "Financial Advisor",
     "Private banker",
     "Appraisal Officer"
+    
   ];
 
   return (
