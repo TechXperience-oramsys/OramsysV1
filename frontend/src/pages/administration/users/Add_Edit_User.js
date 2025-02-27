@@ -167,12 +167,14 @@ const Add_Edit_User = () => {
   const profileOption = ["User", "Admin", "Tester"];
 
   const departmentOption = [
-    "Credit",
-    "Operations",
+    "Client Relations",
+    "Trade Finance",
+    "Structuring and Risk Distribution",
+    "Banking Operations",
     "Compliance",
     "Information Technology",
     "Finance",
-    "Credit Remediation",
+    "Credit Assessment",
     "Senior Management",
     "Teller",
     "Accountant",

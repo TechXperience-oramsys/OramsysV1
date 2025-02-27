@@ -1,17 +1,22 @@
 const UserProfileTypes = {
     User: 'User',
+    Trade_Finance: 'Trade Finance',
+    Syndication_and_Risk_Distribution: 'Syndication and Risk Distribution Manager',
+    Credit_Assessment: 'Credit Assessment',
+    Banking_Operations: 'Banking Operations',
     Admin: 'Admin',
-    Tester: 'Tester'
 }
 
 const UserDepartmentTypes = {
-    Credit: 'Credit',
-    Operations: 'Operations',
+    Client_relations: "Client Relations",
+    Trade_Finance: "Trade Finance",
+    Structuring_and_Risk_Distribution: "Structuring and Risk Distribution",
+    Banking_Operations: 'Banking Operations',
     Compliance: 'Compliance',
     Information_Technology: 'Information Technology',
     Finance: 'Finance',
     Risk: 'Risk',
-    Credit_Remediation: 'Credit Remediation',
+    Credit_Assesment: 'Credit Assesment',
     Senior_Management: 'Senior Management',
     Teller: "Teller",
     Accountant: "Accountant",
