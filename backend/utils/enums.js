@@ -8,7 +8,8 @@ const UserProfileTypes = {
 }
 
 const UserDepartmentTypes = {
-    Client_relations: "Client Relations",
+
+    Client_Relations: "Client Relations",
     Trade_Finance: "Trade Finance",
     Structuring_and_Risk_Distribution: "Structuring and Risk Distribution",
     Banking_Operations: 'Banking Operations',
@@ -16,7 +17,7 @@ const UserDepartmentTypes = {
     Information_Technology: 'Information Technology',
     Finance: 'Finance',
     Risk: 'Risk',
-    Credit_Assesment: 'Credit Assesment',
+    Credit_Assessment: 'Credit Assessment',
     Senior_Management: 'Senior Management',
     Teller: "Teller",
     Accountant: "Accountant",
@@ -25,6 +26,7 @@ const UserDepartmentTypes = {
     Financial_Advisor: "Financial Advisor",
     Private_banker: "Private banker",
     Appraisal_Officer: "Appraisal Officer"
+
 }
 
 const ProductNatureTypes = {
