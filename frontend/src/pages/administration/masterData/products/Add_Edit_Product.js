@@ -290,13 +290,13 @@ const Add_Edit_Product = () => {
                   type="date"
                   name="expiryDate"
                   placeholder="dd-mm-yyyy"
-                  // min={transactionData.details.contractDetails.contractDate ? new Date(transactionData.details.contractDetails.contractDate).toISOString().split("T")[0] : ""}
-                  value={state.expiryDate}
-                  onChange={(e) => setState({ ...state, expiriyDate: e.target.value })}
+                  value={state.expiryDate} // Ensure state is correctly referenced
+                  onChange={(e) => setState({ ...state, expiryDate: e.target.value })} // Fixed the typo
                   required
                 />
-                {error && error?.expiriyDate && <span style={{ color: 'red' }}>{error.expiriyDate}</span>}
+                {error && error.expiryDate && <span style={{ color: 'red' }}>{error.expiryDate}</span>}
               </Form.Group>
+
 
 
               <Form.Group as={Col} controlId="formGridZip">

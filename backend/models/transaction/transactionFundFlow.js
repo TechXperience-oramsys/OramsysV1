@@ -23,6 +23,7 @@ var Schema = new Schema({
     lettersOfCredit: { type: [LettersOfCredit], required: false, default: null },
     paymentDate: { type: String, required: false, default: null },
     terms: { type: String, required: false, default: null },
+    others: { type: String, required: false, default: null },
     paymentOrigin: { type: Schema.Types.ObjectId, ref: "Countries", required: false, default: null },
     beneficiary: { type: Schema.Types.ObjectId, ref: "Entity", required: false, default: null },
     additonalCharges: { type: Boolean, required: true, default: false },

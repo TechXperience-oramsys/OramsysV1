@@ -253,17 +253,9 @@ const KeyParties = ({ hendelCancel, hendelNext, transactionType, getShippingComp
             },
             type: transactionType
         }
-        dispatch(transactionDataAction(body))
 
-        if (body.keyParties?._id.length > 0) {
-            body.keyParties.transactionId = body.details?.transactionId
-            transactionServices.updateKeyParties(body.keyParties).then((res) => {
-                hendelNext()
-                toast.success(res.data.message)
-            }).catch(err => toast.error("Failed to update Key Parties!"))
-        }else{
-            hendelNext()
-        }
+        dispatch(transactionDataAction(body))
+        hendelNext()
     }
     // console.log('TAbLE dATa', tableData)
     useEffect(() => {

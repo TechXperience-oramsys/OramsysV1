@@ -26,7 +26,7 @@ import { transactionServices } from "../../_Services/transactions"
 
 
 
-const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalCounterParty, signalShippingCompany, signalWarehouseCompany, signalWarehouseStatus, signalContract, signalBorrower, signalLender, transaction_id, signalPricingHedgingStatus , stype}) => {
+const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalCounterParty, signalShippingCompany, signalWarehouseCompany, signalWarehouseStatus, signalContract, signalBorrower, signalLender, transaction_id, signalPricingHedgingStatus, stype }) => {
     const navigate = useNavigate()
     // let numberReg = /^[0-9\b]+$/;
     const [isLoading, setIsLoading] = useState(true);
@@ -575,6 +575,9 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                             previousDayClosingAmount:
                                 getTransactionByIdData.data?.details?.pricingDetails
                                     ?.previousDayClosingAmount,
+                            others:
+                                getTransactionByIdData.data?.details?.pricingDetails
+                                    ?.others,
                             pricingFormula:
                                 getTransactionByIdData.data?.details?.pricingDetails?.pricingFormula,
                             pricingHedgingStatus:
@@ -718,7 +721,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         { value: false, label: "No" },
     ]
 
-    const pricingTypeOption = ["Firm fixed price", "Price to be fixed"]
+    const pricingTypeOption = ["Firm fixed price", "Price to be fixed", "Others"]
 
     const pricingFormulaOption = [
         "To be negotiated",
@@ -726,7 +729,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         "Other",
     ]
 
-    const handleChnage = (e, name, type) => {
+    const handleChange = (e, name, type) => {
         if (type === "productDetails") {
             if (name === "quantity") {
                 if (e.target.value === '' || e.target.value) {
@@ -757,15 +760,13 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
             }
         }
         else if (type === "pricingDetails") {
-            if (name === "pricingAmount" || name === "previousDayClosingAmount") {
-                if (e.target.value === '' || e.target.value) {
-                    setPricingDetails({ ...pricingDetails, [name]: e.target.value })
-                }
+            if (["pricingAmount", "previousDayClosingAmount", "others"].includes(name)) { // ✅ Handle "others" explicitly
+                setPricingDetails({ ...pricingDetails, [name]: e.target.value });
             }
         }
     }
 
-    const handleChnages = (e) => {
+    const handleChanges = (e) => {
         setContractDetails({
             ...contractDetails,
             [e.target.name]: e.target.value,
@@ -863,7 +864,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         if (!contractDetails.expiryDate) {
             flag = true
             error.expiryDate = "Please enter expiry date!"
-            toast.error(error.expiriyDate);
+            toast.error(error.expiryDate);
 
         }
 
@@ -1027,6 +1028,12 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
             flag = true
             error.previousDayClosingAmount = "Please enter previous_day_closing_amount!"
             toast.error(error.previousDayClosingAmount);
+        }
+
+        if (pricingDetails.pricingType === "Others" && !pricingDetails.others) {
+            flag = true
+            error.others = "Please enter other prcing details"
+            toast.error(error.others);
         }
 
         if (
@@ -1213,7 +1220,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
         console.log(body, 'WAHALA')
 
         dispatch(transactionDataAction(body))
-        toast.success("Details added successfully!");
+        // toast.success("Details added successfully!");
         signalContract(body.details.contractDetails)
         signalBorrower(body.borrower_Applicant)
         signalWarehouseCompany(body.details.shippingOptions)
@@ -1573,7 +1580,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             name='Product_nature'
                                             value={formateCurrencyValue(productDetails.quantity)}
                                             onChange={(e) =>
-                                                handleChnage(e, "quantity", "productDetails")
+                                                handleChange(e, "quantity", "productDetails")
                                             }
                                             disabled={isView} />
                                         {error?.quantity && (<span style={{ color: "#da251e", width: "100%", textAlign: "start", }}>{error?.quantity}</span>
@@ -1587,7 +1594,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                             <Form.Control className='no-border'
                                                 name='netMetric'
                                                 value={productDetails.metric}
-                                                onChange={(e) => handleChnage(e, "metric", "productDetails")}
+                                                onChange={(e) => handleChange(e, "metric", "productDetails")}
                                                 disabled={true} />
                                             {error?.metric && (
                                                 <span style={{ color: "#da251e", width: "100%", textAlign: "start", }}>
@@ -1675,7 +1682,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                         <Form.Label>Contract Value</Form.Label>
                                         <Form.Control className='no-border'
                                             value={formateCurrencyValue(contractDetails.value)}
-                                            onChange={(e) => handleChnage(e, "value", "contractDetails")}
+                                            onChange={(e) => handleChange(e, "value", "contractDetails")}
                                             disabled={isView} />
                                         {error && error?.value && <span style={{ color: 'red' }}>{error.value}</span>}
                                     </Form.Group>
@@ -1721,7 +1728,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                         <Form.Control className='no-border'
                                             name='conditionsOfContract'
                                             value={contractDetails.conditionsOfContract}
-                                            onChange={(e) => handleChnages(e)}
+                                            onChange={(e) => handleChanges(e)}
                                             disabled={isView} />
                                         {error && error?.conditionsOfContract && <span style={{ color: 'red' }}>{error.conditionsOfContract}</span>}
                                     </Form.Group>
@@ -1732,7 +1739,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                         <Form.Control className='no-border'
                                             name='descriptionOfContract'
                                             value={contractDetails.descriptionOfContract}
-                                            onChange={(e) => handleChnages(e)}
+                                            onChange={(e) => handleChanges(e)}
                                             disabled={isView} />
                                         {error && error?.descriptionOfContract && <span style={{ color: 'red' }}>{error.descriptionOfContract}</span>}
                                     </Form.Group>
@@ -1961,7 +1968,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                 name='netShippedWeights'
                                                 value={formateCurrencyValue(shippingOptions.shippedWeights)}
                                                 onChange={(e) =>
-                                                    handleChnage(e, "shippedWeights", "shippingOptions")
+                                                    handleChange(e, "shippedWeights", "shippingOptions")
                                                 }
                                                 disabled={isView}
                                             />
@@ -2212,7 +2219,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                     name='conditions_of_contract'
                                                     value={formateCurrencyValue(transShipmentOptions.transShipmentQuantity)}
                                                     disabled={isView}
-                                                    onChange={(e) => handleChnage(e, "transShipmentQuantity", "transShipmentOptions")} />
+                                                    onChange={(e) => handleChange(e, "transShipmentQuantity", "transShipmentOptions")} />
                                                 {error?.transShipmentQuantity && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.transShipmentQuantity}</span>)}
                                             </Form.Group>
 
@@ -2283,7 +2290,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                     value={formateCurrencyValue(pricingDetails.pricingAmount)}
                                                     name='contract_value'
                                                     onChange={(e) =>
-                                                        handleChnage(e, "pricingAmount", "pricingDetails")
+                                                        handleChange(e, "pricingAmount", "pricingDetails")
                                                     }
                                                     disabled={isView} />
                                                 {error?.pricingAmount && (
@@ -2295,7 +2302,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                 <Form.Label>Pricing Unit</Form.Label>
                                                 <Form.Control className='no-border'
                                                     value={productDetails.unit}
-                                                    onChange={(e) => handleChnage(e, "unit", "productDetails")}
+                                                    onChange={(e) => handleChange(e, "unit", "productDetails")}
                                                     disabled={true} />
                                                 {error && error?.value && <span style={{ color: 'red' }}>{error.value}</span>}
                                             </Form.Group>
@@ -2306,7 +2313,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                                                     value={pricingDetails.previousDayClosingAmount}
                                                     name='previous_day_closing_amount'
                                                     onChange={(e) =>
-                                                        handleChnage(e, "previousDayClosingAmount", "pricingDetails")
+                                                        handleChange(e, "previousDayClosingAmount", "pricingDetails")
                                                     }
                                                     disabled={isView} />
                                                 {error?.previousDayClosingAmount && (<span
@@ -2445,6 +2452,25 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
 
                                         </>
                                     )}
+
+                                    {pricingDetails.pricingType === "Others" && (
+                                        <>
+                                            <Form.Group as={Col} lg={pricingDetails.pricingType === "Others" ? 3 : 4} controlId="formGridZip">
+                                                <Form.Label>Enter other pricing details</Form.Label>
+                                                <Form.Control className='no-border'
+                                                    value={pricingDetails.others}
+                                                    name='others'
+                                                    // onChange={(e) => handleChanges(e)}
+                                                    onChange={(e) =>
+                                                        handleChange(e, "others", "pricingDetails")
+                                                    }
+                                                    disabled={isView} />
+                                                {error?.others && (
+                                                    <span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.others}</span>
+                                                )}
+                                            </Form.Group>
+                                        </>
+                                    )}
                                 </Row>
                             </div>
                         </div>
@@ -2457,7 +2483,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                         <AddInsuranceModal show={addInsuranceModal} onHide={() => setAddInsuranceModal(false)} />
                     )}
                     {/* {showTextEditModal && <TextEditerModal show={showTextEditModal} onHide={() => setShowTextEditModal(false)} commentDone={(e) => hadleChangeModal(e)} data={sendModalData} type={type} inputName={selectedName} />} */}
-                   {stype === undefined && <div className='footer_'>
+                    {stype === undefined && <div className='footer_'>
                         <div className="d-flex justify-content-between">
                             <button onClick={() => navigate("/transactions")} className='footer_cancel_btn'> Back </button>
                             {/* <button onClick={() => { save();  console.log('Click me')}} className='footer_cancel_btn'> Save Details and exit </button> */}

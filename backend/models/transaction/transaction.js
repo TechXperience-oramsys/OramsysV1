@@ -5,7 +5,7 @@ var Schema = mongoose.Schema
 
 var Schema = new Schema({
     type: { type: String, required: true },
-    createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true, default: null },
+    userId: {type: Schema.Types.ObjectId, ref: "User", required: true, default: null },
     lenders: { type: String, required: false, default: null },
     borrower_Applicant: { type: String, required: false, default: null },
     termSheet: { type: String, required: true, default: "Not Signed" },
@@ -16,12 +16,12 @@ var Schema = new Schema({
     fundFlow: { type: Schema.Types.ObjectId, ref: "TransactionFundFlow", required: false, default: null },
     facility: { type: Schema.Types.ObjectId, ref: "TransactionFacility", required: false, default: null },
     isDeleted: { type: Boolean, required: true, default: false },
-    admin: { type: String, required: true, default: null },
-    workFlowSteps: { type: [] },
-    workflowstepNotes: { type: [] }
+    admin : { type: String, required: true, default: null },
+    workFlowSteps: {type : []},
+    workflowstepNotes : { type : []}
 }, {
     timestamps: true
-});
+})
 
 Schema.index({ name: "text" })
 

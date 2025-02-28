@@ -657,9 +657,7 @@ const Facility = ({ hendelCancel, hendelNext , type}) => {
       params = true;
       error.documentation = "Please enter documentation!";
     }
-    if (
-      facility.documentation === "Others (Please Specify)" &&
-      !facility.specifyDocumentation
+    if (facility.documentation === "Others (Please Specify)" && !facility.specifyDocumentation
     ) {
       params = true;
       error.specifyDocumentation = "Please specify documentation!";
@@ -880,8 +878,6 @@ const Facility = ({ hendelCancel, hendelNext , type}) => {
       lenders: transactionData.lenders,
       userId: AuthStorage.getStorageData(STORAGEKEY.userId),
     };
-    facility.transactionId = body?.detail?.transactionId
-    facility.flowVerified = false
 
     let user = localStorage.getItem("userData") && JSON.parse(localStorage.getItem("userData"));
     body.admin = user.admin;
@@ -892,14 +888,7 @@ const Facility = ({ hendelCancel, hendelNext , type}) => {
     setLoading(true);
     await dispatch(addTransaction(body));
     setLoading(false);
-    if(facility?._id?.length>0){
-      transactionServices.updateFacility(facility).then((res) => {
-        toast.success(res.data?.message)
-        navigate("/final-page")
-      }).catch(err => toast.error("Failed to update facility!"))
-    }else{
-        navigate("/final-page")
-    }
+    navigate("/final-page")
   };
 
   useEffect(() => {
@@ -2028,7 +2017,7 @@ const Facility = ({ hendelCancel, hendelNext , type}) => {
                       value={facility.finalMaturity}
                       onChange={(e) => handleChangeNumber(e, "finalMaturity")}
                     />
-                    <InputGroup.Text>Days</InputGroup.Text>
+                    <InputGroup.Text>Months</InputGroup.Text>
                   </InputGroup>
 
                   {error?.finalMaturity && (
@@ -2089,25 +2078,12 @@ const Facility = ({ hendelCancel, hendelNext , type}) => {
                       }
                     />
                     {error?.specifyDocumentation && (
-                      <span
-                        style={{
-                          color: "#da251e",
-                          width: "100%",
-                          textAlign: "start",
-                        }}
-                      >
+                      <span style={{ color: "#da251e", width: "100%", textAlign: "start"}}>
                         {error?.specifyDocumentation}
-                      </span>
-                    )}
+                      </span> )}
                   </Form.Group>
                 )}
-                <Form.Group
-                  as={Col}
-                  lg={
-                    facility.documentation === "Others (Please specify)" ? 3 : 4
-                  }
-                  controlId="formGridZip"
-                >
+                <Form.Group as={Col} lg={facility.documentation === "Others (Please specify)" ? 3 : 4 } controlId="formGridZip">
                   <Form.Label>
                     Taxation Duties <OptionalSpan />
                   </Form.Label>
@@ -2399,28 +2375,9 @@ const Facility = ({ hendelCancel, hendelNext , type}) => {
 
                  
     {type == undefined &&    <div className="footer_">
-          <button
-            onClick={() => {
-              hendelCancel();
-            }}
-            className="footer_cancel_btn"
-          >
-            Back
-          </button>
-          <button
-            onClick={() => {
-              navigate("/final-page");
-            }}
-            className={`footer_next_btn ${isView ? "d-block" : "d-none"}`}
-          >
-            Exit
-          </button>
-          <button
-            onClick={() => {
-              id ? edit() : save();
-            }}
-            className={`footer_next_btn ${isView && "d-none"}`}
-          >
+          <button onClick={() => { hendelCancel(); }} className="footer_cancel_btn">Back</button>
+          <button onClick={() => { navigate("/final-page"); }}className={`footer_next_btn ${isView ? "d-block" : "d-none"}`}>Exit</button>
+          <button onClick={() => { id ? edit() : save(); }} className={`footer_next_btn ${isView && "d-none"}`}>
             {!loading ? <>{id ? "Close" : "Save"}</> : null}
             {loading && (
               <div class="d-flex justify-content-center">

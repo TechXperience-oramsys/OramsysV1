@@ -43,7 +43,7 @@ const Header = () => {
                   <p className="item-paragraph">Not a User?</p>
                   <div className="header-button">
                     <Link to="/">
-                      {/* You have to be registered under an institution{" "} */}
+                      You have to be registered under an institution{" "}
                       <FontAwesomeIcon
                         icon={faArrowRightLong}
                         style={{ color: "#da251e" }}

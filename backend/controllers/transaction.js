@@ -167,7 +167,7 @@ class transactionController {
           .json(
             new APIResponse(
               transactionDetailsResponse,
-              "Transaction details saved successfully.",
+              "Transaction details successfully.",
               httpStatus.OK
             )
           );
@@ -505,7 +505,7 @@ class transactionController {
     let updateData = {};
     const newTransaction = {
       type: body.type,
-      createdBy: body.userId, // Assign userId to createdBy
+      userId: body.userId,
       lenders: body.lenders,
       borrower_Applicant: body.borrower_Applicant,
       admin: body.admin,
@@ -790,22 +790,21 @@ class transactionController {
     try {
       let transactions = [];
       if (userId === "all") {
-        transactions = await transaction.find().populate("createdBy", "name"); // Populate createdBy with name
+        transactions = await transaction.getAll();
       } else {
-        if (req.query.role.toLowerCase() === "user") {
+        if (req.query.role.toLowerCase() == "user") {
           let adminId = req.query.adminId;
-          transactions = await transaction.find({ createdBy: userId, admin: adminId }).populate("createdBy", "name");
+          transactions = await transaction.getByUserId(userId, adminId);
         } else {
-          transactions = await transaction.find({ createdBy: req.query.id }).populate("createdBy", "name");
+          transactions = await transaction.getByUserId(req.query.id);
         }
       }
-
       return res
         .status(httpStatus.OK)
         .json(
           new APIResponse(
             transactions,
-            "Transactions fetched successfully.",
+            "Transactions fetch successfully.",
             httpStatus.OK
           )
         );
@@ -815,52 +814,52 @@ class transactionController {
         .json(
           new APIResponse(
             {},
-            "Error fetching transactions",
+            "Error in fetching transactions",
             httpStatus.INTERNAL_SERVER_ERROR,
             e
           )
         );
     }
   }
-
   async getById(req, res, next) {
+    let userId = req.params.userId;
     let id = req.params.id;
     try {
-        let Transaction = await transaction.findById(id).populate("createdBy", "name"); // Populate createdBy with name
-        if (Transaction) {
-            return res
-                .status(httpStatus.OK)
-                .json(
-                    new APIResponse(
-                        Transaction,
-                        "Transaction fetched successfully.",
-                        httpStatus.OK
-                    )
-                );
-        } else {
-            return res
-                .status(httpStatus.OK)
-                .json(
-                    new APIResponse(
-                        {},
-                        "Transaction not found.",
-                        httpStatus.OK
-                    )
-                );
-        }
-    } catch (e) {
+      let Transaction = await transaction.getById(id);
+      if (Transaction) {
         return res
-            .status(httpStatus.INTERNAL_SERVER_ERROR)
-            .json(
-                new APIResponse(
-                    {},
-                    "Error fetching transaction",
-                    httpStatus.INTERNAL_SERVER_ERROR,
-                    e
-                )
-            );
+          .status(httpStatus.OK)
+          .json(
+            new APIResponse(
+              Transaction,
+              "Transaction fetch successfully.",
+              httpStatus.OK
+            )
+          );
+      } else {
+        return res
+          .status(httpStatus.OK)
+          .json(
+            new APIResponse(
+              Transaction,
+              "Transaction not found.",
+              httpStatus.OK
+            )
+          );
+      }
+    } catch (e) {
+      return res
+        .status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json(
+          new APIResponse(
+            {},
+            "Error in fetching transaction",
+            httpStatus.INTERNAL_SERVER_ERROR,
+            e
+          )
+        );
     }
-}
+  }
 
   async download(req, res, next) {
     try {

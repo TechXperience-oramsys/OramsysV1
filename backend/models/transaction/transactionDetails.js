@@ -76,6 +76,7 @@ var PricingDetailOptions = new Schema({
     pricingFormula: { type: String, require: false, default: null },
     pricingHedgingStatus: { type: Boolean, require: false, default: false },
     pricingHedgingMethod: { type: String, require: false, default: false },
+    others: { type: String, require: false, default: null },
     pricingCounterParty: { type: Schema.Types.ObjectId, ref: 'Entity', require: false, default: null },
 })
 

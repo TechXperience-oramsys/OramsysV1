@@ -75,6 +75,7 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans, stype }) => {
 
                 paymentDate: getTransactionByIdData.data?.fundFlow?.paymentDate,
                 terms: getTransactionByIdData.data?.fundFlow?.terms,
+                others: getTransactionByIdData.data?.fundFlow?.others,
                 paymentOrigin: getTransactionByIdData.data?.fundFlow?.paymentOrigin?._id,
                 beneficiary: getTransactionByIdData.data?.fundFlow?.beneficiary?._id,
                 additonalCharges: getTransactionByIdData.data?.fundFlow?.additonalCharges,
@@ -154,6 +155,7 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans, stype }) => {
         '60 Days',
         '90 Days',
         '180 Days',
+        'Others'
     ]
 
     const additonalChargesOption = [
@@ -182,6 +184,31 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans, stype }) => {
         })
     }
 
+    // const next = () => {
+    //     if (validation()) {
+    //         return
+    //     }
+    //     let body = {
+    //         ...transactionData,
+    //         fundFlow: {
+    //             ...fundFlow,
+    //             lettersOfCredit
+    //         }
+    //     }
+    //     fundFlow.transactionId = body?.details?.transactionId
+    //     fundFlow.flowVerified = body?.details?.flowVerified
+    //     dispatch(transactionDataAction(body))
+
+    //     if (fundFlow._id.length > 0) {
+    //         transactionServices.updateFundFlow(fundFlow).then((res) => {
+    //             toast.success(res.data?.message)
+    //             hendelNext()
+    //         }).catch((err) => toast.error("Failed to update Fund Flow"))
+    //     } else {
+    //         hendelNext()
+    //     }
+    // }
+
     const next = () => {
         if (validation()) {
             return
@@ -193,33 +220,13 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans, stype }) => {
                 lettersOfCredit
             }
         }
-        fundFlow.transactionId = body?.details?.transactionId
-        fundFlow.flowVerified = body?.details?.flowVerified
         dispatch(transactionDataAction(body))
-
-        if (fundFlow._id.length > 0) {
-            transactionServices.updateFundFlow(fundFlow).then((res) => {
-                toast.success(res.data?.message)
-                hendelNext()
-            }).catch((err) => toast.error("Failed to update Fund Flow"))
-        } else {
-            hendelNext()
-        }
+        hendelNext()
     }
 
     const validation = () => {
         let flag = false
         let error = {}
-
-        // if (!fundFlow.contractCurrency) {
-        //     flag = true
-        //     error.contractCurrency = ' Please enter contract currency!'
-        // }
-
-        // if (!fundFlow.contractValue) {
-        //     flag = true
-        //     error.contractValue = ' Please enter contract value!'
-        // }
 
         if (!fundFlow.paymentMethod) {
             flag = true
@@ -239,6 +246,11 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans, stype }) => {
         if (!fundFlow.terms) {
             flag = true
             error.terms = 'Please enter terms'
+        }
+
+        if (fundFlow.terms === 'Others' && !fundFlow.others) {
+            flag = true;
+            error.others = "Please specify other payment terms!";
         }
 
         if (!fundFlow.paymentOrigin) {
@@ -511,7 +523,7 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans, stype }) => {
                     <h4 className="fs-5 fw-bold mb-4 title-admin">PAYMENT TERMS</h4>
                     <Row className='mb-3'>
 
-                        <Form.Group as={Col} controlId="formGridZip">
+                        <Form.Group as={Col} lg={fundFlow.terms === "Others" ? 4 : 6} controlId="formGridZip">
                             <Form.Label>Payment Date</Form.Label>
                             <Form.Control
                                 type="date"
@@ -527,7 +539,7 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans, stype }) => {
 
 
 
-                        <Form.Group as={Col} controlId="formGridZip">
+                        <Form.Group as={Col} lg={fundFlow.terms === "Others" ? 4 : 6} controlId="formGridZip">
                             <Form.Label>Terms</Form.Label>
                             <Form.Select
                                 onChange={(event, newValue) => {
@@ -545,7 +557,22 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans, stype }) => {
                             {error && error?.terms && <span style={{ color: 'red' }}>{error.terms}</span>}
                         </Form.Group>
 
-                        <Form.Group as={Col} controlId="formGridZip">
+                        {fundFlow.terms === "Others" && (
+                            <>
+                                <Form.Group as={Col} lg={fundFlow.terms === "Others" ? 4 : 6} controlId="formGridZip">
+                                    <Form.Label>Enter Others</Form.Label>
+                                    <Form.Control
+                                        name='others'
+                                        value={fundFlow.others}
+                                        onChange={(e) => handleChnage(e)} />
+                                    {error?.others && (<span style={{ color: "#da251e", width: "100%", textAlign: "start" }}>{error?.others}</span>)}
+                                </Form.Group>
+                            </>
+                        )}
+                    </Row>
+
+                    <Row className='mb-3 mt-4'>
+                        <Form.Group as={Col} lg={6} controlId="formGridZip">
                             <Form.Label>Payment Origin</Form.Label>
                             <Form.Select
                                 onChange={(event, newValue) => {
@@ -562,8 +589,7 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans, stype }) => {
                             </Form.Select>
                             {error && error.paymentOrigin && <span style={{ color: 'red' }}>{error.paymentOrigin}</span>}
                         </Form.Group>
-
-                        <Form.Group as={Col} controlId="formGridZip">
+                        <Form.Group as={Col} lg={6} controlId="formGridZip">
                             <Form.Label>Beneficiary</Form.Label>
                             <Form.Select
                                 onChange={(event, newValue) => {
@@ -580,7 +606,6 @@ const FundFlow = ({ hendelCancel, hendelNext, getTrans, stype }) => {
                             </Form.Select>
                             {error && error?.beneficiary && <span style={{ color: 'red' }}>{error.beneficiary}</span>}
                         </Form.Group>
-
                     </Row>
                     <Row>
                         <Form.Group as={Col} lg={12} controlId="formGridZip">

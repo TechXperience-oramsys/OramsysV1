@@ -58,6 +58,7 @@ export const pricingDetailsAtom = atom({
     pricingHedgingStatus: false,
     pricingHedgingMethod: "",
     pricingCounterParty: "",
+    others: "",
 })
 export const borrowerApplicantAtom = atom("");
 export const lendersAtom = atom("");
@@ -116,6 +117,7 @@ export const fundFlowAtom = atom({
 
     paymentDate: "",
     terms: "",
+    others: "",
     paymentOrigin: "",
     beneficiary: "",
     additonalCharges: false,

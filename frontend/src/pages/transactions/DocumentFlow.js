@@ -57,6 +57,26 @@ const DocumentFlow = ({ hendelCancel, hendelNext, stype }) => {
 
 
 
+    // const next = () => {
+    //     if (validation()) {
+    //         return
+    //     }
+    //     let body = {
+    //         ...transactionData,
+    //         documentFlow
+    //     }
+    //     dispatch(transactionDataAction(body))
+    //     documentFlow.transactionId = body.details?.transactionId
+
+    //     if (documentFlow?._id.length > 0) {
+    //         transactionServices.updateDocumentFlow(documentFlow).then((res) => {
+    //             toast.success(res.data?.message)
+    //             hendelNext()
+    //         }).catch((err) => toast.error("Failed to update Document Flow!"))
+    //     }else{
+    //         hendelNext()
+    //     }
+    // }
     const next = () => {
         if (validation()) {
             return
@@ -66,16 +86,7 @@ const DocumentFlow = ({ hendelCancel, hendelNext, stype }) => {
             documentFlow
         }
         dispatch(transactionDataAction(body))
-        documentFlow.transactionId = body.details?.transactionId
-
-        if (documentFlow?._id.length > 0) {
-            transactionServices.updateDocumentFlow(documentFlow).then((res) => {
-                toast.success(res.data?.message)
-                hendelNext()
-            }).catch((err) => toast.error("Failed to update Document Flow!"))
-        }else{
-            hendelNext()
-        }
+        hendelNext()
     }
 
     return (
