@@ -6,14 +6,6 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const port = process.env.PORT || 5002
 
-// const corsOptions = {
-//     origin: ['https://oramsysdev.com', 'http://localhost:3001', 'https://oramsys.com'], // Adjust this to the specific origin(s) you want to allow
-//     methods: 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
-//     allowedHeaders: 'X-Requested-With, content-type, Authorization, Accept',
-//     credentials: true,
-//     exposedHeaders: 'Authorization'
-// };
-
 // Cross-domain JavaScript Source File Inclusion
 app.use((req, res, next) => {
     res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' https://trusted-cdn.com");

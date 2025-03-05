@@ -863,88 +863,47 @@ class transactionController {
 
   async download(req, res, next) {
     try {
-      let id = req.params.id;
-      let data;
-      const finedTransaction = await transaction.getById(id);
-      // console.log(finedTransaction, "finedTransaction")
-      if (finedTransaction && finedTransaction.termSheetURL) {
-        data = finedTransaction.termSheetURL;
+        let id = req.params.id
+        let data
+        const finedTransaction = await transaction.getById(id)
+        if (finedTransaction && finedTransaction.termSheetURL) {
+            data = finedTransaction.termSheetURL
+            return res.status(httpStatus.OK).json(new APIResponse({ data: data }, 'TermSheet downloaded successfully.', httpStatus.OK));
+        } else {
+            // const User = await user.getById(finedTransaction.userId)
+            // const SuperAdmin = await superAdmin.getById(finedTransaction.userId)
+            // const financer = User.name ?? SuperAdmin.name
+            let doc = new PDFDocument({ bufferPages: true });
+            let buffers = [];
+            doc.on('data', buffers.push.bind(buffers));
+            makeTermSheet(doc, finedTransaction)
+            // makeTermSheet(doc, finedTransaction,financer)
+            doc.on('end', async () => {
+                let pdfData = Buffer.concat(buffers);
+                const filePath = `files/TermSheet-${id}.pdf`
+                fs.writeFile(filePath, pdfData, async function (err) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        try {
+                            console.log("File Created")
+                            data = fs.readFileSync(path.join(__dirname, `../files/TermSheet-${id}.pdf`), 'base64', function (err, content) {
+                                return content;
+                            });
+                            return res.status(httpStatus.OK).json(new APIResponse({ data: data }, 'TermSheet downloaded successfully.', httpStatus.OK));
+                        } catch (e) {
+                            console.log(e);
+                        }
+                    }
+                });
+            });
 
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-        const buffer = Buffer.from(data, 'utf8')
-        // console.log(buffer, "buffer")
-        const stringData = buffer.toString('base64');
-        // console.log(stringData);
-        res.setHeader('Content-Type', 'application/pdf');
-        res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-        // res.setHeader('Content-Length', buffer.length);
-        // Send the binary data as a PDF response
-        res.send(buffer);
-        // res.send(data);
-      } else {
-        console.log('this is else part 2 ');
-        // const User = await user.getById(finedTransaction.userId)
-        // const SuperAdmin = await superAdmin.getById(finedTransaction.userId)
-        // const financer = User.name ?? SuperAdmin.name
-        let doc = new PDFDocument({ bufferPages: true });
-        let buffers = [];
-        doc.on("data", buffers.push.bind(buffers));
-        makeTermSheet(doc, finedTransaction);
-        // makeTermSheet(doc, finedTransaction,financer)
-        doc.on("end", async () => {
-          let pdfData = Buffer.concat(buffers);
-          const filePath = `files/TermSheet-${id}.pdf`;
-          fs.writeFile(filePath, pdfData, async function (err) {
-            if (err) {
-              console.log(err);
-            } else {
-              try {
-                console.log("File Created");
-                data = fs.readFileSync(
-                  path.join(__dirname, `../files/TermSheet-${id}.pdf`),
-                  "base64",
-                  function (err, content) {
-                    return content;
-                  }
-                );
-                // Set the correct headers for downloading the file
-                res.setHeader('Content-Type', 'application/pdf');
-                res.setHeader('Content-Disposition', 'attachment; filename="TermSheet.pdf"');
-
-                return res
-                  .status(httpStatus.OK)
-                  .json(
-                    new APIResponse(
-                      { data: data },
-                      "TermSheet downloaded successfully.",
-                      httpStatus.OK
-                    )
-                  );
-              } catch (e) {
-                console.log(e);
-              }
-            }
-          });
-        });
-      }
+        }
     } catch (e) {
-      console.log(
-        "-----------------------catch-------------------------------------",
-        e
-      );
-      return res
-        .status(httpStatus.INTERNAL_SERVER_ERROR)
-        .json(
-          new APIResponse(
-            {},
-            "Error in downloading TermSheet",
-            httpStatus.INTERNAL_SERVER_ERROR,
-            e
-          )
-        );
+        console.log('-----------------------catch-------------------------------------', e);
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(new APIResponse({}, 'Error in downloading TermSheet', httpStatus.INTERNAL_SERVER_ERROR, e));
     }
-  }
+}
 
 
 
@@ -988,37 +947,17 @@ class transactionController {
 
   async uploadTermSheet(req, res, next) {
     try {
-      let body = req.body;
-      let id = body._id;
-      const updateTransaction = await transaction.updateTransaction(
-        { termSheet: "Signed", termSheetURL: body.termSheetUrl },
-        id
-      );
-      const updatedTransaction = await transaction.getById(id);
-      // const data = fs.readFileSync(path.join(__dirname, '../files/TermSheet.docx'), 'base64', function (err, content) {
-      //     return content;
-      // });
-      return res
-        .status(httpStatus.OK)
-        .json(
-          new APIResponse(
-            updatedTransaction,
-            "TermSheet uploaded successfully.",
-            httpStatus.OK
-          )
-        );
+        let body = req.body
+        let id = body._id
+        const updateTransaction = await transaction.updateTransaction({ termSheet: "Signed", termSheetURL: body.termSheetUrl }, id)
+        const updatedTransaction = await transaction.getById(id)
+        // const data = fs.readFileSync(path.join(__dirname, '../files/TermSheet.docx'), 'base64', function (err, content) {
+        //     return content;
+        // });
+        return res.status(httpStatus.OK).json(new APIResponse(updatedTransaction, 'TermSheet uploaded successfully.', httpStatus.OK));
     } catch (e) {
-      return res
-        .status(httpStatus.INTERNAL_SERVER_ERROR)
-        .json(
-          new APIResponse(
-            {},
-            "Error in uploading TermSheet",
-            httpStatus.INTERNAL_SERVER_ERROR,
-            e
-          )
-        );
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(new APIResponse({}, 'Error in uploading TermSheet', httpStatus.INTERNAL_SERVER_ERROR, e));
     }
-  }
+}
 }
 var exports = (module.exports = new transactionController());

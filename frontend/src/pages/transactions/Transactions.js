@@ -123,91 +123,27 @@ const Transactions = () => {
   }, [riskAssessment, selected, navigate]);
 
   const downloadTermSheet = (id, name) => {
-
     ApiGet(`transaction/termSheet/${id}`)
       .then((res) => {
-        // console.log(res)
-        let data = res;
+        let data = res.data.data
         if (name === "view") {
-          ViewRiskAssessment(data);
+          ViewRiskAssessment(data)
         } else if (name === "download") {
-
-          converBase64toBlob(data);
+          converBase64toBlob(data)
         }
       })
-      .catch((e) => console.log(e));
-  };
-
-  function fixBase64String(base64String) {
-    // Convert URL-safe Base64 to standard Base64
-    base64String = base64String.replace(/-/g, '+').replace(/_/g, '/');
-    
-    // Add padding if missing
-    while (base64String.length % 4 !== 0) {
-      base64String += '=';
-    }
-  
-    return base64String;
+      .catch((e) => console.log(e))
   }
-  
 
-  const converBase64toBlob = (content, contentType = "application/pdf") => {
-  try {
-    // Fix the Base64 string if needed
-    const fixedContent = fixBase64String(content);
+  const converBase64toBlob = (content, contentType) => {
+    const linkSource = `data:application/pdf;base64,${content}`
+    const downloadLink = document.createElement("a")
+    const fileName = "TermSheet.pdf"
 
-    // Decode the Base64 string
-    const byteCharacters = atob(fixedContent);
-
-    const byteArrays = [];
-    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
-      const slice = byteCharacters.slice(offset, offset + 512);
-      const byteNumbers = new Array(slice.length);
-      for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
-    }
-    const blob = new Blob(byteArrays, { type: contentType });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "TermSheet.pdf";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  } catch (error) {
-    console.error("Failed to convert Base64 to Blob:", error.message);
+    downloadLink.href = linkSource
+    downloadLink.download = fileName
+    downloadLink.click()
   }
-};
-
-
-  // const converBase64toBlob = (content, contentType = "application/pdf") => {
-
-  //   const byteCharacters = atob(content);
-
-  //   const byteArrays = [];
-  //   for (let offset = 0; offset < byteCharacters.length; offset += 512) {
-  //     const slice = byteCharacters.slice(offset, offset + 512);
-  //     const byteNumbers = new Array(slice.length);
-  //     for (let i = 0; i < slice.length; i++) {
-  //       byteNumbers[i] = slice.charCodeAt(i);
-  //     }
-  //     const byteArray = new Uint8Array(byteNumbers);
-  //     byteArrays.push(byteArray);
-  //   }
-  //   const blob = new Blob(byteArrays, { type: contentType });
-  //   const url = URL.createObjectURL(blob);
-  //   const a = document.createElement("a");
-  //   a.href = url;
-  //   a.download = "TermSheet.pdf";
-  //   document.body.appendChild(a);
-  //   a.click();
-  //   document.body.removeChild(a);
-  //   URL.revokeObjectURL(url);
-  // };
 
   const ViewRiskAssessment = (contents) => {
     const linkSources = `data:application/pdf;base64,${contents}`;
@@ -398,14 +334,13 @@ const Transactions = () => {
                 </Menu.Item>
               )}
               <Menu.Item
-                onClick={() => downloadTermSheet(record._id, "view")}
-              // onClick={() => {
-              //   record.termSheet === "Not Signed"
-              //     ? downloadTermSheet(record._id, "view")
-              //     : ViewRiskAssessment();
-              // }}
+                onClick={() => {
+                  record.termSheet === "Not Signed"
+                    ? downloadTermSheet(record._id, "view")
+                    : ViewRiskAssessment();
+                }}
               >
-                <EyeOutlined className='pe-2' /> View Termsheet
+                <EyeOutlined /> View Termsheet
               </Menu.Item>
               <Menu.Item
                 onClick={() => {
@@ -417,14 +352,14 @@ const Transactions = () => {
               >
                 <EyeOutlined className='pe-2' /> View Flowstep Notes
               </Menu.Item>
-              <Menu.Item
+             <Menu.Item
                 onClick={() => {
-                  record.termSheet === "Signed"
+                  record.termSheet === "Not Signed"
                     ? downloadTermSheet(record._id, "download")
                     : converBase64toBlob(record.termSheetUrl);
                 }}
               >
-                <DownloadOutlined className='pe-2' /> Download Termsheet
+                <DownloadOutlined /> Download Termsheet
               </Menu.Item>
             </Menu>
           }
