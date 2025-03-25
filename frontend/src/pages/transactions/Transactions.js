@@ -272,7 +272,7 @@ const Transactions = () => {
       ),
     },
     {
-      title: "Workflow Step Name",
+      title: "Approval Step",
       dataIndex: "workFlowSteps",
       key: "workflowStepName",
       render: (workFlowSteps) =>

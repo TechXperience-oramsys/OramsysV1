@@ -2263,8 +2263,7 @@ const DetailsTransaction = ({ hendelNext, onHide, show, transactionType, signalC
                             <h4 className='mb-3 fs-5 fw-bold title-admin'>PRICING DETAILS</h4>
                             <div>
                                 <Row>
-                                    <Form.Group as={Col} lg={pricingDetails.pricingType === "Firm fixed price"
-                                        ? 3 : 4 || pricingDetails.pricingHedgingStatus === "Yes" ? 3 : 4} controlId="formGridZip">
+                                    <Form.Group as={Col} lg={pricingDetails.pricingType === "Firm fixed price"  ? 3 : 4 || pricingDetails.pricingHedgingStatus === "Yes" ? 3 : 4} controlId="formGridZip">
                                         <Form.Label>Pricing Type</Form.Label>
                                         <Form.Select className='no-border'
                                             onChange={(e, newVal) =>
