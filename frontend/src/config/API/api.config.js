@@ -9,7 +9,7 @@
 // export const API = API_LOCAL.host
 
 export let API;
-API = 'https://backend.oramsysdev.com/' 
+API = 'https://backend.oramsysdev.com/'  
 // API = 'https://oramsys-server.vercel.app/' 
 
 // API = 'http://localhost:5003/'
