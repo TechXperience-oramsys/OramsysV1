@@ -2,9 +2,10 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 const cors = require('cors');
-const cookieParser = require('cookie-parser');
-var database = require("../database/database");
 const port = process.env.PORT || 5002;
+const cookieParser = require('cookie-parser');
+const connectDB = require("./database/database");
+connectDB();
 
 // Handle preflight requests early
 app.options('*', (req, res) => {
