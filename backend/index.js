@@ -61,6 +61,6 @@ function setupRoutes() {
 
 setupRoutes();
 
-app.listen(port, () => {
-  console.log(`Server is running on PORT ${port}`);
-});
+
+module.exports = app; // for CommonJS
+
