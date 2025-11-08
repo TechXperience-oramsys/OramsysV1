@@ -44,42 +44,25 @@ app.use((req, res, next) => {
     next();
 });
 
-const corsOptions = {
-    origin: ['https://www.oramsysdev.com', 'https://oramsysdev.com', 'http://localhost:3000', 'http://localhost:5173', 'https://oramsysdev.netlify.app', "https://oramsys3.netlify.app"],
-    credentials: true,
-    allowedHeaders: ["X-Requested-With", "Content-Type", "Authorization", "Accept"],
-    methods: ["GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"],
-    exposedHeaders: ["Authorization"]
-};
+const allowedOrigins = ['https://www.oramsysdev.com', 'https://oramsysdev.com', 'http://localhost:3000', 'http://localhost:5173', 'https://oramsysdev.netlify.app', "https://oramsys3.netlify.app"]
 
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
+  })
+);
+// app.use(cors(corsOptions));
 app.use(express.json({ limit: '50mb' }));
 app.use(cookieParser());  // This enables req.cookies
 app.use(express.static('files'));
-
-// app.all("*", function (req, res, next) {
-//     res.setHeader(
-//         "Access-Control-Allow-Origin",
-//         ['https://www.oramsysdev.com', 'https://oramsysdev.com', 'http://localhost:3000'] // Replace '*' with your frontend domain in production
-//     );
-//     res.setHeader("Access-Control-Allow-Credentials", "true");
-//     res.setHeader(
-//         "Content-Security-Policy",
-//         "default-src 'self'; frame-src 'self' data:; script-src 'self';"
-//     );
-
-//     res.setHeader(
-//         "Access-Control-Allow-Headers",
-//         "X-Requested-With, Content-Type, Authorization, Accept"
-//     );
-//     res.setHeader(
-//         "Access-Control-Allow-Methods",
-//         "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-//     );
-//     res.setHeader("Access-Control-Expose-Headers", "Authorization");
-//     next();
-// });
-
 
 
 
