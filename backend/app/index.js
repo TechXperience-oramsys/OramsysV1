@@ -3,7 +3,7 @@ const app = express();
 require('dotenv').config();
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-var database = require("./database/database");
+var database = require("../database/database");
 const port = process.env.PORT || 5002;
 
 // Handle preflight requests early
@@ -55,7 +55,7 @@ app.use((req, res, next) => {
 app.disable('x-powered-by');
 
 function setupRoutes() {
-  const routes = require("./routes/index");
+  const routes = require("../routes/index");
   routes.setup(app);
 }
 
