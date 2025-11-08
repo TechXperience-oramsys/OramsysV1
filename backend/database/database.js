@@ -1,26 +1,14 @@
-"use strict";
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
+"use strict"
+const dotenv = require('dotenv')
+dotenv.config()
+var mongoose = require('mongoose')
 
-dotenv.config();
-
-let isConnected = false; // Track the connection state
-
-async function connectDB() {
-  if (isConnected) return;
-
-  try {
-    const conn = await mongoose.connect(process.env.DB_CONNECTION_CLUSTER, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+mongoose.connect(`${process.env.DB_CONNECTION_CLUSTER}`, { useUnifiedTopology: false })
+function connect() {
+    let db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', function () {
+        console.log(`Database connected successfully`);
     });
-
-    isConnected = conn.connections[0].readyState === 1;
-    console.log("✅ MongoDB connected successfully");
-  } catch (error) {
-    console.error("❌ MongoDB connection error:", error);
-    throw error;
-  }
-}
-
-module.exports = connectDB;
+};
+connect()
