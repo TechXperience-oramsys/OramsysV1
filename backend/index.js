@@ -45,7 +45,7 @@ app.use((req, res, next) => {
 });
 
 const corsOptions = {
-    origin: ['https://www.oramsysdev.com', 'https://oramsysdev.com', 'http://localhost:3000', 'http://localhost:5173', 'https://oramsysdev.netlify.app'],
+    origin: ['https://www.oramsysdev.com', 'https://oramsysdev.com', 'http://localhost:3000', 'http://localhost:5173', 'https://oramsysdev.netlify.app', 'https://oramsys3.netlify.app'],
     credentials: true,
     allowedHeaders: ["X-Requested-With", "Content-Type", "Authorization", "Accept"],
     methods: ["GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"],

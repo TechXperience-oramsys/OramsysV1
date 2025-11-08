@@ -2,7 +2,7 @@
 const dotenv = require('dotenv')
 dotenv.config()
 var mongoose = require('mongoose')
-// mongoose.set("strictQuery", false)
+
 mongoose.connect(`${process.env.DB_CONNECTION_CLUSTER}`, { useUnifiedTopology: false })
 function connect() {
     let db = mongoose.connection;
