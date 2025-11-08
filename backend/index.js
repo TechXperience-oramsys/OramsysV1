@@ -2,10 +2,9 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 const cors = require('cors');
-const port = process.env.PORT || 5002;
 const cookieParser = require('cookie-parser');
-const connectDB = require("./database/database");
-connectDB();
+var database = require("./database/database");
+const port = process.env.PORT || 5002;
 
 // Handle preflight requests early
 app.options('*', (req, res) => {
@@ -56,12 +55,12 @@ app.use((req, res, next) => {
 app.disable('x-powered-by');
 
 function setupRoutes() {
-  const routes = require("../routes/index");
+  const routes = require("./routes/index");
   routes.setup(app);
 }
 
 setupRoutes();
 
-
-module.exports = app; // for CommonJS
-
+app.listen(port, () => {
+  console.log(`Server is running on PORT ${port}`);
+});
